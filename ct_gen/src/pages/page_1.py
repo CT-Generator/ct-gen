@@ -25,3 +25,10 @@ def display_page_1():
     st.subheader("Greetings")
     st.markdown("Welcome to the Conspiracy Generator! By following three simple steps, you can turn any story from your newspaper (or from history books) into an intriguing, shocking, mind-bending, titillating but still plausible-sounding Conspiracy Theory of your own choosing. Make your own Conspiracy Theory in a few simple steps! ")
     st.markdown("""Want to see how?""")  
+
+    with st.expander("See Project Info"):
+        st.subheader("📃 Credits")
+        st.write("Created by the Etienne Vermeersch Chair of Critical Thinking at Ghent University")
+        st.write("Ideas: Maarten Boudry & Marco Meyer")
+        st.write("Design & Development: TJI (Natasha Newbold)")
+        st.write("[Learn more about the app on GitHub](https://github.com/Tech-Jobs-International/ct-generator)")
