@@ -18,7 +18,7 @@ def initalize_session_state_dict():
         st.session_state.culprits = ""
     if 'goals' not in st.session_state:
         st.session_state.goals = ""
-    if 'motive' not in st.session_state:
+    if 'motive_info' not in st.session_state:
         st.session_state.motive_info = ""  
     if 'conspiracy_theory' not in st.session_state:
         st.session_state.conspiracy_theory = ""

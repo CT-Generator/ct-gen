@@ -23,5 +23,4 @@ def display_page_2():
     st.title("🔦 The Official Version")
     st.subheader("Article Scraper")
     st.markdown("What’s your conspiracy about? Every conspiracy theories starts from an official version of events")
-    url = st.text_input("Enter url", placeholder="Paste URL and Enter")
-    st.session_state["user_input_page_2"] = url
+    st.session_state["url"] = st.text_input("Enter url", placeholder="Paste URL and Enter", value=st.session_state["url"])

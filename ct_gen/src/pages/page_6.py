@@ -17,19 +17,6 @@ import webbrowser
 from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict
 
 
-# Initialize session state dictionary
-def initialize_session_state():
-    if 'official_version' not in st.session_state:
-        st.session_state.official_version = ""
-    if 'culprits' not in st.session_state:
-        st.session_state.culprits = ""
-    if 'goals' not in st.session_state:
-        st.session_state.goals = ""
-    if 'motive' not in st.session_state:
-        st.session_state.motive = ""  
-    if 'conspiracy_theory' not in st.session_state:
-        st.session_state.conspiracy_theory = ""
-
 def generate_conspiracy_theory():
     # Access the user inputs from the session state
     url = st.session_state.url

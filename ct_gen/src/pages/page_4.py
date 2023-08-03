@@ -24,5 +24,4 @@ def display_page_4():
     st.title("🔦 The Motive")
     st.subheader("Select a Motive")
     st.markdown("What do the plotters want? Every conspiracy theory needs to assigns a motive. ")
-    motive_info = st.text_input("Motive Information", placeholder="The Society seeks to uncover hidden truths and secrets from the past...", key="new_motive_info")
-    st.session_state["user_input_page_2"] = motive_info
+    st.session_state["motive_info"] = st.text_input("Motive Information", placeholder="The Society seeks to uncover hidden truths and secrets from the past...", key="new_motive_info", value=st.session_state["motive_info"])
