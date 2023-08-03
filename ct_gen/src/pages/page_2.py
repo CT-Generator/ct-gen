@@ -1,42 +1,15 @@
 import streamlit as st
-import datetime
-import gspread
+
 #from initialize_session_state import initialize_session_state_dict
-import newspaper
-from oauth2client.service_account import ServiceAccountCredentials
-import os
-import openai
 import pandas as pd
-import random
-import requests
-from streamlit_extras.badges import badge
-import sys
-import webbrowser
 import toml
 
-from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict
+from ct_gen.src.modules.google_sheets_api import load_google_sheets_data
 
 # Load the secrets from the secrets.toml file
 secrets = toml.load(".streamlit/secrets.toml")
 
-# Function to load Google Sheets data
-def load_google_sheets_data():
-    # Define the scope and credentials for Google Sheets API
-    scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-    credentials = ServiceAccountCredentials.from_json_keyfile_dict(secrets['google_sheets'], scope)
-    
-    # Authenticate and access the Google Sheets API
-    gc = gspread.authorize(credentials)
-    
-    # Load the Google Sheets data
-    spreadsheet_url = secrets['google_sheets']['spreadsheet']
-    worksheet_name = secrets['google_sheets']['worksheet']
-    sheet = gc.open_by_url(spreadsheet_url).sheet1  # Replace 'sheet1' with the correct worksheet name if needed
-    data = sheet.get_all_values()
-    
-    # Convert the data to a DataFrame
-    df = pd.DataFrame(data[1:], columns=data[0])
-    return df
+
 
 # Contents for page 2
 def display_page_2():
