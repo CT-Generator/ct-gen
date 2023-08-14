@@ -126,7 +126,7 @@ def main():
         display_page_1()
         st.markdown("---")
         col1, col2 = st.columns(2)
-        forward_button(col2, "NEXT")
+        forward_button(col2, "Start")
         
             
     if st.session_state["page_number"] == 2:

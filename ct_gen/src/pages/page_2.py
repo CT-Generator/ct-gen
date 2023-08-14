@@ -36,7 +36,7 @@ def display_page_2():
         st.write(selected_article_content)
         
         st.subheader("Article URL")
-        st.write(selected_article_url)
+        st.write(f"[Read more]({selected_article_url})")
 
         # Store the selected content in session state
         st.session_state.selected_version = selected_version

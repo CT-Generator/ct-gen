@@ -12,6 +12,7 @@ import random
 import requests
 from streamlit_extras.badges import badge
 import sys
+import time
 import toml
 import webbrowser
 
@@ -53,14 +54,18 @@ def generate_conspiracy_theory():
              "The truth is hidden and only the chosen ones can see it. [GENERATE GT]"
 
     # Generate the conspiracy theory using OpenAI
-    response = openai.Completion.create(
-        engine="text-davinci-003",  # Use the appropriate engine
-        prompt=prompt,
-        max_tokens=100  # Adjust the number of tokens as needed
-    )
-
+    with st.spinner('Generating conspiracy theory...'):
+        response = openai.ChatCompletion.create(
+            model="gpt-4",  # Use the appropriate model name
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "user", "content": prompt}
+            ]
+        )
     # Save the generated conspiracy theory in the session state
-    st.session_state.conspiracy_theory = response.choices[0].text.strip()
+    #st.session_state.conspiracy_theory = response.choices[0].text.strip()
+    st.session_state.conspiracy_theory = response.choices[0].message['content'].strip()
+
 
 
 def display_page_6():
