@@ -19,18 +19,18 @@ from ct_gen.src.modules.initialize_session_state import initalize_session_state_
 
 def display_page_1():
     
-    st.markdown("### Page 1")
     st.warning('DISCLAIMER: DISCLAIMER: False conspiracy theories can be harmful. Please use our Conspiracy Generator with caution and do not target vulnerable groups of individuals.', icon="⚠️")
     st.title("🔦 Conspiracy Generator")
-    st.subheader("Greetings")
-    st.markdown("Welcome to the Conspiracy Generator! By following three simple steps, you can turn any story from your newspaper (or from history books) into an intriguing, shocking, mind-bending, titillating but still plausible-sounding Conspiracy Theory of your own choosing. Make your own Conspiracy Theory in a few simple steps! ")
+    st.divider()
+    st.info("Welcome to the Conspiracy Generator! By following three simple steps, you can turn any story from your newspaper (or from history books) into an intriguing, shocking, mind-bending, titillating but still plausible-sounding Conspiracy Theory of your own choosing. Make your own Conspiracy Theory in a few simple steps! ")
+    st.divider()
     st.markdown("""Want to see how?""")  
 
     with st.expander("See Project Info"):
         st.subheader("📃 Credits")
-        st.write("Created by the Etienne Vermeersch Chair of Critical Thinking at Ghent University")
-        st.write("Ideas: Maarten Boudry & Marco Meyer")
-        st.write("Design & Development: TJI (Natasha Newbold)")
-        st.write("[Learn more about the app on GitHub](https://github.com/Tech-Jobs-International/ct-generator)")
+        st.info("Created by the Etienne Vermeersch Chair of Critical Thinking at Ghent University")
+        st.info("Ideas: [Maarten Boudry](https://research.flw.ugent.be/en/maarten.boudry) & [Marco Meyer](https://www.philosophie.uni-hamburg.de/philosophisches-seminar/personen/meyer-marco.html)")
+        st.info("Design & Development: [TJI](https://techjobsinternational.com/) ([Natasha Newbold](https://www.linkedin.com/in/natasha-newbold/) & [Justus Schollmeyer](https://www.linkedin.com/in/justus-schollmeyer-014a2314b/))")
+        st.info("Learn more about the app on [GitHub](https://github.com/Tech-Jobs-International/ct-gen)")
 
 

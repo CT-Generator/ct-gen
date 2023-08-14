@@ -125,42 +125,46 @@ def main():
     if st.session_state["page_number"] == 1:
         display_page_1()
         st.markdown("---")
-        col1, col2 = st.columns(2)
-        forward_button(col2, "Start")
+        col1 = st.columns(1)[0]
+        forward_button(col1, "Start")
         
             
     if st.session_state["page_number"] == 2:
         display_page_2()
         st.markdown("---")
-        col1, col2 = st.columns(2)
+        col1 = st.columns(1)[0]
+        forward_button(col1, "NEXT")
         backward_button(col1, "BACK")
-        forward_button(col2, "NEXT")
+        
         
     if st.session_state["page_number"] == 3:
         display_page_3()
         st.markdown("---")
-        col1, col2 = st.columns(2)
+        col1 = st.columns(1)[0]
+        forward_button(col1, "NEXT")
         backward_button(col1, "BACK")
-        forward_button(col2, "NEXT")
+        
     
     if st.session_state["page_number"] == 4:
         display_page_4()
         st.markdown("---")
-        col1, col2 = st.columns(2)
+        col1 = st.columns(1)[0]
+        forward_button(col1, "NEXT")
         backward_button(col1, "BACK")
-        forward_button(col2, "NEXT")
+        
     
     if st.session_state["page_number"] == 5:
         display_page_5()
         st.markdown("---")
-        col1, col2 = st.columns(2)
+        col1 = st.columns(1)[0]
+        forward_button(col1, "NEXT")
         backward_button(col1, "BACK")
-        forward_button(col2, "NEXT")
+        
     
     if st.session_state["page_number"] == 6:
         display_page_6()
         st.markdown("---")
-        col1, col2 = st.columns(2)
+        col1 = st.columns(1)[0]
         backward_button(col1, "BACK")
 
     #Add badege - Repo needs to be public
