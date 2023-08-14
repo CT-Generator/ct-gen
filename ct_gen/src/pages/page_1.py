@@ -32,3 +32,5 @@ def display_page_1():
         st.write("Ideas: Maarten Boudry & Marco Meyer")
         st.write("Design & Development: TJI (Natasha Newbold)")
         st.write("[Learn more about the app on GitHub](https://github.com/Tech-Jobs-International/ct-generator)")
+
+

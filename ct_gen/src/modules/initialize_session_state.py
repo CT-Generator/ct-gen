@@ -1,7 +1,10 @@
 import streamlit as st
+import openai
 
 
 def initalize_session_state_dict():
+    # Initialize OpenAI API connection
+    openai.api_key = st.secrets["openai"]["api_key"]
     
     st.session_state["model_name"] = "gpt-3.5-turbo"
     
