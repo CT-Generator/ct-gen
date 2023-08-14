@@ -75,7 +75,7 @@ def display_page_6():
     st.warning('DISCLAIMER: DISCLAIMER: False conspiracy theories can be harmful. Please use our Conspiracy Generator with caution and do not target vulnerable groups of individuals.', icon="⚠️")
     st.title("🔦 Your conspiracy theory")
     st.divider()
-    st.info("Here is you conspiracy theory.") 
+    st.info("Here is your conspiracy theory.") 
     st.divider()
     # Call the function to generate the conspiracy theory
     st.subheader("Generated Conspiracy Theory")
