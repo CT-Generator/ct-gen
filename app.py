@@ -168,8 +168,8 @@ def main():
         backward_button(col1, "BACK")
 
     #Add badege - Repo needs to be public
-    badge(type="github", name="Tech-Jobs-International/ct-generator")
-    badge(type="twitter", name="streamlit")
+    #badge(type="github", name="Tech-Jobs-International/ct-generator")
+    #badge(type="twitter", name="streamlit")
     
 if __name__ == '__main__':
     main()
