@@ -44,7 +44,7 @@ def display_page_2():
         st.subheader("Article Summary")
         st.write(selected_article_content)
         
-        st.divider()
+        
         
         #st.subheader("Article URL")
         st.write(f"[Read more]({selected_article_url})")

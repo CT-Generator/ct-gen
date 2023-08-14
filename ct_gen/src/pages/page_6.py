@@ -39,7 +39,7 @@ openai.api_key = gpt_api_key
 # Set the API URL explicitly if needed
 openai.api_base = "https://api.openai.com/v1"
 
-@st.cache_data
+#@st.cache_data
 def generate_conspiracy_theory(selected_article_content, culprits, goals, motive_info):
     
     # Access the user inputs from the session state
@@ -75,10 +75,14 @@ def display_page_6():
     st.warning('DISCLAIMER: DISCLAIMER: False conspiracy theories can be harmful. Please use our Conspiracy Generator with caution and do not target vulnerable groups of individuals.', icon="⚠️")
     st.title("🔦 Your conspiracy theory")
     st.divider()
-    st.info("Here is your conspiracy theory.") 
-    st.divider()
-    # Call the function to generate the conspiracy theory
-    st.subheader("Generated Conspiracy Theory")
-    generate_conspiracy_theory(st.session_state.selected_article_content, st.session_state.culprits, st.session_state.goals, st.session_state.motive_info)
-    # Display the generated conspiracy theory
-    st.write(st.session_state.conspiracy_theory)
+    generation_button = st.button("Generate your theory!")
+    
+    if generation_button == True:
+        
+        generate_conspiracy_theory(st.session_state.selected_article_content, st.session_state.culprits, st.session_state.goals, st.session_state.motive_info)    
+        
+    if st.session_state.conspiracy_theory != "":
+        st.divider()
+        st.info("Here is your conspiracy theory.") 
+        st.divider()    
+        st.write(st.session_state.conspiracy_theory)
