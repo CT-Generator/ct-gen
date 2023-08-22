@@ -28,9 +28,10 @@ def display_page_1():
 
     with st.expander("See Project Info"):
         st.subheader("📃 Credits")
-        st.write("Created by the Etienne Vermeersch Chair of Critical Thinking at Ghent University")
-        st.write("Ideas: Maarten Boudry & Marco Meyer")
-        st.write("Design & Development: TJI (Natasha Newbold)")
-        st.write("[Learn more about the app on GitHub](https://github.com/Tech-Jobs-International/ct-generator)")
+        st.info("Created by the Etienne Vermeersch Chair of Critical Thinking at Ghent University")
+        st.info("Ideas: [Maarten Boudry](https://research.flw.ugent.be/en/maarten.boudry) & [Marco Meyer](https://www.philosophie.uni-hamburg.de/philosophisches-seminar/personen/meyer-marco.html)")
+        st.info("Design & Development: [TJI](https://techjobsinternational.com/) ([Natasha Newbold](https://www.linkedin.com/in/natasha-newbold/) & [Justus Schollmeyer](https://www.linkedin.com/in/justus-schollmeyer-014a2314b/))")
+        st.info("Learn more about the app on [GitHub](https://github.com/Tech-Jobs-International/ct-gen)")
+        st.info("Our Conspiracy Generator follows a simple recipe created to turn any event into one or more Conspiracy Theories, using a few simple steps and a few parameters. You can find all the details in this [academic paper](https://drive.google.com/file/d/1GMDVLdKfvaFnj8IFDyiRTGH3ePsOO9B7/view) or this [shorter blog post](https://maartenboudry.be/2020/09/how-not-to-get-sucked-into-an-intellectual-black-hole-on-the-warped-epistemology-of-conspiracy-theories.html). Our fully automatic Conspiracy Generator is powered by Open AI’s GPT-4, which churns out conspiracies at the drop of a hat. But you can also try out our recipe for yourself, without the aid of artificial intelligence! ")
 
 
