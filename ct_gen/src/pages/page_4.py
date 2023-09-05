@@ -115,7 +115,7 @@ def display_page_4():
         subset = random_motives_df.iloc[i:i+3]
         cols = st.columns(3)
         for j, (index, row) in enumerate(subset.iterrows()):
-            display_image_link(cols[j], row["Goals"], row["Image_URL"], image_width, image_height)
+            display_image_link(cols[j], row["Goals"], row["Goals_Image_URL"], image_width, image_height)
 
     if st.button("Reload New Motives"):
         if "motives_list" in st.session_state:

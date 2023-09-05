@@ -230,7 +230,7 @@ def display_page_3():
         subset = random_culprits_df.iloc[i:i+3]
         cols = st.columns(3)
         for j, (index, row) in enumerate(subset.iterrows()):
-            display_image_link(cols[j], row["Culprits"], row["Image_URL"], image_width, image_height)
+            display_image_link(cols[j], row["Culprits"], row["Culprit_Image_URL"], image_width, image_height)
 
     if st.button("Reload New Culprits"):
         if "culprits_list" in st.session_state:
