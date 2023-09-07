@@ -1,8 +1,5 @@
 import streamlit as st
 
-import datetime
-import gspread
-#from initialize_session_state import initialize_session_state_dict
 import newspaper
 from oauth2client.service_account import ServiceAccountCredentials
 import os
@@ -12,77 +9,78 @@ import random
 import requests
 from streamlit_extras.badges import badge
 import sys
-import time
-import toml
 import webbrowser
 
 from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict
 
-# Load the secrets at the start of the app
-def load_secrets():
-    # Construct the full path to the secrets.toml file in the .streamlit directory
-    secrets_file_path = os.path.join(".streamlit", "secrets.toml")
 
-    # Load the secrets from the secrets.toml file
-    secrets = toml.load(secrets_file_path)
-    return secrets
-
-# Load the secrets at the start of the app
-secrets = load_secrets()
-
-# Access your GPT API key
-gpt_api_key = secrets["openai"]["api_key"]
-
-# Set the GPT API key for OpenAI
-openai.api_key = gpt_api_key
-
-# Set the API URL explicitly if needed
-openai.api_base = "https://api.openai.com/v1"
-
-#@st.cache_data
 def generate_conspiracy_theory(selected_article_content, culprits, goals, motive_info):
-    
     # Access the user inputs from the session state
-    #selected_article_content = st.session_state.selected_article_content
     url = st.session_state.url
-    #culprits = st.session_state.culprits
-    #goals = st.session_state.goals
-    #motive_info = st.session_state.motive_info
 
+    # Partial prompts from each step
+    partial_prompts = [
+        f"Connecting the dots...\n- Find inconsistencies in the timeline.\n- Highlight contradictions in witness statements.",
+        f"Dealing with counterevidence...\n- Connect unconnected events to create intrigue.\n- Associate the culprits with unusual symbols.",
+        f"Refuting counterevidence...\n- Label counterevidence as part of a larger cover-up.\n- Propose that evidence was planted to confuse.",
+        f"Discrediting critics...\n- Label critics as government shills.\n- Suggest critics are manipulated by hidden powers."
+    ]
+
+    
     # Set up your prompt for generating the conspiracy theory
-    prompt = f"Generate a conspiracy theory involving {culprits} and their goal to {goals}. " \
-             f"They are working against the official version which says: '{selected_article_content}'. " \
+    main_prompt = f"Generate a conspiracy theory involving {culprits} and their goal to {goals}. " \
+             f"They have orchestrated the creation of the official version as a cover-up for their evil plans, which says: '{selected_article_content}'. " \
              f"Their motive behind this conspiracy is to {motive_info}. " \
-             "The truth is hidden and only the chosen ones can see it. [GENERATE GT]"
+             "The truth is hidden and only those who 'wake up' can see it. [GENERATE GT]"
+
+   
+    
+# Create messages in conversation format
+    messages = [{"role": "system", "content": "You are a helpful assistant."}]
+    for prompt in partial_prompts:
+        messages.append({"role": "user", "content": prompt})
+    messages.append({"role": "user", "content": main_prompt})
 
     # Generate the conspiracy theory using OpenAI
-    with st.spinner('Generating conspiracy theory...'):
+    with st.spinner('Generating your conspiracy theory...'):
         response = openai.ChatCompletion.create(
             model="gpt-4",  # Use the appropriate model name
-            messages=[
-                {"role": "system", "content": "You are a helpful assistant."},
-                {"role": "user", "content": prompt}
-            ]
+            messages=messages
         )
-    # Save the generated conspiracy theory in the session state
-    #st.session_state.conspiracy_theory = response.choices[0].text.strip()
-    st.session_state.conspiracy_theory = response.choices[0].message['content'].strip()
-
+    conspiracy_theory = response.choices[-1].message['content'].strip()
+    
+    return conspiracy_theory
+   
 
 
 def display_page_6():
-        
-    st.warning('DISCLAIMER: DISCLAIMER: False conspiracy theories can be harmful. Please use our Conspiracy Generator with caution and do not target vulnerable groups of individuals.', icon="⚠️")
-    st.title("🔦 Your conspiracy theory")
+    
+    st.markdown("### Page 6")
+    st.warning('DISCLAIMER: False conspiracy theories can be harmful. Please use our Conspiracy Generator with caution and do not target vulnerable groups of individuals.', icon="⚠️")
+    st.title("🔦 Your Conspiracy Theory")
     st.divider()
     generation_button = st.button("Generate your theory!")
     
-    if generation_button == True:
-        
-        generate_conspiracy_theory(st.session_state.selected_article_content, st.session_state.culprits, st.session_state.goals, st.session_state.motive_info)    
-        
-    if st.session_state.conspiracy_theory != "":
-        st.divider()
-        st.info("Here is your conspiracy theory.") 
-        st.divider()    
-        st.write(st.session_state.conspiracy_theory)
+    
+    try:
+        if generation_button:
+            conspiracy_theory = generate_conspiracy_theory(
+                st.session_state.selected_article_content,
+                st.session_state.selected_culprit,
+                st.session_state.goals,
+                st.session_state.motive_info
+            )
+            st.session_state.conspiracy_theory = conspiracy_theory
+
+        if hasattr(st.session_state, 'conspiracy_theory') and st.session_state.conspiracy_theory != "":
+            st.divider()
+            st.info("Here is your conspiracy theory.")
+            st.divider()
+            st.write(st.session_state.conspiracy_theory)
+
+    except AttributeError:
+        st.warning("It seems you haven't selected a story, conspirator, and motive. Please go back and make your selections.")
+
+    
+
+
