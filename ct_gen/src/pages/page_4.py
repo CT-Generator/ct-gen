@@ -67,7 +67,6 @@ def display_image_link(column, motive, Motive_image_url, image_width, image_heig
     image_html = f'''
     <div style="width: {image_width}px; height: {image_height}px;">
         <img src="{Motive_image_url}" alt="{motive}" width="{image_width}" height="{image_height}" style="border: 1px solid #eee; padding: 5px;">
-        <button class="stButton">{motive}</button>
     </div>
     '''
     column.markdown(image_html, unsafe_allow_html=True)
