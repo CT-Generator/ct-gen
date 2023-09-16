@@ -131,8 +131,8 @@ def get_random_stories():
 
 def display_page_2():
     
-    st.markdown("### Page 2")
-    st.warning('DISCLAIMER: False conspiracy theories can be harmful. Please use our Conspiracy Generator with caution and do not target vulnerable groups of individuals.', icon="⚠️")
+    st.markdown("### Step 1")
+    #st.warning('DISCLAIMER: False conspiracy theories can be harmful. Please use our Conspiracy Generator with caution and do not target vulnerable groups of individuals.', icon="⚠️")
     st.title("📰 The Official Version")
     st.info("What’s your conspiracy about? Every conspiracy theory starts from an official version of events.")
 
@@ -149,19 +149,19 @@ def display_page_2():
     random_stories = get_random_stories()
 
     # Display the random stories as buttons
-    st.write("Select a story:")
+    st.write("Click on a story to see the summary below:")
     story_selected = None
     for story in random_stories:
         if st.button(story):
             story_selected = story
 
     # Add the reload button
-    if st.button("Reload New Stories"):
+    if st.button("Load New Stories"):
         st.cache_data.clear()  # Clear the cache data
         st.experimental_rerun()  # Rerun the app
 
     # Input field for users to enter a custom URL
-    url = st.text_input("Or enter your URL:", placeholder="Paste URL and Enter")
+    url = st.text_input("Paste the web address of a newspaper article:", placeholder="Paste URL and Enter")
 
     df = load_google_sheets_data()  # Load data directly for selected stories
 
@@ -184,7 +184,7 @@ def display_page_2():
             st.session_state.selected_article_content = article.summary
 
         except:
-            st.warning("Sorry, we couldn't scrape content from the provided URL. Please try another story.")
+            st.warning("Sorry, we could not load the story. Please try another or consider using a desktop.")
 
     # Handling the story selection from the buttons
     elif story_selected:

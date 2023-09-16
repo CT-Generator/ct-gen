@@ -41,12 +41,25 @@ def generate_conspiracy_theory(selected_article_content, culprits, goals, motive
         messages.append({"role": "user", "content": prompt})
     messages.append({"role": "user", "content": main_prompt})
 
-    # Generate the conspiracy theory using OpenAI
-    with st.spinner('Generating your conspiracy theory...'):
-        response = openai.ChatCompletion.create(
-            model="gpt-4",  # Use the appropriate model name
-            messages=messages
-        )
+    
+    try:
+        # Try to generate the conspiracy theory using GPT-4
+        with st.spinner('Generating your conspiracy theory with GPT-4. This usually takes about 20-30 seconds.'):
+            response = openai.ChatCompletion.create(
+                model="gpt-4",
+                messages=messages
+            )
+        conspiracy_theory = response.choices[-1].message['content'].strip()
+
+    except Exception as e:
+        # If GPT-4 throws an error, fall back to GPT-3
+        st.warning(f"An error occurred with GPT-4: {str(e)}. Falling back to GPT-3.")
+        with st.spinner('Generating your conspiracy theory with GPT-3...'):
+            response = openai.Completion.create(
+                model="gpt-3.5",
+                messages=messages
+            )
+
     conspiracy_theory = response.choices[-1].message['content'].strip()
     
     return conspiracy_theory
@@ -55,8 +68,8 @@ def generate_conspiracy_theory(selected_article_content, culprits, goals, motive
 
 def display_page_6():
     
-    st.markdown("### Page 6")
-    st.warning('DISCLAIMER: False conspiracy theories can be harmful. Please use our Conspiracy Generator with caution and do not target vulnerable groups of individuals.', icon="⚠️")
+    st.markdown("### Step 5")
+    #st.warning('DISCLAIMER: False conspiracy theories can be harmful. Please use our Conspiracy Generator with caution and do not target vulnerable groups or individuals.', icon="⚠️")
     st.title("🔦 Your Conspiracy Theory")
     st.divider()
     generation_button = st.button("Generate your theory!")
@@ -77,10 +90,20 @@ def display_page_6():
             st.info("Here is your conspiracy theory.")
             st.divider()
             st.write(st.session_state.conspiracy_theory)
+            
 
     except AttributeError:
-        st.warning("It seems you haven't selected a story, conspirator, and motive. Please go back and make your selections.")
+        st.warning("It seems you haven't selected a story, conspirator, or motive. Please go back and make your selections.")
 
-    
+    # Custom CSS for full-width buttons
+    st.markdown("""
+    <style>
+        .stButton>button {
+            width: 100%;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+
+    #st.warning('DISCLAIMER: False conspiracy theories can be harmful. Please use our Conspiracy Generator with caution and do not target vulnerable groups or individuals.', icon="⚠️")
 
 

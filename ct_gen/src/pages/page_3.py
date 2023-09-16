@@ -171,7 +171,7 @@ def get_random_culprits():
             st.error("Failed to load culprits data from Google Sheets.")
             return pd.DataFrame()  # Return an empty DataFrame
 
-        st.session_state.culprits_list = df.sample(6)  # sample 6 culprits
+        st.session_state.culprits_list = df.sample(3)  # sample 3 culprits
 
     return st.session_state.culprits_list
 
@@ -188,7 +188,7 @@ def display_image_link(column, culprit, Culprit_Image_URL, image_width, image_he
     column.markdown(image_html, unsafe_allow_html=True)
 
     # Use Streamlit button for interactions
-    if column.button(f"Select {culprit}"):
+    if column.button(f"{culprit}"):
         # Capture the clicked culprit's details
         df = load_google_sheets_data()
         if df is not None and "Culprits" in df.columns:
@@ -201,11 +201,12 @@ def display_image_link(column, culprit, Culprit_Image_URL, image_width, image_he
             st.error("Error retrieving culprit info.")
 
 def display_page_3():
-    st.markdown("### Page 3")
-    st.warning('DISCLAIMER: False conspiracy theories can be harmful. Please use our Conspiracy Generator with caution and do not target vulnerable groups of individuals.', icon="⚠️")
+    st.markdown("### Step 2")
+    #st.warning('DISCLAIMER: False conspiracy theories can be harmful. Please use our Conspiracy Generator with caution and do not target vulnerable groups of individuals.', icon="⚠️")
     st.title("🐍 The Conspirators")
     
     st.info("Who’s behind it? Every conspiracy theory needs a sinister group of scheming culprits.")
+    st.write("Click on a culprit to see the summary below:")
 
     # Custom CSS for full-width buttons
     st.markdown("""
@@ -232,7 +233,7 @@ def display_page_3():
         for j, (index, row) in enumerate(subset.iterrows()):
             display_image_link(cols[j], row["Culprits"], row["Culprit_Image_URL"], image_width, image_height)
 
-    if st.button("Reload New Culprits"):
+    if st.button("Load New Culprits"):
         if "culprits_list" in st.session_state:
             del st.session_state.culprits_list
 
@@ -243,6 +244,8 @@ def display_page_3():
     if "selected_culprit" in st.session_state and "selected_culprit_info" in st.session_state:
         st.subheader(f"Conspirator: {st.session_state.selected_culprit}")
         st.write(st.session_state.selected_culprit_info)
+
+    
 
 
 

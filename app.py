@@ -99,14 +99,7 @@ def create_connection():
 
 
 
-#rest of code...
-# def test_openai_connection():
-#     try:
-#         # Make a test call to the OpenAI API
-#         openai.Completion.create(prompt="This is a test.", max_tokens=5)
-#         return True
-#     except Exception as e:
-#         return False
+
 
 
 
@@ -115,61 +108,64 @@ def main():
                        page_title="Consipracy Generator",
                        page_icon = '🔦')
 
-    # # Check if connected to OpenAI API
-    # if test_openai_connection():
-    #     st.success("Connected to OpenAI API")
-    # else:
-    #     st.error("Failed to connect to OpenAI API")
+    
 
     # Rest of your code...
     if st.session_state["page_number"] == 1:
         display_page_1()
         st.markdown("---")
-        col1 = st.columns(1)[0]
+        #col1 = st.columns(1)[0]
+        col1, col2 = st.columns(2)
         forward_button(col1, "Start")
         
-            
+
     if st.session_state["page_number"] == 2:
         display_page_2()
         st.markdown("---")
-        col1 = st.columns(1)[0]
-        forward_button(col1, "NEXT")
+        #col1 = st.columns(1)[0]
+        col1, col2 = st.columns(2)
         backward_button(col1, "BACK")
+        forward_button(col2, "NEXT")
         
         
     if st.session_state["page_number"] == 3:
         display_page_3()
         st.markdown("---")
-        col1 = st.columns(1)[0]
-        forward_button(col1, "NEXT")
+        #col1 = st.columns(1)[0]
+        col1, col2 = st.columns(2)
         backward_button(col1, "BACK")
+        forward_button(col2, "NEXT")
         
     
     if st.session_state["page_number"] == 4:
         display_page_4()
         st.markdown("---")
-        col1 = st.columns(1)[0]
-        forward_button(col1, "NEXT")
+        #col1 = st.columns(1)[0]
+        col1, col2 = st.columns(2)
         backward_button(col1, "BACK")
+        forward_button(col2, "NEXT")
         
     
     if st.session_state["page_number"] == 5:
         display_page_5()
         st.markdown("---")
-        col1 = st.columns(1)[0]
-        forward_button(col1, "NEXT")
+        #col1 = st.columns(1)[0]
+        col1, col2 = st.columns(2)
         backward_button(col1, "BACK")
+        forward_button(col2, "NEXT")
         
     
     if st.session_state["page_number"] == 6:
         display_page_6()
         st.markdown("---")
-        col1 = st.columns(1)[0]
+        #col1 = st.columns(1)[0]
+        col1, col2 = st.columns(2)
         backward_button(col1, "BACK")
 
     #Add badege - Repo needs to be public
     #badge(type="github", name="Tech-Jobs-International/ct-generator")
     #badge(type="twitter", name="streamlit")
+    st.warning('DISCLAIMER: False conspiracy theories can be harmful. Please use our Conspiracy Generator with caution and do not target vulnerable groups or individuals.', icon="⚠️")
     
 if __name__ == '__main__':
     main()
