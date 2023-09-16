@@ -55,7 +55,7 @@ def get_random_motives():
             st.error("Failed to load motives data from Google Sheets.")
             return pd.DataFrame()  # Return an empty DataFrame
 
-        st.session_state.motives_list = df.sample(6)  # sample 6 motives
+        st.session_state.motives_list = df.sample(3)  # sample 3 motives
 
     return st.session_state.motives_list
 
@@ -85,11 +85,12 @@ def display_image_link(column, motive, Motive_image_url, image_width, image_heig
             st.error("Error retrieving motive info.")
 
 def display_page_4():
-    st.markdown("### Page 4")
-    st.warning('DISCLAIMER: False conspiracy theories can be harmful. Please use our Conspiracy Generator with caution and do not target vulnerable groups of individuals.', icon="⚠️")
+    st.markdown("### Step 3")
+    #st.warning('DISCLAIMER: False conspiracy theories can be harmful. Please use our Conspiracy Generator with caution and do not target vulnerable groups of individuals.', icon="⚠️")
     st.title("💡 The Motive")
     
     st.info("What's their endgame? Every conspiracy theory has a motive.")
+    st.write("Click on a motive to see the summary below:")
 
     # Custom CSS for full-width buttons
     st.markdown("""
