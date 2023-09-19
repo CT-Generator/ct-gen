@@ -129,3 +129,15 @@ def display_page_4():
         st.subheader(f"Motive: {st.session_state.selected_motive}")
         st.write(st.session_state.selected_motive_info)
 
+
+    # USER INPUT SECTION
+    user_input = st.text_input("Please paste your motive here and hit Enter:")
+    if user_input:
+        st.session_state.user_input = user_input  # Store the user input in session state
+        st.write(f"You entered: {user_input}")
+
+
+    # Store the pasted culprit in session state
+    st.session_state.motives_list = None
+    st.session_state.motives_list = user_input
+
