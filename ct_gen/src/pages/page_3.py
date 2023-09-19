@@ -202,7 +202,6 @@ def display_image_link(column, culprit, Culprit_Image_URL, image_width, image_he
 
 def display_page_3():
     st.markdown("### Step 2")
-    #st.warning('DISCLAIMER: False conspiracy theories can be harmful. Please use our Conspiracy Generator with caution and do not target vulnerable groups of individuals.', icon="⚠️")
     st.title("🐍 The Conspirators")
     
     st.info("Who’s behind it? Every conspiracy theory needs a sinister group of scheming culprits.")
@@ -233,10 +232,10 @@ def display_page_3():
         for j, (index, row) in enumerate(subset.iterrows()):
             display_image_link(cols[j], row["Culprits"], row["Culprit_Image_URL"], image_width, image_height)
 
+    # Add the reload button
     if st.button("Load New Culprits"):
         if "culprits_list" in st.session_state:
             del st.session_state.culprits_list
-
         st.cache_data.clear()  # Clear the cache
         st.experimental_rerun()  # Rerun the app
 
@@ -244,6 +243,20 @@ def display_page_3():
     if "selected_culprit" in st.session_state and "selected_culprit_info" in st.session_state:
         st.subheader(f"Conspirator: {st.session_state.selected_culprit}")
         st.write(st.session_state.selected_culprit_info)
+
+    # USER INPUT SECTION
+    user_input = st.text_input("Please paste your culprit here and hit Enter:")
+    if user_input:
+        st.session_state.user_input = user_input  # Store the user input in session state
+        st.write(f"You entered: {user_input}")
+
+
+    # Store the pasted culprit in session state
+    st.session_state.selected_culprit = None
+    st.session_state.selected_culprit = user_input
+
+    
+
 
     
 

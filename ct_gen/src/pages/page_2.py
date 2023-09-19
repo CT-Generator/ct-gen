@@ -161,7 +161,7 @@ def display_page_2():
         st.experimental_rerun()  # Rerun the app
 
     # Input field for users to enter a custom URL
-    url = st.text_input("Paste the web address of a newspaper article:", placeholder="Paste URL and Enter")
+    url = st.text_input("Paste the web address of a newspaper article to see the summary below:", placeholder="Paste URL and Enter")
 
     df = load_google_sheets_data()  # Load data directly for selected stories
 
