@@ -18,38 +18,11 @@ from ct_gen.src.modules.initialize_session_state import initalize_session_state_
 from ct_gen.src.modules.google_sheets_api import load_google_sheets_data
 
 
-# def display_page_4():
-    
-#     st.markdown("### Page 4")
-#     st.warning('DISCLAIMER: False conspiracy theories can be harmful. Please use our Conspiracy Generator with caution and do not target vulnerable groups of individuals.', icon="⚠️")
-#     st.title("💡 The Motive")
-    
-    
-#     col_1, col_2 = st.columns(2)
-#     with col_1:
-#         st.info("Who’s behind it? Every conspiracy theory needs a sinister group of scheming culprits.")
-    
-#     df = load_google_sheets_data()
-    
-#     with col_2:
-#         selected_version = st.selectbox("Select a Motive:", df["Goals"])
-    
-#     if selected_version:
-#         selected_motive_info = df.loc[df["Goals"] == selected_version, "Goals_Info"].values[0]
-        
-        
-        
-#         st.subheader("Motive Info") #Goal/Motive Infor
-#         st.write(selected_motive_info)
-        
-#         # Store the selected content in session state
-#         st.session_state.motives = selected_version
-#         st.session_state.motive_info = selected_motive_info
 
 @st.cache_data(ttl=3600)
 def get_random_motives():
     if "motives_list" not in st.session_state:
-        df = load_google_sheets_data()
+        df = load_google_sheets_data("goals")
 
         if df is None or df.empty:
             st.error("Failed to load motives data from Google Sheets.")
@@ -74,7 +47,7 @@ def display_image_link(column, motive, Motive_image_url, image_width, image_heig
     # Use Streamlit button for interactions
     if column.button(f"Select {motive}"):
         # Capture the clicked motive's details
-        df = load_google_sheets_data()
+        df = load_google_sheets_data("goals")
         if df is not None and "Goals" in df.columns:
             selected_motive_info = df[df["Goals"] == motive]["Goals_Info"].values[0]
 
