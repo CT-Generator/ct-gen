@@ -21,7 +21,7 @@ from ct_gen.src.modules.initialize_session_state import initalize_session_state_
 from ct_gen.src.modules.google_sheets_api import load_google_sheets_data
 
 @st.cache_data(ttl=3600, show_spinner=False)
-def get_random_culprits_old():
+def get_random_culprits():
     if "culprits_list" not in st.session_state:
         df = load_google_sheets_data("culprits")
 
@@ -33,7 +33,8 @@ def get_random_culprits_old():
 
     return st.session_state.culprits_list
 
-def get_random_culprits(df):
+def get_random_culprits_new(df):
+    #st.session_state.culprits_list = df.sample(3)  # sample 3 culprits
     return df.sample(3)  # sample 3 culprits
 
 
@@ -79,8 +80,8 @@ def display_page_3():
     """, unsafe_allow_html=True)
     
     
-    culprits_df = load_google_sheets_data("culprits")    
-    random_culprits_df = get_random_culprits(culprits_df)
+    #culprits_df = load_google_sheets_data("culprits")    
+    random_culprits_df = get_random_culprits()
     
     # Check if the DataFrame is empty
     if random_culprits_df.empty:
@@ -115,9 +116,9 @@ def display_page_3():
         st.write(f"You entered: {user_input}")
 
 
-    # Store the pasted culprit in session state
-    st.session_state.selected_culprit = None
-    st.session_state.selected_culprit = user_input
+        # Store the pasted culprit in session state
+        st.session_state.selected_culprit = None
+        st.session_state.selected_culprit = user_input
 
     
 

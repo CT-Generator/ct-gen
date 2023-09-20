@@ -22,7 +22,8 @@ def load_google_sheets_data(worksheet_name):
     # Load the Google Sheets data
     spreadsheet_url = secrets['google_sheets']['spreadsheet']
     #worksheet_name = secrets['google_sheets']['worksheet']
-    sheet = gc.open_by_url(spreadsheet_url).sheet1  # Replace 'sheet1' with the correct worksheet name if needed
+    #sheet = gc.open_by_url(spreadsheet_url).sheet1  # Replace 'sheet1' with the correct worksheet name if needed
+    sheet = gc.open_by_url(spreadsheet_url).worksheet(worksheet_name)  # Replace 'sheet1' with the correct worksheet name if needed
     data = sheet.get_all_values()
     
     # Convert the data to a DataFrame
