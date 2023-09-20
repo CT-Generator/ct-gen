@@ -42,73 +42,14 @@ def load_secrets():
 # Load the secrets at the start of the app
 secrets = load_secrets()
 
-# Access your GPT API key
-gpt_api_key = secrets["openai"]["api_key"]
-
-# Set the GPT API key for OpenAI
-openai.api_key = gpt_api_key
-
-# Set the API URL explicitly if needed
+# Assign OpenAI key
+openai.api_key = secrets["openai"]["api_key"]
 openai.api_base = "https://api.openai.com/v1"
-
-
-# this class ensures we have an working API key
-class OpenAI_API: 
-    def __init__(self, api_key):
-        self.api_key = api_key
-
-    def __enter__(self):
-        openai.api_key = self.api_key
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        pass
-
-# Check for API key  
-def run_app():
-  api_key = st.secrets["api_key"]['open_ai']
-  if api_key is None:
-    st.error('API key not found. Please set the api_key in the .streamlit/secrets.toml file.')     
-
-# # Pull private google sheet into Streamlit app using shillelagh
-private_gsheets_url = st.secrets["google_sheets"]["private_gsheets_url"]
-
-def create_connection():
-    if 'email' in st.session_state:
-        credentials = service_account.Credentials.from_service_account_info(
-            st.secrets["gcp_service_account"], 
-            scopes=["https://www.googleapis.com/auth/spreadsheets"]
-        )
-        connection = connect(":memory:", adapter_kwargs={
-            "gsheetsapi": { 
-                "service_account_info": {
-                    "type": st.secrets["gcp_service_account"]["type"],
-                    "project_id": st.secrets["gcp_service_account"]["project_id"],
-                    "private_key_id": st.secrets["gcp_service_account"]["private_key_id"],
-                    "private_key": st.secrets["gcp_service_account"]["private_key"],
-                    "client_email": st.secrets["gcp_service_account"]["client_email"],
-                    "client_id": st.secrets["gcp_service_account"]["client_id"],
-                    "auth_uri": st.secrets["gcp_service_account"]["auth_uri"],
-                    "token_uri": st.secrets["gcp_service_account"]["token_uri"],
-                    "auth_provider_x509_cert_url": st.secrets["gcp_service_account"]["auth_provider_x509_cert_url"],
-                    "client_x509_cert_url": st.secrets["gcp_service_account"]["client_x509_cert_url"],
-                },
-                "spreadsheet_url": private_gsheets_url,
-            }
-        })
-    return connection.cursor()
-
-
-
-
-
-
 
 def main():
     st.set_page_config(layout="centered",
                        page_title="Consipracy Generator",
                        page_icon = '🔦')
-
-    
 
     # Rest of your code...
     if st.session_state["page_number"] == 1:
@@ -162,9 +103,6 @@ def main():
         col1, col2 = st.columns(2)
         backward_button(col1, "BACK")
 
-    #Add badege - Repo needs to be public
-    #badge(type="github", name="Tech-Jobs-International/ct-generator")
-    #badge(type="twitter", name="streamlit")
     st.warning('DISCLAIMER: False conspiracy theories can be harmful. Please use our Conspiracy Generator with caution and do not target vulnerable groups or individuals.', icon="⚠️")
     
 if __name__ == '__main__':
