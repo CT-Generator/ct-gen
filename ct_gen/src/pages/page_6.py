@@ -47,7 +47,8 @@ def generate_conspiracy_theory(selected_article_content, culprits, goals, motive
         with st.spinner('Generating your conspiracy theory with GPT-4. This usually takes about 20-30 seconds.'):
             response = openai.ChatCompletion.create(
                 model="gpt-4",
-                messages=messages
+                messages=messages,
+                temperature=0.2
             )
         conspiracy_theory = response.choices[-1].message['content'].strip()
 
@@ -57,7 +58,8 @@ def generate_conspiracy_theory(selected_article_content, culprits, goals, motive
         with st.spinner('Generating your conspiracy theory with GPT-3...'):
             response = openai.Completion.create(
                 model="gpt-3.5",
-                messages=messages
+                messages=messages,
+                temperature=0.2
             )
 
     conspiracy_theory = response.choices[-1].message['content'].strip()
@@ -88,7 +90,7 @@ def generate_theory_title(selected_article_content, culprits, goals, motive_info
 def generate_theory_subtitle(selected_article_content, culprits, goals, motive_info):
     """Generate a subtitle for the conspiracy theory using GPT-4 based on the provided inputs."""
     
-    subtitle_prompt = f"Provide a succinct one-sentence subtitle of about 20 words without using a colon for a conspiracy theory that involves {culprits}, whose goal is {goals} and is driven by the motive to {motive_info}."
+    subtitle_prompt = f"Provide a succinct one-sentence subtitle of about 20 words without using a colon for a conspiracy theory that involves {culprits}, whose goal is {goals} and is driven by the motive to {motive_info}.Based on the article: '{selected_article_content[:100]}...'"
     
     try:
         with st.spinner('Generating a subtitle for your conspiracy theory with GPT-4.'):
