@@ -82,9 +82,6 @@ def display_page_3():
     culprits_df = load_google_sheets_data("culprits")    
     random_culprits_df = get_random_culprits(culprits_df)
     
-    
-    st.write(culprits_df, random_culprits_df)
-    
     # Check if the DataFrame is empty
     if random_culprits_df.empty:
         st.warning("No culprits to display.")
