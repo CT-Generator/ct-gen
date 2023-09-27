@@ -19,7 +19,7 @@ from ct_gen.src.modules.google_sheets_api import load_google_sheets_data
 
 
 
-@st.cache_data(ttl=3600)
+@st.cache_data(ttl=3600, show_spinner=False)
 def get_random_motives():
     if "motives_list" not in st.session_state:
         df = load_google_sheets_data("goals")
@@ -31,6 +31,10 @@ def get_random_motives():
         st.session_state.motives_list = df.sample(3)  # sample 3 motives
 
     return st.session_state.motives_list
+
+def get_random_motives_new(df):
+    #st.session_state.culprits_list = df.sample(3)  # sample 3 culprits
+    return df.sample(3)  # sample 3 culprits
 
 def display_image_link(column, motive, Motive_image_url, image_width, image_height):
     link_id = motive.replace(" ", "_")
@@ -45,7 +49,7 @@ def display_image_link(column, motive, Motive_image_url, image_width, image_heig
     column.markdown(image_html, unsafe_allow_html=True)
 
     # Use Streamlit button for interactions
-    if column.button(f"Select {motive}"):
+    if column.button(f"{motive}"):
         # Capture the clicked motive's details
         df = load_google_sheets_data("goals")
         if df is not None and "Goals" in df.columns:

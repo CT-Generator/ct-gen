@@ -8,10 +8,11 @@ import pandas as pd
 import random
 import requests
 from streamlit_extras.badges import badge
+import time
 import sys
 import webbrowser
 
-from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict ####
+from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict ########
 
 
 def generate_conspiracy_theory(selected_article_content, culprits, goals, motive_info):
@@ -32,8 +33,8 @@ def generate_conspiracy_theory(selected_article_content, culprits, goals, motive
              f"They have orchestrated the creation of the official version as a cover-up for their evil plans, which says: '{selected_article_content}'. " \
              f"Their motive behind this conspiracy is to {motive_info}. " \
              "The truth is hidden and only those who 'wake up' can see it. [GENERATE GT]"
-
-   
+    
+     
     
 # Create messages in conversation format
     messages = [{"role": "system", "content": "You are a helpful assistant."}]
@@ -49,6 +50,7 @@ def generate_conspiracy_theory(selected_article_content, culprits, goals, motive
                 model="gpt-4",
                 messages=messages,
                 temperature=0.2
+                
             )
         conspiracy_theory = response.choices[-1].message['content'].strip()
 
@@ -63,7 +65,8 @@ def generate_conspiracy_theory(selected_article_content, culprits, goals, motive
             )
 
     conspiracy_theory = response.choices[-1].message['content'].strip()
-    
+
+      
     return conspiracy_theory
 
  # Title
@@ -113,6 +116,20 @@ def display_page_6():
     st.markdown("### Step 5")
     #st.warning('DISCLAIMER: False conspiracy theories can be harmful. Please use our Conspiracy Generator with caution and do not target vulnerable groups or individuals.', icon="⚠️")
     st.title("🔦 Your Conspiracy Theory")
+
+    # Create the selected parameters message as a single string
+    message = """
+    ### You selected the following ingredients for your CT:
+    **Story:** {}
+    **Culprit:** {}
+    **Motive:** {}
+    """.format(st.session_state.selected_article_content[:100] + "...", 
+               st.session_state.selected_culprit, 
+               st.session_state.selected_motive_info)
+
+    # Display the message inside an info box
+    st.info(message)
+
     #st.divider()
     generation_button = st.button("Generate your theory!")
     
@@ -128,6 +145,18 @@ def display_page_6():
                 st.session_state.motive_info
             )
             st.session_state.conspiracy_theory = conspiracy_theory
+            
+
+            # "Type" the conspiracy theory letter by letter
+            typed_output = ""
+            placeholder = st.empty()
+            for char in conspiracy_theory:
+                typed_output += char
+                placeholder.markdown(f'### Your Conspiracy Theory\n{typed_output}')
+                time.sleep(0.05)  # Adjust the sleep duration for faster or slower typing effect
+
+            ...
+          
 
             # Generate title and subtitle using GPT-4 only after the "Generate your theory!" button is clicked:
             theory_title = generate_theory_title(
