@@ -3,7 +3,6 @@ import streamlit as st
 import newspaper
 from newspaper import Article
 
-#from initialize_session_state import initialize_session_state_dict
 import pandas as pd
 import random  # Import the random module
 import toml

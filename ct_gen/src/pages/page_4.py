@@ -63,7 +63,7 @@ def display_image_link(column, motive, Motive_image_url, image_width, image_heig
 
 def display_page_4():
     st.markdown("### Step 3")
-    #st.warning('DISCLAIMER: False conspiracy theories can be harmful. Please use our Conspiracy Generator with caution and do not target vulnerable groups of individuals.', icon="⚠️")
+    
     st.title("💡 The Motive")
     
     st.info("What's their endgame? Every conspiracy theory has a motive.")
