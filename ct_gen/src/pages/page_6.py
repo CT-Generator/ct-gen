@@ -64,7 +64,7 @@ def generate_conspiracy_theory(selected_article_content, culprits, goals, motive
                 temperature=0.2
             )
 
-    conspiracy_theory = response.choices[-1].message['content'].strip()
+        conspiracy_theory = response.choices[-1].message['content'].strip()
 
       
     return conspiracy_theory
@@ -129,6 +129,7 @@ def display_page_6():
 
     # Display the message inside an info box
     st.info(message)
+    
 
     #st.divider()
     generation_button = st.button("Generate your theory!")
@@ -147,17 +148,6 @@ def display_page_6():
             st.session_state.conspiracy_theory = conspiracy_theory
             
 
-            # "Type" the conspiracy theory letter by letter
-            typed_output = ""
-            placeholder = st.empty()
-            for char in conspiracy_theory:
-                typed_output += char
-                placeholder.markdown(f'### Your Conspiracy Theory\n{typed_output}')
-                time.sleep(0.05)  # Adjust the sleep duration for faster or slower typing effect
-
-            ...
-          
-
             # Generate title and subtitle using GPT-4 only after the "Generate your theory!" button is clicked:
             theory_title = generate_theory_title(
                 st.session_state.selected_article_content,
@@ -172,15 +162,28 @@ def display_page_6():
                 st.session_state.goals,
                 st.session_state.motive_info
             )
-            
-                       
-        if hasattr(st.session_state, 'conspiracy_theory') and st.session_state.conspiracy_theory != "":
-            #st.divider()
-            st.info("Here is your conspiracy theory.")
-            st.divider()
+
+            # "Type" the conspiracy theory letter by letter
+            #st.info("Here is your conspiracy theory.")
             st.subheader(theory_title)  # Display the generated title
             st.markdown(f"**{theory_subtitle}**")  # Display the generated subtitle in smaller bold font
-            st.write(st.session_state.conspiracy_theory)
+            typed_output = ""
+            placeholder = st.empty()
+            for char in conspiracy_theory:
+                typed_output += char
+                placeholder.markdown(f'{typed_output}')
+                time.sleep(0.05)  # Adjust the sleep duration for faster or slower typing effect
+
+            ...
+            
+                       
+        # if hasattr(st.session_state, 'conspiracy_theory') and st.session_state.conspiracy_theory != "":
+        #     #st.divider()
+        #     st.info("Here is your conspiracy theory.")
+        #     st.divider()
+        #     st.subheader(theory_title)  # Display the generated title
+        #     st.markdown(f"**{theory_subtitle}**")  # Display the generated subtitle in smaller bold font
+        #     st.write(st.session_state.conspiracy_theory)
             
 
     except AttributeError:
