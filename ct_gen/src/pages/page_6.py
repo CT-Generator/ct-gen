@@ -113,16 +113,16 @@ def generate_theory_subtitle(selected_article_content, culprits, goals, motive_i
 # Display page
 def display_page_6():
     
-    st.markdown("### Step 5")
+    #st.markdown("### Step 5")
     #st.warning('DISCLAIMER: False conspiracy theories can be harmful. Please use our Conspiracy Generator with caution and do not target vulnerable groups or individuals.', icon="⚠️")
     st.title("🔦 Your Conspiracy Theory")
 
     # Create the selected parameters message as a single string
     message = """
     ### You selected the following ingredients for your CT:
-    **Story:** {}
-    **Culprit:** {}
-    **Motive:** {}
+    **Story:** {}\n
+    **Culprit:** {}\n
+    **Motive:** {}\n
     """.format(st.session_state.selected_article_content[:100] + "...", 
                st.session_state.selected_culprit, 
                st.session_state.selected_motive_info)
@@ -162,6 +162,10 @@ def display_page_6():
                 st.session_state.goals,
                 st.session_state.motive_info
             )
+            # Display the culprit's image here, before displaying the generated conspiracy theory
+            culprit_image_path = os.path.join("culprits", f"{st.session_state.selected_culprit}.jpg")
+            if os.path.exists(culprit_image_path):
+                st.image(culprit_image_path, caption=st.session_state.selected_culprit, use_column_width=True)
 
             # "Type" the conspiracy theory letter by letter
             #st.info("Here is your conspiracy theory.")
