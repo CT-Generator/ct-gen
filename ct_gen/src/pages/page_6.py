@@ -11,8 +11,10 @@ from streamlit_extras.badges import badge
 import time
 import sys
 import webbrowser
+from googleapiclient.discovery import build
 
 from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict ########
+
 
 
 def generate_conspiracy_theory(selected_article_content, culprits, goals, motive_info):
@@ -53,6 +55,7 @@ def generate_conspiracy_theory(selected_article_content, culprits, goals, motive
                 
             )
         conspiracy_theory = response.choices[-1].message['content'].strip()
+        
 
     except Exception as e:
         # If GPT-4 throws an error, fall back to GPT-3
@@ -203,5 +206,8 @@ def display_page_6():
     """, unsafe_allow_html=True)
 
     #st.warning('DISCLAIMER: False conspiracy theories can be harmful. Please use our Conspiracy Generator with caution and do not target vulnerable groups or individuals.', icon="⚠️")
+
+
+
 
 
