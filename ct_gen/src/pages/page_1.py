@@ -17,6 +17,7 @@ import webbrowser
 from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict
 
 
+# Code for page 1
 def display_page_1():
     
     #st.warning('DISCLAIMER: False conspiracy theories can be harmful. Please use our Conspiracy Generator with caution and do not target vulnerable groups or individuals.', icon="⚠️")

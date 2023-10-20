@@ -9,6 +9,7 @@ import toml
 
 from ct_gen.src.modules.google_sheets_api import load_google_sheets_data
 
+
 # Load the secrets from the secrets.toml file
 secrets = toml.load(".streamlit/secrets.toml")
     
@@ -22,9 +23,9 @@ def get_random_stories():
 def display_page_2():
     
     st.markdown("### Step 1")
-    #st.warning('DISCLAIMER: False conspiracy theories can be harmful. Please use our Conspiracy Generator with caution and do not target vulnerable groups of individuals.', icon="⚠️")
+    
     st.title("📰 The Official Version")
-    st.info("What’s your conspiracy about? Every conspiracy theory starts from an official version of events.")
+    st.info("What’s your conspiracy about? Every conspiracy theory starts from an official version of events. Below, we have randomly selected some recent news stories. Select one or click refresh to sample new articles.")
 
     # Custom CSS for full-width buttons
     st.markdown("""
@@ -39,7 +40,7 @@ def display_page_2():
     random_stories = get_random_stories()
 
     # Display the random stories as buttons
-    st.write("Click on a story to see the summary below:")
+    st.write("Click on an official story to see the summary below:")
     story_selected = None
     for story in random_stories:
         if st.button(story):
