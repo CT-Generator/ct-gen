@@ -26,6 +26,7 @@ GitPython==3.1.32
 google-auth==2.22.0
 google-auth-oauthlib==1.0.0
 greenlet==2.0.2
+gsheetsdb==0.1.13.1
 gspread==5.10.0
 htbuilder==0.6.1
 httplib2==0.22.0

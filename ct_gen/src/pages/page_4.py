@@ -150,6 +150,9 @@ def display_image_link(column, motive, image_path, image_width, image_height):
                 st.session_state.selected_motive = motive
                 st.session_state.selected_motive_info = selected_motive_info
 
+                # Store the image path in session state
+                st.session_state.selected_motive_image_path = image_path  # <-- Add this line here
+
                 st.subheader(f"Motive: {st.session_state.selected_motive}")
                 st.write(st.session_state.selected_motive_info)
             else:

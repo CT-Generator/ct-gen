@@ -16,7 +16,7 @@ from streamlit_extras.badges import badge
 import sys
 import webbrowser
 
-from ct_gen.src.modules.page_nav import forward_button, backward_button
+from ct_gen.src.modules.page_nav import forward_button, backward_button, begin_button
 
 from ct_gen.src.pages.page_1 import display_page_1
 from ct_gen.src.pages.page_2 import display_page_2
@@ -102,6 +102,7 @@ def main():
         #col1 = st.columns(1)[0]
         col1, col2 = st.columns(2)
         backward_button(col1, "BACK")
+        begin_button(col1, "Generate a new story")
 
     st.warning('DISCLAIMER: False conspiracy theories can be harmful. Please use our Conspiracy Generator with caution and do not target vulnerable groups or individuals.', icon="⚠️")
     
