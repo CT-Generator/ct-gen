@@ -1,5 +1,6 @@
 import streamlit as st
 import datetime
+import gspread
 #from gsheetsdb import connect
 import shillelagh
 import sqlite3
@@ -19,6 +20,14 @@ import webbrowser
 #from googleapiclient.discovery import build
 
 from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict 
+
+# Access the Google Sheets API credentials from st.secrets
+google_sheets_credentials = st.secrets["gcp_service_account"]
+
+# Set up Google Sheets API credentials
+scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+creds = ServiceAccountCredentials.from_json_keyfile_dict(google_sheets_credentials, scope)
+client = gspread.authorize(creds)
 
 
 # Generate CT function
@@ -112,6 +121,18 @@ def generate_theory_title_and_subtitle(selected_article_content, culprits, goals
 
     return title, subtitle
 
+# Append data to Google sheet
+def append_to_sheet(title, subtitle, conspiracy_theory, culprits, motive_info):
+    # Current timestamp
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    try:
+        sheet = client.open('Generated_stories').worksheet('ct-stories')
+        row = [title, subtitle, conspiracy_theory, culprits, motive_info, timestamp]
+        sheet.append_row(row)
+        st.success("Successfully added to the Google Sheet!")
+    except Exception as e:
+        st.error(f"Failed to add to the Google Sheet. Error: {str(e)}")
 
 # Display page
 def display_page_6():
@@ -172,8 +193,18 @@ def display_page_6():
                 time.sleep(0.01)  # Adjust the sleep duration for faster or slower typing effect
 
             ...
+            # Check if the conspiracy theory was generated successfully
+            if conspiracy_theory:
+                # Retrieve culprits and goals from session state
+                culprits = st.session_state.selected_culprit
+                motive_info = st.session_state.selected_motive_info
+                # If generated, attempt to add to Google Sheet
+                append_to_sheet(conspiracy_theory, theory_title, theory_subtitle, culprits, motive_info)
+            else:
+                # If not generated, display an error message
+                st.error("Failed to generate the conspiracy theory. Please try again.")
             
-                       
+                 
         
         def image_to_base64(image_path):
             with open(image_path, "rb") as image_file:
@@ -209,7 +240,3 @@ def display_page_6():
     """, unsafe_allow_html=True)
 
     
-
-
-
-
