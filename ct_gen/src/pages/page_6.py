@@ -130,9 +130,23 @@ def append_to_sheet(title, subtitle, conspiracy_theory, culprits, motive_info):
         sheet = client.open('Generated_stories').worksheet('ct-stories')
         row = [title, subtitle, conspiracy_theory, culprits, motive_info, timestamp]
         sheet.append_row(row)
-        st.success("Successfully added to the Google Sheet!")
+        st.success("Complete")
     except Exception as e:
         st.error(f"Failed to add to the Google Sheet. Error: {str(e)}")
+
+# Initialize session state for feedback score if it doesn't exist
+if 'feedback_score' not in st.session_state:
+    st.session_state['feedback_score'] = 0
+
+def log_feedback_to_sheet(title, subtitle, feedback_score):
+    try:
+        sheet = client.open('Generated_stories').worksheet('feedback')  # Assume you have a sheet named 'feedback'
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        row = [title, subtitle, feedback_score, timestamp]
+        sheet.append_row(row)
+        st.success("Feedback logged successfully.")
+    except Exception as e:
+        st.error(f"Failed to log feedback to the Google Sheet. Error: {str(e)}")
 
 # Display page
 def display_page_6():
@@ -229,6 +243,36 @@ def display_page_6():
 
     except AttributeError:
         st.warning("It seems you haven't selected a story, conspirator, or motive. Please go back and make your selections.")
+
+
+    # Initialize session state for feedback score if it doesn't exist
+    if 'feedback_score' not in st.session_state:
+        st.session_state['feedback_score'] = 0
+
+    # Create three columns, with the middle and right ones being narrower
+    col2, col3, col4 = st.columns([1, 1, 1])
+
+    
+    # Thumbs up button in the second column
+    with col2:
+        if st.button("👍"):
+            if 'conspiracy_theory' in st.session_state and st.session_state.conspiracy_theory:
+                st.session_state['feedback_score'] += 1
+                log_feedback_to_sheet(theory_title, theory_subtitle, "Positive")
+            else:
+                st.warning("You can't give feedback without an output.")
+
+    with col3:
+        if st.button("👎"):
+            if 'conspiracy_theory' in st.session_state and st.session_state.conspiracy_theory:
+                st.session_state['feedback_score'] -= 1
+                log_feedback_to_sheet(theory_title, theory_subtitle, "Negative")
+            else:
+                st.warning("You can't give feedback without an output.")
+
+    # Display the feedback score
+    with col4:
+        st.write("Feedback Score:", st.session_state['feedback_score'])
 
     # Custom CSS for full-width buttons
     st.markdown("""

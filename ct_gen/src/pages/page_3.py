@@ -61,6 +61,22 @@ def display_image_link(column, culprit, image_path, image_width, image_height):
         else:
             st.error("Error retrieving culprit info.")
 
+# Moderation endpoint
+def moderate_text(text):
+    try:
+        response = openai.Moderation.create(
+            input=text
+        )
+        
+        if any(result['flagged'] for result in response['results']):
+            return False, "Content is not appropriate."
+        return True, "Content is appropriate."
+
+    except Exception as e:
+        print(f"Error in moderation: {str(e)}")
+        return False, "Failed to moderate content."
+
+
 def display_page_3():
     st.markdown("### Step 2")
     st.title("🐍 The Conspirators")
@@ -105,15 +121,29 @@ def display_page_3():
         st.experimental_rerun()  # Rerun the app
 
 
+    # # USER INPUT SECTION
+    # user_input = st.text_input("Please paste your culprit here and hit Enter:")
+    # if user_input:
+    #     st.session_state.user_input = user_input  # Store the user input in session state
+    #     st.write(f"You entered: {user_input}")
+
+    #     # Store the pasted culprit in session state
+    #     st.session_state.selected_culprit = None
+    #     st.session_state.selected_culprit = user_input
+
     # USER INPUT SECTION
     user_input = st.text_input("Please paste your culprit here and hit Enter:")
     if user_input:
-        st.session_state.user_input = user_input  # Store the user input in session state
-        st.write(f"You entered: {user_input}")
+        is_appropriate, message = moderate_text(user_input)
+        if is_appropriate:
+            st.session_state.user_input = user_input
+            st.write(f"You entered: {user_input}")
 
-        # Store the pasted culprit in session state
-        st.session_state.selected_culprit = None
-        st.session_state.selected_culprit = user_input
+            # Store the pasted culprit in session state
+            st.session_state.selected_culprit = None
+            st.session_state.selected_culprit = user_input
+        else:
+            st.error(message)
 
 
     
