@@ -26,7 +26,6 @@ GitPython==3.1.32
 google-auth==2.22.0
 google-auth-oauthlib==1.0.0
 greenlet==2.0.2
-gsheetsdb==0.1.13.1
 gspread==5.10.0
 htbuilder==0.6.1
 httplib2==0.22.0
@@ -84,6 +83,8 @@ smmap==5.0.0
 soupsieve==2.4.1
 SQLAlchemy==2.0.19
 st-annotated-text==4.0.0
+st-click-detector==0.1.3
+st-clickable-images==0.0.3
 streamlit==1.25.0
 streamlit-camera-input-live==0.2.0
 streamlit-card==0.0.61
