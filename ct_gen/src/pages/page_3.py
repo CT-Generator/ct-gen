@@ -14,7 +14,7 @@ from st_click_detector import click_detector
 
 
 @st.cache_data(ttl=3600, show_spinner=False)
-def select_random_file_names(folder_path, n_random_files=3, change_tracker=st.session_state["change_tracker"]):
+def select_random_file_names(folder_path, n_random_files, change_tracker):
     all_image_names = os.listdir(folder_path)
     file_names = random.sample(all_image_names, n_random_files) if len(all_image_names) >= n_random_files else all_image_names
     return file_names
