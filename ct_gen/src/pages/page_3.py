@@ -64,8 +64,28 @@ def add_line_breaks_after_n_words(s, n):
 
 def display_page_3():
     
+    css = """
+    <style>
+    div .stMarkdown {
+        display: flex; /* Enables flexbox properties */
+        align-items: center; /* Vertically centers content in the flex container */
+        justify-content: center; /* Horizontally centers content in the flex container */
+    }
+    
+    div .element-container {
+        display: flex; /* Enables flexbox properties */
+        align-items: center; /* Vertically centers content in the flex container */
+        justify-content: center; /* Horizontally centers content in the flex container */
+    }
+    
+    
+    
+    </style>
+    """
+    st.markdown(css, unsafe_allow_html=True)
+    
     st.markdown("### Step 2")
-    st.title("🐍 The Conspirators")
+    st.markdown("# 🐍 The Conspirators")
     
     st.info("Who’s behind it? Every conspiracy theory needs a sinister group of scheming culprits.")
     st.write("Click on a culprit to see the summary below:")
@@ -113,10 +133,10 @@ def display_page_3():
                     st.experimental_rerun()
     
     else:
-        col1, col2 = st.columns([0.8, 0.2])
-        col1.warning("Select a culprit")
-        col2.text("")
-        load_more_button_2 = col2.button("load more", "load_more_button_2")
+        #col1, col2 = st.columns([0.8, 0.2])
+        st.warning("Select a culprit")
+        #col2.text("")
+        load_more_button_2 = st.button("load more", "load_more_button_2")
         if load_more_button_2:
             st.session_state["change_tracker"] = st.session_state["change_tracker"] + 1
             st.experimental_rerun()
