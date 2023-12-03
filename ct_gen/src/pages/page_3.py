@@ -11,8 +11,7 @@ from st_clickable_images import clickable_images
 from st_click_detector import click_detector
 
 
-if "change_tracker" not in st.session_state:
-    st.session_state["change_tracker"] = 0
+
 
 @st.cache_data(ttl=3600, show_spinner=False)
 def select_random_file_names(folder_path, n_random_files=3, change_tracker=st.session_state["change_tracker"]):

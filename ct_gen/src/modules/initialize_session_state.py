@@ -25,6 +25,8 @@ def initalize_session_state_dict():
         st.session_state.motive_info = ""  
     if 'conspiracy_theory' not in st.session_state:
         st.session_state.conspiracy_theory = ""
+    if "change_tracker" not in st.session_state:
+        st.session_state["change_tracker"] = 0
     
     
         
