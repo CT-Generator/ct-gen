@@ -52,33 +52,13 @@ def display_page_2():
         st.experimental_rerun()  # Rerun the app
 
     # Input field for users to enter a custom URL
-    url = st.text_input("Paste the web address of a newspaper article to see the summary below:", placeholder="Paste URL and Enter")
+    
+    #url = st.text_input("Paste the web address of a newspaper article to see the summary below:", placeholder="Paste URL and Enter")
 
     df = load_google_sheets_data("news")  # Load data directly for selected stories
 
-    # Handling the user-entered URL
-    if url:
-        try:
-            # Scrape and process the article content based on the provided URL
-            article = Article(url)
-            article.download()
-            article.parse()
-            article.nlp()
-
-            # Display the article content from the entered URL
-            st.subheader("Article Content")
-            st.write(article.summary)
-
-            # Store the pasted URL and its content in session state
-            st.session_state.selected_version = None
-            st.session_state.selected_article_url = url
-            st.session_state.selected_article_content = article.summary
-
-        except:
-            st.warning("Sorry, we could not load the story. Please try another or consider using a desktop.")
-
     # Handling the story selection from the buttons
-    elif story_selected:
+    if story_selected:
         selected_article_url = df.loc[df["Official_Version"] == story_selected, "News_Source"].values[0]
         selected_article_content = df.loc[df["Official_Version"] == story_selected, "Summary"].values[0]
 
