@@ -24,17 +24,17 @@ def display_page_2():
     
     st.markdown("### Step 1")
     
-    st.title("📰 The Official Version")
+    st.markdown("# 📰 The Official Version")
     st.info("What’s your conspiracy about? Every conspiracy theory starts from an official version of events. Below, we have randomly selected some recent news stories. Select one or click refresh to sample new articles.")
 
     # Custom CSS for full-width buttons
-    st.markdown("""
-    <style>
-        .stButton>button {
-            width: 100%;
-        }
-    </style>
-    """, unsafe_allow_html=True)
+    #st.markdown("""
+    #<style>
+    #    .stButton>button {
+    #        width: 100%;
+    #    }
+    #</style>
+    #""", unsafe_allow_html=True)
 
     # Fetch the random stories (this will use the cached data unless the cache is cleared)
     random_stories = get_random_stories()

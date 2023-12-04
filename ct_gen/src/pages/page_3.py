@@ -60,44 +60,7 @@ def add_line_breaks_after_n_words(s, n):
     # Join the chunks with the <br> tag
     return '<br>'.join(chunks)
 
-
-
-def display_page_3():
-    
-    css = """
-    <style>
-    div .stMarkdown {
-        display: flex; /* Enables flexbox properties */
-        align-items: center; /* Vertically centers content in the flex container */
-        justify-content: center; /* Horizontally centers content in the flex container */
-    }
-    
-    div .element-container {
-        display: flex; /* Enables flexbox properties */
-        align-items: center; /* Vertically centers content in the flex container */
-        justify-content: center; /* Horizontally centers content in the flex container */
-    }
-    
-    
-    
-    </style>
-    """
-    st.markdown(css, unsafe_allow_html=True)
-    
-    st.markdown("### Step 2")
-    st.markdown("# 🐍 The Conspirators")
-    
-    st.info("Who’s behind it? Every conspiracy theory needs a sinister group of scheming culprits.")
-    st.write("Click on a culprit to see the summary below:")
-    
-    
-    culprits_df = load_google_sheets_data("culprits")
-    random_culprits = select_random_file_names("ct_gen/data/images/culprits", n_random_files=3, change_tracker = st.session_state["change_tracker"])
-    
-    images = load_images(folder_path="ct_gen/data/images/culprits", file_names=random_culprits)
-    
-    #random_culprits_ = random_culprits + ["Load More"]
-    #images_ = images + load_images(folder_path="ct_gen/data/images/functional", file_names=["Load_more_button.jpg"])
+def display_image_options(images, random_culprits, key):
     
     content = '<div style="display: flex; flex-wrap: wrap; justify-content: space-around;">'
     
@@ -106,24 +69,39 @@ def display_page_3():
         content =  content + new_img
     content = content + "</div>"
         
-    selected_culprit = click_detector(content, key="culprit")
+    selected_culprit = click_detector(content, key)
+    return selected_culprit
+
+def display_page_3():
     
     
-    if "click_counter" not in st.session_state:
-        st.session_state["click_counter"] = 0
-    if "click_counter_comp" not in st.session_state:
-        st.session_state["click_counter_comp"] = st.session_state["click_counter"] + 1
+    culprits_df = load_google_sheets_data("culprits")
+    random_culprits = select_random_file_names("ct_gen/data/images/culprits", n_random_files=3, change_tracker = st.session_state["change_tracker"])
+    images = load_images(folder_path="ct_gen/data/images/culprits", file_names=random_culprits)
+    
+    
+    st.markdown("### Step 2")
+    st.markdown("# 🐍 The Conspirators")
+    
+    st.info("Who’s behind it? Every conspiracy theory needs a sinister group of scheming culprits. Pick one from the selection below.")
+    
+    
+    
+    
+    selected_culprit = display_image_options(images, random_culprits, key="culprit")
+    
     
     if selected_culprit:
         if selected_culprit != "Load More":
+
             st.session_state["selected_culprit"] = selected_culprit
             st.session_state["selected_culprit_info"] = culprits_df[culprits_df["Culprits"] == selected_culprit]["Culprit_Info"].iloc[0]
             
             # Displaying the selected culprit and its info if it exists in session state
             if "selected_culprit" in st.session_state and "selected_culprit_info" in st.session_state:
                 
-                
                 col1, col2, col3 = st.columns([0.25, 0.55, 0.2])
+                #col1, col2 = st.columns([0.3, 0.7])
                 col1.markdown(f"### {st.session_state.selected_culprit}")
                 col2.info(st.session_state.selected_culprit_info)
                 col3.text("")
@@ -133,21 +111,25 @@ def display_page_3():
                     st.experimental_rerun()
     
     else:
+        
+        st.markdown(" ")
         #col1, col2 = st.columns([0.8, 0.2])
         st.warning("Select a culprit")
+        st.markdown(" ")
+        st.markdown(" ")
         #col2.text("")
         load_more_button_2 = st.button("load more", "load_more_button_2")
         if load_more_button_2:
             st.session_state["change_tracker"] = st.session_state["change_tracker"] + 1
             st.experimental_rerun()
         
-        
-    # Add the reload button
-    #if col3.button("Load New Culprits"):
-    #    if "culprits_list" in st.session_state:
-    #        del st.session_state.culprits_list
-    #    st.cache_data.clear()  # Clear the cache
-    #    st.experimental_rerun()  # Rerun the app
+
+
+
+
+
+
+
 
 
     

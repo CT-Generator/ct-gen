@@ -51,60 +51,92 @@ def main():
                        page_title="Consipracy Generator",
                        page_icon = '🔦')
 
+
+    css = """
+    <style>
+    div .stMarkdown {
+        display: flex; /* Enables flexbox properties */
+        align-items: center; /* Vertically centers content in the flex container */
+        justify-content: center; /* Horizontally centers content in the flex container */
+    }
+    
+    div .element-container {
+        display: flex; /* Enables flexbox properties */
+        align-items: center; /* Vertically centers content in the flex container */
+        justify-content: center; /*   Horizontally centers content in the flex container */
+    }
+    
+    div .row-widget {
+        display: flex; /* Enables flexbox properties */
+        align-items: center; /* Vertically centers content in the flex container */
+        justify-content: center; Horizontally centers content in the flex container */
+    }
+    
+    /*  .stButton>button {
+        width: 33%;
+        box-sizing: border-box;
+        } */
+
+    </style>
+    """
+    st.markdown(css, unsafe_allow_html=True)
+
     # Rest of your code...
     if st.session_state["page_number"] == 1:
         display_page_1()
         st.markdown("---")
-        #col1 = st.columns(1)[0]
-        col1, col2 = st.columns(2)
+        col1 = st.columns(1)[0]
+        #col1 = st.columns(1)
         forward_button(col1, "Start")
         
 
     if st.session_state["page_number"] == 2:
         display_page_2()
         st.markdown("---")
-        #col1 = st.columns(1)[0]
-        col1, col2 = st.columns(2)
-        backward_button(col1, "BACK")
-        forward_button(col2, "NEXT")
+        col1 = st.columns(1)[0]
+        #col1, col2 = st.columns(2)
+        #backward_button(col1, "BACK")
+        forward_button(col1, "NEXT")
         
         
     if st.session_state["page_number"] == 3:
         display_page_3()
         st.markdown("---")
-        #col1 = st.columns(1)[0]
-        col1, col2 = st.columns(2)
-        backward_button(col1, "BACK")
-        forward_button(col2, "NEXT")
+        col1 = st.columns(1)[0]
+        #col1, col2 = st.columns(2)
+        #backward_button(col1, "BACK")
+        forward_button(col1, "NEXT")
         
     
     if st.session_state["page_number"] == 4:
         display_page_4()
         st.markdown("---")
-        #col1 = st.columns(1)[0]
-        col1, col2 = st.columns(2)
-        backward_button(col1, "BACK")
-        forward_button(col2, "NEXT")
+        col1 = st.columns(1)[0]
+        #col1, col2 = st.columns(2)
+        #backward_button(col1, "BACK")
+        forward_button(col1, "NEXT")
         
     
     if st.session_state["page_number"] == 5:
         display_page_5()
         st.markdown("---")
-        #col1 = st.columns(1)[0]
-        col1, col2 = st.columns(2)
-        backward_button(col1, "BACK")
-        forward_button(col2, "NEXT")
+        col1 = st.columns(1)[0]
+        #col1, col2 = st.columns(2)
+        #backward_button(col1, "BACK")
+        forward_button(col1, "NEXT")
         
     
     if st.session_state["page_number"] == 6:
         display_page_6()
         st.markdown("---")
-        #col1 = st.columns(1)[0]
-        col1, col2 = st.columns(2)
-        backward_button(col1, "BACK")
-        begin_button(col2, "Generate a new story")
+        col1 = st.columns(1)[0]
+        #col1, col2 = st.columns(2)
+        #backward_button(col1, "BACK")
+        begin_button(col1, "Generate a new story")
 
-    st.warning('DISCLAIMER: False conspiracy theories can be harmful. Please use our Conspiracy Generator with caution and do not target vulnerable groups or individuals.', icon="⚠️")
+    col1, col2, col3 = st.columns([0.1,0.8,0.1])
+    col2.warning('DISCLAIMER: False conspiracy theories can be harmful. Please use our Conspiracy Generator with caution and do not target vulnerable groups or individuals.', icon="⚠️")
+    
     
 if __name__ == '__main__':
     main()
