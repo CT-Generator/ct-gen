@@ -1,110 +1,58 @@
 import streamlit as st
-import base64
-import datetime
-import gspread
-
-import newspaper
-from oauth2client.service_account import ServiceAccountCredentials
-import os
-import openai
 import pandas as pd
-import random
-import requests
-from streamlit_extras.badges import badge
-import sys
-import webbrowser
 
-from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict
 from ct_gen.src.modules.google_sheets_api import load_google_sheets_data
+from ct_gen.src.modules.image_functions import *
 
-
-# Code for page 4
-def image_to_base64(image_path):
-    with open(image_path, "rb") as image_file:
-        return base64.b64encode(image_file.read()).decode('utf-8')
-
-@st.cache_data(ttl=3600, show_spinner=False)
-def get_random_motives():
-    image_dir = "ct_gen/data/images/motives"
-    all_image_names = os.listdir(image_dir)
-    motives = random.sample(all_image_names, 3) if len(all_image_names) >= 3 else all_image_names
-    return motives
-
-def display_image_link(column, motive, image_path, image_width, image_height):
-    base64_image = image_to_base64(image_path)
-    image_html = f'''
-    <div style="width: {image_width}px; height: {image_height}px;">
-        <img src="data:image/png;base64,{base64_image}" alt="{motive}" width="{image_width}" height="{image_height}" style="border: 1px solid #eee; padding: 5px;">
-    </div>
-    '''
-    column.markdown(image_html, unsafe_allow_html=True)
-
-    if column.button(motive):
-        df = load_google_sheets_data("goals")
-        if df is not None and "Goals" in df.columns:
-            selected_motive_rows = df[df["Goals"] == motive]
-            
-            if not selected_motive_rows.empty:
-                selected_motive_info = selected_motive_rows["Goals_Info"].values[0]
-
-                # Store the clicked motive's details in session state
-                st.session_state.selected_motive = motive
-                st.session_state.selected_motive_info = selected_motive_info
-
-                # Store the image path in session state
-                st.session_state.selected_motive_image_path = image_path  # <-- Add this line here
-
-                st.subheader(f"Motive: {st.session_state.selected_motive}")
-                st.write(st.session_state.selected_motive_info)
-            else:
-                st.error(f"No information found for {motive}.")
-        else:
-            st.error("Error retrieving motive info.")
 
 def display_page_4():
-    st.markdown("### Step 2")
-    st.title("🐍 The Motive")
+    motives_df = load_google_sheets_data("goals")
+    random_motives = select_random_file_names("ct_gen/data/images/motives", n_random_files=3, change_tracker = st.session_state["change_tracker"])
+    images = load_images(folder_path="ct_gen/data/images/motives", file_names=random_motives)
     
-    st.info("What's their endgame? Every conspiracy theory has a motive.")
-    st.write("Click on a motive to see the summary below:")
+
+    st.markdown("<h3 style='text-align: center;'>Step 3</h3>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center;'>🐍 The Motives</h1>", unsafe_allow_html=True)
+    st.info("What's their endgame? Every conspiracy theory has a motive. Select one of the options below.")
     
-    st.markdown("""
-    <style>
-        .stButton>button {
-            width: 100%;
-        }
-    </style>
-    """, unsafe_allow_html=True)
+    selected_motive = display_image_options(images, random_motives, key="motive")
     
-    random_motives = get_random_motives()
+    if selected_motive:
+
+        st.session_state["selected_motive"] = selected_motive
+        st.session_state["selected_motive_info"] = motives_df[motives_df["Goals"] == selected_motive]["Goals_Info"].iloc[0]
+        
+        if "selected_motive" in st.session_state and "selected_motive_info" in st.session_state:
+            
+            col1, col2, col3 = st.columns([0.25, 0.55, 0.2])
+            col1.markdown(f"### {st.session_state.selected_culprit}")
+            col2.info(st.session_state.selected_culprit_info)
+            col3.text("")
+            load_more_button_1 = col3.button("load more", "load_more_button_1")
+            if load_more_button_1:
+                st.session_state["change_tracker"] = st.session_state["change_tracker"] + 1
+                st.experimental_rerun()
     
-    if not random_motives:
-        st.warning("No motives to display.")
-        return  # Exit the function early
+    else:
+        
+        st.markdown(" ")
+        st.warning("Select a motive")
+        st.markdown(" ")
+        st.markdown(" ")
+        load_more_button_2 = st.button("load more", "load_more_button_2")
+        if load_more_button_2:
+            st.session_state["change_tracker"] = st.session_state["change_tracker"] + 1
+            st.experimental_rerun()
+        
 
-    image_width = 225
-    image_height = 225
 
-    for i in range(0, len(random_motives), 3):
-        subset = random_motives[i:i+3]
-        cols = st.columns(3)
-        for j, motive_name in enumerate(subset):
-            image_path = os.path.join("ct_gen/data/images/motives", motive_name)
-            display_image_link(cols[j], motive_name.split('.')[0], image_path, image_width, image_height)
-
-    # Add the reload button
-    if st.button("Load New Motive"):
-        if "motives_list" in st.session_state:
-            del st.session_state.motives_list
-        st.cache_data.clear()  # Clear the cache
-        st.experimental_rerun()  # Rerun the app
-
+    
     # USER INPUT SECTION
-    user_input = st.text_input("Please paste your motive here and hit Enter:")
-    if user_input:
-        st.session_state.user_input = user_input  # Store the user input in session state
-        st.write(f"You entered: {user_input}")
+    #user_input = st.text_input("Please paste your motive here and hit Enter:")
+    #if user_input:
+    #    st.session_state.user_input = user_input  # Store the user input in session state
+    #    st.write(f"You entered: {user_input}")
 
         # Store the pasted motive in session state
-        st.session_state.selected_motive_info = None
-        st.session_state.selected_motive_info = user_input
+    #    st.session_state.selected_motive_info = None
+    #    st.session_state.selected_motive_info = user_input

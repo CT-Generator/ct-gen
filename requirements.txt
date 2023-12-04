@@ -1,6 +1,8 @@
 aiohttp==3.8.5
 aiosignal==1.3.1
 altair==5.0.1
+annotated-types==0.6.0
+anyio==3.7.1
 apsw==3.42.0.1
 async-timeout==4.0.2
 attrs==23.1.0
@@ -14,6 +16,7 @@ contourpy==1.1.0
 cssselect==1.2.0
 cycler==0.11.0
 decorator==5.1.1
+distro==1.8.0
 Faker==19.2.0
 favicon==0.7.0
 feedfinder2==0.0.4
@@ -27,8 +30,11 @@ google-auth==2.22.0
 google-auth-oauthlib==1.0.0
 greenlet==2.0.2
 gspread==5.10.0
+h11==0.14.0
 htbuilder==0.6.1
+httpcore==1.0.2
 httplib2==0.22.0
+httpx==0.25.2
 idna==3.4
 importlib-metadata==6.8.0
 jieba3k==0.35.1
@@ -51,7 +57,7 @@ nltk==3.8.1
 numpy==1.25.2
 oauth2client==4.1.3
 oauthlib==3.2.2
-openai==0.27.8
+openai==1.3.7
 packaging==23.1
 pandas==2.0.3
 Pillow==9.5.0
@@ -59,6 +65,8 @@ protobuf==4.23.4
 pyarrow==12.0.1
 pyasn1==0.5.0
 pyasn1-modules==0.3.0
+pydantic==2.5.2
+pydantic_core==2.14.5
 pydeck==0.8.0
 Pygments==2.15.1
 pymdown-extensions==10.1
@@ -80,6 +88,7 @@ sgmllib3k==1.0.0
 shillelagh==1.2.6
 six==1.16.0
 smmap==5.0.0
+sniffio==1.3.0
 soupsieve==2.4.1
 SQLAlchemy==2.0.19
 st-annotated-text==4.0.0

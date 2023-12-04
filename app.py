@@ -132,7 +132,7 @@ def main():
         col1 = st.columns(1)[0]
         #col1, col2 = st.columns(2)
         #backward_button(col1, "BACK")
-        begin_button(col1, "Generate a new story")
+        #begin_button(col1, "Generate a new story")
 
     col1, col2, col3 = st.columns([0.1,0.8,0.1])
     col2.warning('DISCLAIMER: False conspiracy theories can be harmful. Please use our Conspiracy Generator with caution and do not target vulnerable groups or individuals.', icon="⚠️")

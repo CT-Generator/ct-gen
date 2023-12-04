@@ -17,6 +17,10 @@ def initalize_session_state_dict():
     # Initialize the user inputs and generated conspiracy theory in session state
     if 'url' not in st.session_state:
         st.session_state.url = ""
+    if 'selected_version' not in st.session_state:
+        st.session_state["selected_version"] = ""
+    if 'selected_article_content' not in st.session_state:
+        st.session_state["selected_article_content"] = ""
     if 'culprits' not in st.session_state:
         st.session_state.culprits = ""
     if 'goals' not in st.session_state:
@@ -27,6 +31,16 @@ def initalize_session_state_dict():
         st.session_state.conspiracy_theory = ""
     if "change_tracker" not in st.session_state:
         st.session_state["change_tracker"] = 0
+        
+    if "selected_culprit" not in st.session_state:
+        st.session_state["selected_culprit"] = ""
+    if "selected_culprit_info" not in st.session_state:
+        st.session_state["selected_culprit_info"] = ""
+    
+    if "selected_motive" not in st.session_state:
+        st.session_state["selected_motive"] = ""
+    if "selected_motive_info" not in st.session_state:
+        st.session_state["selected_motive_info"] = ""
     
     
         
