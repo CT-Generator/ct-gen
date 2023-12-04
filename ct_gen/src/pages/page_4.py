@@ -25,8 +25,8 @@ def display_page_4():
         if "selected_motive" in st.session_state and "selected_motive_info" in st.session_state:
             
             col1, col2, col3 = st.columns([0.25, 0.55, 0.2])
-            col1.markdown(f"### {st.session_state.selected_culprit}")
-            col2.info(st.session_state.selected_culprit_info)
+            col1.markdown(f"### {st.session_state.selected_motive}")
+            col2.info(st.session_state.selected_motive_info)
             col3.text("")
             load_more_button_1 = col3.button("load more", "load_more_button_1")
             if load_more_button_1:

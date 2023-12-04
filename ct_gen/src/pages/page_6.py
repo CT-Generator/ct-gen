@@ -42,7 +42,7 @@ def create_prompt():
     prompt = f"Turn the following news story into a conspiracy theory by finding loopholes in the story: {selected_article_content}\
         The conspirator(s) of your story: {culprits} ({culprits_info}).\
         The motive behind the conspiracy is: {motive} ({motive_info}).\
-        Make sure to immunize yourself against criticism. Label potential counterevidence of this conspiracy as part of the plot.\
+        Make sure to make yourself immune against criticism. Label potential counter evidence of this conspiracy as part of the plot.\
         Start the story with a catchy title. Format everything in markdown."
     return prompt
     
