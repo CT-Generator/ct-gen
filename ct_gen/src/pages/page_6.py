@@ -38,13 +38,20 @@ def create_prompt():
     culprits_info = st.session_state["selected_culprit_info"]
     motive = st.session_state["selected_motive"]
     motive_info = st.session_state["selected_motive_info"]
-    
-    prompt = f"Turn the following news story into a conspiracy theory by finding loopholes in the story: {selected_article_content}\
-        The conspirator(s) of your story: {culprits} ({culprits_info}).\
-        The motive behind the conspiracy is: {motive} ({motive_info}).\
-        Make sure to make yourself immune against criticism. Label potential counter evidence of this conspiracy as part of the plot.\
-        Start the story with a catchy title. Format everything in markdown."
+        
+    prompt = f"""Write a convicing cospiracey theory by turning the following news story into a conspiracy theory: {selected_article_content}
+        The conspirator(s) of your story are: {culprits} ({culprits_info}).
+        The motive of these conspirators: {motive} ({motive_info}).
+        You construct the conspiracy by following these steps:
+        You find some suspicious loopholes, puzzling details and anomalies in the official story. You 'just ask questions' in the style of conspiracy theorists.
+        You fabricate some 'evidence' that {selected_article_content} is a cover-up of {culprits} trying to achieve {motive}. You 'connect the dots' in the style of conspiracy theorists, using available information about {culprits}.
+        You anticipate counterarguments against the conspiracy theory by arguing that missing evidence and counterevidence is in fact part of the plot. Make sure to make the conspiracy theory immune against criticism
+        You discredit people who are sceptical of the conspiracy theory by suggesting they are gullible dupes or patsies complicit in the conspiracy
+        Write a convicing story starting with a catchy title. Everything must be formated in markdown."""
+
     return prompt
+
+
     
 # Load the secrets at the start of the app
 def load_secrets():
@@ -106,3 +113,5 @@ def display_page_6():
     if generation_button:
         generate_conspiracy_theory(prompt, client)
     
+
+
