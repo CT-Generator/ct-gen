@@ -1,47 +1,113 @@
 import streamlit as st
-
 import datetime
 import gspread
-
+#from gsheetsdb import connect
+import shillelagh
+import sqlite3
+import base64
 import newspaper
 from oauth2client.service_account import ServiceAccountCredentials
+from oauth2client import service_account
 import os
 import openai
 import pandas as pd
 import random
 import requests
-from streamlit_extras.badges import badge
+#from streamlit_extras.badges import badge
+import time
 import sys
 import webbrowser
+from openai import OpenAI
+import toml
+#from googleapiclient.discovery import build
 
-from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict
+from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict 
+
+# Access the Google Sheets API credentials from st.secrets
+google_sheets_credentials = st.secrets["gcp_service_account"]
+
+# Set up Google Sheets API credentials
+scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+creds = ServiceAccountCredentials.from_json_keyfile_dict(google_sheets_credentials, scope)
+client = gspread.authorize(creds)
 
 
-def display_page_5():
-    
-    
-    # main code
-    st.title("🔦 Conspiracy Generator")
-
-    st.divider()
-
-    st.markdown("#### Connecting the dots...")
-    st.info("⛓️ No account of an event is ever complete. Now we’re looking for puzzling details or minor contradictions in the official story. They provide “proof” that the official version is a lie." "\n- Connect unconnected events to create intrigue. \n - Associate the culprits with unusual symbols.")
+def create_prompt():
+    selected_article_content = st.session_state["news_summary"]
+    culprits = st.session_state["culprits_name"]
+    culprits_info = st.session_state["culprits_summary"]
+    motive = st.session_state["motives_name"]
+    motive_info = st.session_state["motives_summary"]
         
-    st.markdown("#### Hunting for anomalies…")
-    st.info("🧑‍🎨 Time to get creative. We’re forging some surprising links with the culprits you have identified. This will make them look suspicious!" "\n- Find inconsistencies in the timeline.\n- Highlight contradictions in witness statements.")
-    
-    st.markdown("#### Dealing with counterevidence…")
-    st.info("🤔 Hm, some evidence is hard to fit with the conspiracy theory. But perhaps conspirators fabricated the evidence to throw us off the scent? We’re making your conspiracy theory evidence-proof!" "\n- Label counterevidence as part of a larger cover-up. \n- Propose that evidence was planted to confuse.")
-    
-    st.markdown("#### Discrediting critics…")
-    st.info("📢 What about those who support the official story? Let’s discredit them as gullible dupes of official propaganda – or as patsies of the conspirators! This should deal with pesky critics! " "\n- Label critics as government shills. \n - Suggest critics are manipulated by hidden powers.")
+    prompt = f"""Write a convicing cospiracey theory by turning the following news story into a conspiracy theory: {selected_article_content}
+        The conspirator(s) of your story are: {culprits} ({culprits_info}).
+        The motive of these conspirators: {motive} ({motive_info}).
+        You construct the conspiracy by following these steps:
+        You find some suspicious loopholes, puzzling details and anomalies in the official story. You 'just ask questions' in the style of conspiracy theorists.
+        You fabricate some 'evidence' that {selected_article_content} is a cover-up of {culprits} trying to achieve {motive}. You 'connect the dots' in the style of conspiracy theorists, using available information about {culprits}.
+        You anticipate counterarguments against the conspiracy theory by arguing that missing evidence and counterevidence is in fact part of the plot. Make sure to make the conspiracy theory immune against criticism
+        You discredit people who are sceptical of the conspiracy theory by suggesting they are gullible dupes or patsies complicit in the conspiracy
+        Write a convicing story starting with a catchy title. Everything must be formated in markdown."""
 
-    # Custom CSS for full-width buttons
-    st.markdown("""
-    <style>
-        .stButton>button {
-            width: 100%;
-        }
-    </style>
-    """, unsafe_allow_html=True)
+    return prompt
+
+
+    
+# Load the secrets at the start of the app
+def load_secrets():
+    # Construct the full path to the secrets.toml file in the .streamlit directory
+    secrets_file_path = os.path.join(".streamlit", "secrets.toml")
+
+    # Load the secrets from the secrets.toml file
+    secrets = toml.load(secrets_file_path)
+    return secrets
+
+
+
+# Generate CT function
+def generate_conspiracy_theory(prompt, client):
+        
+    # Set up your prompt for generating the conspiracy theory
+    
+    res_box = st.empty()
+    report = []
+    # Looping over the response
+    #for resp in openai.Completion.create(model='gpt-4', prompt=prompt, temperature = 0.9, stream = True):
+    #    report.append(resp.choices[0].text)
+    #    result = "".join(report).strip()
+    #    result = result.replace("\n", "")        
+    #    res_box.markdown(f'*{result}*') 
+
+    
+    stream = client.chat.completions.create(
+        model="gpt-4",
+        messages=[
+            {"role": "system", "content": "You are an educational tool. You show people how easy it is to turn anything into a conspiracy. By doing so, you are able to teach people that they should not believe in conspiracies without careful examination."},
+            {"role": "user", "content": prompt},
+            ],
+        stream=True,
+    )
+    for chunk in stream:
+        if chunk.choices[0].delta.content is not None:
+            report.append(chunk.choices[0].delta.content)
+            result = "".join(report).strip()
+            #result = result.replace("\n", " ")        
+            res_box.markdown(f'{result}') 
+    
+# Display page
+def display_page_6():
+    
+    # Load the secrets at the start of the app
+    secrets = load_secrets()
+    client = OpenAI(api_key=secrets["openai"]["api_key"])
+    
+    prompt = create_prompt()
+    
+   
+    #st.divider()
+    generation_button = st.button("Generate your theory!")
+    if generation_button:
+        generate_conspiracy_theory(prompt, client)
+    
+
+
