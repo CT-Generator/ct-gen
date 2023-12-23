@@ -25,6 +25,7 @@ def display_page_3():
 
         st.session_state["selected_culprit"] = selected_culprit
         st.session_state["selected_culprit_info"] = culprits_df[culprits_df["Culprits"] == selected_culprit]["Culprit_Info"].iloc[0]
+        st.write(culprits_df)
         
         if (st.session_state["selected_culprit"] != "") and (st.session_state["selected_culprit_info"] != ""):
             
