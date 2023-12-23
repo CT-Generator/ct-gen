@@ -12,7 +12,7 @@ def display_page_4():
     
 
     st.markdown("<h3 style='text-align: center;'>Step 3</h3>", unsafe_allow_html=True)
-    st.markdown("<h1 style='text-align: center;'>🐍 The Motives</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center;'>The Motives</h1>", unsafe_allow_html=True)
     st.info("What's their endgame? Every conspiracy theory has a motive. Select one of the options below.")
     
     selected_motive = display_image_options(images, random_motives, key="motive")

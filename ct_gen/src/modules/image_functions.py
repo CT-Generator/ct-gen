@@ -41,7 +41,7 @@ def display_image_options(images, random_culprits, key):
     content = '<div style="display: flex; flex-wrap: wrap; justify-content: space-around;">'
     
     for i, image in enumerate(images):
-        new_img = f'<div style="margin: 10px; text-align: center;"><a href="#" id="{random_culprits[i].split(".")[0]}"><img src={image} alt="Image 1" style="width: 100%; max-width: 200px; height: auto;"></a><p>{add_line_breaks_after_n_words(random_culprits[i].split(".")[0], 2)}</p></div>'
+        new_img = f'<div style="margin: 10px; text-align: center;"><a href="#" id="{random_culprits[i].split(".")[0]}"><img src={image} alt="Image 1" style="width: 100%; max-width: 200px; height: auto;"></a><p>{add_line_breaks_after_n_words(random_culprits[i].replace("_", "").split(".")[0], 2)}</p></div>'
         content =  content + new_img
     content = content + "</div>"
         
