@@ -14,7 +14,7 @@ def display_page_3():
     
 
     st.markdown("<h3 style='text-align: center;'>Step 2</h3>", unsafe_allow_html=True)
-    st.markdown("<h1 style='text-align: center;'>🐍 The Conspirators</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center;'>The Conspirators</h1>", unsafe_allow_html=True)
     st.info("Who’s behind it? Every conspiracy theory needs a sinister group of scheming culprits. Pick one from the selection below.")
     
     
