@@ -135,7 +135,7 @@ def main():
         #begin_button(col1, "Generate a new story")
 
     col1, col2, col3 = st.columns([0.1,0.8,0.1])
-    col2.warning('DISCLAIMER: False conspiracy theories can be harmful. Please use our Conspiracy Generator with caution and do not target vulnerable groups or individuals.', icon="⚠️")
+    col2.warning('DISCLAIMER: False conspiracy theories can be harmful. We will screen out conspiracy theories targeting vulnerable groups or individuals. Please use our Conspiracy Generator with caution.', icon="⚠️")
     
     
 if __name__ == '__main__':

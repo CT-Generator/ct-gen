@@ -94,10 +94,6 @@ def generate_conspiracy_theory(prompt, client):
             #result = result.replace("\n", " ")        
             res_box.markdown(f'{result}') 
     
-    
-    
-    
-    
 # Display page
 def display_page_6():
     
