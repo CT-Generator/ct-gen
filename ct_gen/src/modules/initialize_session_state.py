@@ -32,15 +32,17 @@ def initalize_session_state_dict():
     if "change_tracker" not in st.session_state:
         st.session_state["change_tracker"] = 0
         
-    if "selected_culprit" not in st.session_state:
-        st.session_state["selected_culprit"] = ""
-    if "selected_culprit_info" not in st.session_state:
-        st.session_state["selected_culprit_info"] = ""
     
-    if "selected_motive" not in st.session_state:
-        st.session_state["selected_motive"] = ""
-    if "selected_motive_info" not in st.session_state:
-        st.session_state["selected_motive_info"] = ""
-    
-    
+    if "news_name" not in st.session_state:
+        st.session_state["news_name"] = ""
+    if "news_summary" not in st.session_state:
+        st.session_state["news_summary"] = ""
+    if "culprits_name" not in st.session_state:
+        st.session_state["culprits_name"] = ""
+    if "culprits_summary" not in st.session_state:
+        st.session_state["culprits_summary"] = ""
+    if "motives_name" not in st.session_state:
+        st.session_state["motives_name"] = ""
+    if "motives_summary" not in st.session_state:
+        st.session_state["motives_summary"] = ""
         
