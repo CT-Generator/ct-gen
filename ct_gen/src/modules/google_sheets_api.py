@@ -41,7 +41,10 @@ def connect_to_google_sheets_data():
     
     # Load the Google Sheets data
     spreadsheet_url = secrets['google_sheets']['spreadsheet']
-    st.session_state["sheet"] = gc.open_by_url(spreadsheet_url) #.worksheet(worksheet_name)
+    sheet = gc.open_by_url(spreadsheet_url) #.worksheet(worksheet_name)
+    st.session_state["sheet"] = sheet
+    return sheet
+    
     
     # data = sheet.get_all_values()
     
@@ -49,7 +52,7 @@ def connect_to_google_sheets_data():
     # df = pd.DataFrame(data[1:], columns=data[0])
     # return df.loc[::-1]
     
-def load_sheets_data(worksheet_name):
+def load_sheets_data(sheet, worksheet_name):
     sheet = st.session_state["sheet"].worksheet(worksheet_name)
     data = sheet.get_all_values()
     
@@ -57,7 +60,7 @@ def load_sheets_data(worksheet_name):
     df = pd.DataFrame(data[1:], columns=data[0])
     return df.loc[::-1]
     
-def insert_row_to_sheet(worksheet_name, row):
+def insert_row_to_sheet(sheet, worksheet_name, row):
     sheet = st.session_state["sheet"].worksheet(worksheet_name)
     sheet.append_row(row)
     

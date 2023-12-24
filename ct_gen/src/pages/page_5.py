@@ -21,8 +21,8 @@ from openai import OpenAI
 import toml
 from ct_gen.src.modules.image_functions import display_list_of_images
 from ct_gen.src.modules.rating_buttons import add_rating_buttons
-from ct_gen.src.modules.google_sheets_api import insert_row_to_sheet
-
+from ct_gen.src.modules.google_sheets_api import insert_row_to_sheet, connect_to_google_sheets_data
+from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict
 
 
 def create_prompt():
@@ -77,7 +77,8 @@ def generate_conspiracy_theory(prompt, _client):
     
 # Display page
 def display_page_6():
-    
+    sheet = connect_to_google_sheets_data()
+    #initalize_session_state_dict()
     step_title = "Step 4"
     title = "Your Conspiracy Theory"
     info = "See how your selection of culprits and motives turns a simple news story into a conspiracy theory."
@@ -113,9 +114,10 @@ def display_page_6():
         st.session_state["prompt"],
         st.session_state["conspiracy_theory"]
     ]
-    insert_row_to_sheet("generated_ct", row)
+    if st.session_state["conspiracy_theory"] == "":
+        insert_row_to_sheet(sheet, "generated_ct", row)
     
-    #add_rating_buttons()
+    add_rating_buttons(sheet)
     
 
 
