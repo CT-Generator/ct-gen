@@ -20,6 +20,8 @@ def initalize_session_state_dict():
         st.session_state["news_summary"] = ""
     if "news_img" not in st.session_state:
         st.session_state["news_img"] = ""
+    if "news_caption" not in st.session_state:
+        st.session_state["news_caption"] = ""
     
     # culprits
     if "culprits_name" not in st.session_state:
@@ -28,6 +30,8 @@ def initalize_session_state_dict():
         st.session_state["culprits_summary"] = ""
     if "culprits_img" not in st.session_state:
         st.session_state["culprits_img"] = ""
+    if "culprits_caption" not in st.session_state:
+        st.session_state["culprits_caption"] = ""
     
     # motives
     if "motives_name" not in st.session_state:
@@ -36,6 +40,8 @@ def initalize_session_state_dict():
         st.session_state["motives_summary"] = ""
     if "motives_img" not in st.session_state:
         st.session_state["motives_img"] = ""
+    if "motives_caption" not in st.session_state:
+        st.session_state["motives_caption"] = ""
     
     # output
     if "prompt" not in st.session_state:

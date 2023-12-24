@@ -43,7 +43,7 @@ def add_line_breaks_after_n_words(s, n):
 def name_to_captions(name, n_words_per_line):
     return add_line_breaks_after_n_words(name, n_words_per_line)
 
-def display_image_options(df, images, names, captions, key):
+def display_image_options(images, captions, key):
     
     content = '<div style="display: flex; flex-wrap: wrap; justify-content: space-around;">'
     for i, image in enumerate(images):
@@ -64,13 +64,14 @@ def create_image_selection_view(image_path, step_title, title, info, sheet_name,
     st.markdown(f"<h1 style='text-align: center;'>{title}</h1>", unsafe_allow_html=True)
     st.info(info)
     
-    selected_item = display_image_options(df, images, names, captions, key=sheet_name)
+    selected_item = display_image_options(images, captions, key=sheet_name)
 
     if selected_item:
         
         st.session_state[f"{sheet_name}_img"] = images[int(selected_item)]
         st.session_state[f"{sheet_name}_name"] = names[int(selected_item)]
         st.session_state[f"{sheet_name}_summary"] = summaries[int(selected_item)]
+        st.session_state[f"{sheet_name}_caption"] = captions[int(selected_item)]
         
         if (st.session_state[f"{sheet_name}_name"] != "") and (st.session_state[f"{sheet_name}_summary"] != ""):
             
@@ -98,7 +99,16 @@ def create_image_selection_view(image_path, step_title, title, info, sheet_name,
             st.experimental_rerun()
             
 
+# def display_list_of_images(images, captions):
+#     cols = st.columns(len(images))
+#     for i, col in enumerate(cols):
+#         col.image(images[i], caption=captions[i])
+        
 def display_list_of_images(images, captions):
-    cols = st.columns(len(images))
-    for i, col in enumerate(cols):
-        col.image(images[i], caption=captions[i])
+    content = '<div style="display: flex; flex-wrap: wrap; justify-content: space-around;">'
+    for i, image in enumerate(images):
+        new_img = f'<div style="margin: 10px; text-align: center;"><a href="#" id="{i}"><img src={image} alt="Image 1" style="width: 100%; max-width: 200px; height: auto;"></a><p>{captions[i]}</p></div>'
+        content =  content + new_img
+    content = content + "</div>"
+        
+    click_detector(content, key="final_display")
