@@ -23,6 +23,7 @@ from ct_gen.src.modules.image_functions import display_list_of_images
 from ct_gen.src.modules.rating_buttons import add_rating_buttons
 from ct_gen.src.modules.google_sheets_api import insert_row_to_sheet, connect_to_google_sheets_data
 from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict
+from ct_gen.src.modules.pdf_download import add_pdf_button
 
 
 def create_prompt():
@@ -119,5 +120,5 @@ def display_page_5():
     
     add_rating_buttons(sheet)
     
-
-
+    # if st.session_state["conspiracy_theory"] != "":
+    #     add_pdf_button(st.session_state["conspiracy_theory"])
