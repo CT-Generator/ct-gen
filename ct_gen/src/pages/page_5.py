@@ -122,7 +122,7 @@ def display_page_6():
     st.divider()
     #generation_button = st.button("Generate your theory!")
     #if generation_button:
-    generate_conspiracy_theory(prompt, client)
+    #generate_conspiracy_theory(prompt, client)
     
 
 
