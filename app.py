@@ -61,7 +61,7 @@ def main():
     }
         
     /* Selecting the div with the specific data-testid attribute */
-    div[data-testid="css-1r6slb0 e1f1d6gn1"] {
+    div[data-testid="column"] {
         display: flex; /* Using flexbox for centering */
         justify-content: center; /* Centering horizontally */
         align-items: center; /* Centering vertically */
