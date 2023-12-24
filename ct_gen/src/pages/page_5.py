@@ -76,7 +76,7 @@ def generate_conspiracy_theory(prompt, _client):
     st.session_state["conspiracy_theory"] = "".join(report).strip()
     
 # Display page
-def display_page_6():
+def display_page_5():
     sheet = connect_to_google_sheets_data()
     #initalize_session_state_dict()
     step_title = "Step 4"

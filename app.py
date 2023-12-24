@@ -22,8 +22,7 @@ from ct_gen.src.pages.page_1 import display_page_1
 from ct_gen.src.pages.page_2 import display_page_2
 from ct_gen.src.pages.page_3 import display_page_3
 from ct_gen.src.pages.page_4 import display_page_4
-from ct_gen.src.pages.page_5_old import display_page_5
-from ct_gen.src.pages.page_5 import display_page_6
+from ct_gen.src.pages.page_5 import display_page_5
 from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict
 
 from ct_gen.src.modules.google_sheets_api import load_sheets_data
@@ -135,13 +134,14 @@ def main():
         
     
     if st.session_state["page_number"] == 5:
-        display_page_6()
+        display_page_5()
         st.markdown("---")
         #col1 = st.columns(1)[0]
         col1 = st.columns(1)[0]
         #col1, col2 = st.columns(2)
         #backward_button(col1, "BACK")
-        forward_button(col1, "NEXT")
+        begin_button(col1, "Generate a new story")
+        
         
     
     # if st.session_state["page_number"] == 6:
