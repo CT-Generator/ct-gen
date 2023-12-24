@@ -58,7 +58,16 @@ def main():
         display: block;
         margin-left: auto;
         margin-right: auto;
-        }
+    }
+        
+    /* Selecting the div with the specific data-testid attribute */
+    div[data-testid="css-1r6slb0 e1f1d6gn1"] {
+        display: flex; /* Using flexbox for centering */
+        justify-content: center; /* Centering horizontally */
+        align-items: center; /* Centering vertically */
+        text-align: center; /* Ensuring the text inside is also centered, if needed */
+        height: 100%; /* You might need to adjust or set a specific height */
+    }
     div .stMarkdown {
         display: flex; /* Enables flexbox properties */
         align-items: center; /* Vertically centers content in the flex container */
