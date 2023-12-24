@@ -96,3 +96,9 @@ def create_image_selection_view(image_path, step_title, title, info, sheet_name,
         if load_more_button_2:
             st.session_state["change_tracker"] = st.session_state["change_tracker"] + 1
             st.experimental_rerun()
+            
+
+def display_list_of_images(images, captions):
+    cols = st.columns(len(images))
+    for i, col in enumerate(cols):
+        col.image(images[i], caption=captions[i])

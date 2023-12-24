@@ -19,6 +19,7 @@ import sys
 import webbrowser
 from openai import OpenAI
 import toml
+from ct_gen.src.modules.image_functions import display_list_of_images
 #from googleapiclient.discovery import build
 
 from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict 
@@ -65,7 +66,8 @@ def load_secrets():
 
 
 # Generate CT function
-def generate_conspiracy_theory(prompt, client):
+@st.cache_data()
+def generate_conspiracy_theory(prompt, _client):
         
     # Set up your prompt for generating the conspiracy theory
     
@@ -79,7 +81,7 @@ def generate_conspiracy_theory(prompt, client):
     #    res_box.markdown(f'*{result}*') 
 
     
-    stream = client.chat.completions.create(
+    stream = _client.chat.completions.create(
         model="gpt-4",
         messages=[
             {"role": "system", "content": "You are an educational tool. You show people how easy it is to turn anything into a conspiracy. By doing so, you are able to teach people that they should not believe in conspiracies without careful examination."},
@@ -97,17 +99,30 @@ def generate_conspiracy_theory(prompt, client):
 # Display page
 def display_page_6():
     
+    step_title = "Step 4"
+    title = "Your Conspiracy Theory"
+    info = "See how your selection of culprits and motives turns a simple news story into a conspiracy theory."
+    
+    
+    st.markdown(f"<h3 style='text-align: center;'>{step_title}</h3>", unsafe_allow_html=True)
+    st.markdown(f"<h1 style='text-align: center;'>{title}</h1>", unsafe_allow_html=True)
+    st.info(info)
+    
     # Load the secrets at the start of the app
     secrets = load_secrets()
     client = OpenAI(api_key=secrets["openai"]["api_key"])
+    images = [st.session_state["news_img"], st.session_state["culprits_img"], st.session_state["motives_img"]]
+    names = [st.session_state["news_name"], st.session_state["culprits_name"], st.session_state["motives_name"]]
+    
+    display_list_of_images(images, names)
     
     prompt = create_prompt()
     
    
-    #st.divider()
-    generation_button = st.button("Generate your theory!")
-    if generation_button:
-        generate_conspiracy_theory(prompt, client)
+    st.divider()
+    #generation_button = st.button("Generate your theory!")
+    #if generation_button:
+    generate_conspiracy_theory(prompt, client)
     
 
 
