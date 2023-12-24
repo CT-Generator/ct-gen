@@ -54,3 +54,5 @@ def initalize_session_state_dict():
         st.session_state["prompt"] = ""
     if 'conspiracy_theory' not in st.session_state:
         st.session_state.conspiracy_theory = ""
+    if 'conspiracy_explanation' not in st.session_state:
+        st.session_state["conspiracy_explanation"] = ""
