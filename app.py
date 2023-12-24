@@ -54,6 +54,11 @@ def main():
 
     css = """
     <style>
+    img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        }
     div .stMarkdown {
         display: flex; /* Enables flexbox properties */
         align-items: center; /* Vertically centers content in the flex container */
