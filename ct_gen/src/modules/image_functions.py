@@ -105,10 +105,15 @@ def create_image_selection_view(image_path, step_title, title, info, sheet_name,
 #         col.image(images[i], caption=captions[i])
         
 def display_list_of_images(images, captions):
+    
+    
+    images = [img for img in images if img]
+    captions = [capt for capt in captions if capt]
+    
     content = '<div style="display: flex; flex-wrap: wrap; justify-content: space-around;">'
     for i, image in enumerate(images):
         new_img = f'<div style="margin: 10px; text-align: center;"><a href="#" id="{i}"><img src={image} alt="Image 1" style="width: 100%; max-width: 200px; height: auto;"></a><p>{captions[i]}</p></div>'
         content =  content + new_img
     content = content + "</div>"
         
-    click_detector(content, key="final_display")
+    return click_detector(content, key="final_display")
