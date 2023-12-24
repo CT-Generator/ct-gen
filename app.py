@@ -26,6 +26,8 @@ from ct_gen.src.pages.page_5_old import display_page_5
 from ct_gen.src.pages.page_5 import display_page_6
 from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict
 
+from ct_gen.src.modules.google_sheets_api import load_sheets_data
+
 import toml
 
 initalize_session_state_dict()
@@ -94,6 +96,7 @@ def main():
     </style>
     """
     st.markdown(css, unsafe_allow_html=True)
+
 
     # Rest of your code...
     if st.session_state["page_number"] == 1:

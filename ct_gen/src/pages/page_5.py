@@ -20,17 +20,9 @@ import webbrowser
 from openai import OpenAI
 import toml
 from ct_gen.src.modules.image_functions import display_list_of_images
-#from googleapiclient.discovery import build
+from ct_gen.src.modules.rating_buttons import add_rating_buttons
+from ct_gen.src.modules.google_sheets_api import insert_row_to_sheet
 
-from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict 
-
-# Access the Google Sheets API credentials from st.secrets
-google_sheets_credentials = st.secrets["gcp_service_account"]
-
-# Set up Google Sheets API credentials
-scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-creds = ServiceAccountCredentials.from_json_keyfile_dict(google_sheets_credentials, scope)
-client = gspread.authorize(creds)
 
 
 def create_prompt():
@@ -40,7 +32,7 @@ def create_prompt():
     motive = st.session_state["motives_name"]
     motive_info = st.session_state["motives_summary"]
         
-    prompt = f"""Write a convicing cospiracey theory by turning the following news story into a conspiracy theory: {selected_article_content}
+    prompt = f"""Write a convicing conspiracy theory by turning the following news story into a conspiracy theory: {selected_article_content}
         The conspirator(s) of your story are: {culprits} ({culprits_info}).
         The motive of these conspirators: {motive} ({motive_info}).
         You construct the conspiracy by following these steps:
@@ -56,31 +48,17 @@ def create_prompt():
     
 # Load the secrets at the start of the app
 def load_secrets():
-    # Construct the full path to the secrets.toml file in the .streamlit directory
     secrets_file_path = os.path.join(".streamlit", "secrets.toml")
-
-    # Load the secrets from the secrets.toml file
     secrets = toml.load(secrets_file_path)
     return secrets
-
-
 
 # Generate CT function
 @st.cache_data()
 def generate_conspiracy_theory(prompt, _client):
         
-    # Set up your prompt for generating the conspiracy theory
-    
     res_box = st.empty()
     report = []
-    # Looping over the response
-    #for resp in openai.Completion.create(model='gpt-4', prompt=prompt, temperature = 0.9, stream = True):
-    #    report.append(resp.choices[0].text)
-    #    result = "".join(report).strip()
-    #    result = result.replace("\n", "")        
-    #    res_box.markdown(f'*{result}*') 
 
-    
     stream = _client.chat.completions.create(
         model="gpt-4",
         messages=[
@@ -93,8 +71,9 @@ def generate_conspiracy_theory(prompt, _client):
         if chunk.choices[0].delta.content is not None:
             report.append(chunk.choices[0].delta.content)
             result = "".join(report).strip()
-            #result = result.replace("\n", " ")        
             res_box.markdown(f'{result}') 
+            
+    st.session_state["conspiracy_theory"] = "".join(report).strip()
     
 # Display page
 def display_page_6():
@@ -116,13 +95,27 @@ def display_page_6():
     
     display_list_of_images(images, captions)
     
-    prompt = create_prompt()
-    
+    st.session_state["prompt"] = create_prompt()
    
     st.divider()
     #generation_button = st.button("Generate your theory!")
     #if generation_button:
-    #generate_conspiracy_theory(prompt, client)
+    
+    generate_conspiracy_theory(st.session_state["prompt"], client)
+    
+    row = [
+        st.session_state["news_name"],
+        st.session_state["news_summary"],
+        st.session_state["culprits_name"],
+        st.session_state["culprits_summary"],
+        st.session_state["motives_name"],
+        st.session_state["motives_summary"],
+        st.session_state["prompt"],
+        st.session_state["conspiracy_theory"]
+    ]
+    insert_row_to_sheet("generated_ct", row)
+    
+    #add_rating_buttons()
     
 
 

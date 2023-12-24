@@ -7,7 +7,7 @@ import pandas as pd
 import random  # Import the random module
 import toml
 
-from ct_gen.src.modules.google_sheets_api import load_google_sheets_data
+#from ct_gen.src.modules.google_sheets_api import load_google_sheets_data
 from ct_gen.src.modules.image_functions import *
 
 
