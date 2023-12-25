@@ -1,29 +1,14 @@
 import streamlit as st
-import datetime
-import gspread
-#from gsheetsdb import connect
-import shillelagh
-import sqlite3
-import base64
-import newspaper
-from oauth2client.service_account import ServiceAccountCredentials
-from oauth2client import service_account
 import os
 import openai
 import pandas as pd
-import random
-import requests
-#from streamlit_extras.badges import badge
-import time
-import sys
-import webbrowser
 from openai import OpenAI
 import toml
 from ct_gen.src.modules.image_functions import display_list_of_images
 from ct_gen.src.modules.rating_buttons import add_rating_buttons
 from ct_gen.src.modules.google_sheets_api import insert_row_to_sheet, connect_to_google_sheets_data
 from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict
-from ct_gen.src.modules.pdf_download import add_pdf_button
+#from ct_gen.src.modules.pdf_download import add_pdf_button
 
 
 def create_prompt():
@@ -78,12 +63,13 @@ def generate_conspiracy_theory(prompt, _client):
     
 # Display page
 def display_page_5():
-    sheet = connect_to_google_sheets_data()
     #initalize_session_state_dict()
     step_title = "Step 4"
     title = "Your Conspiracy Theory"
     info = "See how your selection of culprits and motives turns a simple news story into a conspiracy theory."
     
+    ct_sheet = connect_to_google_sheets_data("generated_ct")
+    ratings_sheet = connect_to_google_sheets_data("ratings")
     
     st.markdown(f"<h3 style='text-align: center;'>{step_title}</h3>", unsafe_allow_html=True)
     st.markdown(f"<h1 style='text-align: center;'>{title}</h1>", unsafe_allow_html=True)
@@ -100,25 +86,11 @@ def display_page_5():
     st.session_state["prompt"] = create_prompt()
    
     st.divider()
-    #generation_button = st.button("Generate your theory!")
-    #if generation_button:
     
     generate_conspiracy_theory(st.session_state["prompt"], client)
     
-    row = [
-        st.session_state["news_name"],
-        st.session_state["news_summary"],
-        st.session_state["culprits_name"],
-        st.session_state["culprits_summary"],
-        st.session_state["motives_name"],
-        st.session_state["motives_summary"],
-        st.session_state["prompt"],
-        st.session_state["conspiracy_theory"]
-    ]
-    if st.session_state["conspiracy_theory"] == "":
-        insert_row_to_sheet(sheet, "generated_ct", row)
     
-    add_rating_buttons(sheet)
+    add_rating_buttons(ct_sheet, ratings_sheet)
     
     # if st.session_state["conspiracy_theory"] != "":
     #     add_pdf_button(st.session_state["conspiracy_theory"])

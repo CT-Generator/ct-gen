@@ -5,11 +5,6 @@ import os
 from st_click_detector import click_detector
 import pandas as pd
 
-@st.cache_data(ttl=3600, show_spinner=False)
-def select_random_file_names(folder_path, n_random_files, change_tracker):
-    all_image_names = os.listdir(folder_path)
-    file_names = random.sample(all_image_names, n_random_files) if len(all_image_names) >= n_random_files else all_image_names
-    return file_names
 
 @st.cache_data(ttl=3600, show_spinner=False)
 def select_random_items(df: pd.DataFrame, folder_path: str, change_tracker: int):
@@ -98,11 +93,6 @@ def create_image_selection_view(image_path, step_title, title, info, sheet_name,
             st.session_state["change_tracker"] = st.session_state["change_tracker"] + 1
             st.experimental_rerun()
             
-
-# def display_list_of_images(images, captions):
-#     cols = st.columns(len(images))
-#     for i, col in enumerate(cols):
-#         col.image(images[i], caption=captions[i])
         
 def display_list_of_images(images, captions):
     

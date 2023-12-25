@@ -15,9 +15,7 @@ def initalize_session_state_dict():
         st.session_state["page_number"] = 1
     if "rating" not in st.session_state:
         st.session_state["rating"] = None
-    if "sheet" not in st.session_state:
-        connect_to_google_sheets_data()
-        
+
         
     # news
     if "news_name" not in st.session_state:
