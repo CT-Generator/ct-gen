@@ -102,10 +102,10 @@ def main():
     if st.session_state["page_number"] == 2:
         display_page_2()
         st.markdown("---")
-        #col1 = st.columns(1)[0]
-        col1, col2 = st.columns(2)
-        backward_button(col1, "BACK")
-        forward_button(col2, "NEXT")
+        col1 = st.columns(1)[0]
+        # col1, col2 = st.columns(2)
+        # backward_button(col1, "BACK")
+        forward_button(col1, "NEXT")
         
         
     if st.session_state["page_number"] == 3:

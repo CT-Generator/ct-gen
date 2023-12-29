@@ -70,14 +70,16 @@ def create_image_selection_view(image_path, step_title, title, info, sheet_name,
         
         if (st.session_state[f"{sheet_name}_name"] != "") and (st.session_state[f"{sheet_name}_summary"] != ""):
             
-            col1, col2, col3 = st.columns([0.25, 0.55, 0.2])
+            #col1, col2, col3 = st.columns([0.25, 0.55, 0.2])
+            
             name = st.session_state[f"{sheet_name}_name"]
             summary = st.session_state[f"{sheet_name}_summary"]
             
-            col1.markdown(f"### {name}")
-            col2.info(summary)
-            col3.text("")
-            load_more_button_1 = col3.button("load more", "load_more_button_1")
+            st.markdown(f"### {name}")
+            col1, col2 = st.columns([0.8, 0.2])
+            col1.info(summary)
+            col2.text("")
+            load_more_button_1 = col2.button("load more", "load_more_button_1")
             if load_more_button_1:
                 st.session_state["change_tracker"] = st.session_state["change_tracker"] + 1
                 st.experimental_rerun()
