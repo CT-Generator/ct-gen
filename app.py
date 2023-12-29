@@ -88,20 +88,24 @@ def main():
 
     # Rest of your code...
     if st.session_state["page_number"] == 1:
+        checkbox_label = "I agree that the generated conspiracy theory, the choices that led to its creation, and my rating of it will be recorded anonymously."
         display_page_1()
         st.markdown("---")
+        privacy_check = st.checkbox(checkbox_label)
         col1 = st.columns(1)[0]
         #col1 = st.columns(1)
-        forward_button(col1, "Start")
+        
+        if privacy_check:
+            forward_button(col1, "Start")
         
 
     if st.session_state["page_number"] == 2:
         display_page_2()
         st.markdown("---")
-        col1 = st.columns(1)[0]
-        #col1, col2 = st.columns(2)
-        #backward_button(col1, "BACK")
-        forward_button(col1, "NEXT")
+        #col1 = st.columns(1)[0]
+        col1, col2 = st.columns(2)
+        backward_button(col1, "BACK")
+        forward_button(col2, "NEXT")
         
         
     if st.session_state["page_number"] == 3:
