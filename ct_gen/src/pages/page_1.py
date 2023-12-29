@@ -19,33 +19,21 @@ from ct_gen.src.modules.initialize_session_state import initalize_session_state_
 
 # Code for page 1
 def display_page_1():
+    step_title = "Intro"
+    title = "Conspiracy Generator"
+    info_1 = "Created by the Etienne Vermeersch Chair of Critical Thinking at Ghent University."
     
-    #st.warning('DISCLAIMER: False conspiracy theories can be harmful. Please use our Conspiracy Generator with caution and do not target vulnerable groups or individuals.', icon="⚠️")
-    st.markdown("<h1 style='text-align: center;'>Conspiracy Generator</h1>", unsafe_allow_html=True)
-    #st.divider()
-    col1, col2, col3 = st.columns([0.1,0.8,0.1])
-    col2.info("Welcome to the Conspiracy Generator! By following three simple steps, you can turn any story from your newspaper (or from history books) into an intriguing, shocking, mind-bending, titillating but still plausible-sounding Conspiracy Theory of your own choosing. Make your own Conspiracy Theory in a few simple steps! ")
-    st.divider()
-
-    #st.warning('DISCLAIMER: False conspiracy theories can be harmful. Please use our Conspiracy Generator with caution and do not target vulnerable groups or individuals.', icon="⚠️")
-    st.markdown("""Want to learn more?""")  
-
-    #with st.expander("See Project Info"):
-    #    st.subheader("📃 Project Info")
-    #    st.info("Our Conspiracy Generator follows a simple recipe created to turn any event into one or more Conspiracy Theories, using a few simple steps and a few parameters. You can find all the details in this [academic paper](https://drive.google.com/file/d/1GMDVLdKfvaFnj8IFDyiRTGH3ePsOO9B7/view) or this [shorter blog post](https://maartenboudry.be/2020/09/how-not-to-get-sucked-into-an-intellectual-black-hole-on-the-warped-epistemology-of-conspiracy-theories.html). Our fully automatic Conspiracy Generator is powered by Open AI’s GPT-4, which churns out conspiracies at the drop of a hat. But you can also try out our recipe for yourself, without the aid of artificial intelligence! ")
-    #    st.info("Learn more about the app on [GitHub](https://github.com/Tech-Jobs-International/ct-gen) Consider starring, thank you! ⭐ Report a [bug](https://github.com/Tech-Jobs-International/ct-gen/issues) 🐛")
-    #    st.subheader("📃 Credits")
-    #    st.info("Created by the Etienne Vermeersch Chair of Critical Thinking at Ghent University")
-    #    st.info("Ideas: [Maarten Boudry](https://research.flw.ugent.be/en/maarten.boudry) & [Marco Meyer](https://www.philosophie.uni-hamburg.de/philosophisches-seminar/personen/meyer-marco.html)")
-    #    st.info("Design & Development: [TJI](https://techjobsinternational.com/) ([Natasha Newbold](https://www.linkedin.com/in/natasha-newbold/) & [Justus Schollmeyer](https://www.linkedin.com/in/justus-schollmeyer-014a2314b/))")
+    text_1 = f"""By adhering to three straightforward steps, you can transform any narrative from your newspaper or history books into a conspiracy theory."""
+    text_2 = """The methodology is detailed in [academic article](https://drive.google.com/file/d/1GMDVLdKfvaFnj8IFDyiRTGH3ePsOO9B7/view?usp=share_link) and in this [blog post](https://maartenboudry.be/2020/09/how-not-to-get-sucked-into-an-intellectual-black-hole-on-the-warped-epistemology-of-conspiracy-theories.html).
+        To illustrate the process in an engaging way, this app will guide you from a mundane news story to crafting your very own distinctive conspiracy theory.
+        """
+    text_3 = """*Ideas*: [Maarten Boudry](https://research.flw.ugent.be/en/maarten.boudry) (Ghent University) & [Marco Meyer](https://www.philosophie.uni-hamburg.de/philosophisches-seminar/personen/meyer-marco.html) (University of Hamburg), *Design & Development*: [Natasha Newbold](https://www.linkedin.com/in/natasha-newbold/) ([Tech Jobs International](https://techjobsinternational.com/)).
+        """
+    checkbox_label = "I agree that the generated conspiracy theory, the choices that led to its creation, and my rating of it will be recorded anonymously."
     
-    # Custom CSS for full-width buttons
-    
-    #st.markdown("""
-    #<style>
-    #    .stButton>button {
-    #        width: 100%;
-    #    }
-    #</style>
-    #""", unsafe_allow_html=True)
-
+    st.markdown(f"<h3 style='text-align: center;'>{step_title}</h3>", unsafe_allow_html=True)
+    st.markdown(f"<h1 style='text-align: center;'>{title}</h1>", unsafe_allow_html=True)
+    st.info(info_1)
+    st.markdown(text_1)
+    st.markdown(text_2)
+    st.markdown(text_3)
