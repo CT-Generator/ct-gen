@@ -95,7 +95,7 @@ def display_page_5():
     secrets = load_secrets()
     client = OpenAI(api_key=secrets["openai"]["api_key"])
     images = [st.session_state["news_img"], st.session_state["culprits_img"], st.session_state["motives_img"]]
-    captions = ["Story:\n" + st.session_state["news_caption"], "Culprit:\n" + st.session_state["culprits_caption"], "Motive:\n" + st.session_state["motives_caption"]]
+    captions = ["STORY:\n\n" + st.session_state["news_caption"], "CULPRIT:\n\n" + st.session_state["culprits_caption"], "MOTIVE:\n\n" + st.session_state["motives_caption"]]
     
     display_list_of_images(images, captions)
     
