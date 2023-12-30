@@ -17,6 +17,10 @@ import webbrowser
 from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict
 
 
+
+
+
+
 # Code for page 1
 def display_page_1():
     step_title = "Intro"

@@ -9,7 +9,7 @@ from ct_gen.src.modules.rating_buttons import add_rating_buttons
 from ct_gen.src.modules.google_sheets_api import insert_row_to_sheet, connect_to_google_sheets_data
 from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict
 #from ct_gen.src.modules.pdf_download import add_pdf_button
-
+import streamlit.components.v1 as components
 
 def create_prompt():
     selected_article_content = st.session_state["news_summary"]
@@ -60,7 +60,23 @@ def generate_conspiracy_theory(prompt, _client):
             res_box.markdown(f'{result}') 
             
     st.session_state["conspiracy_theory"] = "".join(report).strip()
-    
+
+def create_twitter_button():
+   components.html(
+    f"""
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" 
+        data-text="I’ve just generated a conspiracy about {st.session_state['news_name']} with the Conspiracy Generator. This is an educational tool that lets you make funny conspiracy theories with AI to learn how to spot them. In my story {st.session_state['culprits_name']} are behind it because they want to {st.session_state['motives_name']} 😊. You can make your own here https://conspiracy-generator.streamlit.app/ !" 
+        data-url="https://conspiracy-generator.streamlit.app/"
+        data-show-count="false">
+        data-size="Large" 
+        data-hashtags="streamlit,conspiracy"
+        Tweet
+        </a>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    """
+    )
+
+  
 # Display page
 def display_page_5():
     #initalize_session_state_dict()
@@ -91,6 +107,7 @@ def display_page_5():
     
     
     add_rating_buttons(ct_sheet, ratings_sheet)
+    create_twitter_button()
     
     # if st.session_state["conspiracy_theory"] != "":
     #     add_pdf_button(st.session_state["conspiracy_theory"])
