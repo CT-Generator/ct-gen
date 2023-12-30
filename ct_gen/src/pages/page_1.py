@@ -27,8 +27,8 @@ def display_page_1():
     title = "Conspiracy Generator"
     info_1 = "Created by the Etienne Vermeersch Chair of Critical Thinking at Ghent University."
     
-    text_1 = f"""By adhering to three straightforward steps, you can transform any narrative from your newspaper or history books into a conspiracy theory."""
-    text_2 = """The methodology is detailed in [academic article](https://drive.google.com/file/d/1GMDVLdKfvaFnj8IFDyiRTGH3ePsOO9B7/view?usp=share_link) and in this [blog post](https://maartenboudry.be/2020/09/how-not-to-get-sucked-into-an-intellectual-black-hole-on-the-warped-epistemology-of-conspiracy-theories.html).
+    text_1 = f"""By following three simple steps, you can transform any narrative from your newspaper or history books into a conspiracy theory."""
+    text_2 = """The methodology is detailed in this [academic article](https://drive.google.com/file/d/1GMDVLdKfvaFnj8IFDyiRTGH3ePsOO9B7/view?usp=share_link) and in this [blog post](https://maartenboudry.be/2020/09/how-not-to-get-sucked-into-an-intellectual-black-hole-on-the-warped-epistemology-of-conspiracy-theories.html).
         To illustrate the process in an engaging way, this app will guide you from a mundane news story to crafting your very own distinctive conspiracy theory.
         """
     text_3 = """*Ideas*: [Maarten Boudry](https://research.flw.ugent.be/en/maarten.boudry) (Ghent University) & [Marco Meyer](https://www.philosophie.uni-hamburg.de/philosophisches-seminar/personen/meyer-marco.html) (University of Hamburg), *Design & Development*: [Natasha Newbold](https://www.linkedin.com/in/natasha-newbold/) ([TJI](https://techjobsinternational.com/)), *Image Generation*: [Peter Keroti](https://www.linkedin.com/in/peter-keroti) ([TJI](https://techjobsinternational.com/)) using Dall-e.
