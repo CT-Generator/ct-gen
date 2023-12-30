@@ -10,24 +10,10 @@ from ct_gen.src.pages.page_2 import display_page_2
 from ct_gen.src.pages.page_3 import display_page_3
 from ct_gen.src.pages.page_4 import display_page_4
 from ct_gen.src.pages.page_5 import display_page_5
-#from ct_gen.src.pages.page_6 import display_page_6
 from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict
-from ct_gen.src.modules.authentication import check_password
-
-from ct_gen.src.modules.google_sheets_api import load_sheets_data
-
-import toml
+from ct_gen.src.modules.authentication import check_password, load_secrets
 
 
-
-# Load the secrets at the start of the app
-def load_secrets():
-    # Construct the full path to the secrets.toml file in the .streamlit directory
-    secrets_file_path = os.path.join(".streamlit", "secrets.toml")
-
-    # Load the secrets from the secrets.toml file
-    secrets = toml.load(secrets_file_path)
-    return secrets
 
 # Load the secrets at the start of the app
 secrets = load_secrets()

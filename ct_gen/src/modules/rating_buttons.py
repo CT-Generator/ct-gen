@@ -28,7 +28,6 @@ def add_rating_buttons(ct_sheet, ratings_sheet):
                 st.session_state["conspiracy_theory"],
                 "👍"
             ]
-            insert_row_to_sheet(ct_sheet, ct_row)
             insert_row_to_sheet(ratings_sheet, row)
             st.success("Thank you for the rating!")
             
@@ -44,6 +43,5 @@ def add_rating_buttons(ct_sheet, ratings_sheet):
                 st.session_state["conspiracy_theory"],
                 "👎"
             ]
-            insert_row_to_sheet(ct_sheet, ct_row)
             insert_row_to_sheet(ratings_sheet, row)
             st.error("Thank you for the rating!")

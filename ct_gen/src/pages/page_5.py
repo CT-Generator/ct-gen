@@ -105,6 +105,20 @@ def display_page_5():
     
     generate_conspiracy_theory(st.session_state["prompt"], client)
     
+    if st.session_state["ct_saved"] == False:
+        
+        ct_row = [
+        st.session_state["news_name"],
+        st.session_state["news_summary"],
+        st.session_state["culprits_name"],
+        st.session_state["culprits_summary"],
+        st.session_state["motives_name"],
+        st.session_state["motives_summary"],
+        st.session_state["prompt"],
+        st.session_state["conspiracy_theory"]
+        ]
+        insert_row_to_sheet(ct_sheet, ct_row)
+        st.session_state["ct_saved"] = True
     
     add_rating_buttons(ct_sheet, ratings_sheet)
     create_twitter_button()

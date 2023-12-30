@@ -1,6 +1,16 @@
 import hmac
+import os
 import streamlit as st
+import toml
 
+# Load the secrets at the start of the app
+def load_secrets():
+    # Construct the full path to the secrets.toml file in the .streamlit directory
+    secrets_file_path = os.path.join(".streamlit", "secrets.toml")
+
+    # Load the secrets from the secrets.toml file
+    secrets = toml.load(secrets_file_path)
+    return secrets
 
 def check_password():
     """Returns `True` if the user had the correct password."""

@@ -15,6 +15,8 @@ def initalize_session_state_dict():
         st.session_state["page_number"] = 1
     if "rating" not in st.session_state:
         st.session_state["rating"] = None
+    if "ct_saved" not in st.session_state:
+        st.session_state["ct_saved"] = False
 
         
     # news
