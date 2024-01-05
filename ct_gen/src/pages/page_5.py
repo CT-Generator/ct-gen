@@ -62,10 +62,17 @@ def generate_conspiracy_theory(prompt, _client):
     st.session_state["conspiracy_theory"] = "".join(report).strip()
 
 def create_twitter_button():
+    post_text = f"I've just made my own conspiracy theory with the Conspiracy Generator, a new educational tool!\
+    \nHere it is:\n\
+    - Official story: {st.session_state['news_name']}\n\
+    - Culprits: {st.session_state['culprits_name']}\n\
+    - Motive: {st.session_state['motives_name']}\n\
+    Make your own conspiracy here:"
+
    components.html(
     f"""
         <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" 
-        data-text="I’ve just generated a conspiracy about {st.session_state['news_name']} with the Conspiracy Generator. This is an educational tool that lets you make funny conspiracy theories with AI to learn how to spot them. In my story {st.session_state['culprits_name']} are behind it because they want to {st.session_state['motives_name']} 😊. You can make your own here https://conspiracy-generator.streamlit.app/ !" 
+        data-text={post_text} 
         data-url="https://conspiracy-generator.streamlit.app/"
         data-show-count="false">
         data-size="Large" 
