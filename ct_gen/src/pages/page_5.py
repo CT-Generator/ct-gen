@@ -69,9 +69,7 @@ def create_twitter_button():
     - Motive: {st.session_state['motives_name']}\n\
     Make your own conspiracy here:"
 
-   components.html(
-    f"""
-        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" 
+    post_string = f"""<a href='https://twitter.com/share?ref_src=twsrc%5Etfw' class='twitter-share-button' 
         data-text={post_text} 
         data-url="https://conspiracy-generator.streamlit.app/"
         data-show-count="false">
@@ -79,9 +77,9 @@ def create_twitter_button():
         data-hashtags="streamlit,conspiracy"
         Tweet
         </a>
-        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-    """
-    )
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>"""
+    
+    components.html(post_string)
 
   
 # Display page
