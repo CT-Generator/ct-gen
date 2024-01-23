@@ -10,6 +10,7 @@ from ct_gen.src.pages.page_2 import display_page_2
 from ct_gen.src.pages.page_3 import display_page_3
 from ct_gen.src.pages.page_4 import display_page_4
 from ct_gen.src.pages.page_5 import display_page_5
+from ct_gen.src.pages.page_6 import display_page_6
 from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict
 from ct_gen.src.modules.authentication import check_password, load_secrets
 
@@ -113,10 +114,17 @@ def main():
         #col1, col2 = st.columns(2)
         #backward_button(col1, "BACK")
         forward_button(col1, "NEXT")
-        
-    
+
     if st.session_state["page_number"] == 5:
         display_page_5()
+        st.markdown("---")
+        col1 = st.columns(1)[0]
+        #col1, col2 = st.columns(2)
+        #backward_button(col1, "BACK")
+        forward_button(col1, "NEXT")  
+    
+    if st.session_state["page_number"] == 6:
+        display_page_6()
         st.markdown("---")
         #col1 = st.columns(1)[0]
         col1 = st.columns(1)[0]
