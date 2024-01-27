@@ -81,6 +81,7 @@ def main():
         checkbox_label = "I agree that the generated conspiracy theory, the choices that led to its creation, and my rating of it will be recorded anonymously."
         display_page_1()
         st.markdown("---")
+        st.warning('(Check the box to start)')
         privacy_check = st.checkbox(checkbox_label)
         col1 = st.columns(1)[0]
         #col1 = st.columns(1)
