@@ -26,7 +26,7 @@ def create_prompt():
         You fabricate some 'evidence' that {selected_article_content} is a cover-up of {culprits} trying to achieve {motive}. You 'connect the dots' in the style of conspiracy theorists, using available information about {culprits}.
         You anticipate counterarguments against the conspiracy theory by arguing that missing evidence and counterevidence is in fact part of the plot. Make sure to make the conspiracy theory immune against criticism
         You discredit people who are sceptical of the conspiracy theory by suggesting they are gullible dupes or patsies complicit in the conspiracy
-        Write a convicing story starting with a catchy title. Everything must be formated in markdown."""
+        Write a convicing story starting with a catchy title. Simplify the story to a reading level of grade ten and shorten the story. Everything must be formated in markdown."""
 
     return prompt
 
