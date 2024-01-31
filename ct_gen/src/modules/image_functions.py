@@ -4,6 +4,7 @@ import base64
 import os
 from st_click_detector import click_detector
 import pandas as pd
+from ct_gen.src.modules.page_nav import scroll_up
 
 
 @st.cache_data(ttl=3600, show_spinner=False)
@@ -50,7 +51,6 @@ def display_image_options(images, captions, key):
     return selected_item
 
 def create_image_selection_view(image_path, step_title, title, info, sheet_name, instruction):
-    
     df = pd.read_excel("ct_gen/data/images_db.xlsx", sheet_name=sheet_name)
     uuids, names, summaries, images = select_random_items(df, image_path, st.session_state["change_tracker"])
     captions = [name_to_captions(name, 2) for name in names]
@@ -60,9 +60,8 @@ def create_image_selection_view(image_path, step_title, title, info, sheet_name,
     st.info(info)
     
     selected_item = display_image_options(images, captions, key=sheet_name)
-
+    
     if selected_item:
-        
         st.session_state[f"{sheet_name}_img"] = images[int(selected_item)]
         st.session_state[f"{sheet_name}_name"] = names[int(selected_item)]
         st.session_state[f"{sheet_name}_summary"] = summaries[int(selected_item)]
@@ -85,7 +84,6 @@ def create_image_selection_view(image_path, step_title, title, info, sheet_name,
                 st.experimental_rerun()
 
     else:
-        
         st.markdown(" ")
         st.warning(instruction)
         st.markdown(" ")
@@ -94,11 +92,9 @@ def create_image_selection_view(image_path, step_title, title, info, sheet_name,
         if load_more_button_2:
             st.session_state["change_tracker"] = st.session_state["change_tracker"] + 1
             st.experimental_rerun()
-            
+       
         
 def display_list_of_images(images, captions):
-    
-    
     images = [img for img in images if img]
     captions = [capt for capt in captions if capt]
     
@@ -106,6 +102,5 @@ def display_list_of_images(images, captions):
     for i, image in enumerate(images):
         new_img = f'<div style="margin: 10px; text-align: center;"><a href="#" id="{i}"><img src={image} alt="Image 1" style="width: 100%; max-width: 200px; height: auto;"></a><p>{captions[i]}</p></div>'
         content =  content + new_img
-    content = content + "</div>"
-        
+    content = content + "</div>" 
     return click_detector(content, key="final_display")

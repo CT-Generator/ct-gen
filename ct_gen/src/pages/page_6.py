@@ -10,6 +10,7 @@ from ct_gen.src.modules.google_sheets_api import insert_row_to_sheet, connect_to
 from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict
 #from ct_gen.src.modules.pdf_download import add_pdf_button
 import streamlit.components.v1 as components
+from ct_gen.src.modules.page_nav import scroll_up
 
 def create_prompt():
     selected_article_content = st.session_state["news_summary"]
@@ -93,7 +94,7 @@ def display_page_6():
     
     ct_sheet = connect_to_google_sheets_data("generated_ct")
     ratings_sheet = connect_to_google_sheets_data("ratings")
-    
+    scroll_up()
     st.markdown(f"<h3 style='text-align: center;'>{step_title}</h3>", unsafe_allow_html=True)
     st.markdown(f"<h1 style='text-align: center;'>{title}</h1>", unsafe_allow_html=True)
     st.info(info)
@@ -103,7 +104,6 @@ def display_page_6():
     client = OpenAI(api_key=secrets["openai"]["api_key"])
     images = [st.session_state["news_img"], st.session_state["culprits_img"], st.session_state["motives_img"]]
     captions = ["STORY:\n\n" + st.session_state["news_caption"], "CULPRIT:\n\n" + st.session_state["culprits_caption"], "MOTIVE:\n\n" + st.session_state["motives_caption"]]
-    
     display_list_of_images(images, captions)
     
     st.session_state["prompt"] = create_prompt()

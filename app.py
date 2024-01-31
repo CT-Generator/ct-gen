@@ -3,7 +3,7 @@ import os
 import openai
 import pandas as pd
 
-from ct_gen.src.modules.page_nav import forward_button, backward_button, begin_button
+from ct_gen.src.modules.page_nav import forward_button, backward_button, begin_button, scroll_up
 
 from ct_gen.src.pages.page_1 import display_page_1
 from ct_gen.src.pages.page_2 import display_page_2
@@ -73,6 +73,7 @@ def main():
     """
     st.markdown(css, unsafe_allow_html=True)
 
+    
     if not check_password():
         st.stop()  # Do not continue if check_password is not True.
 
@@ -86,6 +87,7 @@ def main():
         col1 = st.columns(1)[0]
         #col1 = st.columns(1)
         
+
         if privacy_check:
             forward_button(col1, "Start")
         
@@ -106,7 +108,6 @@ def main():
         #col1, col2 = st.columns(2)
         #backward_button(col1, "BACK")
         forward_button(col1, "NEXT")
-        
     
     if st.session_state["page_number"] == 4:
         display_page_4()
@@ -122,7 +123,8 @@ def main():
         col1 = st.columns(1)[0]
         #col1, col2 = st.columns(2)
         #backward_button(col1, "BACK")
-        forward_button(col1, "NEXT")  
+        forward_button(col1, "NEXT")
+         
     
     if st.session_state["page_number"] == 6:
         display_page_6()
@@ -133,6 +135,7 @@ def main():
         begin_button(col1, "Generate a new story")
         #col1, col2 = st.columns(2)
         #backward_button(col1, "BACK")
+        
     
     # if st.session_state["page_number"] == 6:
     #     display_page_6()

@@ -17,3 +17,13 @@ def begin_button(col, button_text):
             del st.session_state[key]
         st.session_state["page_number"] = st.session_state["page_number"] = 2
         st.experimental_rerun()
+
+def scroll_up():
+        js_scroll_up = '''
+<script>
+    var body = window.parent.document.querySelector(".main");
+    console.log(body);
+    body.scrollTop = 0;
+</script>
+'''
+        st.components.v1.html(js_scroll_up)
