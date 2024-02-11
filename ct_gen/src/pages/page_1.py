@@ -13,6 +13,7 @@ import requests
 from streamlit_extras.badges import badge
 import sys
 import webbrowser
+from ct_gen.src.modules.page_nav import scroll_up
 
 from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict
 
@@ -41,3 +42,4 @@ def display_page_1():
     st.markdown(text_1)
     st.markdown(text_2)
     st.markdown(text_3)
+    scroll_up()
