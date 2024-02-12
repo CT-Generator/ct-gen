@@ -1,13 +1,12 @@
 import streamlit as st
 import pandas as pd
 
-from ct_gen.src.modules.page_nav import scroll_up
+from ct_gen.src.modules.scroll_up import scroll_up
 #from ct_gen.src.modules.google_sheets_api import load_google_sheets_data
 from ct_gen.src.modules.image_functions import *
 
 
 def display_page_4():
-    
     image_path = "ct_gen/data/images/culprits"
     step_title = "Step 2"
     title = "The Conspirators"

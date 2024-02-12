@@ -13,7 +13,7 @@ import requests
 from streamlit_extras.badges import badge
 import sys
 import webbrowser
-from ct_gen.src.modules.page_nav import scroll_up
+from ct_gen.src.modules.scroll_up import scroll_up
 
 from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict
 
@@ -24,6 +24,7 @@ from ct_gen.src.modules.initialize_session_state import initalize_session_state_
 
 # Code for page motives
 def display_page_2():
+    
     step_title = "Background & Motivation"
     title_1 = "What’s the point of the Conspiracy Generator?"
     info_1 = "(For a longer background and motivation, see this blog post and this academic paper)"
@@ -45,14 +46,11 @@ def display_page_2():
 
     st.markdown(f"<h3 style='text-align: center;'>{step_title}</h3>", unsafe_allow_html=True)
     st.markdown(f"<h1 style='text-align: center;'>{title_1}</h1>", unsafe_allow_html=True)
-
     st.info(info_1)
     st.markdown(text_1a)
     st.markdown(text_2a)
     st.markdown(text_3a)
-
     st.markdown(f"<h1 style='text-align: center;'>{title_2}</h1>", unsafe_allow_html=True)
-
     st.markdown(text_1b)
     st.markdown(text_2b)
     scroll_up()

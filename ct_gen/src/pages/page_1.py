@@ -13,14 +13,9 @@ import requests
 from streamlit_extras.badges import badge
 import sys
 import webbrowser
-from ct_gen.src.modules.page_nav import scroll_up
+from ct_gen.src.modules.scroll_up import scroll_up
 
 from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict
-
-
-
-
-
 
 # Code for page 1
 def display_page_1():
