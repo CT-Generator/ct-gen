@@ -37,10 +37,10 @@ def display_page_1():
     st.info(info_1)
     st.markdown(f"<h1 style='text-align: center;'>{title_2}</h1>", unsafe_allow_html=True)
     st.markdown(text_1)
-
-    with st.expander('Background and motivation about the Conspiracy Generator'):
-        display_page_background()
-    
     st.info(info_2)
     st.markdown(text_2)
+    
+    with st.expander('Background and motivation about the Conspiracy Generator'):
+        display_page_background()
+
     scroll_up()
