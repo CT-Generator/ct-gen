@@ -38,7 +38,7 @@ def display_page_1():
     st.markdown(f"<h1 style='text-align: center;'>{title_2}</h1>", unsafe_allow_html=True)
     st.markdown(text_1)
 
-    if st.button('Background and motivation about the Conspiracy Generator.'):
+    with st.expander('Background and motivation about the Conspiracy Generator'):
         display_page_background()
     
     st.info(info_2)
