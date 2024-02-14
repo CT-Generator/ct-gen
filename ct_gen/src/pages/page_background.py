@@ -27,7 +27,7 @@ def display_page_background():
     
     step_title = "Background & Motivation"
     title_1 = "What’s the point of the Conspiracy Generator?"
-    info_1 = "(For a longer background and motivation, see this blog post and this academic paper)"
+    info_1 = "(For a longer background and motivation, see this [blog post](https://maartenboudry.be/2020/09/how-not-to-get-sucked-into-an-intellectual-black-hole-on-the-warped-epistemology-of-conspiracy-theories.html) and this [academic paper](https://drive.google.com/file/d/1GMDVLdKfvaFnj8IFDyiRTGH3ePsOO9B7/view?usp=share_link))"
     
     text_1a = f"""Conspiracy theories are all around us. From the 9/11 attacks to the coronavirus pandemic, from the assassination of John F. Kennedy to the birth certificate of Barack Obama, from the Moon landing to just about any mass shooting or terrorist attack – all these events have sparked suspicions and allegations that the official version we’ve been told is a lie. That far more sinister things are going on behind the scenes."""
     text_2a = """Some conspiracies are real, of course, as any historian will tell you (e.g., the Watergate scandal, the October revolution). But people believe in many more unfounded conspiracy theories than there are actual conspiracies to go around. That’s because stories about  hidden plots are extremely alluring. In fact, it’s quite easy to generate a conspiracy theory around any news story, and to maintain that theory in the face of any evidence or counterarguments. All you need to do is follow a few simple steps!
