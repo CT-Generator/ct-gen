@@ -4,7 +4,6 @@ import base64
 import os
 from st_click_detector import click_detector
 import pandas as pd
-from ct_gen.src.modules.page_nav import scroll_up
 
 
 @st.cache_data(ttl=3600, show_spinner=False)
@@ -84,10 +83,11 @@ def create_image_selection_view(image_path, step_title, title, info, sheet_name,
                 st.experimental_rerun()
 
     else:
-        st.markdown(" ")
+        # The lines commented below were to fix the whitespaces issue. Not sure why spaces were needed in the first place; as it was old code.
+        #st.markdown(" ")
         st.warning(instruction)
-        st.markdown(" ")
-        st.markdown(" ")
+        #st.markdown(" ")
+        #st.markdown(" ")
         load_more_button_2 = st.button("load more", "load_more_button_2")
         if load_more_button_2:
             st.session_state["change_tracker"] = st.session_state["change_tracker"] + 1
