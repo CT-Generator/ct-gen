@@ -22,7 +22,7 @@ from ct_gen.src.modules.initialize_session_state import initalize_session_state_
 def display_page_1():
     step_title = "Intro"
     title = "Conspiracy Generator"
-    info = "Created by the Etienne Vermeersch Chair of Critical Thinking at Ghent University. Make your own conspiracy theory in a few simple steps!"
+    info = "Make your own conspiracy theory in a few simple steps! Created by the Etienne Vermeersch Chair of Critical Thinking at Ghent University."
    
 
     text_1 = """By following three simple steps, you can turn any story from your newspaper or from history books into an intriguing, shocking, mind-bending, earth-shattering, but still plausible-sounding Conspiracy Theory."""
