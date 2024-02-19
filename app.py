@@ -82,8 +82,6 @@ def main():
         st.markdown("---")
         privacy_check = st.checkbox(checkbox_label)
         col1 = st.columns(1)[0]
-        #col1 = st.columns(1)
-        
         if privacy_check:
             forward_button(col1, "Start")
         
@@ -118,9 +116,9 @@ def main():
     if st.session_state["page_number"] == 5:
         display_page_5()
         st.markdown("---")
-        #col1 = st.columns(1)[0]
         col1 = st.columns(1)[0]
         #forward_button(col1, "EXPLANATION")
+          
         begin_button(col1, "Generate a new story")
         #col1, col2 = st.columns(2)
         #backward_button(col1, "BACK")

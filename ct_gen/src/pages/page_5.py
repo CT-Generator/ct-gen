@@ -41,7 +41,6 @@ def load_secrets():
 # Generate CT function
 @st.cache_data()
 def generate_conspiracy_theory(prompt, _client):
-        
     res_box = st.empty()
     report = []
 
@@ -109,7 +108,7 @@ def display_page_5():
     st.divider()
     
     generate_conspiracy_theory(st.session_state["prompt"], client)
-    
+       
     if st.session_state["ct_saved"] == False:
         
         ct_row = [
@@ -125,6 +124,11 @@ def display_page_5():
         insert_row_to_sheet(ct_sheet, ct_row)
         st.session_state["ct_saved"] = True
     
+    if st.button('Recreate your conspiracy theory'):
+        st.markdown(f"<h3 style='text-align: center;'>Recreated Story</h3>", unsafe_allow_html=True)
+        generate_conspiracy_theory.clear()
+        generate_conspiracy_theory(st.session_state["prompt"], client)
+
     add_rating_buttons(ct_sheet, ratings_sheet)
     create_twitter_button()
     
