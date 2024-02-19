@@ -10,6 +10,7 @@ from ct_gen.src.modules.google_sheets_api import insert_row_to_sheet, connect_to
 from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict
 #from ct_gen.src.modules.pdf_download import add_pdf_button
 import streamlit.components.v1 as components
+from ct_gen.src.modules.scroll_up import scroll_up
 
 def create_prompt():
     selected_article_content = st.session_state["news_summary"]
@@ -26,7 +27,7 @@ def create_prompt():
         You fabricate some 'evidence' that {selected_article_content} is a cover-up of {culprits} trying to achieve {motive}. You 'connect the dots' in the style of conspiracy theorists, using available information about {culprits}.
         You anticipate counterarguments against the conspiracy theory by arguing that missing evidence and counterevidence is in fact part of the plot. Make sure to make the conspiracy theory immune against criticism
         You discredit people who are sceptical of the conspiracy theory by suggesting they are gullible dupes or patsies complicit in the conspiracy
-        Write a convicing story starting with a catchy title. Everything must be formated in markdown."""
+        Write a convicing story starting with a catchy title. Simplify the story to a reading level of grade ten and shorten the story. Everything must be formated in markdown."""
 
     return prompt
 
@@ -60,6 +61,8 @@ def generate_conspiracy_theory(prompt, _client):
             
     st.session_state["conspiracy_theory"] = "".join(report).strip()
 
+    
+
 def create_twitter_button():
     post_text = f"I've just made my own conspiracy theory with the Conspiracy Generator, a new educational tool!\
     \nHere it is:\n\
@@ -68,7 +71,9 @@ def create_twitter_button():
     - Motive: {st.session_state['motives_name']}\n\
     Make your own conspiracy here:"
 
-    post_string = f"""<a href='https://twitter.com/share?ref_src=twsrc%5Etfw' class='twitter-share-button' 
+    components.html(
+    f"""
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" 
         data-text={post_text} 
         data-url="https://conspiracy-generator.streamlit.app/"
         data-show-count="false">
@@ -76,9 +81,9 @@ def create_twitter_button():
         data-hashtags="streamlit,conspiracy"
         Tweet
         </a>
-        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>"""
-    
-    components.html(post_string)
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    """
+    )
 
   
 # Display page
@@ -90,17 +95,16 @@ def display_page_5():
     
     ct_sheet = connect_to_google_sheets_data("generated_ct")
     ratings_sheet = connect_to_google_sheets_data("ratings")
-    
     st.markdown(f"<h3 style='text-align: center;'>{step_title}</h3>", unsafe_allow_html=True)
     st.markdown(f"<h1 style='text-align: center;'>{title}</h1>", unsafe_allow_html=True)
     st.info(info)
+    scroll_up()
     
     # Load the secrets at the start of the app
     secrets = load_secrets()
     client = OpenAI(api_key=secrets["openai"]["api_key"])
     images = [st.session_state["news_img"], st.session_state["culprits_img"], st.session_state["motives_img"]]
     captions = ["STORY:\n\n" + st.session_state["news_caption"], "CULPRIT:\n\n" + st.session_state["culprits_caption"], "MOTIVE:\n\n" + st.session_state["motives_caption"]]
-    
     display_list_of_images(images, captions)
     
     st.session_state["prompt"] = create_prompt()
