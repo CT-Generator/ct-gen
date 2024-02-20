@@ -53,4 +53,3 @@ def display_page_background():
     st.markdown(f"<h1 style='text-align: center;'>{title_2}</h1>", unsafe_allow_html=True)
     st.markdown(text_1b)
     st.markdown(text_2b)
-    scroll_up()
