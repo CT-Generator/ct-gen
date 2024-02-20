@@ -6,12 +6,15 @@ import pandas as pd
 from ct_gen.src.modules.page_nav import forward_button, backward_button, begin_button
 
 from ct_gen.src.pages.page_1 import display_page_1
+from ct_gen.src.pages.page_background import display_page_background
 from ct_gen.src.pages.page_2 import display_page_2
 from ct_gen.src.pages.page_3 import display_page_3
 from ct_gen.src.pages.page_4 import display_page_4
 from ct_gen.src.pages.page_5 import display_page_5
 from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict
 from ct_gen.src.modules.authentication import check_password, load_secrets
+from ct_gen.src.modules.scroll_up import scroll_up
+
 
 
 
@@ -72,6 +75,7 @@ def main():
     """
     st.markdown(css, unsafe_allow_html=True)
 
+    
     if not check_password():
         st.stop()  # Do not continue if check_password is not True.
 
@@ -80,6 +84,7 @@ def main():
         checkbox_label = "I agree that the generated conspiracy theory, the choices that led to its creation, and my rating of it will be recorded anonymously."
         display_page_1()
         st.markdown("---")
+        st.warning('(Check the box to start)')
         privacy_check = st.checkbox(checkbox_label)
         col1 = st.columns(1)[0]
         if privacy_check:
@@ -93,7 +98,7 @@ def main():
         # col1, col2 = st.columns(2)
         # backward_button(col1, "BACK")
         forward_button(col1, "NEXT")
-        
+    
         
     if st.session_state["page_number"] == 3:
         display_page_3()
@@ -102,7 +107,6 @@ def main():
         #col1, col2 = st.columns(2)
         #backward_button(col1, "BACK")
         forward_button(col1, "NEXT")
-        
     
     if st.session_state["page_number"] == 4:
         display_page_4()
@@ -122,6 +126,7 @@ def main():
         begin_button(col1, "Generate a new story")
         #col1, col2 = st.columns(2)
         #backward_button(col1, "BACK")
+        
     
     # if st.session_state["page_number"] == 6:
     #     display_page_6()
