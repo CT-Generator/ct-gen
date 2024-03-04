@@ -5,8 +5,8 @@ import os
 from st_click_detector import click_detector
 import pandas as pd
 
-
-@st.cache_data(ttl=3600, show_spinner=False)
+# Reduced cache time to 20s instead of original value of around 3600s to solve the randomness in suggested topics.
+@st.cache_data(ttl=20, show_spinner=False)
 def select_random_items(df: pd.DataFrame, folder_path: str, change_tracker: int):
     sampled_df = df.sample(n=3)
     uuids = sampled_df["uuid"].to_list()
