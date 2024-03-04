@@ -19,7 +19,7 @@ def create_prompt():
     motive = st.session_state["motives_name"]
     motive_info = st.session_state["motives_summary"]
         
-    prompt = f"""Write a convicing conspiracy theory by turning the following news story into a conspiracy theory: {selected_article_content}
+    prompt = f"""Write a convicing conspiracy theory by turning the following news story into a conspiracy theory: {selected_article_content}.
         The conspirator(s) of your story are: {culprits} ({culprits_info}).
         The motive of these conspirators: {motive} ({motive_info}).
         You construct the conspiracy by following these steps:
@@ -29,6 +29,12 @@ def create_prompt():
         You discredit people who are sceptical of the conspiracy theory by suggesting they are gullible dupes or patsies complicit in the conspiracy
         Write a convicing story starting with a catchy title. Simplify the story to a reading level of grade ten and shorten the story. Everything must be formated in markdown."""
 
+    return prompt
+
+def create_summary_prompt():
+    selected_article_content = st.session_state["news_summary"]
+    prompt = f"""Summarize the following news story: {selected_article_content}."""
+    
     return prompt
 
 
@@ -61,7 +67,27 @@ def generate_conspiracy_theory(prompt, _client):
             
     st.session_state["conspiracy_theory"] = "".join(report).strip()
 
-    
+# Generate News Story Summary function
+@st.cache_data()
+def summarize_news_story(summary_prompt, _client):
+    res_box = st.empty()
+    report = []
+
+    stream = _client.chat.completions.create(
+        model="gpt-4",
+        messages=[
+            {"role": "system", "content": "You are an educational tool. You should summarize the news story given to you."},
+            {"role": "user", "content": summary_prompt},
+            ],
+        stream=True,
+    )
+    for chunk in stream:
+        if chunk.choices[0].delta.content is not None:
+            report.append(chunk.choices[0].delta.content)
+            result = "".join(report).strip()
+            res_box.markdown(f'{result}') 
+            
+    st.session_state["summarized_news_story"] = "".join(report).strip() 
 
 def create_twitter_button():
     post_text = f"I've just made my own conspiracy theory with the Conspiracy Generator, a new educational tool!\
@@ -108,11 +134,14 @@ def display_page_5():
     display_list_of_images(images, captions)
     
     st.session_state["prompt"] = create_prompt()
-   
+    st.session_state["summary_prompt"] = create_summary_prompt()
+
     st.divider()
     
+    st.markdown(f"<h3 style='text-align: center;'>Summary of original News Story</h3>", unsafe_allow_html=True)
+    summarize_news_story(st.session_state["summary_prompt"], client)
     generate_conspiracy_theory(st.session_state["prompt"], client)
-       
+     
     if st.session_state["ct_saved"] == False:
         
         ct_row = [
