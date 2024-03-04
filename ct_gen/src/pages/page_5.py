@@ -10,6 +10,7 @@ from ct_gen.src.modules.google_sheets_api import insert_row_to_sheet, connect_to
 from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict
 #from ct_gen.src.modules.pdf_download import add_pdf_button
 import streamlit.components.v1 as components
+from ct_gen.src.pages.page_recipe import display_page_recipe
 from ct_gen.src.modules.scroll_up import scroll_up
 
 def create_prompt():
@@ -138,10 +139,13 @@ def display_page_5():
 
     st.divider()
     
-    st.markdown(f"<h3 style='text-align: center;'>Summary of original News Story</h3>", unsafe_allow_html=True)
-    summarize_news_story(st.session_state["summary_prompt"], client)
+    with st.expander('Summary of original News Story'):
+        summarize_news_story(st.session_state["summary_prompt"], client)
     generate_conspiracy_theory(st.session_state["prompt"], client)
-     
+    
+    with st.expander('What’s the recipe for a great conspiracy theory?'):
+        display_page_recipe()
+    
     if st.session_state["ct_saved"] == False:
         
         ct_row = [
