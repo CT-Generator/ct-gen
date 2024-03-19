@@ -101,14 +101,14 @@ def create_twitter_button(image):
     - Culprits: {st.session_state['culprits_name']}\n\
     - Motive: {st.session_state['motives_name']}\n\
     Make your own conspiracy here:"
-
+    # Shortened Link: https://rb.gy/ijujlh
     components.html(
     f"""
         <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" 
-        data-text={post_text}
+        data-text="{post_text}"
         data-url="https://conspiracy-generator.streamlit.app/"
         data-show-count="false">
-        data-size="Large" 
+        data-size="Large"
         data-hashtags="streamlit,conspiracy"
         Tweet
         </a>
