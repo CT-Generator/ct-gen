@@ -12,6 +12,9 @@ from ct_gen.src.modules.initialize_session_state import initalize_session_state_
 import streamlit.components.v1 as components
 from ct_gen.src.pages.page_recipe import display_page_recipe
 from ct_gen.src.modules.scroll_up import scroll_up
+from ct_gen.src.modules.markdown_functions import markdown_to_image
+import base64
+
 
 def create_prompt():
     selected_article_content = st.session_state["news_summary"]
@@ -65,7 +68,8 @@ def generate_conspiracy_theory(prompt, _client):
             report.append(chunk.choices[0].delta.content)
             result = "".join(report).strip()
             res_box.markdown(f'{result}') 
-            
+    disclaimer = "Warning: This conspiracy story is FAKE and was generated with the Conspiracy Generator, an educational tool."
+    report.append(disclaimer)
     st.session_state["conspiracy_theory"] = "".join(report).strip()
 
 # Generate News Story Summary function
@@ -90,21 +94,21 @@ def summarize_news_story(summary_prompt, _client):
             
     st.session_state["summarized_news_story"] = "".join(report).strip() 
 
-def create_twitter_button():
+def create_twitter_button(image):
     post_text = f"I've just made my own conspiracy theory with the Conspiracy Generator, a new educational tool!\
     \nHere it is:\n\
     - Official story: {st.session_state['news_name']}\n\
     - Culprits: {st.session_state['culprits_name']}\n\
     - Motive: {st.session_state['motives_name']}\n\
     Make your own conspiracy here:"
-
+    # Shortened Link: https://rb.gy/ijujlh
     components.html(
     f"""
         <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" 
-        data-text={post_text} 
+        data-text="{post_text}"
         data-url="https://conspiracy-generator.streamlit.app/"
         data-show-count="false">
-        data-size="Large" 
+        data-size="Large"
         data-hashtags="streamlit,conspiracy"
         Tweet
         </a>
@@ -165,9 +169,16 @@ def display_page_5():
         st.markdown(f"<h3 style='text-align: center;'>Recreated Story</h3>", unsafe_allow_html=True)
         generate_conspiracy_theory.clear()
         generate_conspiracy_theory(st.session_state["prompt"], client)
+        
+
+   # Convert Markdown to an image
+    image_bytes = markdown_to_image(st.session_state["conspiracy_theory"])
+
+    # Display the image in Streamlit
+    st.image(image_bytes, caption='Generated Conspiracy Theory', use_column_width=True)
 
     add_rating_buttons(ct_sheet, ratings_sheet)
-    create_twitter_button()
+    create_twitter_button(image_bytes)
     
     # if st.session_state["conspiracy_theory"] != "":
     #     add_pdf_button(st.session_state["conspiracy_theory"])
