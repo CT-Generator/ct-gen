@@ -84,6 +84,7 @@ jupyterlab_server==2.25.2
 kiwisolver==1.4.4
 lxml==4.9.3
 Markdown==3.4.4
+markdown2==2.4.13
 markdown-it-py==3.0.0
 markdownlit==0.0.7
 MarkupSafe==2.1.3
