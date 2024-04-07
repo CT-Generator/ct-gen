@@ -95,12 +95,11 @@ def summarize_news_story(summary_prompt, _client):
     st.session_state["summarized_news_story"] = "".join(report).strip() 
 
 def create_twitter_button(image):
-    post_text = f"I've just made my own conspiracy theory with the Conspiracy Generator, a new educational tool!\
-    \nHere it is:\n\
-    - Official story: {st.session_state['news_name']}\n\
-    - Culprits: {st.session_state['culprits_name']}\n\
-    - Motive: {st.session_state['motives_name']}\n\
-    Make your own conspiracy here:"
+    post_text = f"I’ve just made my own conspiracy theory with the Conspiracy Generator!\n\
+&#9989 Official story: {st.session_state['news_name']}\n\
+&#9989 Culprits: {st.session_state['culprits_name']}\n\
+&#9989 Motive: {st.session_state['motives_name']}\n\
+Make your own conspiracy here:"
     # Shortened Link: https://rb.gy/ijujlh
     components.html(
     f"""
