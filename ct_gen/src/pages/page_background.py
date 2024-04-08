@@ -1,27 +1,5 @@
 import streamlit as st
 
-import datetime
-import gspread
-
-import newspaper
-from oauth2client.service_account import ServiceAccountCredentials
-import os
-import openai
-import pandas as pd
-import random
-import requests
-from streamlit_extras.badges import badge
-import sys
-import webbrowser
-from ct_gen.src.modules.scroll_up import scroll_up
-
-from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict
-
-
-
-
-
-
 # Code for page motives
 def display_page_background():
     

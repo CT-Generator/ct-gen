@@ -3,17 +3,15 @@ import os
 import openai
 import pandas as pd
 
-from ct_gen.src.modules.page_nav import forward_button, backward_button, begin_button
+from ct_gen.src.modules.page_nav import forward_button, begin_button
 
 from ct_gen.src.pages.page_1 import display_page_1
-from ct_gen.src.pages.page_background import display_page_background
 from ct_gen.src.pages.page_2 import display_page_2
 from ct_gen.src.pages.page_3 import display_page_3
 from ct_gen.src.pages.page_4 import display_page_4
 from ct_gen.src.pages.page_5 import display_page_5
 from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict
 from ct_gen.src.modules.authentication import check_password, load_secrets
-from ct_gen.src.modules.scroll_up import scroll_up
 
 
 

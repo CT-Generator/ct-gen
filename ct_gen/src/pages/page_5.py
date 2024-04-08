@@ -1,19 +1,15 @@
 import streamlit as st
 import os
-import openai
-import pandas as pd
 from openai import OpenAI
 import toml
 from ct_gen.src.modules.image_functions import display_list_of_images
 from ct_gen.src.modules.rating_buttons import add_rating_buttons
 from ct_gen.src.modules.google_sheets_api import insert_row_to_sheet, connect_to_google_sheets_data
-from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict
 #from ct_gen.src.modules.pdf_download import add_pdf_button
 import streamlit.components.v1 as components
 from ct_gen.src.pages.page_recipe import display_page_recipe
 from ct_gen.src.modules.scroll_up import scroll_up
 from ct_gen.src.modules.markdown_functions import markdown_to_image
-import base64
 
 
 def create_prompt():

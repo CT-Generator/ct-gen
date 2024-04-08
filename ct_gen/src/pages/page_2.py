@@ -1,13 +1,7 @@
 import streamlit as st
 
-import newspaper
-from newspaper import Article
-
 import pandas as pd
-import random  # Import the random module
-import toml
 from ct_gen.src.modules.scroll_up import scroll_up
-#from ct_gen.src.modules.google_sheets_api import load_google_sheets_data
 from ct_gen.src.modules.image_functions import *
 
 
