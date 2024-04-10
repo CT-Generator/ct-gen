@@ -120,7 +120,6 @@ def main():
         st.markdown("---")
         col1 = st.columns(1)[0]
         #forward_button(col1, "EXPLANATION")
-          
         begin_button(col1, "Generate a new story")
         #col1, col2 = st.columns(2)
         #backward_button(col1, "BACK")

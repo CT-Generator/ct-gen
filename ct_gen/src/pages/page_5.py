@@ -10,6 +10,94 @@ import streamlit.components.v1 as components
 from ct_gen.src.pages.page_recipe import display_page_recipe
 from ct_gen.src.modules.scroll_up import scroll_up
 from ct_gen.src.modules.markdown_functions import markdown_to_image
+from PIL import Image, ImageDraw, ImageFont
+import io
+import base64
+
+
+def selections_merger(images_list, captions_list):
+    if len(images_list) != len(captions_list):
+        return 0
+    
+    for elem in images_list:
+        if elem is None:
+            return 0
+        
+    for elem in captions_list:
+        if elem is None:
+            return 0
+
+    
+    # Save the Streamlit app's content to an in-memory byte stream
+    
+    images = [Image.open(io.BytesIO(base64.b64decode(images_list[0].split(',')[1]))),
+              Image.open(io.BytesIO(base64.b64decode(images_list[1].split(',')[1]))),
+              Image.open(io.BytesIO(base64.b64decode(images_list[2].split(',')[1])))]
+    
+    # Set up font and text color for captions
+    font = ImageFont.truetype("arial.ttf", 15)
+    text_color = (255, 255, 255)  # White
+
+    # Add Headers to images:
+    """
+    draw_1 = ImageDraw.Draw(images[0])
+    rectangle_height = 25
+    rectangle_width = images[0].width
+    rectangle_position = (0, 0)
+    draw_1.rectangle([rectangle_position, (rectangle_position[0] + rectangle_width, rectangle_position[1] + rectangle_height)], fill=(0, 0, 0))
+    text_position = ((images[0].width - draw_1.textsize("STORY", font=font)[0]) // 2, (rectangle_height - draw_1.textsize("STORY", font=font)[1]) // 2)
+    draw_1.text(text_position, "STORY", font=font, fill=text_color, align='center')
+
+    draw_2 = ImageDraw.Draw(images[0])
+    rectangle_height = 25
+    rectangle_width = images[0].width
+    rectangle_position = (0, 0)
+    draw_2.rectangle([rectangle_position, (rectangle_position[0] + rectangle_width, rectangle_position[1] + rectangle_height)], fill=(0, 0, 0))
+    text_position = ((images[0].width - draw_2.textsize("CULPRIT", font=font)[0]) // 2, (rectangle_height - draw_2.textsize("CULPRIT", font=font)[1]) // 2)
+    draw_2.text(text_position, "CULPRIT", font=font, fill=text_color, align='center')
+    """
+
+    # Add rectangles and text to images
+    draw_1 = ImageDraw.Draw(images[0])
+    rectangle_height = 25
+    rectangle_width = images[0].width
+    rectangle_position = (0, 0)
+    draw_1.rectangle([rectangle_position, (rectangle_position[0] + rectangle_width, rectangle_position[1] + rectangle_height)], fill=(0, 0, 0))
+    text_position = ((images[0].width - draw_1.textsize("STORY", font=font)[0]) // 2, (rectangle_height - draw_1.textsize("STORY", font=font)[1]) // 2)
+    draw_1.text(text_position, "STORY", font=font, fill=text_color)
+
+    draw_2 = ImageDraw.Draw(images[1])
+    rectangle_height = 25
+    rectangle_width = images[1].width
+    rectangle_position = (0, 0)
+    draw_2.rectangle([rectangle_position, (rectangle_position[0] + rectangle_width, rectangle_position[1] + rectangle_height)], fill=(0, 0, 0))
+    text_position = ((images[1].width - draw_2.textsize("CULPRIT", font=font)[0]) // 2, (rectangle_height - draw_2.textsize("CULPRIT", font=font)[1]) // 2)
+    draw_2.text(text_position, "CULPRIT", font=font, fill=text_color)
+
+    draw_3 = ImageDraw.Draw(images[2])
+    rectangle_height = 25
+    rectangle_width = images[2].width
+    rectangle_position = (0, 0)
+    draw_3.rectangle([rectangle_position, (rectangle_position[0] + rectangle_width, rectangle_position[1] + rectangle_height)], fill=(0, 0, 0))
+    text_position = ((images[2].width - draw_3.textsize("MOTIVE", font=font)[0]) // 2, (rectangle_height - draw_3.textsize("MOTIVE", font=font)[1]) // 2)
+    draw_3.text(text_position, "MOTIVE", font=font, fill=text_color)
+
+    
+    # Combine images into one:
+    widths, heights = zip(*(img.size for img in images))
+    max_height = max(heights)
+    total_width = sum(widths)
+    combined_image = Image.new('RGB', (total_width, max_height))
+    x_offset = 0
+    for img in images:
+        combined_image.paste(img, (x_offset, 0))
+        x_offset += img.size[0]
+
+    # Convert the combined image to bytes
+    combined_image_bytes = io.BytesIO()
+    combined_image.save(combined_image_bytes, format='PNG')
+    return combined_image_bytes
+
 
 
 def create_prompt():
@@ -129,9 +217,10 @@ def display_page_5():
     # Load the secrets at the start of the app
     secrets = load_secrets()
     client = OpenAI(api_key=secrets["openai"]["api_key"])
-    images = [st.session_state["news_img"], st.session_state["culprits_img"], st.session_state["motives_img"]]
+    images_list = [st.session_state["news_img"], st.session_state["culprits_img"], st.session_state["motives_img"]]
+    captions_list = [st.session_state["news_caption"],st.session_state["culprits_caption"], st.session_state["motives_caption"]]
     captions = ["STORY:\n\n" + st.session_state["news_caption"], "CULPRIT:\n\n" + st.session_state["culprits_caption"], "MOTIVE:\n\n" + st.session_state["motives_caption"]]
-    display_list_of_images(images, captions)
+    display_list_of_images(images_list, captions)
     
     st.session_state["prompt"] = create_prompt()
     st.session_state["summary_prompt"] = create_summary_prompt()
@@ -172,8 +261,18 @@ def display_page_5():
     # Display the image in Streamlit
     st.image(image_bytes, caption='Generated Conspiracy Theory', use_column_width=True)
 
-    add_rating_buttons(ct_sheet, ratings_sheet)
+    # Download button for images:
+    st.markdown(f"<h3 style='text-align: center;'><b>Download images & Share</b></h3>", unsafe_allow_html=True)
+    col1,col2 = st.columns(2)
+    with col1:
+        st.download_button('Download Selections', data=selections_merger(images_list, captions_list), file_name='CT Selections.png')
+
+    with col2:
+        st.download_button('Download Conspiracy Theory', data=image_bytes, file_name='Conspiracy Theory.png')
     create_twitter_button(image_bytes)
+    st.markdown(f"<h3 style='text-align: center;'><b>Rate us!</b></h3>", unsafe_allow_html=True)    
+    add_rating_buttons(ct_sheet, ratings_sheet)
+    
     
     # if st.session_state["conspiracy_theory"] != "":
     #     add_pdf_button(st.session_state["conspiracy_theory"])
