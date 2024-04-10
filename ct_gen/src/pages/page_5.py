@@ -15,6 +15,7 @@ import io
 import base64
 
 
+
 def selections_merger(images_list, captions_list):
     if len(images_list) != len(captions_list):
         return 0
@@ -35,8 +36,10 @@ def selections_merger(images_list, captions_list):
               Image.open(io.BytesIO(base64.b64decode(images_list[2].split(',')[1])))]
     
     # Set up font and text color for captions
-    FONTS_DIR = "/usr/share/fonts"
-    font = ImageFont.truetype(FONTS_DIR + "/arial.ttf", 15)
+    current_dir = os.getcwd()   
+    FONTS_DIR = os.getcwd() + "/ct_gen/data/fonts/"
+    print (FONTS_DIR)
+    font = ImageFont.truetype(FONTS_DIR + "arial.ttf", 15)
     text_color = (255, 255, 255)  # White
 
     # Add Headers to images:
