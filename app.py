@@ -95,8 +95,10 @@ def main():
         col1 = st.columns(1)[0]
         # col1, col2 = st.columns(2)
         # backward_button(col1, "BACK")
-        forward_button(col1, "NEXT")
-    
+        disable_flag = True
+        if st.session_state["news_img"]:
+            forward_button(col1, "NEXT")
+        
         
     if st.session_state["page_number"] == 3:
         display_page_3()
@@ -104,7 +106,8 @@ def main():
         col1 = st.columns(1)[0]
         #col1, col2 = st.columns(2)
         #backward_button(col1, "BACK")
-        forward_button(col1, "NEXT")
+        if st.session_state["culprits_img"]:
+            forward_button(col1, "NEXT")
     
     if st.session_state["page_number"] == 4:
         display_page_4()
@@ -112,7 +115,8 @@ def main():
         col1 = st.columns(1)[0]
         #col1, col2 = st.columns(2)
         #backward_button(col1, "BACK")
-        forward_button(col1, "NEXT")
+        if st.session_state["motives_img"]:
+            forward_button(col1, "NEXT")
         
     
     if st.session_state["page_number"] == 5:
