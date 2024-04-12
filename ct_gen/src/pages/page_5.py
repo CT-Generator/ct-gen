@@ -154,7 +154,7 @@ def generate_conspiracy_theory(prompt, _client):
             report.append(chunk.choices[0].delta.content)
             result = "".join(report).strip()
             res_box.markdown(f'{result}') 
-    disclaimer = "Warning: This conspiracy story is FAKE and was generated with the Conspiracy Generator, an educational tool."
+    disclaimer = "<br>Warning: This conspiracy story is FAKE and was generated with the Conspiracy Generator, an educational tool."
     report.append(disclaimer)
     st.session_state["conspiracy_theory"] = "".join(report).strip()
 
