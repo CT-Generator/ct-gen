@@ -1,16 +1,22 @@
+@font-face {
+  font-family: local_arial;
+  src: url('../fonts/arial.ttf') format('tff');
+  font-weight: normal;
+  font-style: normal;
+}
 
 h1 {
   color: rgb(0, 0, 0);
   margin-left: 20px;
   text-align: justify;
   font-weight: bold;
-  font-family: Arial, Helvetica, sans-serif
+  font-family: local_arial, Helvetica, sans-serif
 }
 
 p {
   color: rgb(0, 0, 0);
   margin-left: 5px;
   text-align: justify;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: local_arial, Helvetica, sans-serif;
   font-size: larger;
 }
