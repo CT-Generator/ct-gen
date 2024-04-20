@@ -109,13 +109,12 @@ def summarize_news_story(summary_prompt, _client):
             
     st.session_state["summarized_news_story"] = "".join(report).strip() 
 
-def create_twitter_button(image):
+def create_twitter_button():
     post_text = f"I’ve just made my own conspiracy theory with the Conspiracy Generator!\n\
 &#9989 Official story: {st.session_state['news_name']}\n\
 &#9989 Culprits: {st.session_state['culprits_name']}\n\
 &#9989 Motive: {st.session_state['motives_name']}\n\
 Make your own conspiracy here:"
-    # Shortened Link: https://rb.gy/ijujlh
     components.html(
     f"""
         <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" 
@@ -187,8 +186,8 @@ def display_page_5():
         
 
    # Convert Markdown to an image
-    image_bytes = markdown_to_image(st.session_state["conspiracy_theory"], "ct_gen/data/css/CT-img.css")
-
+    ct_image_bytes = markdown_to_image(st.session_state["conspiracy_theory"], "ct_gen/data/css/CT-img.css")
+    selections_image_bytes = selections_merger(images_list, captions_list)
     # Display the image in Streamlit
     # st.image(image_bytes, caption='Generated Conspiracy Theory', use_column_width=True)
 
@@ -196,12 +195,15 @@ def display_page_5():
     st.markdown(f"<h3 style='text-align: center;'><b>Download images & Share</b></h3>", unsafe_allow_html=True)
     col1,col2 = st.columns(2)
     with col1:
-        st.download_button('Download Selections', data=selections_merger(images_list, captions_list), file_name='CT Selections.jpg')
+        st.download_button('Download Selections Image', data=selections_image_bytes, file_name='CT Selections.jpg')
 
     with col2:
-        st.download_button('Download Conspiracy Theory', data=image_bytes, file_name='Conspiracy Theory.jpg')
+        st.download_button('Download Conspiracy Theory Image', data=ct_image_bytes, file_name='Conspiracy Theory.jpg')
     
-    create_twitter_button(image_bytes)
+    scol1,scol2,scol3,scol4,scol5 = st.columns(5)
+    with scol3:
+        create_twitter_button()
+    
     st.markdown(f"<h3 style='text-align: center;'><b>Rate us!</b></h3>", unsafe_allow_html=True)    
     add_rating_buttons(ct_sheet, ratings_sheet)
     
