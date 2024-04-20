@@ -190,7 +190,7 @@ def display_page_5():
     image_bytes = markdown_to_image(st.session_state["conspiracy_theory"], "ct_gen/data/css/CT-img.css")
 
     # Display the image in Streamlit
-    st.image(image_bytes, caption='Generated Conspiracy Theory', use_column_width=True)
+    # st.image(image_bytes, caption='Generated Conspiracy Theory', use_column_width=True)
 
     # Download button for images:
     st.markdown(f"<h3 style='text-align: center;'><b>Download images & Share</b></h3>", unsafe_allow_html=True)
