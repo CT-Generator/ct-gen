@@ -28,7 +28,7 @@ def selections_merger(images_list, captions_list):
         content = content + new_img
     content = content + "</tr></table>"
     
-    return markdown_to_image(content)
+    return markdown_to_image(content, "ct_gen/data/css/selections-img.css")
 
 
 def create_prompt():
@@ -82,8 +82,8 @@ def generate_conspiracy_theory(prompt, _client):
         if chunk.choices[0].delta.content is not None:
             report.append(chunk.choices[0].delta.content)
             result = "".join(report).strip()
-            res_box.markdown(f'{result}') 
-    disclaimer = "<br>Warning: This conspiracy story is FAKE and was generated with the Conspiracy Generator, an educational tool."
+            res_box.write(result, unsafe_allow_html=True) 
+    disclaimer = "<br><p>**Warning: This conspiracy story is FAKE and was generated with the Conspiracy Generator, an educational tool.**</p>"
     report.append(disclaimer)
     st.session_state["conspiracy_theory"] = "".join(report).strip()
 
@@ -187,7 +187,7 @@ def display_page_5():
         
 
    # Convert Markdown to an image
-    image_bytes = markdown_to_image(st.session_state["conspiracy_theory"])
+    image_bytes = markdown_to_image(st.session_state["conspiracy_theory"], "ct_gen/data/css/CT-img.css")
 
     # Display the image in Streamlit
     st.image(image_bytes, caption='Generated Conspiracy Theory', use_column_width=True)
@@ -196,10 +196,10 @@ def display_page_5():
     st.markdown(f"<h3 style='text-align: center;'><b>Download images & Share</b></h3>", unsafe_allow_html=True)
     col1,col2 = st.columns(2)
     with col1:
-        st.download_button('Download Selections', data=selections_merger(images_list, captions_list), file_name='CT Selections.png')
+        st.download_button('Download Selections', data=selections_merger(images_list, captions_list), file_name='CT Selections.jpg')
 
     with col2:
-        st.download_button('Download Conspiracy Theory', data=image_bytes, file_name='Conspiracy Theory.png')
+        st.download_button('Download Conspiracy Theory', data=image_bytes, file_name='Conspiracy Theory.jpg')
     
     create_twitter_button(image_bytes)
     st.markdown(f"<h3 style='text-align: center;'><b>Rate us!</b></h3>", unsafe_allow_html=True)    
