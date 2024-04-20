@@ -1,22 +1,24 @@
-@font-face {
-  font-family: local_arial;
-  src: url('../fonts/arial.ttf') format('tff');
-  font-weight: normal;
-  font-style: normal;
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&display=swap');
+
+/* Body */
+body {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333333;
 }
 
-h1 {
-  color: rgb(0, 0, 0);
-  margin-left: 20px;
-  text-align: justify;
-  font-weight: bold;
-  font-family: local_arial, Helvetica, sans-serif
+/* Heading */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
 }
 
-p {
-  color: rgb(0, 0, 0);
-  margin-left: 5px;
-  text-align: justify;
-  font-family: local_arial, Helvetica, sans-serif;
-  font-size: larger;
+/* Links */
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }
