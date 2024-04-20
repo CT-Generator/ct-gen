@@ -26,7 +26,7 @@ openai.api_base = "https://api.openai.com/v1"
 def main():
     initalize_session_state_dict()
     st.set_page_config(layout="centered",
-                       page_title="Consipracy Generator",
+                       page_title="Conspiracy Generator",
                        page_icon = '🔦')
 
 
