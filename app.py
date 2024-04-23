@@ -11,7 +11,13 @@ from ct_gen.src.pages.page_3 import display_page_3
 from ct_gen.src.pages.page_4 import display_page_4
 from ct_gen.src.pages.page_5 import display_page_5
 from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict
+from ct_gen.src.modules.authentication import load_secrets
 
+
+
+
+# Load the secrets at the start of the app
+secrets = load_secrets()
 
 # Assign OpenAI key
 openai.api_key = secrets["openai"]["api_key"]
