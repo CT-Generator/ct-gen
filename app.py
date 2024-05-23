@@ -11,7 +11,7 @@ from ct_gen.src.pages.page_3 import display_page_3
 from ct_gen.src.pages.page_4 import display_page_4
 from ct_gen.src.pages.page_5 import display_page_5
 from ct_gen.src.modules.initialize_session_state import initalize_session_state_dict
-from ct_gen.src.modules.authentication import check_password, load_secrets
+from ct_gen.src.modules.authentication import load_secrets
 
 
 
@@ -72,10 +72,6 @@ def main():
     </style>
     """
     st.markdown(css, unsafe_allow_html=True)
-
-    
-    if not check_password():
-        st.stop()  # Do not continue if check_password is not True.
 
     # Rest of your code...
     if st.session_state["page_number"] == 1:

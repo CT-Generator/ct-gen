@@ -1,5 +1,7 @@
 # ct-gen
 
+Make your own conspiracy theory in a few simple steps!
+
 This is the repo to build an educational conspiracy theory generator app.
 
 ## Setup
