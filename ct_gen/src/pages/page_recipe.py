@@ -7,7 +7,7 @@ import streamlit as st
 # Code for page motives
 def display_page_recipe():
     
-    text_1 = """Our Conspiracy Generator follows a simple recipe. You can find the details in this academic paper or this blog post. You can also try out our recipe for yourself, without the aid of artificial intelligence. Here it is:"""
+    text_1 = """Our Conspiracy Generator follows a simple recipe. You can find the details in this [academic paper](https://drive.google.com/file/d/1GMDVLdKfvaFnj8IFDyiRTGH3ePsOO9B7/views) or this [blog post](https://maartenboudry.substack.com/p/the-conspiracy-generator). You can also try out our recipe for yourself, without the aid of artificial intelligence. Here it is:"""
     text_2 = """
 * **Hunt for anomalies**: Look for puzzling details, anomalies or contradictions in the official story, which “proves” that it must be false. You’re “just asking questions” at this point. Since no explanation of any event is ever complete, this will be easy.
 * **Connect the dots**: Now you fabricate some “evidence” that implicates your culprit and reveal their evil schemes. Try to be creative and forge some suspicious connections between the story and your culprits. 
