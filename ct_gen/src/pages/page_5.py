@@ -110,7 +110,7 @@ def summarize_news_story(summary_prompt, _client):
     st.session_state["summarized_news_story"] = "".join(report).strip() 
 
 def create_twitter_button():
-    post_text = f"I’ve just made my own conspiracy theory with the Conspiracy Generator!\n\
+    post_text = f"I've just made my own conspiracy theory with the Conspiracy Generator!\n\
 &#9989 Official story: {st.session_state['news_name']}\n\
 &#9989 Culprits: {st.session_state['culprits_name']}\n\
 &#9989 Motive: {st.session_state['motives_name']}\n\
@@ -146,7 +146,10 @@ def display_page_5():
     
     # Load the secrets at the start of the app
     secrets = load_secrets()
-    client = OpenAI(api_key=secrets["openai"]["api_key"])
+    client = OpenAI(
+        api_key=secrets["openai"]["api_key"],
+        base_url="https://api.openai.com/v1"
+    )
     images_list = [st.session_state["news_img"], st.session_state["culprits_img"], st.session_state["motives_img"]]
     captions_list = [st.session_state["news_caption"],st.session_state["culprits_caption"], st.session_state["motives_caption"]]
     captions = ["STORY:\n\n" + st.session_state["news_caption"], "CULPRIT:\n\n" + st.session_state["culprits_caption"], "MOTIVE:\n\n" + st.session_state["motives_caption"]]
@@ -161,7 +164,7 @@ def display_page_5():
         summarize_news_story(st.session_state["summary_prompt"], client)
     generate_conspiracy_theory(st.session_state["prompt"], client)
     
-    with st.expander('What’s the recipe for a great conspiracy theory?'):
+    with st.expander('What's the recipe for a great conspiracy theory?'):
         display_page_recipe()
     
     if st.session_state["ct_saved"] == False:

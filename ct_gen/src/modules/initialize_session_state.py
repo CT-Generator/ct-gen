@@ -1,13 +1,13 @@
 import streamlit as st
-import openai
+from openai import OpenAI
 from ct_gen.src.modules.google_sheets_api import connect_to_google_sheets_data
 
 def initalize_session_state_dict():
-    # Initialize OpenAI API connection
-    openai.api_key = st.secrets["openai"]["api_key"]
+    # Initialize OpenAI API connection - now using the OpenAI class
+    # We'll initialize the client when needed in the specific pages
     
     # functional 
-    st.session_state["model_name"] = "gpt-4"
+    st.session_state["model_name"] = "gpt-4o"
     
     if "change_tracker" not in st.session_state:
         st.session_state["change_tracker"] = 0

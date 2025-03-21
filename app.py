@@ -21,7 +21,6 @@ secrets = load_secrets()
 
 # Assign OpenAI key
 openai.api_key = secrets["openai"]["api_key"]
-openai.api_base = "https://api.openai.com/v1"
 
 def main():
     initalize_session_state_dict()
