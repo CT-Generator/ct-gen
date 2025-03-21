@@ -1,6 +1,6 @@
 import streamlit as st
 import os
-from openai import OpenAI
+import openai
 import toml
 from ct_gen.src.modules.image_functions import display_list_of_images
 from ct_gen.src.modules.rating_buttons import add_rating_buttons
@@ -66,48 +66,59 @@ def load_secrets():
 
 # Generate CT function
 @st.cache_data()
-def generate_conspiracy_theory(prompt, _client):
+def generate_conspiracy_theory(prompt, api_key):
     res_box = st.empty()
     report = []
 
-    stream = _client.chat.completions.create(
-        model="gpt-4",
+    # Set the OpenAI API key
+    openai.api_key = api_key
+
+    # Use the completion endpoint for streaming
+    response = openai.ChatCompletion.create(
+        model="gpt-4o",
         messages=[
             {"role": "system", "content": "You are an educational tool. You show people how easy it is to turn anything into a conspiracy. By doing so, you are able to teach people that they should not believe in conspiracies without careful examination."},
             {"role": "user", "content": prompt},
-            ],
+        ],
         stream=True,
     )
-    for chunk in stream:
-        if chunk.choices[0].delta.content is not None:
+    
+    for chunk in response:
+        if chunk.choices[0].delta.get("content"):
             report.append(chunk.choices[0].delta.content)
             result = "".join(report).strip()
             res_box.write(result, unsafe_allow_html=True) 
+    
     disclaimer = "<br><p>**Warning: This conspiracy story is FAKE and was generated with the Conspiracy Generator, an educational tool.**</p>"
     report.append(disclaimer)
     st.session_state["conspiracy_theory"] = "".join(report).strip()
 
 # Generate News Story Summary function
 @st.cache_data()
-def summarize_news_story(summary_prompt, _client):
+def summarize_news_story(summary_prompt, api_key):
     res_box = st.empty()
     report = []
 
-    stream = _client.chat.completions.create(
-        model="gpt-4",
+    # Set the OpenAI API key
+    openai.api_key = api_key
+
+    # Use the completion endpoint for streaming
+    response = openai.ChatCompletion.create(
+        model="gpt-4o",
         messages=[
             {"role": "system", "content": "You are an educational tool. You should summarize the news story given to you."},
             {"role": "user", "content": summary_prompt},
-            ],
+        ],
         stream=True,
     )
-    for chunk in stream:
-        if chunk.choices[0].delta.content is not None:
+    
+    for chunk in response:
+        if chunk.choices[0].delta.get("content"):
             report.append(chunk.choices[0].delta.content)
             result = "".join(report).strip()
             res_box.markdown(f'{result}') 
             
-    st.session_state["summarized_news_story"] = "".join(report).strip() 
+    st.session_state["summarized_news_story"] = "".join(report).strip()
 
 def create_twitter_button():
     post_text = f"I've just made my own conspiracy theory with the Conspiracy Generator!\n\
@@ -146,10 +157,8 @@ def display_page_5():
     
     # Load the secrets at the start of the app
     secrets = load_secrets()
-    client = OpenAI(
-        api_key=secrets["openai"]["api_key"],
-        base_url="https://api.openai.com/v1"
-    )
+    api_key = secrets["openai"]["api_key"]
+    
     images_list = [st.session_state["news_img"], st.session_state["culprits_img"], st.session_state["motives_img"]]
     captions_list = [st.session_state["news_caption"],st.session_state["culprits_caption"], st.session_state["motives_caption"]]
     captions = ["STORY:\n\n" + st.session_state["news_caption"], "CULPRIT:\n\n" + st.session_state["culprits_caption"], "MOTIVE:\n\n" + st.session_state["motives_caption"]]
@@ -161,10 +170,10 @@ def display_page_5():
     st.divider()
     
     with st.expander('Summary of original News Story'):
-        summarize_news_story(st.session_state["summary_prompt"], client)
-    generate_conspiracy_theory(st.session_state["prompt"], client)
+        summarize_news_story(st.session_state["summary_prompt"], api_key)
+    generate_conspiracy_theory(st.session_state["prompt"], api_key)
     
-    with st.expander('What's the recipe for a great conspiracy theory?'):
+    with st.expander("What's the recipe for a great conspiracy theory?"):
         display_page_recipe()
     
     if st.session_state["ct_saved"] == False:
@@ -185,7 +194,7 @@ def display_page_5():
     if st.button('Recreate your conspiracy theory'):
         st.markdown(f"<h3 style='text-align: center;'>Recreated Story</h3>", unsafe_allow_html=True)
         generate_conspiracy_theory.clear()
-        generate_conspiracy_theory(st.session_state["prompt"], client)
+        generate_conspiracy_theory(st.session_state["prompt"], api_key)
         
 
    # Convert Markdown to an image

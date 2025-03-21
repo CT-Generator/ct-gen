@@ -1,10 +1,11 @@
 import streamlit as st
-from openai import OpenAI
+# Removing OpenAI import as we're using the older module-based approach now
+import openai
 from ct_gen.src.modules.google_sheets_api import connect_to_google_sheets_data
 
 def initalize_session_state_dict():
-    # Initialize OpenAI API connection - now using the OpenAI class
-    # We'll initialize the client when needed in the specific pages
+    # Initialize OpenAI API connection - now using module-based approach
+    # We'll set the API key when needed in the specific pages
     
     # functional 
     st.session_state["model_name"] = "gpt-4o"
