@@ -8,22 +8,22 @@ import { MoveGlyph } from "@/components/move-glyph";
 
 const MOVE_LONG: Record<string, string[]> = {
   anomaly: [
-    "Find a pattern that wasn't asked for. Coincidence becomes signal.",
+    "Turn coincidence into evidence of a secret plot.",
     "Look for puzzling details or contradictions in the official story. Insist they prove the official story is false. You're \"just asking questions\" — and since no explanation of any event is ever complete, this part is easy.",
     "Real investigators look for patterns that survive a base-rate check. Conspiracists collect anomalies and forget to ask how often a coincidence of that kind happens by chance.",
   ],
   connection: [
-    "Draw lines between unrelated dots until they look load-bearing.",
+    "Draw lines between unrelated dots until they look meaningful.",
     "Fabricate \"evidence\" that implicates your culprit. Forge suspicious connections between the official story and your culprits — the tighter the network looks, the better.",
     "\"Six degrees of separation\" works for any two people on the planet. Treating a six-link chain as evidence is a category error: the connection exists in every direction, not only the one being highlighted.",
   ],
   dismiss: [
-    "If a fact disagrees, the fact is part of the cover-up.",
+    "If a fact disagrees, make the fact part of the cover-up.",
     "Argue that any disconfirming evidence is missing because the conspirators covered their tracks — and any apparent counter-evidence was planted to throw truth-seekers off.",
     "When counter-evidence becomes further evidence of the conspiracy, the theory has become unfalsifiable. Any disconfirmation just expands the circle of conspirators.",
   ],
   discredit: [
-    "Whoever points out the flaw is conveniently compromised.",
+    "Dismiss people who point out flaws in your theory.",
     "Critics can be dismissed in different ways: they're gullible dupes, they've been manipulated, or they're paid stooges of the conspirators themselves.",
     "Ad hominem framing reroutes the question from \"is this true?\" to \"who is asking?\" Real investigators welcome critique; conspiracists treat it as more evidence of the conspiracy.",
   ],

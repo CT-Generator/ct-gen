@@ -51,7 +51,25 @@ export default function AboutPage() {
             Credits
           </h2>
           <p className="mt-4 text-[15px] leading-relaxed">
-            The Conspiracy Generator is built by Marco Meyer and Maarten Boudry, inspired by{" "}
+            The Conspiracy Generator is built by{" "}
+            <a
+              href="https://www.linkedin.com/in/marco-meyer-10923245/"
+              target="_blank"
+              rel="noopener"
+              className="underline-offset-2 underline hover:no-underline"
+            >
+              Marco Meyer
+            </a>{" "}
+            and{" "}
+            <a
+              href="https://www.linkedin.com/in/maarten-boudry-6b199a8/"
+              target="_blank"
+              rel="noopener"
+              className="underline-offset-2 underline hover:no-underline"
+            >
+              Maarten Boudry
+            </a>
+            , inspired by{" "}
             <a
               href="https://maartenboudry.substack.com/p/the-conspiracy-generator"
               target="_blank"

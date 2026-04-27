@@ -7,6 +7,8 @@ export type Move = {
   key: MoveKey;
   title: string;
   sub: string;
+  /** Short caps phrase naming the move's tell — used in the inline stamp on /g/[id]. */
+  tell: string;
   /** Move accent — used for chips, glyphs, theory-column left border (oklch for in-browser). */
   color: string;
   /** ~8% tint of the accent — used for background fills under theory body. */
@@ -21,7 +23,8 @@ export const MOVES: Move[] = [
     n: "01",
     key: "anomaly",
     title: "Hunt anomalies",
-    sub: "Find a pattern that wasn't asked for. Coincidence becomes signal.",
+    sub: "Turn coincidence into evidence of a secret plot.",
+    tell: "BASE RATES",
     color: "oklch(56% 0.14 28)",
     soft: "oklch(92% 0.04 28)",
     colorHex: "#A04A3C",
@@ -31,7 +34,8 @@ export const MOVES: Move[] = [
     n: "02",
     key: "connection",
     title: "Fabricate connections",
-    sub: "Draw lines between unrelated dots until they look load-bearing.",
+    sub: "Draw lines between unrelated dots until they look meaningful.",
+    tell: "SIX DEGREES",
     color: "oklch(56% 0.14 130)",
     soft: "oklch(92% 0.04 130)",
     colorHex: "#5C7339",
@@ -41,7 +45,7 @@ export const MOVES: Move[] = [
     n: "03",
     key: "dismiss",
     title: "Dismiss counter-evidence",
-    sub: "If a fact disagrees, the fact is part of the cover-up.",
+    sub: "If a fact disagrees, make the fact part of the cover-up.",
     color: "oklch(56% 0.14 230)",
     soft: "oklch(92% 0.04 230)",
     colorHex: "#3A6E97",
@@ -51,7 +55,7 @@ export const MOVES: Move[] = [
     n: "04",
     key: "discredit",
     title: "Discredit the critics",
-    sub: "Whoever points out the flaw is conveniently compromised.",
+    sub: "Dismiss people who point out flaws in your theory.",
     color: "oklch(56% 0.14 70)",
     soft: "oklch(92% 0.04 70)",
     colorHex: "#876133",
