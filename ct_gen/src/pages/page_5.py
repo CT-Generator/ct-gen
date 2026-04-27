@@ -9,26 +9,6 @@ from ct_gen.src.modules.google_sheets_api import insert_row_to_sheet, connect_to
 import streamlit.components.v1 as components
 from ct_gen.src.pages.page_recipe import display_page_recipe
 from ct_gen.src.modules.scroll_up import scroll_up
-from ct_gen.src.modules.markdown_functions import markdown_to_image
-
-
-def selections_merger(images_list, captions_list):
-    additional_items = ['STORY', 'CULPRIT', 'MOTIVES']
-    
-    # Check if both lists are of the same size
-    if len(captions_list) != len(additional_items):
-        raise ValueError("The captions_list and additional_items lists must be of the same size.")
-    
-    # Concatenate the additional items to captions_list elements
-    modified_captions_list = [f"{additional_items[i]}: {captions_list[i]}" for i in range(len(captions_list))]
-    
-    content = '<table style="width: 100%; table-layout: fixed;"><tr>'
-    for i, image in enumerate(images_list):
-        new_img = f'<td style="width: 200px; text-align: center; padding: 5px; vertical-align: top;"><a href="#" id="{i}"><img src={image} alt="Image 1" style="width: 100%; max-width: 200px; height: auto;"></a><p style="margin: 2px;">{modified_captions_list[i]}</p></td>'
-        content = content + new_img
-    content = content + "</tr></table>"
-    
-    return markdown_to_image(content, "ct_gen/data/css/selections-img.css")
 
 
 def create_prompt():
@@ -160,7 +140,6 @@ def display_page_5():
     api_key = secrets["openai"]["api_key"]
     
     images_list = [st.session_state["news_img"], st.session_state["culprits_img"], st.session_state["motives_img"]]
-    captions_list = [st.session_state["news_caption"],st.session_state["culprits_caption"], st.session_state["motives_caption"]]
     captions = ["STORY:\n\n" + st.session_state["news_caption"], "CULPRIT:\n\n" + st.session_state["culprits_caption"], "MOTIVE:\n\n" + st.session_state["motives_caption"]]
     display_list_of_images(images_list, captions)
     
@@ -195,23 +174,7 @@ def display_page_5():
         st.markdown(f"<h3 style='text-align: center;'>Recreated Story</h3>", unsafe_allow_html=True)
         generate_conspiracy_theory.clear()
         generate_conspiracy_theory(st.session_state["prompt"], api_key)
-        
 
-   # Convert Markdown to an image
-    ct_image_bytes = markdown_to_image(st.session_state["conspiracy_theory"], "ct_gen/data/css/CT-img.css")
-    selections_image_bytes = selections_merger(images_list, captions_list)
-    # Display the image in Streamlit
-    # st.image(image_bytes, caption='Generated Conspiracy Theory', use_column_width=True)
-
-    # Download button for images:
-    st.markdown(f"<h3 style='text-align: center;'><b>Download images & Share</b></h3>", unsafe_allow_html=True)
-    col1,col2 = st.columns(2)
-    with col1:
-        st.download_button('Download Selections Image', data=selections_image_bytes, file_name='CT Selections.jpg')
-
-    with col2:
-        st.download_button('Download Conspiracy Theory Image', data=ct_image_bytes, file_name='Conspiracy Theory.jpg')
-    
     scol1,scol2,scol3,scol4,scol5 = st.columns(5)
     with scol3:
         create_twitter_button()
