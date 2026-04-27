@@ -1,0 +1,39 @@
+# Conspiracy Generator v2 — Caddy reverse proxy with DNS-01 via DuckDNS.
+# Spec: openspec/changes/v2-rebuild/specs/infrastructure/spec.md
+
+{
+	email admin@conspiracy-generator.example
+	# DNS-01 against DuckDNS so renewal does not require port 80 inbound.
+	# Token is provided as a Compose secret (file path) and read at runtime.
+	acme_dns duckdns {env.DUCKDNS_TOKEN}
+}
+
+conspiracy-generator.duckdns.org {
+	encode zstd gzip
+
+	header {
+		# HSTS — minimum 1 year, also include preload candidate posture.
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Permissions-Policy "camera=(), microphone=(), geolocation=()"
+
+		# CSP — same-origin scripts + the share-button targets.
+		# Adjust if you add more share platforms.
+		Content-Security-Policy "default-src 'self'; img-src 'self' data: blob:; font-src 'self' data: https://fonts.gstatic.com; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://twitter.com https://x.com https://bsky.app; upgrade-insecure-requests"
+
+		-Server
+	}
+
+	@healthz path /healthz
+	reverse_proxy @healthz web:3000
+
+	reverse_proxy web:3000 {
+		header_up X-Forwarded-Proto {scheme}
+	}
+
+	log {
+		output stdout
+		format console
+	}
+}

@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+  .dark {
+    color-scheme: dark;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: theme('colors.paper');
+    color: theme('colors.ink');
+    font-family: theme('fontFamily.body');
+    font-feature-settings: "kern", "liga", "calt";
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .dark body {
+    background: theme('colors.paper-dark');
+    color: theme('colors.ink-dark');
+  }
+
+  /* Display headings inherit Fraunces with optical sizing */
+  h1, h2, h3, h4, .display {
+    font-family: theme('fontFamily.display');
+    font-feature-settings: "kern", "liga", "ss01";
+    font-variation-settings: "opsz" 36, "SOFT" 20, "WONK" 0;
+    letter-spacing: -0.02em;
+  }
+
+  /* Mono captions */
+  .meta {
+    font-family: theme('fontFamily.mono');
+    font-size: 10px;
+    letter-spacing: theme('letterSpacing.meta');
+    text-transform: uppercase;
+    color: theme('colors.ink-soft');
+  }
+  .dark .meta { color: theme('colors.ink-soft-dark'); }
+
+  /* Visible focus rings — accessibility baseline */
+  :focus-visible {
+    outline: 2px solid theme('colors.ink');
+    outline-offset: 2px;
+  }
+  .dark :focus-visible { outline-color: theme('colors.ink-dark'); }
+}
+
+@layer components {
+  /* Hairline rule between sections, matches the editorial-newsprint feel */
+  .rule-h {
+    border-top: 1px solid theme('colors.ink');
+  }
+  .dark .rule-h { border-top-color: theme('colors.ink-dark'); }
+
+  .rule-h-soft {
+    border-top: 1px solid color-mix(in oklab, theme('colors.ink') 15%, transparent);
+  }
+  .dark .rule-h-soft {
+    border-top-color: color-mix(in oklab, theme('colors.ink-dark') 18%, transparent);
+  }
+}

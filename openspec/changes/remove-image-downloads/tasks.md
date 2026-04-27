@@ -21,7 +21,7 @@
 
 ## 4. Ship
 
-- [ ] 4.1 Commit on a feature branch with a message referencing this change name
-- [ ] 4.2 Open a PR; once merged to `main`, watch the Streamlit Cloud build log
+- [x] 4.1 Commit on a feature branch with a message referencing this change name (committed directly on `main` per user "Super Deploy" decision: `4c579a9`)
+- [x] 4.2 Open a PR; once merged to `main`, watch the Streamlit Cloud build log (skipped in favor of direct push to `main`; pushed as `4c579a9` to `origin/main`, Streamlit Cloud auto-redeploys)
 - [ ] 4.3 Confirm the live app loads at `https://conspiracy-generation.streamlit.app` without "Error installing requirements"
 - [ ] 4.4 Run `openspec archive remove-image-downloads` after the live deploy is verified green

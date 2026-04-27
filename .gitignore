@@ -1,11 +1,53 @@
+# --- v1 (legacy Streamlit) ---
 venv/
 env/
-
 .env
-
+.env.*
+!.env.example
 __pycache__/
-
+*.pyc
 secrets.toml
+.streamlit/secrets.toml
 .DS_Store
-
 ignoredFiles/
+
+# --- v2 (Next.js + infra) ---
+
+# Node
+node_modules/
+.pnpm-store/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+
+# TypeScript
+*.tsbuildinfo
+
+# Drizzle
+drizzle/.cache/
+
+# Docker / Compose secrets
+infra/secrets/*
+!infra/secrets/.gitkeep
+!infra/secrets/README.md
+
+# Postgres backups (local)
+*.dump
+*.sql.gz
+
+# Caddy local data
+infra/caddy_data/
+infra/caddy_config/
+
+# Editor
+.vscode/
+.idea/
+
+# OS
+Thumbs.db
