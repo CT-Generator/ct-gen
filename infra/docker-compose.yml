@@ -95,7 +95,9 @@ services:
 networks:
   edge:
   internal:
-    internal: true
+    # NOT marked internal:true — the web service needs outbound to api.openai.com.
+    # The db container has no host port binding (production compose) so it remains
+    # unreachable from outside the host even on a non-internal bridge network.
 
 volumes:
   pgdata:

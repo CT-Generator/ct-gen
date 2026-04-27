@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <rect width="64" height="64" fill="#1B1A1F"/>
+  <text x="20" y="48" font-family="Georgia, 'Fraunces', serif" font-style="italic" font-size="56" font-weight="600" fill="#F6F2EA">?</text>
+  <text x="36" y="48" font-family="Georgia, 'Fraunces', serif" font-size="56" font-weight="600" fill="#3A6E97">!</text>
+</svg>
