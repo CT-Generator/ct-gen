@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Inter_Tight, JetBrains_Mono } from "next/font/google";
+import { ClassroomMount } from "@/components/classroom-mount";
 import "./globals.css";
 
 const display = Fraunces({
@@ -66,7 +67,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <script dangerouslySetInnerHTML={{ __html: NO_FLASH_THEME }} />
       </head>
-      <body>{children}</body>
+      <body>
+        <ClassroomMount />
+        {children}
+      </body>
     </html>
   );
 }

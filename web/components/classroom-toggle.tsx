@@ -11,7 +11,9 @@ export function ClassroomToggle() {
   const [active, setActive] = useState(false);
 
   useEffect(() => {
-    setActive(sessionStorage.getItem(KEY) === "1");
+    const isOn = sessionStorage.getItem(KEY) === "1";
+    setActive(isOn);
+    document.body.dataset.classroom = isOn ? "1" : "0";
   }, []);
 
   function toggle() {

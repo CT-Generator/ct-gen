@@ -42,7 +42,7 @@ export function ShareButtons({ permalink, culprit }: Props) {
   }
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-2" data-share-area>
       <button
         type="button"
         onClick={copy}

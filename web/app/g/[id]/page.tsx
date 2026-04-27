@@ -18,6 +18,8 @@ import { Footer } from "@/components/footer";
 import { DisclaimerBand } from "@/components/disclaimer-band";
 import { MoveGlyph } from "@/components/move-glyph";
 import { ShareButtons } from "@/components/share-buttons";
+import { RatingBar } from "@/components/rating-bar";
+import Link from "next/link";
 
 type Params = { id: string };
 
@@ -196,8 +198,15 @@ export default async function GenerationPage({ params }: { params: Promise<Param
         </section>
       )}
 
-      {/* Share row — always-link-back, no downloadable artifacts */}
-      <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-9 mt-8 sm:mt-10 pt-6 sm:pt-8 rule-h-soft">
+      {/* Rate + remix + share row — always-link-back, no downloadable artifacts */}
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-9 mt-8 sm:mt-10 pt-6 sm:pt-8 rule-h-soft space-y-6">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="meta">Rate — was the recipe convincingly applied?</p>
+          </div>
+          <RatingBar shortId={id} />
+        </div>
+
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="meta">Share — recipe-naming, never theory text</p>
@@ -208,7 +217,23 @@ export default async function GenerationPage({ params }: { params: Promise<Param
               Anyone you send this to lands on the recipe explainer first.
             </p>
           </div>
-          <ShareButtons permalink={permalink} culprit={gen.culpritValue} />
+          <div className="flex flex-wrap gap-2 items-center">
+            <Link
+              href={{
+                pathname: "/",
+                query: {
+                  remix: id,
+                  e: gen.eventValue,
+                  c: gen.culpritValue,
+                  m: gen.motiveValue,
+                },
+              }}
+              className="border border-ink/30 dark:border-ink-dark/30 px-3 py-2 text-[12px] hover:border-ink dark:hover:border-ink-dark transition-colors"
+            >
+              ↻ Remix this
+            </Link>
+            <ShareButtons permalink={permalink} culprit={gen.culpritValue} />
+          </div>
         </div>
       </section>
 

@@ -66,4 +66,10 @@
   .dark .rule-h-soft {
     border-top-color: color-mix(in oklab, theme('colors.ink-dark') 18%, transparent);
   }
+
+  /* Classroom mode — hide all external share affordances when active.
+     Spec: openspec/changes/v2-rebuild/specs/teacher-mode/spec.md */
+  body[data-classroom="1"] [data-share-area] {
+    display: none;
+  }
 }
