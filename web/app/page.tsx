@@ -18,6 +18,11 @@ export const dynamic = "force-dynamic";
 
 type SearchParams = {
   r?: string;
+  // Remix params — when present, the selection form pre-fills these as custom inputs.
+  remix?: string;
+  e?: string;
+  c?: string;
+  m?: string;
 };
 
 export default async function HomePage({
@@ -31,6 +36,11 @@ export default async function HomePage({
   const events = sampleN("news", 4, refresh + 1);
   const culprits = sampleN("culprits", 4, refresh + 2);
   const motives = sampleN("motives", 3, refresh + 3);
+
+  const remix =
+    sp.remix && sp.e && sp.c && sp.m
+      ? { from: sp.remix, event: sp.e, culprit: sp.c, motive: sp.m }
+      : undefined;
 
   return (
     <>
@@ -110,7 +120,7 @@ export default async function HomePage({
             ↻ Refresh
           </Link>
         </div>
-        <SelectionForm events={events} culprits={culprits} motives={motives} />
+        <SelectionForm events={events} culprits={culprits} motives={motives} remix={remix} />
       </section>
 
       <DisclaimerBand compact accent={3} />

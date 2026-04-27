@@ -13,11 +13,15 @@ CREATE DATABASE cgen;
 -- The :'app_password' bind protects against quoting issues; psql escapes it.
 CREATE ROLE app WITH LOGIN PASSWORD :'app_password';
 
-GRANT CONNECT ON DATABASE cgen TO app;
+-- Ownership transfer + CREATE on the database so the app can run Drizzle
+-- migrations (which create the `drizzle` schema for migration metadata).
+ALTER DATABASE cgen OWNER TO app;
+GRANT ALL ON DATABASE cgen TO app;
 
 \connect cgen
 
 -- App role owns everything inside the cgen database.
+ALTER SCHEMA public OWNER TO app;
 GRANT ALL ON SCHEMA public TO app;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO app;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO app;

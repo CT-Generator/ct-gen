@@ -19,6 +19,7 @@ import { DisclaimerBand } from "@/components/disclaimer-band";
 import { MoveGlyph } from "@/components/move-glyph";
 import { ShareButtons } from "@/components/share-buttons";
 import { RatingBar } from "@/components/rating-bar";
+import { RerollButton } from "@/components/reroll-button";
 import Link from "next/link";
 
 type Params = { id: string };
@@ -141,7 +142,7 @@ export default async function GenerationPage({ params }: { params: Promise<Param
               >
                 {/* Theory column */}
                 <div>
-                  <div className="flex items-center gap-2.5 mb-3">
+                  <div className="flex flex-wrap items-center gap-2.5 mb-3">
                     <span style={{ color: m.color }}>
                       <MoveGlyph kind={m.key} size={22} strokeWidth={1.6} />
                     </span>
@@ -151,6 +152,11 @@ export default async function GenerationPage({ params }: { params: Promise<Param
                     >
                       Move {m.n} · {m.title}
                     </span>
+                    <RerollButton
+                      parentShortId={id}
+                      section={MOVE_KEYS[i]}
+                      accentColor={m.color}
+                    />
                   </div>
                   <div
                     className="font-body text-[15px] sm:text-[16px] leading-[1.65] pl-4 sm:pl-5 max-w-prose-theory"
@@ -257,8 +263,8 @@ function formatDate(d: Date | null): string {
 /**
  * The debunk field is one continuous string covering all four moves.
  * Best-effort split: try to find paragraph breaks corresponding to each move.
- * If splitting fails, return the whole debunk under move 0 and empty for others —
- * the UI still renders coherently because each aside has its own heading.
+ * Also strips redundant "Move N — Title:" prefixes the model occasionally emits
+ * (the UI already labels each section, so the prefix is double-tagging).
  */
 function extractDebunkParagraph(full: string, idx: number): string {
   if (!full) return "";
@@ -266,7 +272,14 @@ function extractDebunkParagraph(full: string, idx: number): string {
     .split(/\n\s*\n+/)
     .map((p) => p.trim())
     .filter(Boolean);
-  if (paras.length >= 4) return paras[idx] ?? "";
-  // Fallback: only show on move 0
-  return idx === 0 ? full : "";
+  const para = paras.length >= 4 ? paras[idx] : idx === 0 ? full : "";
+  if (!para) return "";
+  // Strip leading "Move N — Anomaly hunting:" / "Move 02: Connections —" etc.
+  return para
+    .replace(
+      /^\s*(?:\[[^\]]*\]\s*)?move\s*0?[1-4]\s*[—:.\-–]\s*[^.:\n]*[—:]\s*/i,
+      "",
+    )
+    .replace(/^\s*(?:\[[^\]]*\]\s*)?move\s*0?[1-4]\s*[—:.\-–]\s*/i, "")
+    .trim();
 }

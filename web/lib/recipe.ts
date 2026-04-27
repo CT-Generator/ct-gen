@@ -8,10 +8,13 @@ export type Move = {
   key: MoveKey;
   title: string;
   sub: string;
-  /** Move accent — used for chips, glyphs, theory-column left border. */
+  /** Move accent — used for chips, glyphs, theory-column left border (oklch for in-browser). */
   color: string;
   /** ~8% tint of the accent — used for background fills under theory body. */
   soft: string;
+  /** Hex equivalent for environments that don't grok oklch (e.g. Satori → next/og). */
+  colorHex: string;
+  softHex: string;
 };
 
 export const MOVES: Move[] = [
@@ -22,6 +25,8 @@ export const MOVES: Move[] = [
     sub: "Find a pattern that wasn't asked for. Coincidence becomes signal.",
     color: "oklch(56% 0.14 28)",
     soft: "oklch(92% 0.04 28)",
+    colorHex: "#A04A3C",
+    softHex: "#F2DDD5",
   },
   {
     n: "02",
@@ -30,6 +35,8 @@ export const MOVES: Move[] = [
     sub: "Draw lines between unrelated dots until they look load-bearing.",
     color: "oklch(56% 0.14 130)",
     soft: "oklch(92% 0.04 130)",
+    colorHex: "#5C7339",
+    softHex: "#E0E8D2",
   },
   {
     n: "03",
@@ -38,6 +45,8 @@ export const MOVES: Move[] = [
     sub: "If a fact disagrees, the fact is part of the cover-up.",
     color: "oklch(56% 0.14 230)",
     soft: "oklch(92% 0.04 230)",
+    colorHex: "#3A6E97",
+    softHex: "#D6E2EC",
   },
   {
     n: "04",
@@ -46,6 +55,8 @@ export const MOVES: Move[] = [
     sub: "Whoever points out the flaw is conveniently compromised.",
     color: "oklch(56% 0.14 70)",
     soft: "oklch(92% 0.04 70)",
+    colorHex: "#876133",
+    softHex: "#EBE2D0",
   },
 ];
 

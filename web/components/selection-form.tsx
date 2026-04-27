@@ -4,7 +4,7 @@
 
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import type { SeedItemWithImage } from "@/lib/seed";
@@ -13,6 +13,13 @@ type Props = {
   events: SeedItemWithImage[];
   culprits: SeedItemWithImage[];
   motives: SeedItemWithImage[];
+  /** When present, pre-fill the form with these values as custom inputs (Remix flow). */
+  remix?: {
+    from: string;
+    event: string;
+    culprit: string;
+    motive: string;
+  };
 };
 
 type Picked = {
@@ -22,14 +29,26 @@ type Picked = {
   source: "curated" | "custom";
 };
 
-export function SelectionForm({ events, culprits, motives }: Props) {
+export function SelectionForm({ events, culprits, motives, remix }: Props) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
 
-  const [event, setEvent] = useState<Picked | null>(toPicked(events[0]));
-  const [culprit, setCulprit] = useState<Picked | null>(toPicked(culprits[0]));
-  const [motive, setMotive] = useState<Picked | null>(toPicked(motives[1] ?? motives[0]));
+  const [event, setEvent] = useState<Picked | null>(
+    remix
+      ? matchOrCustom(events, remix.event)
+      : toPicked(events[0]),
+  );
+  const [culprit, setCulprit] = useState<Picked | null>(
+    remix
+      ? matchOrCustom(culprits, remix.culprit)
+      : toPicked(culprits[0]),
+  );
+  const [motive, setMotive] = useState<Picked | null>(
+    remix
+      ? matchOrCustom(motives, remix.motive)
+      : toPicked(motives[1] ?? motives[0]),
+  );
 
   const ready = event && culprit && motive;
 
@@ -38,15 +57,20 @@ export function SelectionForm({ events, culprits, motives }: Props) {
     setError(null);
     startTransition(async () => {
       try {
+        // Long timeout — gpt-5 with structured outputs can take 60–90s.
+        const ctrl = new AbortController();
+        const t = setTimeout(() => ctrl.abort(), 180_000);
         const res = await fetch("/api/generate", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          signal: ctrl.signal,
           body: JSON.stringify({
             event: { value: event!.name, source: event!.source },
             culprit: { value: culprit!.name, source: culprit!.source },
             motive: { value: motive!.name, source: motive!.source },
           }),
         });
+        clearTimeout(t);
         if (!res.ok) {
           const payload = (await res.json().catch(() => ({}))) as { error?: string };
           throw new Error(payload.error ?? `Generation failed (${res.status})`);
@@ -54,7 +78,11 @@ export function SelectionForm({ events, culprits, motives }: Props) {
         const { shortId } = (await res.json()) as { shortId: string };
         router.push(`/g/${shortId}`);
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Generation failed.");
+        if (err instanceof Error && err.name === "AbortError") {
+          setError("That took longer than 3 minutes — try again or pick a different triple.");
+        } else {
+          setError(err instanceof Error ? err.message : "Generation failed.");
+        }
       }
     });
   }
@@ -202,10 +230,13 @@ export function SelectionForm({ events, culprits, motives }: Props) {
           </p>
         )}
 
+        {pending && <CookingProgress />}
+
         <div className="mt-5 sm:mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-[13px] italic text-ink-soft dark:text-ink-soft-dark max-w-xl leading-relaxed">
-            Generation runs in front of you. Each of the four moves streams into its own labeled section,
-            with a debunking column running alongside.
+            {pending
+              ? "Generation takes about a minute — gpt-5 reasons through the four moves and then writes a debunking pass."
+              : "Generation takes about a minute. Each of the four moves is written separately, with a debunking column running alongside."}
           </p>
           <button
             type="button"
@@ -222,6 +253,59 @@ export function SelectionForm({ events, culprits, motives }: Props) {
         </div>
       </div>
     </>
+  );
+}
+
+/**
+ * "Cooking" progress UI. Cycles through the four-move steps so the user gets
+ * a sense of progress during the ~60s the model takes. Purely cosmetic — the
+ * actual generation is a single non-streaming POST.
+ */
+function CookingProgress() {
+  const steps = [
+    { color: "oklch(56% 0.14 28)", title: "Hunting anomalies" },
+    { color: "oklch(56% 0.14 130)", title: "Fabricating connections" },
+    { color: "oklch(56% 0.14 230)", title: "Dismissing counter-evidence" },
+    { color: "oklch(56% 0.14 70)", title: "Discrediting critics" },
+    { color: "var(--tw-color-ink, #1B1A1F)", title: "Writing the debunk" },
+  ];
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    if (i >= steps.length - 1) return;
+    const t = setTimeout(() => setI((x) => x + 1), 14_000);
+    return () => clearTimeout(t);
+  }, [i, steps.length]);
+
+  return (
+    <div className="mt-4 border border-ink/15 dark:border-ink-dark/15 p-4 sm:p-5 bg-paper-alt dark:bg-paper-alt-dark">
+      <p className="meta">Cooking</p>
+      <ol className="mt-3 space-y-2 text-[14px]">
+        {steps.map((s, idx) => {
+          const state = idx < i ? "done" : idx === i ? "active" : "pending";
+          return (
+            <li key={s.title} className="flex items-center gap-3">
+              <span
+                aria-hidden
+                className="inline-block h-2 w-8 transition-opacity"
+                style={{
+                  background: s.color,
+                  opacity: state === "pending" ? 0.2 : 1,
+                }}
+              />
+              <span
+                style={{
+                  color: state === "active" ? s.color : undefined,
+                  fontWeight: state === "active" ? 600 : 400,
+                  opacity: state === "pending" ? 0.5 : 1,
+                }}
+              >
+                {state === "active" ? `${s.title}…` : s.title}
+              </span>
+            </li>
+          );
+        })}
+      </ol>
+    </div>
   );
 }
 
@@ -363,6 +447,13 @@ function CustomInput({
 function toPicked(item: SeedItemWithImage | undefined): Picked | null {
   if (!item) return null;
   return { uuid: item.uuid, name: item.name, summary: item.summary, source: "curated" };
+}
+
+/** If `value` matches a curated item by name, return that. Otherwise treat it as a custom value. */
+function matchOrCustom(items: SeedItemWithImage[], value: string): Picked {
+  const match = items.find((i) => i.name === value);
+  if (match) return { uuid: match.uuid, name: match.name, summary: match.summary, source: "curated" };
+  return { uuid: `custom-${cryptoRandomId()}`, name: value, summary: value, source: "custom" };
 }
 
 function cryptoRandomId(): string {

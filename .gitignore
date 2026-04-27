@@ -37,6 +37,9 @@ infra/secrets/*
 !infra/secrets/.gitkeep
 !infra/secrets/README.md
 
+# Local-only Compose overrides
+infra/docker-compose.override.yml
+
 # Postgres backups (local)
 *.dump
 *.sql.gz

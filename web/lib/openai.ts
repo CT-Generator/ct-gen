@@ -27,6 +27,18 @@ const SYSTEM_PROMPT = [
   "  educational frame.",
   "- The reader must be able to tell each section is satire by its tone and by the labeled structure.",
   "- The debunk section is plain, calm, addressed to the reader. It names each move and its tell.",
+  "",
+  "OUTPUT FORMAT — IMPORTANT:",
+  "- Each section value MUST be the prose for THAT section only. The UI already labels each",
+  "  section with its move number and title.",
+  "- Do NOT include section headings inside the text (no \"[Satire]\", no \"Move 01 —\",",
+  "  no \"Anomaly Hunting:\" prefix, no markdown headers like \"## Move 02\"). Start each",
+  "  section with the first sentence of prose.",
+  "- Do NOT use bracketed editorial labels of any kind at the start of a section.",
+  "- Each of the four theory sections is 120–250 words, set as 1–3 paragraphs separated by",
+  "  blank lines. The debunk section is 200–350 words across 4 short paragraphs (one per move).",
+  "- Use plain prose. Markdown is allowed only for occasional emphasis (single asterisks for",
+  "  italic). No headers, no bullet lists, no numbered lists.",
 ].join("\n");
 
 /**

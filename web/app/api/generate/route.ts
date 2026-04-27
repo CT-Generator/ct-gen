@@ -49,9 +49,13 @@ export async function POST(req: Request) {
 
   const e = env();
 
-  // Pre-compute the short-id with the configured model. If a row already exists,
-  // short-circuit — saves tokens and keeps the URL deterministic.
-  const provisionalShortId = shortIdFor({
+  // The shortId is deterministic over the configured model alias (e.g. "gpt-5"),
+  // not the resolved date-pinned snapshot the API returns. This means:
+  //   - same triple + same configured model → same URL across requests
+  //   - upgrading OPENAI_MODEL ("gpt-5" → "gpt-5-pro") forks new URLs for the
+  //     same triples, which is the correct behavior for a different generator
+  // The persisted modelVersion column captures the actual snapshot for provenance.
+  const shortId = shortIdFor({
     event: event.value,
     culprit: culprit.value,
     motive: motive.value,
@@ -59,12 +63,12 @@ export async function POST(req: Request) {
     recipeVersion: RECIPE_VERSION,
   });
 
+  // Short-circuit if the same triple + same model has been generated before.
   const existing = await db()
-    .select({ id: schema.generations.id, shortId: schema.generations.shortId })
+    .select({ shortId: schema.generations.shortId })
     .from(schema.generations)
-    .where(eq(schema.generations.shortId, provisionalShortId))
+    .where(eq(schema.generations.shortId, shortId))
     .limit(1);
-
   if (existing[0]) {
     return NextResponse.json({ shortId: existing[0].shortId, cached: true });
   }
@@ -107,32 +111,27 @@ export async function POST(req: Request) {
     }
   }
 
-  // Persist.
+  // Persist. Use ON CONFLICT DO NOTHING as a safety net: if two requests for
+  // the same triple race past the dedup query, the second one is a no-op.
   const sessionHash = await getOrIssueSessionHash();
-  // Re-derive with the actual response model in case the alias resolved differently.
-  const shortId = shortIdFor({
-    event: event.value,
-    culprit: culprit.value,
-    motive: motive.value,
-    modelVersion,
-    recipeVersion: RECIPE_VERSION,
-  });
-
-  await db().insert(schema.generations).values({
-    shortId,
-    eventValue: event.value,
-    eventSource: event.source,
-    culpritValue: culprit.value,
-    culpritSource: culprit.source,
-    motiveValue: motive.value,
-    motiveSource: motive.source,
-    recipeContent: output,
-    modelVersion,
-    recipeVersion: RECIPE_VERSION,
-    source: "created",
-    sessionHash,
-    createdAt: new Date(),
-  });
+  await db()
+    .insert(schema.generations)
+    .values({
+      shortId,
+      eventValue: event.value,
+      eventSource: event.source,
+      culpritValue: culprit.value,
+      culpritSource: culprit.source,
+      motiveValue: motive.value,
+      motiveSource: motive.source,
+      recipeContent: output,
+      modelVersion,
+      recipeVersion: RECIPE_VERSION,
+      source: "created",
+      sessionHash,
+      createdAt: new Date(),
+    })
+    .onConflictDoNothing({ target: schema.generations.shortId });
 
   return NextResponse.json({ shortId });
 }
