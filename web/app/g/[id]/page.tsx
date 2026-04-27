@@ -15,6 +15,7 @@ import { MOVES, type MoveKey, type WizardContent } from "@/lib/recipe";
 import { Masthead } from "@/components/masthead";
 import { Footer } from "@/components/footer";
 import { MoveGlyph } from "@/components/move-glyph";
+import { MoveTellStamp } from "@/components/move-tell-stamp";
 import { ShareButtons } from "@/components/share-buttons";
 import { RatingBar } from "@/components/rating-bar";
 
@@ -170,13 +171,15 @@ export default async function GenerationPage({ params }: { params: Promise<Param
                 <div
                   className="font-body text-[15px] sm:text-[16px] leading-[1.65] pl-4 sm:pl-5"
                   style={{
+                    position: "relative",
                     borderLeft: `2px solid ${m.color}`,
                     background: `color-mix(in oklab, ${m.color} 6%, transparent)`,
-                    padding: "10px 14px 10px 16px",
+                    padding: "10px 32px 22px 16px",
                     whiteSpace: "pre-wrap",
                   }}
                 >
                   {dm.paragraph}
+                  <MoveTellStamp move={m} />
                 </div>
                 <div className="mt-4 pl-4 sm:pl-5 border-l border-dashed border-ink/35 dark:border-ink-dark/35 py-1">
                   <p

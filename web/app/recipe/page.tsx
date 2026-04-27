@@ -57,8 +57,32 @@ export default function RecipePage() {
           >
             this blog post
           </a>
+          , with the academic version at{" "}
+          <a
+            href="https://drive.google.com/file/d/1GMDVLdKfvaFnj8IFDyiRTGH3ePsOO9B7/views"
+            target="_blank"
+            rel="noopener"
+            className="underline-offset-2 underline hover:no-underline"
+          >
+            this paper
+          </a>
           .
         </p>
+
+        <aside
+          className="mt-8 border-l-2 pl-4 sm:pl-5 py-2 italic text-[15px] leading-relaxed"
+          style={{ borderColor: "var(--tw-color-ink-soft, #54515C)" }}
+        >
+          <p>
+            Spotting these moves is not the same as winning an argument. Real critics of real
+            institutions sometimes use these moves with substance behind them — a journalist
+            questioning an official cover-up, a researcher rejecting weak counter-evidence. The
+            four-move recipe trains your eye for the <strong className="not-italic">form</strong>{" "}
+            of conspiracy reasoning. Whether the{" "}
+            <strong className="not-italic">substance</strong> of the claim is also wrong is a
+            separate, slower question. Use the recipe as a noticer, not as a verdict.
+          </p>
+        </aside>
 
         <div className="mt-10 space-y-12">
           {MOVES.map((m) => {

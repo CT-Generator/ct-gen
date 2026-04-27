@@ -36,6 +36,12 @@ export default async function HomePage({
             Build a conspiracy theory{" "}
             <span style={{ color: MOVES[0].color }}>from scratch</span>.
           </h1>
+          <p
+            className="mt-3 sm:mt-4 max-w-2xl text-[16px] sm:text-[17px] italic text-ink-soft dark:text-ink-soft-dark"
+            style={{ fontWeight: 400 }}
+          >
+            The best way to learn to spot a conspiracy theory is to make one yourself.
+          </p>
           <p className="mt-5 sm:mt-6 max-w-2xl text-[15px] sm:text-[16px] leading-relaxed text-ink-soft dark:text-ink-soft-dark">
             Pick a real news story. On the next step you'll choose who's behind it and why. Then walk
             through the four moves real conspiracists use — one move per screen — with a debunk on

@@ -169,6 +169,14 @@ const TELL_BRIEFINGS: Record<MoveKey, string> = {
     'Ad hominem reroutes the question from "is this true?" to "who is asking?" Real investigators welcome critique. Conspiracists treat it as the conspiracy.',
 };
 
+/** Per-move extra closing-rule for the debunk. Move 04 needs a crisp standalone
+ * tell sentence; the others already land on memorable phrases ("base rates",
+ * "six-degrees", "unfalsifiable") naturally. Spec: ux-research-fixes #3. */
+const EXTRA_DEBUNK_CLOSING_RULES: Partial<Record<MoveKey, string>> = {
+  discredit:
+    "End the debunk with a single 4–8 word sentence whose only job is to name the move's tell. The sentence MUST stand alone (its own period), not be appended to a longer sentence. Use one of: \"Ad hominem.\" / \"Attacking the messenger, not the message.\" / \"Shoot the messenger.\" Keep this final sentence short and unornamented.",
+};
+
 export async function generateSection(input: {
   eventName: string;
   eventSummary: string;
@@ -182,10 +190,18 @@ export async function generateSection(input: {
   const e = env();
   const move = MOVE_BY_KEY[input.moveKey];
 
-  const priorText = (Object.entries(input.prior) as [MoveKey, string | undefined][])
-    .filter(([, v]) => Boolean(v))
+  const priorEntries = (Object.entries(input.prior) as [MoveKey, string | undefined][])
+    .filter(([, v]) => Boolean(v));
+  const priorText = priorEntries
     .map(([k, v]) => `Prior ${MOVE_BY_KEY[k].title}: ${v}`)
     .join("\n\n");
+  // First three words of each prior paragraph — fed to the user message so the
+  // model can avoid repeating the same imperative opener. Spec: ux-research-fixes #4.
+  const priorOpeners = priorEntries
+    .map(([, v]) => v!.trim().split(/\s+/).slice(0, 3).join(" "))
+    .filter(Boolean);
+
+  const extraRule = EXTRA_DEBUNK_CLOSING_RULES[input.moveKey];
 
   const system = [
     `You are writing Move ${move.n} of a fake conspiracy theory: "${move.title}".`,
@@ -199,11 +215,17 @@ export async function generateSection(input: {
     "     pointing out why the move just played is wrong. End by naming the tell.",
     "",
     `THE TELL. ${TELL_BRIEFINGS[input.moveKey]}`,
+    extraRule ? `\nEXTRA CLOSING RULE. ${extraRule}` : "",
+    "",
+    "OPENER VARIETY. Vary the opening clause. Do NOT start the paragraph with the same",
+    'imperative-pointer used by an earlier move ("Look at...", "Look closer...", "Look',
+    'closely...", "Notice..."). If a list of earlier openers is given below, your opening',
+    "MUST differ from each of them.",
     "",
     VOICE_GUIDELINES,
     "",
     HARD_CONSTRAINTS,
-  ].join("\n");
+  ].filter(Boolean).join("\n");
 
   const user = [
     `Event:   ${input.eventName} — ${input.eventSummary}`,
@@ -212,7 +234,10 @@ export async function generateSection(input: {
     `Idea to apply for THIS move: ${input.chosenIdea}`,
     "",
     priorText || "(no earlier moves yet)",
-  ].join("\n");
+    priorOpeners.length
+      ? `\nEarlier openings (do NOT repeat the same imperative): ${JSON.stringify(priorOpeners)}`
+      : "",
+  ].filter(Boolean).join("\n");
 
   const r = await client().chat.completions.create({
     model: e.OPENAI_MODEL,
