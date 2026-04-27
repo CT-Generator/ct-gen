@@ -55,9 +55,17 @@ export const viewport: Viewport = {
   ],
 };
 
+// Inline script to set theme class before paint, preventing flash-of-wrong-theme.
+const NO_FLASH_THEME = `
+(function(){try{var t=localStorage.getItem('cgen-theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(d)document.documentElement.classList.add('dark');}catch(e){}})();
+`.trim();
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: NO_FLASH_THEME }} />
+      </head>
       <body>{children}</body>
     </html>
   );

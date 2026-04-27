@@ -1,51 +1,86 @@
 // Permalink / generation page.
-// Mobile: theory above, debunk below per move (debunk equal heading prominence).
-// Tablet+: side-by-side 1.4fr / 1fr per move.
-// Source: design system, component-sheets.jsx → GenerationSheet
+// Spec: openspec/changes/v2-rebuild/specs/theory-generation/spec.md
+//       openspec/changes/v2-rebuild/specs/permalinks-and-sharing/spec.md
 //
-// Phase 2 task 2C.2 will replace the placeholder data with a real fetch by short-id.
+// Reads from Postgres by short-id. Falls back to a 404 if not found.
+// Recipe-tagged sections + debunk render in distinct visual containers.
+// Mobile: theory above, debunk below per move (debunk has equal heading prominence).
+// Tablet+: side-by-side 1.4fr / 1fr per move.
 
+import { eq } from "drizzle-orm";
+import { notFound } from "next/navigation";
+import type { Metadata } from "next";
+import { db, schema } from "@/lib/db";
+import { env } from "@/lib/env";
 import { MOVES } from "@/lib/recipe";
 import { Masthead } from "@/components/masthead";
 import { Footer } from "@/components/footer";
 import { DisclaimerBand } from "@/components/disclaimer-band";
 import { MoveGlyph } from "@/components/move-glyph";
+import { ShareButtons } from "@/components/share-buttons";
 
 type Params = { id: string };
 
-// Placeholder data shape — matches the strict OpenAI structured-output schema.
-// The real page will read this from Postgres via the short-id.
-const PLACEHOLDER = {
-  event: "UK push to weaken surveillance laws",
-  culprit: "The Jazz Cabal",
-  motive: "Celebrity Puppeteering",
-  recipe: {
-    anomalies:
-      "It began, as these things do, with a coincidence too tidy to ignore. The week the new surveillance proposal landed, three of London's most-watched jazz clubs quietly went dark for 'private events.' The proposal's lead author had been photographed at one of them eleven years earlier. The other two share a holding company. None of this is in the official record — which, of course, is the point.",
-    connect_dots:
-      "From here the network draws itself. The holding company shares an accountant with a streaming-rights licensor; that licensor's board includes a former intelligence liaison; the liaison sat on a 2019 panel where the surveillance proposal was first floated. Six steps separate any two people on Earth — but when six steps connect your villains, that is no longer a graph theory result. It is a ledger.",
-    dismiss_counter:
-      "The Home Office insists the proposal was drafted by career civil servants with no entertainment-industry ties. Naturally they would say so. The Office's own ethics review confirms the absence of conflict — the same ethics review whose chair, in 2017, attended a charity gala underwritten by… well. Read the guest list yourself.",
-    discredit_critics:
-      "Whoever now points out that 'six degrees of Kevin Bacon' applies to literally any two people on the planet is, of course, on retainer. Look at where their funding comes from; look at where they post; look at the awards they have not won. The pattern is plain to anyone who is willing to see it.",
-    debunk: {
-      anomalies:
-        "This paragraph manufactures a pattern from unrelated facts: a calendar coincidence, an old photograph, a corporate registry. None of these facts is false; the work is in the arrangement. Real investigators look for patterns that survive a base-rate check. Here, no base rate is offered — because there isn't one.",
-      connect_dots:
-        "'Six degrees of separation' works for any two humans on the planet. Treating a six-link chain as evidence is a category error: the connection exists in every direction, not only the one being highlighted.",
-      dismiss_counter:
-        "Here counter-evidence is reframed as further evidence of the cover-up. This is the move's tell: the theory is now unfalsifiable. Any disconfirmation simply expands the circle of conspirators.",
-      discredit_critics:
-        "Ad hominem framing of critics is the recipe's closing move — it reroutes the question from 'is this true?' to 'who is asking?' Real investigators welcome critique; conspiracists treat it as evidence of the conspiracy.",
-    },
-  },
-};
-
 const MOVE_KEYS = ["anomalies", "connect_dots", "dismiss_counter", "discredit_critics"] as const;
 
+type RecipeContent = {
+  anomalies: string;
+  connect_dots: string;
+  dismiss_counter: string;
+  discredit_critics: string;
+  debunk: string;
+  // Migrated rows have the legacy_text shape instead.
+  legacy_text?: string;
+  recipe_tags?: null;
+};
+
+async function loadGeneration(shortId: string) {
+  const rows = await db()
+    .select()
+    .from(schema.generations)
+    .where(eq(schema.generations.shortId, shortId))
+    .limit(1);
+  return rows[0] ?? null;
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<Params>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const gen = await loadGeneration(id).catch(() => null);
+  if (!gen) return { title: "Theory not found" };
+  // OG copy NEVER includes any sentence of the generated theory.
+  // Spec: permalinks-and-sharing → OG cards teach the recipe, not the theory.
+  const title = `${gen.culpritValue} × ${gen.eventValue}`;
+  const description = `Made with the four-move recipe. Pick an event, a culprit, a motive — watch the theory build itself.`;
+  const ogImage = `${env().PUBLIC_BASE_URL}/api/og/${id}`;
+  return {
+    title,
+    description,
+    openGraph: {
+      title: `Conspiracy Generator — ${title}`,
+      description,
+      images: [{ url: ogImage, width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `Conspiracy Generator — ${title}`,
+      description,
+      images: [ogImage],
+    },
+  };
+}
+
 export default async function GenerationPage({ params }: { params: Promise<Params> }) {
-  const { id: _id } = await params;
-  const data = PLACEHOLDER;
+  const { id } = await params;
+  const gen = await loadGeneration(id);
+  if (!gen) notFound();
+
+  const recipe = gen.recipeContent as RecipeContent;
+  const isLegacy = !!recipe.legacy_text && !recipe.anomalies;
+  const permalink = `${env().PUBLIC_BASE_URL}/g/${id}`;
 
   return (
     <>
@@ -56,90 +91,110 @@ export default async function GenerationPage({ params }: { params: Promise<Param
       <section className="border-b border-ink dark:border-ink-dark">
         <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8 lg:px-9 lg:py-10 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:gap-8">
           <div>
-            <p className="meta">Theory · run #4128 · 02:14 a.m.</p>
+            <p className="meta">
+              {gen.source === "migrated" ? "Theory · imported from v1" : `Theory · ${formatDate(gen.createdAt)}`}
+            </p>
             <h1
               className="mt-2 font-display text-[clamp(1.6rem,4.5vw,2.4rem)] leading-[1.05] max-w-3xl"
               style={{ fontWeight: 600, letterSpacing: "-0.02em" }}
             >
-              How <span style={{ color: MOVES[0].color }}>{data.culprit}</span> orchestrated{" "}
-              <span style={{ color: MOVES[2].color }}>{data.event}</span>, in service of{" "}
-              <span style={{ color: MOVES[3].color }}>{data.motive.toLowerCase()}</span>.
+              How <span style={{ color: MOVES[0].color }}>{gen.culpritValue}</span> orchestrated{" "}
+              <span style={{ color: MOVES[2].color }}>{gen.eventValue}</span>, in service of{" "}
+              <span style={{ color: MOVES[3].color }}>{gen.motiveValue.toLowerCase()}</span>.
             </h1>
           </div>
-          <div className="flex items-center gap-3 sm:flex-col sm:items-end sm:gap-1.5">
-            <span
-              className="font-mono uppercase text-ink-soft dark:text-ink-soft-dark"
-              style={{ fontSize: 10, letterSpacing: "0.12em" }}
-            >
-              Generated · 4/4
-            </span>
-            <div className="flex gap-1">
-              {MOVES.map((m) => (
-                <div
-                  key={m.key}
-                  className="h-1 w-7 sm:w-9"
-                  style={{ background: m.color }}
-                  aria-hidden
-                />
-              ))}
+          {!isLegacy && (
+            <div className="flex items-center gap-3 sm:flex-col sm:items-end sm:gap-1.5">
+              <span
+                className="font-mono uppercase text-ink-soft dark:text-ink-soft-dark"
+                style={{ fontSize: 10, letterSpacing: "0.12em" }}
+              >
+                Generated · 4/4
+              </span>
+              <div className="flex gap-1">
+                {MOVES.map((m) => (
+                  <div
+                    key={m.key}
+                    className="h-1 w-7 sm:w-9"
+                    style={{ background: m.color }}
+                    aria-hidden
+                  />
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
 
       {/* Move blocks — theory + debunk per move */}
-      <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-9">
-        {MOVES.map((m, i) => {
-          const theoryText = data.recipe[MOVE_KEYS[i]];
-          const debunkText =
-            data.recipe.debunk[MOVE_KEYS[i] as keyof typeof data.recipe.debunk];
-          return (
-            <article
-              key={m.key}
-              className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-6 sm:gap-8 lg:gap-10 py-6 sm:py-8 border-t border-ink/15 dark:border-ink-dark/15 first:border-t-0 first:pt-2"
-            >
-              {/* Theory column */}
-              <div>
-                <div className="flex items-center gap-2.5 mb-3">
-                  <span style={{ color: m.color }}>
-                    <MoveGlyph kind={m.key} size={22} strokeWidth={1.6} />
-                  </span>
-                  <span
-                    className="font-mono uppercase"
-                    style={{ fontSize: 10, letterSpacing: "0.16em", color: m.color }}
-                  >
-                    Move {m.n} · {m.title}
-                  </span>
-                </div>
-                <p
-                  className="font-body text-[15px] sm:text-[16px] leading-[1.65] pl-4 sm:pl-5 max-w-prose-theory"
-                  style={{
-                    borderLeft: `2px solid ${m.color}`,
-                    background: `color-mix(in oklab, ${m.color} 6%, transparent)`,
-                    padding: "10px 14px 10px 16px",
-                  }}
-                >
-                  {theoryText}
-                </p>
-              </div>
-
-              {/* Debunk column — sans, tighter, dashed left rule */}
-              <aside
-                className="lg:border-l lg:border-dashed lg:border-ink/35 dark:lg:border-ink-dark/35 lg:pl-5 pt-4 lg:pt-0 border-t border-dashed border-ink/35 dark:border-ink-dark/35 lg:border-t-0"
-                aria-label={`Debunking move ${m.n}`}
+      {!isLegacy ? (
+        <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-9">
+          {MOVES.map((m, i) => {
+            const theoryText = recipe[MOVE_KEYS[i]] ?? "";
+            const debunkText = extractDebunkParagraph(recipe.debunk, i);
+            return (
+              <article
+                key={m.key}
+                className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-6 sm:gap-8 lg:gap-10 py-6 sm:py-8 border-t border-ink/15 dark:border-ink-dark/15 first:border-t-0 first:pt-2"
               >
-                <p
-                  className="font-mono uppercase text-ink-soft dark:text-ink-soft-dark mb-2"
-                  style={{ fontSize: 10, letterSpacing: "0.14em" }}
+                {/* Theory column */}
+                <div>
+                  <div className="flex items-center gap-2.5 mb-3">
+                    <span style={{ color: m.color }}>
+                      <MoveGlyph kind={m.key} size={22} strokeWidth={1.6} />
+                    </span>
+                    <span
+                      className="font-mono uppercase"
+                      style={{ fontSize: 10, letterSpacing: "0.16em", color: m.color }}
+                    >
+                      Move {m.n} · {m.title}
+                    </span>
+                  </div>
+                  <div
+                    className="font-body text-[15px] sm:text-[16px] leading-[1.65] pl-4 sm:pl-5 max-w-prose-theory"
+                    style={{
+                      borderLeft: `2px solid ${m.color}`,
+                      background: `color-mix(in oklab, ${m.color} 6%, transparent)`,
+                      padding: "10px 14px 10px 16px",
+                      whiteSpace: "pre-wrap",
+                    }}
+                  >
+                    {theoryText}
+                  </div>
+                </div>
+
+                {/* Debunk column */}
+                <aside
+                  className="lg:border-l lg:border-dashed lg:border-ink/35 dark:lg:border-ink-dark/35 lg:pl-5 pt-4 lg:pt-0 border-t border-dashed border-ink/35 dark:border-ink-dark/35 lg:border-t-0"
+                  aria-label={`Debunking move ${m.n}`}
                 >
-                  Debunk · why the move works
-                </p>
-                <p className="text-[13.5px] leading-[1.55]">{debunkText}</p>
-              </aside>
-            </article>
-          );
-        })}
-      </section>
+                  <p
+                    className="font-mono uppercase text-ink-soft dark:text-ink-soft-dark mb-2"
+                    style={{ fontSize: 10, letterSpacing: "0.14em" }}
+                  >
+                    Debunk · why the move works
+                  </p>
+                  <p className="text-[13.5px] leading-[1.55] whitespace-pre-wrap">{debunkText}</p>
+                </aside>
+              </article>
+            );
+          })}
+        </section>
+      ) : (
+        // Migrated rows: the legacy_text dump, no recipe tagging.
+        <section className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-9 py-8">
+          <p
+            className="meta mb-4 inline-block px-2 py-1 border border-ink-soft dark:border-ink-soft-dark"
+            style={{ fontSize: 9 }}
+          >
+            Imported from v1 · recipe tagging not available
+          </p>
+          <div
+            className="font-body text-[15px] sm:text-[16px] leading-[1.7] whitespace-pre-wrap"
+            dangerouslySetInnerHTML={{ __html: recipe.legacy_text ?? "" }}
+          />
+        </section>
+      )}
 
       {/* Share row — always-link-back, no downloadable artifacts */}
       <section className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-9 mt-8 sm:mt-10 pt-6 sm:pt-8 rule-h-soft">
@@ -153,17 +208,7 @@ export default async function GenerationPage({ params }: { params: Promise<Param
               Anyone you send this to lands on the recipe explainer first.
             </p>
           </div>
-          <div className="flex flex-wrap gap-2">
-            {(["Copy link", "X", "Bluesky", "Email"] as const).map((label) => (
-              <button
-                key={label}
-                type="button"
-                className="border border-ink/30 dark:border-ink-dark/30 px-3 py-2 text-[12px] hover:border-ink dark:hover:border-ink-dark transition-colors"
-              >
-                {label}
-              </button>
-            ))}
-          </div>
+          <ShareButtons permalink={permalink} culprit={gen.culpritValue} />
         </div>
       </section>
 
@@ -173,4 +218,30 @@ export default async function GenerationPage({ params }: { params: Promise<Param
       <Footer />
     </>
   );
+}
+
+function formatDate(d: Date | null): string {
+  if (!d) return "imported from v1";
+  return d.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+}
+
+/**
+ * The debunk field is one continuous string covering all four moves.
+ * Best-effort split: try to find paragraph breaks corresponding to each move.
+ * If splitting fails, return the whole debunk under move 0 and empty for others —
+ * the UI still renders coherently because each aside has its own heading.
+ */
+function extractDebunkParagraph(full: string, idx: number): string {
+  if (!full) return "";
+  const paras = full
+    .split(/\n\s*\n+/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+  if (paras.length >= 4) return paras[idx] ?? "";
+  // Fallback: only show on move 0
+  return idx === 0 ? full : "";
 }

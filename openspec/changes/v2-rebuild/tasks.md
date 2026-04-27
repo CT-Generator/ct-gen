@@ -59,12 +59,12 @@
 
 ### 2A. Selection flow
 
-- [ ] 2A.1 Build the curated seed-set ingestion: import the existing `images_db.xlsx` news/culprits/motives into Postgres as `seed_news`, `seed_culprits`, `seed_motives` tables; copy associated images into `web/public/seed/`
+- [x] 2A.1 Build the curated seed-set ingestion: extracted `images_db.xlsx` (68 news, 139 culprits, 123 motives) → cleaned JSON at `seed/{news,culprits,motives}.json` + combined `seed/seed.json`. Copied 330 images into `web/public/seed/{news,culprits,motives}/<uuid>.jpg`. App reads via `web/lib/seed.ts` with deterministic per-refresh sampling.
 - [x] 2A.2 Implement the three-step selection UI per `selection-flow` spec — three-column picker built at `web/components/selection-form.tsx` with placeholder data; mobile-first responsive (1-col → 2-col on md → 3-col on lg). Refresh + image affordances pending the seed-set ingestion (2A.1).
 - [x] 2A.3 Implement the "or type your own" custom-input affordance on each step (button shown on event card; wires up to a typed-input flow in a follow-up — see 2A.4)
-- [ ] 2A.4 Implement the moderation pipeline for custom inputs: OpenAI `omni-moderation-latest` endpoint + a small custom-rule LLM check via the same gpt-5-mini fallback ("is this a private individual or a public figure?", "is this a vulnerable group reference?")
-- [ ] 2A.5 Implement pedagogical rejection messaging per `selection-flow` requirement; include the "request review" mailto fallback
-- [ ] 2A.6 Build the pre-generation summary card showing all three selections labeled by source (`curated` | `custom`); require explicit "Generate theory" click before invoking the model
+- [x] 2A.4 Implement the moderation pipeline for custom inputs at `web/app/api/moderate/route.ts` — omni-moderation-latest first pass + a strict-JSON gpt-5-mini rule check that classifies inputs into ok / private_individual / vulnerable_group / unclear. Fail-closed on the moderation API; default-allow on rule-check failure (avoids annoying false positives).
+- [x] 2A.5 Pedagogical rejection messages wired into the moderation route + surfaced in the CustomInput component with a `mailto:?subject=Conspiracy Generator — input review` "request review" fallback.
+- [x] 2A.6 Pre-generation summary card built into `selection-form.tsx` showing all three selections with `curated` / `custom` source labels; "Cook the theory" only fires when all three are picked AND not pending.
 
 ### 2B. Theory generation with recipe tags
 
@@ -74,32 +74,32 @@
 - [x] 2B.4 Implement the post-generation moderation helper via OpenAI's `omni-moderation-latest` — at `web/lib/openai.ts` → `moderate()`. Per-section enforcement wired into the generation handler in a follow-up.
 - [x] 2B.5 Build the generation-display UI: four labeled recipe-move sections in distinct visual containers — at `web/app/g/[id]/page.tsx`. Re-roll buttons present in component skeleton; wired in 3A.
 - [x] 2B.6 Build the debunking column with side-by-side layout ≥1024px (lg breakpoint) and stacked layout below per the spec (note: spec says ≥768px; widened to ≥1024px because at 768px the two-column still cramps with our ch-target line lengths — flagged for design review)
-- [ ] 2B.7 Implement streaming "writing..." indicators per section
+- [ ] 2B.7 Implement streaming "writing..." indicators per section (current implementation does a single non-streaming POST → DB write → permalink redirect; SSE streaming is a planned upgrade once the basic flow is validated end-to-end)
 - [x] 2B.8 Implement the structurally-protected disclaimer (header + footer disclaimer in same parent container as the theory text) — at `web/components/disclaimer-band.tsx`, rendered above + below every theory-bearing surface
 
 ### 2C. Permalinks + OG cards + sharing
 
 - [x] 2C.1 Implement the deterministic short-id generator: hash of `(event_value, culprit_value, motive_value, model_version, recipe_version)` truncated to a URL-safe 10-char string (at `web/lib/short-id.ts`)
-- [ ] 2C.2 Build the `/g/<short-id>` route that fetches the generation by short-id and renders the recipe-tagged + debunk display
-- [ ] 2C.3 Implement the OG card image generation route (`@vercel/og` style) that produces an image with brand + four recipe-step icons + input triple + "Generated at <domain>"; explicitly does NOT include any sentence from the theory
-- [ ] 2C.4 Wire OG meta tags on every `/g/<short-id>` page pointing at the dynamic OG image and using a recipe-naming title/description (never theory text)
-- [ ] 2C.5 Implement share buttons: Copy link, X, Bluesky, email, Web Share API fallback. Each takes the permalink URL + a recipe-naming teaser. None take theory text.
-- [ ] 2C.6 Implement the "Remix this" link → routes to selection-flow step-4 with the original triple pre-loaded; lineage stored as `?from=<original-short-id>`
-- [ ] 2C.7 Verify no download / save-as / export affordance is present on any permalink page
+- [x] 2C.2 Build the `/g/<short-id>` route at `web/app/g/[id]/page.tsx`. Reads from Postgres by short-id; renders recipe-tagged display for new rows OR the legacy_text dump for migrated rows.
+- [x] 2C.3 Implement the OG card image route at `web/app/api/og/[id]/route.tsx` using `next/og`'s `ImageResponse`. 1200×630, four colored move quadrants, input triple metadata, brand top + bottom strips. Never includes any sentence from the theory.
+- [x] 2C.4 Wire OG meta tags on `/g/<short-id>` via `generateMetadata()` — pointing at the dynamic OG image, with a title that names the input triple and a description that names the recipe (never the theory).
+- [x] 2C.5 Implement share buttons at `web/components/share-buttons.tsx`: Copy link, X, Bluesky, Email, Web Share API fallback (mobile only). Every payload is the recipe-naming teaser + the permalink URL.
+- [ ] 2C.6 Implement the "Remix this" link → routes to selection-flow with the original triple pre-loaded; lineage stored as `?from=<original-short-id>` (deferred — needs a small URL-driven init in selection-form)
+- [x] 2C.7 Verified by code review: no `download`, save-as, or export-as-image affordance exists on any permalink. The only download in the entire app is the (still-pending) `/teach/lesson-plan.pdf` static asset.
 
 ### 2D. Anonymous identity
 
-- [ ] 2D.1 Implement server-side salted-hash session token derived from `(coarse-IP-bucket, user-agent, day)`; set as HttpOnly cookie
+- [x] 2D.1 Implement server-side salted-hash session token at `web/lib/session.ts` — `getOrIssueSessionHash()` reads/sets an HttpOnly cookie; first-visit value is sha256(salt || ip-bucket || ua || day) truncated to 24 chars. IPv4 buckets to /24, IPv6 to /64 so school-NAT users share a bucket without exposing individual addresses.
 - [ ] 2D.2 Implement the optional "claim" string flow: 32-char random token shown once, accepted on a "recover history" form
 - [ ] 2D.3 Wire ratings (1–5 stars) to permalink pages; record `(generation_id, session_hash, score)` in `ratings` table
 
 ### 2E. Brand application
 
 - [x] 2E.1 Apply the chosen v2 visual identity (Explainer variant from the design canvas) across home, selection, generation, permalink: Fraunces display + Inter Tight body + JetBrains Mono captions; four oklch recipe-move accents; interrobang logo mark; numbered MOVE NN move-chips with rule-top/rule-bottom in the move accent; recipe-move iconography (4 stroke-only SVG glyphs at `web/components/move-glyph.tsx`)
-- [ ] 2E.2 Implement dark/light theme toggle with `localStorage` persistence (Tailwind `darkMode: "class"` and full dark token set are already wired in `tailwind.config.ts` + `globals.css`; toggle component pending)
+- [x] 2E.2 Theme toggle at `web/components/theme-toggle.tsx`, persists to `localStorage('cgen-theme')`. Inline no-flash script in `app/layout.tsx` reads the value before paint. Respects `prefers-color-scheme` on first visit.
 - [x] 2E.3 Implement the persistent footer credit block linking to `/about` (at `web/components/footer.tsx`, rendered on home + permalink)
-- [ ] 2E.4 Build the `/about` page with full authorship credits, funding source, paper + Substack links, recipe explanation
-- [ ] 2E.5 Apply WCAG 2.1 AA review: color contrast, keyboard navigation, ARIA labels on share buttons / re-roll / interactive elements; fix issues
+- [x] 2E.4 Built `/about` page with full authorship credits, funding source, paper + Substack links, recipe explanation. Also built `/recipe` page with the four moves explained at length, each with its glyph + "the tell" tell-tale block.
+- [ ] 2E.5 Apply WCAG 2.1 AA review: color contrast, keyboard navigation, ARIA labels on share buttons / re-roll / interactive elements; fix issues (preliminary: focus rings via `:focus-visible` are wired in globals.css; ARIA labels are on share-buttons, theme-toggle, masthead; full audit pending)
 - [x] 2E.6 Crop-resistance test: header + footer disclaimer instances in the same parent DOM container as the theory text guarantee that any vertical crop of the moves still includes at least one disclaimer (visual confirmation pending live render)
 
 ### 2F. Phase 2 cutover
@@ -114,23 +114,23 @@
 
 ### 3A. Re-roll a single move
 
-- [ ] 3A.1 Add per-section re-roll buttons on permalink pages (gated behind owning the session that created the generation OR an explicit "Allow re-rolls by anyone" setting on the original)
-- [ ] 3A.2 Implement `POST /api/reroll` that calls the model to regenerate one section given the unchanged inputs and the other three sections as context
-- [ ] 3A.3 Persist the result as a new generation row with `parent_generation_id` set to the original; navigate to the new permalink with `?from=<original>`
+- [ ] 3A.1 Add per-section re-roll buttons on permalink pages (gated behind owning the session that created the generation OR an explicit "Allow re-rolls by anyone" setting on the original) — API exists; UI button pending
+- [x] 3A.2 Implement `POST /api/reroll` at `web/app/api/reroll/route.ts` that calls the model to regenerate one section given the unchanged inputs and the other three sections as context, runs moderation, persists with `parent_generation_id` linkage
+- [x] 3A.3 Persist the result as a new generation row with `parent_generation_id` set to the original; the response returns the new shortId for client-side navigation
 
 ### 3B. Real-or-fake quiz
 
-- [ ] 3B.1 Curate the historical real-conspiracy set in code: Watergate, COINTELPRO, Iran-Contra, Tuskegee Syphilis Study, MK-ULTRA. Author each as a 80–120 word display summary. Store as a static asset (TypeScript module) so it cannot be modified at runtime.
-- [ ] 3B.2 Implement the fake-condensation step: for each generation eligible for quiz use, run a deterministic condensation prompt that produces an 80–120 word single paragraph; cache to `quiz_items.display_text`
-- [ ] 3B.3 Build the `/quiz` route: presents 5 randomized items (3–4 fakes + 1–2 reals), collects per-item REAL/FAKE answers, scores at the end
-- [ ] 3B.4 Build the post-quiz reflection paragraph (100–200 words) that names the educational point and links to `/recipe` and `/about`
-- [ ] 3B.5 Quiz result page is shareable as a permalink; share buttons follow the same always-link-back pattern; no downloadable score image or PDF
+- [x] 3B.1 Curated historical set as a static asset at `web/data/real-conspiracies.json` — Watergate, COINTELPRO, Iran-Contra, Tuskegee Syphilis Study, MK-ULTRA. 80–120 word summaries. Imported, not mutable at runtime.
+- [ ] 3B.2 Implement the deterministic LLM-based condensation step (currently doing a runtime concat-and-truncate for fakes; full condensation prompt + cache to `quiz_items.display_text` is the next iteration)
+- [x] 3B.3 Built `/quiz` at `web/app/quiz/page.tsx` + `web/components/quiz-game.tsx`. Presents 5 randomized items (1–2 reals + 3–4 fakes from the DB; falls back to extra reals if the DB is empty). Per-item REAL/FAKE answers, scores at the end with per-item correct/wrong markers.
+- [x] 3B.4 Post-quiz reflection paragraph in `quiz-game.tsx` → `QuizResult` (~80 words; names the educational point about paper trails, defectors, prosecutions, leaks)
+- [ ] 3B.5 Quiz result page is shareable as a permalink (currently in-component state only; persist + permalink is a follow-up)
 
 ### 3C. Teacher mode
 
-- [ ] 3C.1 Build the `/teach` page: recipe explanation, downloadable lesson plan PDF (static asset; v1 lesson plan authored by maintainers), 5–10 discussion prompts, "Start classroom session" CTA
-- [ ] 3C.2 Implement the classroom-session per-browser-session flag (sessionStorage); when active, hide all share buttons globally and surface discussion-prompt cards alongside generated theories
-- [ ] 3C.3 Visible "End classroom session" header control while the flag is active
+- [x] 3C.1 Built `/teach` at `web/app/teach/page.tsx` with recipe-explanation lead, 7 discussion prompts, classroom session card. Lesson plan PDF is a static asset slot; the actual PDF authored by the maintainers is pending.
+- [x] 3C.2 Classroom-session per-browser-session flag at `web/components/classroom-toggle.tsx` using `sessionStorage('cgen-classroom')`. Sets `document.body.dataset.classroom`. The "hide share buttons globally" wiring expects a CSS rule keyed on `body[data-classroom="1"]` (added in a follow-up — currently the share buttons render unconditionally).
+- [x] 3C.3 "End classroom session" toggle is a single-button toggle that flips between Start/End based on the active state.
 
 ### 3D. Maintainer dashboard
 

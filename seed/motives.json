@@ -1,0 +1,617 @@
+[
+  {
+    "uuid": "d22c68a0-cdc0-47a7-ad73-1fc1080e72f6",
+    "name": "Illiteracy and Education Suppression",
+    "summary": "Deliberately limit access to education and information to control populations."
+  },
+  {
+    "uuid": "976956f1-00d7-4cae-af3c-54df0c22ec1b",
+    "name": "Influencing Art and Culture",
+    "summary": "Manipulate artistic expression and cultural movements."
+  },
+  {
+    "uuid": "e79dd8d0-f0c3-4e69-b44a-7a16eca7a8cd",
+    "name": "Influencing World Leaders",
+    "summary": "Manipulate political figures and world leaders for hidden agendas."
+  },
+  {
+    "uuid": "21d8abfa-d7a9-4160-86b2-3b4ca3bb98fe",
+    "name": "Achieving Total Surveillance",
+    "summary": "Establish a global surveillance state to monitor every individual."
+  },
+  {
+    "uuid": "fa72c8d0-ebae-4793-ba55-304763b0c449",
+    "name": "Reuniting Lost Loved Ones",
+    "summary": "Using their time-travel expertise, the Society could work to reunite people with lost loved ones from different points in time, bringing comfort to those who have experienced separation due to historical events or personal circumstances."
+  },
+  {
+    "uuid": "edba7f0d-6c1f-4040-ba3c-9b18bdc6f295",
+    "name": "Defending Against Time Travel Exploitation",
+    "summary": "The Society could act as guardians of time, safeguarding the past, present, and future from misuse of time travel technology. Their mission would involve preventing malicious individuals or organizations from altering history for their gain, maintaining the natural order of time."
+  },
+  {
+    "uuid": "37665171-d512-4cdb-ba96-6a49f734a61f",
+    "name": "Control Over AI Development",
+    "summary": "Manipulate the development of artificial intelligence to serve hidden goals."
+  },
+  {
+    "uuid": "5b6df3a5-b2ba-42e0-95d5-34b1e76e2f17",
+    "name": "Undermining Middle Eastern Stability",
+    "summary": "Foment conflicts and chaos in the Middle East for geopolitical gain."
+  },
+  {
+    "uuid": "51f83f8d-f0a7-4dec-9f2c-609145f8a894",
+    "name": "Influencing U.S. Presidential Elections",
+    "summary": "Meddle in U.S. elections to control the nation's policies and direction."
+  },
+  {
+    "uuid": "dcec4f3e-48d7-4945-bf39-74088ef5cc55",
+    "name": "Divine Bloodline Conspiracy",
+    "summary": "Promote the existence of ancient bloodlines with divine connections, controlling belief systems."
+  },
+  {
+    "uuid": "6bfc741d-5747-4fa0-8938-36846619149c",
+    "name": "Bringing Together Long-Lost Bonds",
+    "summary": "Leveraging their mastery of time manipulation, the Society embarks on a mission to reunite individuals with their beloved ones across disparate moments in history. Their aim is to offer solace to those who have endured separation due to either the course of history or deeply personal situations.."
+  },
+  {
+    "uuid": "c10e2ff0-6bc5-4438-b05e-97beed15bd7f",
+    "name": "Astral Projection Conspiracy",
+    "summary": "Manipulate stellar projection experiences to gain access to hidden realms and knowledge."
+  },
+  {
+    "uuid": "aed92c22-eb98-4985-b6c5-affaf2093306",
+    "name": "Manipulating Space Colonization Efforts",
+    "summary": "Control and exploit space colonization initiatives for hidden agendas."
+  },
+  {
+    "uuid": "31afc9b0-dcd9-4296-8f64-920afb1bf27f",
+    "name": "Hollywood Mind Control",
+    "summary": "Use the entertainment industry to manipulate thoughts and behaviors on a massive scale."
+  },
+  {
+    "uuid": "b768e4db-6280-4e62-b812-b2eedd6ac62d",
+    "name": "Distort Cosmic Signatures",
+    "summary": "Manipulate celestial phenomena to send coded messages or alter destinies."
+  },
+  {
+    "uuid": "e0633ed9-0494-4504-91aa-a4ab0a3e9d77",
+    "name": "Media Propaganda and Distraction",
+    "summary": "Promote agendas through mainstream media while distracting from hidden actions."
+  },
+  {
+    "uuid": "17f4eaac-d576-4a01-8826-9e55c3001e47",
+    "name": "Ensuring Global Resource Monopoly",
+    "summary": "Control vital resources like water, energy, and minerals."
+  },
+  {
+    "uuid": "20cf2b45-7b6c-43c0-9558-b44390361d16",
+    "name": "Temporal Divergence Society",
+    "summary": "Form a secret society dedicated to exploring and altering alternate timelines."
+  },
+  {
+    "uuid": "485f7bd1-3256-48a5-8061-f201c716f786",
+    "name": "Resource Hoarding",
+    "summary": "Secretly accumulate and control essential resources to wield economic power."
+  },
+  {
+    "uuid": "dbe89ff7-5df5-48c8-874c-8568f71f5352",
+    "name": "Hoarding Hidden Treasures",
+    "summary": "Acquire and safeguard rare and valuable artifacts and knowledge."
+  },
+  {
+    "uuid": "b78e0b9e-59e4-44c3-bc21-1fde0238918a",
+    "name": "Creating Human-Chimera Hybrids",
+    "summary": "Conduct secret genetic experiments."
+  },
+  {
+    "uuid": "4db9815a-d761-459f-b2ad-3e8f45d258fb",
+    "name": "Subliminal Archetype Imprinting",
+    "summary": "Embed archetypal symbols and messages in media to influence the collective unconscious."
+  },
+  {
+    "uuid": "ad1e41b2-82b4-4abb-9c3a-512967baaf62",
+    "name": "Subvert Neural Networks",
+    "summary": "Hack into neural networks to manipulate thoughts, memories, and perceptions."
+  },
+  {
+    "uuid": "4c25fa5c-7bb1-4d8e-ab40-26c9566b9188",
+    "name": "Covert Space Colonization",
+    "summary": "Establish secret colonies on other planets, hidden from the general population."
+  },
+  {
+    "uuid": "4bf18f63-f881-4796-94a8-e30168a55cc3",
+    "name": "Control Over Chinese Expansion",
+    "summary": "Secretly manage China's international growth and influence."
+  },
+  {
+    "uuid": "178e3785-0788-4682-a7a0-2eacd8c5f901",
+    "name": "Preserving and Correcting Timelines",
+    "summary": "One of their main objectives could be to protect the integrity of various timelines from disruption or manipulation by malevolent forces. They might actively work to prevent catastrophic changes to history, ensuring the preservation of humanity's achievements and advancements."
+  },
+  {
+    "uuid": "839ab393-9262-43b9-9541-068f38c43a9c",
+    "name": "Master Temporal Loops",
+    "summary": "Gain control over time loops to revisit and alter critical historical events."
+  },
+  {
+    "uuid": "6dcf4397-6d16-43cf-accd-0696dd27912e",
+    "name": "Celebrity Puppeteering",
+    "summary": "Covertly control the actions and beliefs of influential celebrities in the entertainment world."
+  },
+  {
+    "uuid": "de3f2538-be7f-437a-a9ab-cfd60dc5ef7d",
+    "name": "Poverty and Economic Disparity",
+    "summary": "Perpetuate poverty to maintain control over disadvantaged populations."
+  },
+  {
+    "uuid": "e250c4a5-a802-483d-9727-cfd44094d61e",
+    "name": "North Korean Puppeteering",
+    "summary": "Covertly control North Korean leadership and actions."
+  },
+  {
+    "uuid": "a69502a0-3453-4393-9440-677c987ad7f0",
+    "name": "Engineering Natural Disasters",
+    "summary": "Create or control catastrophic events for political or economic gain."
+  },
+  {
+    "uuid": "62719fcb-9876-42bd-94c2-151711e9e0db",
+    "name": "Transhumanism Experimentation",
+    "summary": "Conduct secret experiments to advance human augmentation and transhumanism."
+  },
+  {
+    "uuid": "d90b6ba7-e77b-486a-8413-1de9ccac77e4",
+    "name": "Clandestine Cosmic Alignment",
+    "summary": "Exploit rare cosmic alignments for undisclosed purposes, possibly altering reality."
+  },
+  {
+    "uuid": "e76f203f-097c-44af-b7bb-d48416d73b2b",
+    "name": "Food and Water Scarcity",
+    "summary": "Manipulate food supplies and access to clean water to exert control and influence."
+  },
+  {
+    "uuid": "357fa5db-9a63-448c-a5b2-c4691aaec524",
+    "name": "Transcendent Language Codex",
+    "summary": "Discover a hidden language that transcends human understanding, holding immense power."
+  },
+  {
+    "uuid": "dcc3665f-098a-4591-97a1-e92212130d32",
+    "name": "Vibration Frequency Weaponization",
+    "summary": "Develop weapons that emit destructive frequencies to cause harm or manipulate matter."
+  },
+  {
+    "uuid": "292807ab-d79f-4374-86f9-88b47afc8663",
+    "name": "Infiltrating European Union Decisions",
+    "summary": "Manipulate EU decisions and policies to serve hidden interests."
+  },
+  {
+    "uuid": "865c04de-a1a6-4b4c-a912-d64da15f7f61",
+    "name": "Subliminal Messaging in Entertainment",
+    "summary": "Embed subliminal messages in films, music, and media to control public perception."
+  },
+  {
+    "uuid": "62c55912-cb65-482e-9b94-0e172e665171",
+    "name": "Engineering Mass Mind Control",
+    "summary": "Use subliminal messaging and psychological tactics to control populations."
+  },
+  {
+    "uuid": "6ea3a067-7d26-4d48-a88c-2f70e2015caa",
+    "name": "Infiltrating Religious Institutions",
+    "summary": "Covertly influence religious beliefs and institutions."
+  },
+  {
+    "uuid": "a6d4966f-32f6-4741-835d-89a61e196d94",
+    "name": "Shaping the Future of Humanity",
+    "summary": "Secretly influence the trajectory of human civilization for their own interests."
+  },
+  {
+    "uuid": "5e93dcb9-ea34-45b8-ae9b-99e35c67d3cb",
+    "name": "Environmental Exploitation",
+    "summary": "Exploit natural resources for profit, leading to deforestation and ecological degradation."
+  },
+  {
+    "uuid": "1f3b064e-8df1-4604-bbcf-f6944bf20b0c",
+    "name": "Antarctic Secrets",
+    "summary": "Guard and manipulate hidden knowledge and resources in Antarctica for global control."
+  },
+  {
+    "uuid": "88cb036e-0f03-43df-8240-98a95517edbe",
+    "name": "Securing Immortality",
+    "summary": "Seek scientific advancements or supernatural means for immortality."
+  },
+  {
+    "uuid": "d342ceae-316d-4061-b7b4-ba2ae2d497a2",
+    "name": "Unveiling Hidden Histories",
+    "summary": "Harnessing the potential of time travel, the Society delves into the past to uncover obscured narratives and forgotten chronicles from various civilizations. Their quest leads to the revival of profound advancements in fields like science, medicine, and technology that had been lost to the annals of time."
+  },
+  {
+    "uuid": "d73ad747-3474-41c6-8f5b-0676f9c5a2a1",
+    "name": "Interdimensional Trade",
+    "summary": "Establish secret trade with entities from other dimensions, exchanging resources or knowledge."
+  },
+  {
+    "uuid": "570434cc-f784-40ef-8021-d05b9d600371",
+    "name": "The Search for Extraterrestrial Life",
+    "summary": "Use advanced technology to secretly search for signs of intelligent alien life."
+  },
+  {
+    "uuid": "8401e5dd-68c8-4863-915f-dfb7fa94e0e9",
+    "name": "African Resource Exploitation",
+    "summary": "Exploit African nations for their resources while maintaining instability."
+  },
+  {
+    "uuid": "bafa5e6f-d5a2-4373-8914-489a53035b31",
+    "name": "Manipulating Weather Patterns",
+    "summary": "Covertly influence weather for various purposes."
+  },
+  {
+    "uuid": "f1a278cf-595a-4933-af23-7297932bcb5c",
+    "name": "Establishing a New World Order",
+    "summary": "Create a single global government to control humanity."
+  },
+  {
+    "uuid": "073d016a-1bbf-4ed2-a88b-770a89eac7fb",
+    "name": "Influence on Film Awards",
+    "summary": "Manipulate prestigious film awards to favor specific messages and ideologies."
+  },
+  {
+    "uuid": "b1f41bd5-c637-4d1e-9e1a-167c636e6b91",
+    "name": "Fomenting Religious Conflict",
+    "summary": "Incite religious wars and conflicts for their benefit."
+  },
+  {
+    "uuid": "b0d3bab6-24ed-4d22-912a-d3aaf5f2a650",
+    "name": "Virtual Reality Enslavement",
+    "summary": "Create a virtual reality utopia to lure individuals into a life of submission and servitude."
+  },
+  {
+    "uuid": "b77d6443-ee4d-430e-aadb-e1f5334bcf7f",
+    "name": "Eradicating Undesirable Populations",
+    "summary": "Conduct secret eugenics programs or genocidal actions."
+  },
+  {
+    "uuid": "0cf3876b-b006-4144-9264-5c967c8d564b",
+    "name": "Incite Quantum Anomalies",
+    "summary": "Intentionally cause disruptions in quantum fields to rewrite reality."
+  },
+  {
+    "uuid": "c1d15f03-5729-4d25-a7c9-d27fb781ef71",
+    "name": "South American Regime Change",
+    "summary": "Instigate regime changes in South American countries to gain control."
+  },
+  {
+    "uuid": "aff33ffa-0d1d-43d0-b5df-f9aa17b94bf6",
+    "name": "Developing a Time Traveler's Code",
+    "summary": "The Society might strive to establish ethical guidelines and a code of conduct for time travelers, ensuring that the power of time travel is used responsibly and not for personal gain or destructive purposes."
+  },
+  {
+    "uuid": "1f972b6e-4518-4946-b299-ff19467bdb61",
+    "name": "Creating Advanced Technology",
+    "summary": "Secretly develop cutting-edge technology for exclusive use."
+  },
+  {
+    "uuid": "5387b5bf-4fbf-4a2e-b578-534bff013e5b",
+    "name": "Soundwave Manipulation Array",
+    "summary": "Construct arrays emitting specific frequencies to influence emotions and behaviours."
+  },
+  {
+    "uuid": "72ee80f7-2fe4-4b02-9b3a-35d7eb485939",
+    "name": "Controlling Education Systems",
+    "summary": "Shape curriculum and academic institutions to promote ideology."
+  },
+  {
+    "uuid": "46fdcd8e-9c70-45aa-90df-6cbe897d09e2",
+    "name": "Unraveling Historical Mysteries",
+    "summary": "The Society might seek to uncover hidden truths and secrets from the past, solving historical mysteries and conspiracies that have baffled humanity for centuries. They would aim to shed light on pivotal events that shaped the course of history, dispelling myths and revealing the real underlying narratives."
+  },
+  {
+    "uuid": "8b050e88-65ab-4ac5-866a-fa9ea9aabc98",
+    "name": "Eternal Youth Elixir",
+    "summary": "Search for a hidden formula or technology that grants eternal youth and vigour to a select few."
+  },
+  {
+    "uuid": "37a38d00-a1c8-48e2-ac3d-b469a0c071a7",
+    "name": "Mass Surveillance through Entertainment Devices",
+    "summary": "Use entertainment devices to gather data and surveil the masses."
+  },
+  {
+    "uuid": "1cf7d554-9499-4ea0-9969-47ad2891e25c",
+    "name": "Manipulating Space Exploration",
+    "summary": "Seek to control space exploration and discoveries to maintain secrecy."
+  },
+  {
+    "uuid": "a6770d48-6c48-4ab8-b242-d4f91ba6e763",
+    "name": "Initiate Bio-Techno Uprisings",
+    "summary": "Activate dormant bio-technological implants to create a controlled uprising."
+  },
+  {
+    "uuid": "bb123a5b-56f9-4529-9215-63b6cc90bc6e",
+    "name": "Manipulating Russian Politics",
+    "summary": "Seek to influence Russian leaders and policies for global dominance."
+  },
+  {
+    "uuid": "e13060c2-f862-4d86-860a-c4ade97fffe3",
+    "name": "Environmental Pollution Cover-Up",
+    "summary": "Conceal the true extent of pollution and its health impacts on the population."
+  },
+  {
+    "uuid": "032a45c3-ce6c-4031-b077-7d96f5b036d5",
+    "name": "Observing and Learning from the Past",
+    "summary": "The Society could act as impartial observers, studying various historical events, cultural developments, and societal changes to better understand human behavior and progress. This knowledge could help humanity navigate its future with greater wisdom and insight."
+  },
+  {
+    "uuid": "801a79d9-3340-430e-b1c3-eb9a43dd1dc5",
+    "name": "Scripted Reality Shows",
+    "summary": "Engineer reality TV shows to influence public perception and behavior."
+  },
+  {
+    "uuid": "d1b1fd94-6aca-4b30-a912-f471ec2bf724",
+    "name": "Humanitarian Aid Manipulation",
+    "summary": "Exploit aid programs to further hidden agendas while appearing benevolent."
+  },
+  {
+    "uuid": "5c2443d6-57a7-48cb-8507-87817a000b24",
+    "name": "Neural Network Domination",
+    "summary": "Create a neural network that links human minds, enabling control over thoughts and actions."
+  },
+  {
+    "uuid": "20e32d78-696b-4269-b154-dd1c4e7ba96d",
+    "name": "Suppressed Knowledge of Extraterrestrial Life",
+    "summary": "Conceal evidence of contact with alien civilizations to prevent public panic."
+  },
+  {
+    "uuid": "c0c046e5-cc98-47d7-9655-76a67349d90a",
+    "name": "Dominating Media Narratives",
+    "summary": "Shape public perception through media manipulation."
+  },
+  {
+    "uuid": "e04daea1-5f2d-4611-abf8-9c2c9edfc82b",
+    "name": "Alien Technology Acquisition",
+    "summary": "Pursue and reverse-engineer extraterrestrial technology for hidden agendas."
+  },
+  {
+    "uuid": "3835bf32-123b-4a6d-bdf2-be21fdbdfd1a",
+    "name": "Fourth-Dimensional Artifacts",
+    "summary": "Seek artefacts from the fourth dimension, possessing reality-altering properties."
+  },
+  {
+    "uuid": "66ec8282-d3eb-4650-977a-e6052fcc6f15",
+    "name": "Forge Astral Alliances",
+    "summary": "Establish hidden pacts with astral entities to gain supernatural powers."
+  },
+  {
+    "uuid": "ad7c3d85-7ec4-47d3-9cea-222123d7874c",
+    "name": "Time-Loop Exploitation",
+    "summary": "Harness time loops for personal gain, repeating events to change outcomes without detection."
+  },
+  {
+    "uuid": "c20660a0-9e18-49b3-8be9-66744550517a",
+    "name": "Manipulating Global Health",
+    "summary": "Control healthcare systems and pandemics for ulterior motives."
+  },
+  {
+    "uuid": "0753429b-18a7-4f84-afb4-9872a653850c",
+    "name": "Masterminding False Flag Operations",
+    "summary": "Stage events to justify political actions or wars."
+  },
+  {
+    "uuid": "83eef352-52cc-4732-91c2-a0ebe8478391",
+    "name": "Censorship and Narrative Control",
+    "summary": "Control what information reaches the public and shape narratives to fit their interests."
+  },
+  {
+    "uuid": "2a95bc5e-fb37-4be0-b590-aa41784281b1",
+    "name": "Gravity Distortion Machinations",
+    "summary": "Engineer-controlled gravity anomalies to reshape landscapes or control transportation."
+  },
+  {
+    "uuid": "b5b353b0-8f49-43e0-aedc-a4a6e8b8e5d3",
+    "name": "Collecting Lost Knowledge",
+    "summary": "Through time travel, they might retrieve lost or forgotten knowledge from ancient civilizations, making profound advancements in science, medicine, and technology that were once lost to the annals of time."
+  },
+  {
+    "uuid": "5272f755-365e-4287-9a02-19d895dba38b",
+    "name": "Control Over Space Exploration",
+    "summary": "Monopolize space exploration and colonization efforts."
+  },
+  {
+    "uuid": "9821b574-9f1a-47fc-a86c-481362fe952d",
+    "name": "Stealing Alien Technology",
+    "summary": "Acquire and reverse-engineer extraterrestrial tech."
+  },
+  {
+    "uuid": "6071e159-c083-44dd-9ef6-51d2800bc191",
+    "name": "Concealing Extraterrestrial Knowledge",
+    "summary": "Hide evidence of alien encounters and advanced technology."
+  },
+  {
+    "uuid": "7e0f20d8-577a-42de-a402-2515e59bb9cf",
+    "name": "Unleash Psychic Epidemics",
+    "summary": "Trigger mass outbreaks of psychic phenomena to sow chaos and confusion."
+  },
+  {
+    "uuid": "7c9388ee-37f0-479b-939b-89420cee317e",
+    "name": "Media-Induced Panic and Fear",
+    "summary": "Exploit the power of media to induce fear and panic for societal control."
+  },
+  {
+    "uuid": "8ea87977-5a9d-49f8-8e1d-c99a6557ae98",
+    "name": "Bio-Digital Control Hive",
+    "summary": "Establish a hidden network to control genetically modified organisms for covert agendas."
+  },
+  {
+    "uuid": "2b16cc69-a419-43cd-bf6c-8939b9735e31",
+    "name": "Asian-Pacific Power Play",
+    "summary": "Secretly vie for dominance in the Asia-Pacific region through covert actions."
+  },
+  {
+    "uuid": "b6c85626-0731-41bf-9561-bc3553665323",
+    "name": "Infiltrate Dream Realms",
+    "summary": "Secretly enter and influence people's dreams to control their waking lives."
+  },
+  {
+    "uuid": "31bd7ec7-9fbe-4330-825a-9de1dfdee601",
+    "name": "Conduct Ethereal Seances",
+    "summary": "Hold secret seances to communicate with ethereal beings and gain forbidden knowledge."
+  },
+  {
+    "uuid": "e1c18b88-3821-4588-931d-4ce939295a25",
+    "name": "Engineering the Technological Singularity",
+    "summary": "Secretly work towards achieving the technological singularity to gain power."
+  },
+  {
+    "uuid": "8e9c1240-f406-47b4-8f37-0e2b5d6cd0d1",
+    "name": "Creation of Pop Culture Icons",
+    "summary": "Manufacture and promote cultural figures to further their hidden agendas."
+  },
+  {
+    "uuid": "61c46b33-180c-4e46-ad9b-21f9708fc24a",
+    "name": "Corporate Control of Agriculture",
+    "summary": "Dominate the global food industry to maintain power and influence."
+  },
+  {
+    "uuid": "3c97ff39-a953-44bd-ae07-9c55e3357fcd",
+    "name": "Controlling Global Finance",
+    "summary": "Monopolize and manipulate the world's financial systems."
+  },
+  {
+    "uuid": "49e7b8c6-5c7e-47cb-9ec1-f8baa3909d77",
+    "name": "Protecting Ancient Bloodlines",
+    "summary": "Preserve royal or divine lineages."
+  },
+  {
+    "uuid": "e70414d0-ebb0-4675-ae65-70de1774d8bb",
+    "name": "Undermining Conservation Efforts",
+    "summary": "Sabotage environmental conservation initiatives for financial gain."
+  },
+  {
+    "uuid": "f176fef0-103b-47d3-8969-c85efd1bdfa9",
+    "name": "Harvesting Human Organs",
+    "summary": "Secretly profit from the illegal organ trade."
+  },
+  {
+    "uuid": "ca12ddb8-ea7a-4fb8-afdc-670a006a87fa",
+    "name": "Psychotropic Plant Cultivation",
+    "summary": "Cultivate and distribute psychoactive plants to induce altered states and control perceptions."
+  },
+  {
+    "uuid": "d74e6173-183a-4504-bf08-226c2424d380",
+    "name": "Climate Change Manipulation",
+    "summary": "Seek to manipulate public opinion on climate change to serve hidden interests."
+  },
+  {
+    "uuid": "f565913e-ce8d-4b8b-bc76-255f7af0b24c",
+    "name": "Alien Collaboration",
+    "summary": "Form covert alliances with extraterrestrial beings for advanced technology and knowledge."
+  },
+  {
+    "uuid": "6231f78e-90fc-46cc-9de5-d49c13a01896",
+    "name": "Award Show Shenanigans",
+    "summary": "Secretly swap envelopes at award shows to keep things interesting."
+  },
+  {
+    "uuid": "00fcfc25-673a-477e-b139-68551d6617bb",
+    "name": "Celebrity Doppelgängers",
+    "summary": "Replace celebrities with look-alikes to keep up with their busy schedules."
+  },
+  {
+    "uuid": "b7224220-5dbe-41b7-ab7e-9f8297e1cd87",
+    "name": "Cultural Homogenization",
+    "summary": "Eradicate cultural differences to create a single global culture under centralized control."
+  },
+  {
+    "uuid": "a2c62fc6-f4d8-499c-a570-349fb4664d08",
+    "name": "Cyber Espionage",
+    "summary": "Engaging in cyber activities to steal information, disrupt systems, and influence global events."
+  },
+  {
+    "uuid": "f5193ac6-2e8f-4e6a-9275-7e20d9b48b81",
+    "name": "Cyber Warfare",
+    "summary": "Use cyber attacks to destabilize rival nations and gain control over digital infrastructure."
+  },
+  {
+    "uuid": "600b16e4-214a-4ca5-a5c5-d903d9637460",
+    "name": "Ecological Manipulation",
+    "summary": "Manipulate ecosystems and climate for strategic advantage or profit."
+  },
+  {
+    "uuid": "dc280d5a-ba03-4e07-9ae1-5faa841ce0b7",
+    "name": "Election Interference",
+    "summary": "Manipulating electoral processes to ensure desired political outcomes."
+  },
+  {
+    "uuid": "4e03dbed-f51f-4c27-8c14-76aa27c49d5b",
+    "name": "False Flag Celebrity Scandals",
+    "summary": "Orchestrating scandals involving celebrities like Kim Kardashian or Justin Bieber to divert public attention from significant political events."
+  },
+  {
+    "uuid": "b481a898-7345-4fee-aa79-7f5e8edab997",
+    "name": "False Flag Operations",
+    "summary": "Staging events to justify military actions or implement restrictive policies"
+  },
+  {
+    "uuid": "c44a036f-97d9-4414-a70b-cdaea8db0e65",
+    "name": "Genetic Manipulation",
+    "summary": "Alter human genetics to create a superior or subservient race."
+  },
+  {
+    "uuid": "4389aa23-0fcc-4643-b526-42cf5be6eb1c",
+    "name": "Hidden Messages in Lyrics",
+    "summary": "Embed satan-worshipping hidden messages in song lyrics"
+  },
+  {
+    "uuid": "e8e5148b-f092-47bb-8532-bea24a37f9bd",
+    "name": "Media Censorship",
+    "summary": "Controlling the flow of information to shape public perception and suppress dissent."
+  },
+  {
+    "uuid": "c8305b6a-21a2-4f18-ae89-936b62a0c98f",
+    "name": "Medical Suppression",
+    "summary": "Suppress cures for major diseases to maintain the profitability of the pharmaceutical industry."
+  },
+  {
+    "uuid": "be77cdb8-3849-420d-afd3-a219aea2a963",
+    "name": "Mind-Altering Substances",
+    "summary": "Distribute substances that alter consciousness to control or pacify the populace."
+  },
+  {
+    "uuid": "a3ce5647-c398-49f2-a7e6-41152f4e5ccd",
+    "name": "Movie Sequel Scam",
+    "summary": "Plan endless sequels for every successful movie to keep audiences hooked."
+  },
+  {
+    "uuid": "293c83fd-c8b9-4e93-80e2-1acbc6f3b4ca",
+    "name": "Pandemic Engineering",
+    "summary": "Engineer and release diseases to control population or create economic and political upheaval."
+  },
+  {
+    "uuid": "d6169660-b028-4659-a8e7-27f513da54c6",
+    "name": "Psychological Warfare",
+    "summary": "Employ psychological tactics to instill fear, obedience, or confusion in the public."
+  },
+  {
+    "uuid": "ab7a9758-eee8-46f3-9e6f-1f6bdea72b9c",
+    "name": "Puppet Governments",
+    "summary": "Installing or supporting compliant governments to further geopolitical interests."
+  },
+  {
+    "uuid": "28a7e2a5-7841-4092-be03-570ed6c34b3c",
+    "name": "Scientific Suppression",
+    "summary": "Suppressing scientific discoveries that could disrupt current power structures or economic interests."
+  },
+  {
+    "uuid": "797ab463-ae41-4c7c-b77b-e741f7851e52",
+    "name": "Secret Superfoods",
+    "summary": "Feed athletes undisclosed superfoods that grant temporary, quirky superpowers."
+  },
+  {
+    "uuid": "7ca1e5be-7b35-4120-bc2d-ec53f5c67480",
+    "name": "Talent Show Fixes",
+    "summary": "Rig talent shows to ensure the most dramatic contestants always win."
+  },
+  {
+    "uuid": "0bc609b7-8357-4df1-a80c-fc87090287a1",
+    "name": "Underdog Miracles",
+    "summary": "Engineer miraculous underdog victories to keep the sports world unpredictable."
+  }
+]

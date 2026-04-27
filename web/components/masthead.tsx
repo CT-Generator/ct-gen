@@ -7,6 +7,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { LogoMark } from "@/components/logo";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { cn } from "@/lib/utils";
 
 const NAV = [
@@ -52,14 +53,17 @@ export function Masthead() {
               {item.label}
             </Link>
           ))}
+          <ThemeToggle />
         </nav>
 
-        {/* Mobile toggle */}
+        {/* Mobile theme + nav toggle */}
+        <div className="md:hidden flex items-center gap-1 -mr-2">
+          <ThemeToggle />
         <button
           type="button"
           aria-label="Open navigation"
           aria-expanded={open}
-          className="md:hidden -mr-2 rounded p-2 text-ink dark:text-ink-dark"
+          className="rounded p-2 text-ink dark:text-ink-dark"
           onClick={() => setOpen((o) => !o)}
         >
           <svg
@@ -76,6 +80,7 @@ export function Masthead() {
             <line x1="4" y1="17" x2="20" y2="17" />
           </svg>
         </button>
+        </div>
       </div>
 
       {/* Mobile drawer */}

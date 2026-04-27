@@ -1,0 +1,22 @@
+[
+  {
+    "label": "Watergate",
+    "summary": "In 1972, the Nixon White House orchestrated a break-in at the Democratic National Committee headquarters at the Watergate complex and an extensive cover-up that involved obstruction of justice, paying hush money, and pressuring the FBI and CIA. Tape recordings, special prosecutor investigations, congressional hearings, and the eventual resignation of President Nixon documented the conspiracy in granular detail."
+  },
+  {
+    "label": "COINTELPRO",
+    "summary": "From 1956 to 1971, the FBI ran a covert program to surveil, infiltrate, discredit, and disrupt domestic political organizations including civil rights groups, Black liberation movements, the New Left, the Puerto Rican independence movement, and the Ku Klux Klan. The program was exposed when burglars stole files from an FBI field office in Media, Pennsylvania in 1971, and was further documented by the Church Committee in the mid-1970s."
+  },
+  {
+    "label": "Iran-Contra",
+    "summary": "Senior Reagan administration officials secretly facilitated the sale of arms to Iran (then under an arms embargo) and used the proceeds to fund Contra rebels in Nicaragua, in violation of the Boland Amendment. Congressional joint committee hearings, criminal indictments, and the Tower Commission report in 1986 to 1987 established the operation in detail; multiple officials were convicted."
+  },
+  {
+    "label": "Tuskegee Syphilis Study",
+    "summary": "From 1932 to 1972, the U.S. Public Health Service ran a study in which 600 Black men in Macon County, Alabama (399 with latent syphilis) were left untreated so researchers could observe the disease's natural progression, even after penicillin became standard treatment in the 1940s. The study ended after a whistleblower exposed it in 1972; a federal investigation, class-action lawsuit, and presidential apology in 1997 followed."
+  },
+  {
+    "label": "MK-ULTRA",
+    "summary": "Beginning in 1953, the CIA ran a clandestine program of human experimentation involving LSD and other drugs, hypnosis, sensory deprivation, and other techniques aimed at developing mind-control methods. The program operated for roughly two decades on unwitting subjects in the U.S. and Canada. Most documents were destroyed by CIA Director Richard Helms in 1973, but surviving records were uncovered by the Church Committee and the Rockefeller Commission in 1975, and by Freedom of Information Act litigation since."
+  }
+]

@@ -1,21 +1,63 @@
 // Selection form — interactive client component for picking event/culprit/motive.
-// Mobile: stacks 1-column. Tablet+: 1.4fr / 1fr / 1fr grid (matches design canvas proportions).
+// Mobile: stacks 1-column. Tablet+: progressively wider grids.
 // Source: design system, component-sheets.jsx → HomeSheet (picker)
 
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import type { SeedItemWithImage } from "@/lib/seed";
 
 type Props = {
-  events: string[];
-  culprits: string[];
-  motives: string[];
+  events: SeedItemWithImage[];
+  culprits: SeedItemWithImage[];
+  motives: SeedItemWithImage[];
+};
+
+type Picked = {
+  uuid: string;
+  name: string;
+  summary: string;
+  source: "curated" | "custom";
 };
 
 export function SelectionForm({ events, culprits, motives }: Props) {
-  const [event, setEvent] = useState(events[0] ?? "");
-  const [culprit, setCulprit] = useState(culprits[0] ?? "");
-  const [motive, setMotive] = useState(motives[1] ?? motives[0] ?? "");
+  const router = useRouter();
+  const [pending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
+
+  const [event, setEvent] = useState<Picked | null>(toPicked(events[0]));
+  const [culprit, setCulprit] = useState<Picked | null>(toPicked(culprits[0]));
+  const [motive, setMotive] = useState<Picked | null>(toPicked(motives[1] ?? motives[0]));
+
+  const ready = event && culprit && motive;
+
+  async function generate() {
+    if (!ready || pending) return;
+    setError(null);
+    startTransition(async () => {
+      try {
+        const res = await fetch("/api/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            event: { value: event!.name, source: event!.source },
+            culprit: { value: culprit!.name, source: culprit!.source },
+            motive: { value: motive!.name, source: motive!.source },
+          }),
+        });
+        if (!res.ok) {
+          const payload = (await res.json().catch(() => ({}))) as { error?: string };
+          throw new Error(payload.error ?? `Generation failed (${res.status})`);
+        }
+        const { shortId } = (await res.json()) as { shortId: string };
+        router.push(`/g/${shortId}`);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Generation failed.");
+      }
+    });
+  }
 
   return (
     <>
@@ -30,34 +72,38 @@ export function SelectionForm({ events, culprits, motives }: Props) {
             </span>
           </div>
           <div className="flex flex-col">
-            {events.map((e, i) => (
-              <label
-                key={e}
-                className={[
-                  "flex items-start gap-2.5 py-2 text-[13.5px] leading-snug cursor-pointer",
-                  i ? "border-t border-ink/10 dark:border-ink-dark/10" : "",
-                  event === e ? "text-ink dark:text-ink-dark font-medium" : "text-ink-soft dark:text-ink-soft-dark",
-                ].join(" ")}
-              >
-                <input
-                  type="radio"
-                  name="event"
-                  value={e}
-                  checked={event === e}
-                  onChange={() => setEvent(e)}
-                  className="mt-1.5 accent-ink"
-                />
-                <span>{e}</span>
-              </label>
-            ))}
+            {events.map((e, i) => {
+              const selected = event?.uuid === e.uuid && event?.source === "curated";
+              return (
+                <label
+                  key={e.uuid}
+                  className={[
+                    "flex items-start gap-2.5 py-2 text-[13.5px] leading-snug cursor-pointer",
+                    i ? "border-t border-ink/10 dark:border-ink-dark/10" : "",
+                    selected
+                      ? "text-ink dark:text-ink-dark font-medium"
+                      : "text-ink-soft dark:text-ink-soft-dark",
+                  ].join(" ")}
+                >
+                  <input
+                    type="radio"
+                    name="event"
+                    checked={selected}
+                    onChange={() => setEvent(toPicked(e))}
+                    className="mt-1.5 accent-ink"
+                  />
+                  <span>{e.name}</span>
+                </label>
+              );
+            })}
           </div>
-          <button
-            type="button"
-            className="mt-3 font-mono uppercase border border-dashed border-ink/35 dark:border-ink-dark/35 px-2.5 py-1.5 text-ink-soft dark:text-ink-soft-dark hover:text-ink dark:hover:text-ink-dark hover:border-ink/60 dark:hover:border-ink-dark/60 transition-colors"
-            style={{ fontSize: 10, letterSpacing: "0.14em" }}
-          >
-            + Use my own headline
-          </button>
+          <CustomInput
+            label="Use my own headline"
+            placeholder="Paste a recent news headline"
+            onAccepted={(value) =>
+              setEvent({ uuid: `custom-${cryptoRandomId()}`, name: value, summary: value, source: "custom" })
+            }
+          />
         </fieldset>
 
         {/* Culprit card */}
@@ -66,16 +112,16 @@ export function SelectionForm({ events, culprits, motives }: Props) {
           <div className="meta mb-3.5">Culprit</div>
           <div className="flex flex-col gap-2.5">
             {culprits.map((c) => {
-              const selected = culprit === c;
+              const selected = culprit?.uuid === c.uuid && culprit?.source === "curated";
               return (
                 <button
-                  key={c}
+                  key={c.uuid}
                   type="button"
-                  onClick={() => setCulprit(c)}
+                  onClick={() => setCulprit(toPicked(c))}
                   aria-pressed={selected}
                   className={[
                     "flex items-center gap-2.5 px-3 py-2.5 text-left",
-                    "font-display text-[16px] sm:text-[17px] leading-tight",
+                    "font-display text-[15px] sm:text-[16px] leading-tight",
                     "border transition-colors",
                     selected
                       ? "border-ink dark:border-ink-dark bg-paper dark:bg-paper-dark text-ink dark:text-ink-dark"
@@ -83,12 +129,26 @@ export function SelectionForm({ events, culprits, motives }: Props) {
                   ].join(" ")}
                   style={{ fontWeight: 600 }}
                 >
-                  <span aria-hidden className="block h-7 w-7 sm:h-8 sm:w-8 flex-shrink-0 bg-paper dark:bg-paper-dark border border-ink/15 dark:border-ink-dark/15" />
-                  <span>{c}</span>
+                  <Image
+                    src={c.imageUrl}
+                    width={36}
+                    height={36}
+                    alt=""
+                    className="block h-8 w-8 sm:h-9 sm:w-9 flex-shrink-0 object-cover border border-ink/15 dark:border-ink-dark/15"
+                    unoptimized
+                  />
+                  <span>{c.name}</span>
                 </button>
               );
             })}
           </div>
+          <CustomInput
+            label="Type your own"
+            placeholder="A power structure or institution"
+            onAccepted={(value) =>
+              setCulprit({ uuid: `custom-${cryptoRandomId()}`, name: value, summary: value, source: "custom" })
+            }
+          />
         </fieldset>
 
         {/* Motive card */}
@@ -97,12 +157,12 @@ export function SelectionForm({ events, culprits, motives }: Props) {
           <div className="meta mb-3.5">Motive</div>
           <div className="flex flex-col gap-2">
             {motives.map((m) => {
-              const selected = motive === m;
+              const selected = motive?.uuid === m.uuid && motive?.source === "curated";
               return (
                 <button
-                  key={m}
+                  key={m.uuid}
                   type="button"
-                  onClick={() => setMotive(m)}
+                  onClick={() => setMotive(toPicked(m))}
                   aria-pressed={selected}
                   className={[
                     "px-3 py-2.5 text-left text-[14px] leading-snug",
@@ -112,33 +172,202 @@ export function SelectionForm({ events, culprits, motives }: Props) {
                       : "border-ink/20 dark:border-ink-dark/20 text-ink-soft dark:text-ink-soft-dark hover:border-ink/40 dark:hover:border-ink-dark/40",
                   ].join(" ")}
                 >
-                  {m}
+                  {m.name}
                 </button>
               );
             })}
           </div>
+          <CustomInput
+            label="Type your own"
+            placeholder="What the conspirators want"
+            onAccepted={(value) =>
+              setMotive({ uuid: `custom-${cryptoRandomId()}`, name: value, summary: value, source: "custom" })
+            }
+          />
         </fieldset>
       </div>
 
-      {/* CTA row */}
-      <div className="mt-7 sm:mt-8 rule-h pt-5 sm:pt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-[13px] italic text-ink-soft dark:text-ink-soft-dark max-w-xl leading-relaxed">
-          Generation runs in front of you. You can stop it, replay any move, or compare it against the
-          debunking column at any time.
-        </p>
-        <button
-          type="button"
-          disabled={!event || !culprit || !motive}
-          className="self-stretch sm:self-auto bg-ink text-paper dark:bg-ink-dark dark:text-paper-dark px-5 py-3 sm:px-6 sm:py-3.5 font-display inline-flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity hover:opacity-90"
-          style={{ fontSize: 17, fontWeight: 600, letterSpacing: "-0.01em" }}
-          // Phase 2 task 2B.3 wires this to /api/generate. For now a no-op.
-        >
-          Cook the theory
-          <span className="font-mono opacity-70" style={{ fontSize: 11 }}>
-            →
-          </span>
-        </button>
+      {/* Pre-generation summary */}
+      <div className="mt-7 sm:mt-8 rule-h pt-5 sm:pt-6">
+        <p className="meta mb-2">Ready to cook</p>
+        <ul className="space-y-1 text-[14px]">
+          <SummaryRow label="Event" picked={event} />
+          <SummaryRow label="Culprit" picked={culprit} />
+          <SummaryRow label="Motive" picked={motive} />
+        </ul>
+
+        {error && (
+          <p className="mt-3 text-[13px] text-[oklch(56%_0.14_28)]" role="alert">
+            {error}
+          </p>
+        )}
+
+        <div className="mt-5 sm:mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-[13px] italic text-ink-soft dark:text-ink-soft-dark max-w-xl leading-relaxed">
+            Generation runs in front of you. Each of the four moves streams into its own labeled section,
+            with a debunking column running alongside.
+          </p>
+          <button
+            type="button"
+            onClick={generate}
+            disabled={!ready || pending}
+            className="self-stretch sm:self-auto bg-ink text-paper dark:bg-ink-dark dark:text-paper-dark px-5 py-3 sm:px-6 sm:py-3.5 font-display inline-flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity hover:opacity-90"
+            style={{ fontSize: 17, fontWeight: 600, letterSpacing: "-0.01em" }}
+          >
+            {pending ? "Cooking…" : "Cook the theory"}
+            <span className="font-mono opacity-70" style={{ fontSize: 11 }}>
+              →
+            </span>
+          </button>
+        </div>
       </div>
     </>
   );
+}
+
+function SummaryRow({ label, picked }: { label: string; picked: Picked | null }) {
+  if (!picked) {
+    return (
+      <li className="flex items-baseline gap-3 text-ink-soft dark:text-ink-soft-dark italic">
+        <span className="meta w-20">{label}</span>
+        <span>none yet</span>
+      </li>
+    );
+  }
+  return (
+    <li className="flex items-baseline gap-3">
+      <span className="meta w-20">{label}</span>
+      <span className="font-medium">{picked.name}</span>
+      <span
+        className="font-mono uppercase text-[10px] tracking-meta-tight px-1.5 py-0.5 border"
+        style={{
+          color: picked.source === "custom" ? "oklch(56% 0.14 28)" : "var(--tw-color-ink-soft, #54515C)",
+          borderColor: picked.source === "custom" ? "oklch(56% 0.14 28)" : "currentColor",
+          opacity: picked.source === "custom" ? 1 : 0.5,
+        }}
+      >
+        {picked.source}
+      </span>
+    </li>
+  );
+}
+
+function CustomInput({
+  label,
+  placeholder,
+  onAccepted,
+}: {
+  label: string;
+  placeholder: string;
+  onAccepted: (value: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [reject, setReject] = useState<string | null>(null);
+
+  async function submit() {
+    const v = value.trim();
+    if (!v) return;
+    setBusy(true);
+    setReject(null);
+    try {
+      const res = await fetch("/api/moderate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ value: v }),
+      });
+      const data = (await res.json()) as { ok: boolean; reason?: string };
+      if (!data.ok) {
+        setReject(data.reason ?? "This input would push the recipe somewhere it shouldn't go. Try a power structure or institution instead.");
+        return;
+      }
+      onAccepted(v);
+      setOpen(false);
+      setValue("");
+    } catch {
+      setReject("Could not verify the input — try again, or pick from the list.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  if (!open) {
+    return (
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className="mt-3 font-mono uppercase border border-dashed border-ink/35 dark:border-ink-dark/35 px-2.5 py-1.5 text-ink-soft dark:text-ink-soft-dark hover:text-ink dark:hover:text-ink-dark hover:border-ink/60 dark:hover:border-ink-dark/60 transition-colors"
+        style={{ fontSize: 10, letterSpacing: "0.14em" }}
+      >
+        + {label}
+      </button>
+    );
+  }
+
+  return (
+    <div className="mt-3 border border-ink/30 dark:border-ink-dark/30 p-3 bg-paper dark:bg-paper-dark">
+      <input
+        type="text"
+        autoFocus
+        value={value}
+        placeholder={placeholder}
+        onChange={(e) => setValue(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") submit();
+          if (e.key === "Escape") setOpen(false);
+        }}
+        className="w-full bg-transparent outline-none border-b border-ink/30 dark:border-ink-dark/30 pb-1 text-[14px] text-ink dark:text-ink-dark"
+      />
+      <div className="flex items-center gap-2 mt-2">
+        <button
+          type="button"
+          onClick={submit}
+          disabled={busy || !value.trim()}
+          className="font-mono uppercase bg-ink text-paper dark:bg-ink-dark dark:text-paper-dark px-2.5 py-1 disabled:opacity-50"
+          style={{ fontSize: 10, letterSpacing: "0.14em" }}
+        >
+          {busy ? "Checking…" : "Use this"}
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            setOpen(false);
+            setValue("");
+            setReject(null);
+          }}
+          className="font-mono uppercase text-ink-soft dark:text-ink-soft-dark hover:text-ink dark:hover:text-ink-dark px-2.5 py-1"
+          style={{ fontSize: 10, letterSpacing: "0.14em" }}
+        >
+          Cancel
+        </button>
+      </div>
+      {reject && (
+        <div
+          className="mt-3 text-[12.5px] leading-snug border-l-2 pl-3 py-1"
+          style={{ borderColor: "oklch(56% 0.14 28)" }}
+        >
+          {reject}{" "}
+          <a
+            href="mailto:hello@conspiracy-generator.duckdns.org?subject=Conspiracy%20Generator%20%E2%80%94%20input%20review"
+            className="underline-offset-2 underline"
+          >
+            request review
+          </a>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function toPicked(item: SeedItemWithImage | undefined): Picked | null {
+  if (!item) return null;
+  return { uuid: item.uuid, name: item.name, summary: item.summary, source: "curated" };
+}
+
+function cryptoRandomId(): string {
+  if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
+    return crypto.randomUUID().slice(0, 8);
+  }
+  return Math.random().toString(36).slice(2, 10);
 }
