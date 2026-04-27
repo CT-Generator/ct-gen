@@ -25,6 +25,11 @@ conspiracy-generator.duckdns.org {
 		-Server
 	}
 
+	# Rewrite the legacy /favicon.ico request browsers send by reflex to our
+	# real SVG favicon at /icon.svg. Avoids a console 404 on every page load.
+	@favicon path /favicon.ico
+	rewrite @favicon /icon.svg
+
 	@healthz path /healthz
 	reverse_proxy @healthz web:3000
 
