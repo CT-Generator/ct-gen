@@ -53,6 +53,19 @@
   .dark :focus-visible { outline-color: theme('colors.ink-dark'); }
 }
 
+/* Print stylesheet — the lesson plan should look good on paper. */
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+  header, footer, nav { display: none !important; }
+  .print\:hidden { display: none !important; }
+  a { color: black; text-decoration: underline; }
+  a[href]:after { content: " (" attr(href) ")"; font-size: 9pt; }
+  a[href^="/"]:after, a[href^="#"]:after, a[href^="mailto:"]:after { content: ""; }
+}
+
 @layer components {
   /* Hairline rule between sections, matches the editorial-newsprint feel */
   .rule-h {

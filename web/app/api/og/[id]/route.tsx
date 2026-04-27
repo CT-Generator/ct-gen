@@ -111,8 +111,8 @@ export async function GET(_req: Request, { params }: { params: Promise<Params> }
                 flexWrap: "wrap",
               }}
             >
-              <span>Every conspiracy theory follows&nbsp;the&nbsp;</span>
-              <span style={{ color: MOVES[1].colorHex }}>same four steps.</span>
+              <span>Conspiracy theories follow&nbsp;</span>
+              <span style={{ color: MOVES[1].colorHex }}>four moves.</span>
             </div>
 
             <div

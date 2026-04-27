@@ -1,29 +1,16 @@
-// Home / selection page.
-// Mobile-first responsive translation of the design canvas Home sheet.
-// Source: /tmp/design-extract/conspiracy-generator/project/component-sheets.jsx → HomeSheet
-//
-// The seed sample is taken at request time. A query param `r` advances the
-// shuffle seed so "Refresh" produces a new draw without a generation.
+// Home — pick the news event. Culprit + motive are chosen on the next step (/story/[uuid]).
 
 import Link from "next/link";
+import Image from "next/image";
 import { MOVES } from "@/lib/recipe";
 import { sampleN } from "@/lib/seed";
 import { Masthead } from "@/components/masthead";
 import { Footer } from "@/components/footer";
-import { DisclaimerBand } from "@/components/disclaimer-band";
 import { MoveGlyph } from "@/components/move-glyph";
-import { SelectionForm } from "@/components/selection-form";
 
 export const dynamic = "force-dynamic";
 
-type SearchParams = {
-  r?: string;
-  // Remix params — when present, the selection form pre-fills these as custom inputs.
-  remix?: string;
-  e?: string;
-  c?: string;
-  m?: string;
-};
+type SearchParams = { r?: string };
 
 export default async function HomePage({
   searchParams,
@@ -31,37 +18,28 @@ export default async function HomePage({
   searchParams: Promise<SearchParams>;
 }) {
   const sp = await searchParams;
-  const refresh = Number.parseInt(sp.r ?? "0", 10) || 0;
-
+  // First-time landing (`?r=` not present) gets a random sample. Refresh advances the seed.
+  const refresh = sp.r != null ? Number.parseInt(sp.r, 10) || 0 : Math.floor(Math.random() * 1_000_000);
   const events = sampleN("news", 4, refresh + 1);
-  const culprits = sampleN("culprits", 4, refresh + 2);
-  const motives = sampleN("motives", 3, refresh + 3);
-
-  const remix =
-    sp.remix && sp.e && sp.c && sp.m
-      ? { from: sp.remix, event: sp.e, culprit: sp.c, motive: sp.m }
-      : undefined;
 
   return (
     <>
-      <DisclaimerBand />
       <Masthead />
 
       {/* Hero */}
       <section className="border-b border-ink/15 dark:border-ink-dark/15">
         <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-14 lg:px-9 lg:py-16">
-          <p className="meta">The four-move recipe</p>
           <h1
-            className="mt-3 sm:mt-4 font-display text-[clamp(2.25rem,7vw,4.75rem)] leading-[0.96] max-w-3xl"
+            className="font-display text-[clamp(2.25rem,7vw,4.75rem)] leading-[0.96] max-w-3xl"
             style={{ fontWeight: 600, letterSpacing: "-0.025em" }}
           >
-            Watch a conspiracy theory{" "}
-            <span style={{ color: MOVES[0].color }}>build itself</span> from your inputs.
+            Build a conspiracy theory{" "}
+            <span style={{ color: MOVES[0].color }}>from scratch</span>.
           </h1>
           <p className="mt-5 sm:mt-6 max-w-2xl text-[15px] sm:text-[16px] leading-relaxed text-ink-soft dark:text-ink-soft-dark">
-            Pick an event, a culprit, and a motive. We assemble a plausible-sounding theory using the four
-            moves real conspiracists rely on — labeled as they happen — with a debunking column running
-            alongside.
+            Pick a real news story. On the next step you'll choose who's behind it and why. Then walk
+            through the four moves real conspiracists use — one move per screen — with a debunk on
+            every step.
           </p>
         </div>
       </section>
@@ -109,10 +87,10 @@ export default async function HomePage({
         ))}
       </section>
 
-      {/* Selection picker */}
-      <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6 sm:py-12 lg:px-9 lg:py-14">
-        <div className="flex items-center justify-between mb-1">
-          <p className="meta">Step 1 — Choose your ingredients</p>
+      {/* News picker — single column, horizontal cards */}
+      <section className="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-12 lg:py-14">
+        <div className="flex items-center justify-between mb-4">
+          <p className="meta">Step 1 — Pick a real news story</p>
           <Link
             href={{ pathname: "/", query: { r: refresh + 1 } }}
             className="meta hover:text-ink dark:hover:text-ink-dark transition-colors"
@@ -120,10 +98,61 @@ export default async function HomePage({
             ↻ Refresh
           </Link>
         </div>
-        <SelectionForm events={events} culprits={culprits} motives={motives} remix={remix} />
+
+        <div className="flex flex-col gap-3 sm:gap-4">
+          {events.map((e) => {
+            const summary =
+              e.intro_paragraphs?.[0] ??
+              (e.summary.length > 280 ? e.summary.slice(0, 280) + "…" : e.summary);
+            const sourceHost = e.url
+              ? new URL(e.url).hostname.replace(/^www\./, "")
+              : null;
+            return (
+              <Link
+                key={e.uuid}
+                href={`/story/${e.uuid}`}
+                className="group flex flex-col sm:flex-row gap-4 sm:gap-5 p-4 sm:p-5 bg-paper-alt dark:bg-paper-alt-dark border border-ink/15 dark:border-ink-dark/15 hover:border-ink dark:hover:border-ink-dark transition-colors"
+              >
+                <Image
+                  src={e.imageUrl}
+                  width={140}
+                  height={140}
+                  alt=""
+                  className="block h-32 sm:h-32 w-full sm:w-32 object-cover flex-shrink-0 border border-ink/15 dark:border-ink-dark/15"
+                  unoptimized
+                />
+                <div className="flex flex-col justify-between min-w-0">
+                  <div>
+                    <h3
+                      className="font-display text-[18px] sm:text-[20px] leading-tight"
+                      style={{ fontWeight: 600, letterSpacing: "-0.01em" }}
+                    >
+                      {e.name}
+                    </h3>
+                    <p className="mt-1.5 sm:mt-2 text-[13.5px] leading-snug text-ink-soft dark:text-ink-soft-dark line-clamp-3">
+                      {summary}
+                    </p>
+                  </div>
+                  <div className="mt-2 sm:mt-3 flex items-center justify-between gap-3">
+                    {sourceHost ? (
+                      <span className="meta">{sourceHost}</span>
+                    ) : (
+                      <span />
+                    )}
+                    <span
+                      className="font-mono uppercase tracking-meta-tight text-ink-soft dark:text-ink-soft-dark group-hover:text-ink dark:group-hover:text-ink-dark transition-colors"
+                      style={{ fontSize: 10 }}
+                    >
+                      Choose this story →
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
       </section>
 
-      <DisclaimerBand compact accent={3} />
       <Footer />
     </>
   );

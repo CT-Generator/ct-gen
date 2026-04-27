@@ -9,6 +9,7 @@ Files in this directory are mounted into containers as Docker Compose secrets at
 | `duckdns_token.txt`             | DuckDNS API token for DNS-01 cert renewal    | Get from https://www.duckdns.org → "token" field → paste into the file                                           |
 | `openai_api_key.txt`            | OpenAI API key (generation + moderation)     | Generate in https://platform.openai.com/api-keys → paste                                                         |
 | `session_hash_salt.txt`         | Server-side salt for the anonymous session ID | `openssl rand -hex 32 > infra/secrets/session_hash_salt.txt`                                                     |
+| `stats_password.txt`            | Basic Auth password for the `/stats` page     | `openssl rand -base64 24 \| tr -d '/+=' \| cut -c1-24 > infra/secrets/stats_password.txt`                        |
 | `postgres_password.txt`         | Password for the Postgres superuser          | `openssl rand -base64 32 \| tr -d '\\n=' > infra/secrets/postgres_password.txt`                                  |
 | `postgres_app_password.txt`     | Password for the non-superuser `app` role    | `openssl rand -base64 32 \| tr -d '\\n=' > infra/secrets/postgres_app_password.txt`                              |
 

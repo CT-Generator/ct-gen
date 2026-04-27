@@ -24,6 +24,9 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV PORT=3000
+# Bind on all interfaces — overrides Docker's per-container HOSTNAME default
+# which Next.js's standalone server.js otherwise uses as the bind addr.
+ENV HOSTNAME=0.0.0.0
 
 # Non-root runtime user
 RUN addgroup --system --gid 1001 nodejs && \

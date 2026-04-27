@@ -1,5 +1,4 @@
-// The four-move recipe. Source of truth for the entire app.
-// Colors: equal chroma + lightness, hue rotated. Pedagogy, not tribal coding.
+// The four-move recipe + structured-output schemas for the stepwise wizard.
 
 export type MoveKey = "anomaly" | "connection" | "dismiss" | "discredit";
 
@@ -12,7 +11,7 @@ export type Move = {
   color: string;
   /** ~8% tint of the accent — used for background fills under theory body. */
   soft: string;
-  /** Hex equivalent for environments that don't grok oklch (e.g. Satori → next/og). */
+  /** Hex equivalents for environments that don't grok oklch (Satori → next/og). */
   colorHex: string;
   softHex: string;
 };
@@ -60,50 +59,85 @@ export const MOVES: Move[] = [
   },
 ];
 
-export const RECIPE_VERSION = "v1";
+export const MOVE_BY_KEY: Record<MoveKey, Move> = Object.fromEntries(
+  MOVES.map((m) => [m.key, m]),
+) as Record<MoveKey, Move>;
 
-/**
- * Strict JSON schema for OpenAI structured outputs.
- * The model returns ALL FIVE sections in one call. Each section is a
- * non-empty string. additionalProperties: false makes the schema strict.
- */
-export const RECIPE_OUTPUT_SCHEMA = {
+export const RECIPE_VERSION = "v2";
+
+/* ─── Shared output schemas (strict JSON for OpenAI structured outputs) ───── */
+
+/** /api/start: short plain-English summary of the news event. */
+export const EVENT_INTRO_SCHEMA = {
   type: "object",
   additionalProperties: false,
-  required: ["anomalies", "connect_dots", "dismiss_counter", "discredit_critics", "debunk"],
+  required: ["paragraphs", "source_url"],
   properties: {
-    anomalies: {
-      type: "string",
+    paragraphs: {
+      type: "array",
+      items: { type: "string" },
       description:
-        "Move 01: Hunt anomalies. Find puzzling details, contradictions, coincidences in the official story. 2–4 paragraphs in the satirical conspiracist voice.",
+        "Two or three short paragraphs (60–90 words each) explaining the news event in plain language. The reader has not heard of this event before.",
     },
-    connect_dots: {
+    source_url: {
       type: "string",
       description:
-        "Move 02: Fabricate connections. Draw 'six-degrees' lines between unrelated entities until they look load-bearing. 2–4 paragraphs in the satirical conspiracist voice.",
+        "A best-guess link to a published news article about this event. May be empty string if unknown.",
     },
-    dismiss_counter: {
+  },
+} as const;
+export type EventIntro = { paragraphs: string[]; source_url: string };
+
+/** /api/start: 3 short ideas per move for the user to pick. */
+export const IDEAS_SCHEMA = {
+  type: "object",
+  additionalProperties: false,
+  required: ["anomaly", "connection", "dismiss", "discredit"],
+  properties: {
+    anomaly: { type: "array", items: { type: "string" }, description: "3 short anomaly-hunt ideas, ≤ 8 words each." },
+    connection: { type: "array", items: { type: "string" }, description: "3 short fake-connection ideas, ≤ 8 words each." },
+    dismiss: { type: "array", items: { type: "string" }, description: "3 short ways to dismiss counter-evidence, ≤ 8 words each." },
+    discredit: { type: "array", items: { type: "string" }, description: "3 short ways to discredit critics, ≤ 8 words each." },
+  },
+} as const;
+export type Ideas = Record<MoveKey, string[]>;
+
+/** /api/build/[id]/[move]/section: paragraph + debunk for one chosen idea. */
+export const SECTION_SCHEMA = {
+  type: "object",
+  additionalProperties: false,
+  required: ["paragraph", "debunk"],
+  properties: {
+    paragraph: {
       type: "string",
       description:
-        "Move 03: Dismiss counter-evidence. Reframe disconfirming facts as further evidence of the cover-up. 2–3 paragraphs.",
-    },
-    discredit_critics: {
-      type: "string",
-      description:
-        "Move 04: Discredit the critics. Frame skeptics as gullible dupes or paid stooges. 2–3 paragraphs.",
+        "One paragraph (45–80 words) applying the move, in the satirical conspiracist voice. Plain English, no bullets, no headings.",
     },
     debunk: {
       type: "string",
       description:
-        "Critical-thinking response. Plain, calm, addressed to the reader. Names each move and its tell, explains the logical fallacy, contrasts with how real investigators reason. 4–6 short paragraphs total covering all four moves.",
+        "One paragraph (40–70 words) of plain-language critical-thinking response to that paragraph. Names the move's tell. No bullets, no headings.",
     },
   },
 } as const;
+export type SectionOutput = { paragraph: string; debunk: string };
 
-export type RecipeOutput = {
-  anomalies: string;
-  connect_dots: string;
-  dismiss_counter: string;
-  discredit_critics: string;
-  debunk: string;
+/* ─── Persisted shape on the generations.recipe_content JSONB column ────── */
+
+export type WizardContent = {
+  event_intro?: EventIntro;
+  /** Short conspiracist-voice opener used on the shareable /g/[id] page. */
+  conspiracist_intro?: string;
+  ideas?: Ideas;
+  per_move?: Partial<Record<MoveKey, { idea: string; paragraph: string; debunk: string }>>;
+  // Legacy v1-style migrated rows have these instead:
+  legacy_text?: string;
+  legacy_prompt?: string;
+  recipe_tags?: null;
+  // Earlier v2 generations (before the wizard) used these top-level keys:
+  anomalies?: string;
+  connect_dots?: string;
+  dismiss_counter?: string;
+  discredit_critics?: string;
+  debunk?: string;
 };

@@ -10,7 +10,6 @@ import { sql } from "drizzle-orm";
 import { db, schema } from "@/lib/db";
 import { Masthead } from "@/components/masthead";
 import { Footer } from "@/components/footer";
-import { DisclaimerBand } from "@/components/disclaimer-band";
 import { QuizGame } from "@/components/quiz-game";
 import realData from "@/data/real-conspiracies.json";
 
@@ -92,7 +91,6 @@ export default async function QuizPage() {
   const items = await buildQuiz();
   return (
     <>
-      <DisclaimerBand />
       <Masthead />
 
       <article className="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-14 lg:py-16">

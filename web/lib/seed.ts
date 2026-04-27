@@ -13,6 +13,12 @@ export type SeedItem = {
   uuid: string;
   name: string;
   summary: string;
+  /** Only on news: original source URL. */
+  url?: string;
+  /** Only on news: pre-generated plain-English paragraphs (~70 words each). */
+  intro_paragraphs?: string[];
+  /** Only on news: pre-generated conspiracist-voice opener (40-70 words). Used on /g/[id]. */
+  conspiracist_intro?: string;
 };
 
 export type SeedItemWithImage = SeedItem & {

@@ -38,12 +38,12 @@ export const metadata: Metadata = {
     siteName: "Conspiracy Generator",
     title: "Conspiracy Generator — the recipe, written out",
     description:
-      "Every conspiracy theory follows the same four moves. Once you can name them, you can spot them.",
+      "Conspiracy theories follow four moves. Once you can name them, you can spot them. Build one yourself to see the recipe.",
   },
   twitter: {
     card: "summary_large_image",
     title: "Conspiracy Generator",
-    description: "Every conspiracy theory follows the same four moves.",
+    description: "Conspiracy theories follow four moves. Build one to see the recipe.",
   },
 };
 

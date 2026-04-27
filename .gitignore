@@ -40,6 +40,10 @@ infra/secrets/*
 # Local-only Compose overrides
 infra/docker-compose.override.yml
 
+# Production env (sourced by docker compose; never committed)
+infra/.env.production
+infra/.env
+
 # Postgres backups (local)
 *.dump
 *.sql.gz

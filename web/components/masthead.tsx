@@ -14,7 +14,7 @@ const NAV = [
   { label: "The recipe", href: "/recipe" as const },
   { label: "For teachers", href: "/teach" as const },
   { label: "About", href: "/about" as const },
-  { label: "Generate", href: "/" as const, active: true },
+  { label: "Build", href: "/" as const, active: true },
 ];
 
 export function Masthead() {
@@ -25,16 +25,11 @@ export function Masthead() {
         <Link href="/" className="flex items-center gap-2 sm:gap-3">
           <LogoMark size={28} className="sm:hidden" />
           <LogoMark size={32} className="hidden sm:inline-flex" />
-          <div>
-            <div
-              className="font-display leading-none"
-              style={{ fontSize: 16, fontWeight: 600 }}
-            >
-              Conspiracy Generator
-            </div>
-            <div className="meta mt-1 hidden sm:block">
-              Boudry · Meyer · Ghent · Hamburg
-            </div>
+          <div
+            className="font-display leading-none"
+            style={{ fontSize: 16, fontWeight: 600 }}
+          >
+            Conspiracy Generator
           </div>
         </Link>
 
