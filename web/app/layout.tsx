@@ -1,9 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Inter_Tight, JetBrains_Mono } from "next/font/google";
 import { headers } from "next/headers";
-import { after } from "next/server";
 import { ClassroomMount } from "@/components/classroom-mount";
-import { getOrIssueSessionHash } from "@/lib/session";
+import { readSessionHash } from "@/lib/session";
 import { recordPageView } from "@/lib/tracking";
 import "./globals.css";
 
@@ -80,31 +79,30 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   );
 }
 
-// Anonymous page-view capture. Reads request context, schedules a fire-and-forget
-// DB insert via after() so the response streams without waiting on it.
+// Anonymous page-view capture. Reads request context, kicks off a fire-and-forget
+// DB insert that resolves on the Node event loop after the response streams.
 // /stats/* paths are auth-gated and not tracked (the maintainer is not a visitor).
 async function captureVisit() {
   try {
     const h = await headers();
     const path = h.get("x-pathname");
-    console.log("[tracking] captureVisit path=", path);
-    if (!path) return; // middleware didn't run (e.g. excluded route)
+    if (!path) return; // middleware didn't run (excluded route or static asset)
     if (path.startsWith("/stats")) return;
 
-    const sessionHash = await getOrIssueSessionHash();
+    const sessionHash = await readSessionHash();
     const userAgent = h.get("user-agent");
     const referer = h.get("x-referrer");
     const countryHeader = h.get("x-country");
 
-    after(() =>
-      recordPageView({
-        sessionHash,
-        path,
-        userAgent,
-        referer,
-        countryHeader,
-      }),
-    );
+    // Intentionally not awaited. recordPageView swallows its own errors;
+    // any rejection here would already have been caught inside it.
+    void recordPageView({
+      sessionHash,
+      path,
+      userAgent,
+      referer,
+      countryHeader,
+    });
   } catch {
     // Capture is best-effort; never block the response on it.
   }

@@ -28,12 +28,8 @@ const ISO2_RE = /^[A-Z]{2}$/;
  */
 export async function recordPageView(ev: PageViewEvent): Promise<void> {
   try {
-    console.log("[tracking] recordPageView fired path=", ev.path);
     const ua = ev.userAgent ?? "";
-    if (BOT_RE.test(ua)) {
-      console.log("[tracking] bot filtered ua=", ua.slice(0, 60));
-      return;
-    }
+    if (BOT_RE.test(ua)) return;
 
     const deviceClass = MOBILE_RE.test(ua) ? "mobile" : "desktop";
     const referrerHost = parseReferrerHost(ev.referer);
@@ -46,9 +42,10 @@ export async function recordPageView(ev: PageViewEvent): Promise<void> {
       deviceClass,
       country,
     });
-    console.log("[tracking] inserted path=", ev.path);
   } catch (err) {
-    console.warn("[tracking] recordPageView failed:", err);
+    if (process.env.NODE_ENV !== "production") {
+      console.warn("[tracking] recordPageView failed:", err);
+    }
   }
 }
 
