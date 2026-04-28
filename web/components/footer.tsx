@@ -15,6 +15,12 @@ export function Footer() {
         <Link href="/about" className="hover:text-ink dark:hover:text-ink-dark">
           About &amp; credits
         </Link>
+        <Link href="/imprint" className="hover:text-ink dark:hover:text-ink-dark">
+          Imprint
+        </Link>
+        <Link href="/privacy" className="hover:text-ink dark:hover:text-ink-dark">
+          Privacy
+        </Link>
       </div>
     </footer>
   );
