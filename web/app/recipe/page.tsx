@@ -57,15 +57,6 @@ export default function RecipePage() {
           >
             this blog post
           </a>
-          , with the academic version at{" "}
-          <a
-            href="https://drive.google.com/file/d/1GMDVLdKfvaFnj8IFDyiRTGH3ePsOO9B7/views"
-            target="_blank"
-            rel="noopener"
-            className="underline-offset-2 underline hover:no-underline"
-          >
-            this paper
-          </a>
           .
         </p>
 
