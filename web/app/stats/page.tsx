@@ -1,11 +1,12 @@
 // /stats — maintainer dashboard. Basic Auth gated by middleware.ts.
-// Two tabs: v1 (legacy Streamlit + Sheets) and v2 (Next.js wizard).
+// Three tabs: v2 (Next.js wizard), v1 (legacy Streamlit + Sheets), Visitors (/stats/visitors).
 
-import Link from "next/link";
 import { Masthead } from "@/components/masthead";
 import { Footer } from "@/components/footer";
 import { BarChart } from "@/components/bar-chart";
 import { LineChart } from "@/components/line-chart";
+import { Tile, TopList, RatingHist } from "@/components/stats-pieces";
+import { StatsTabs } from "@/components/stats-tabs";
 import { MOVES } from "@/lib/recipe";
 import {
   loadV1Totals,
@@ -49,38 +50,12 @@ export default async function StatsPage({
           How the recipe is being used.
         </h1>
 
-        <nav className="mt-8 flex gap-px border-b border-ink/15 dark:border-ink-dark/15">
-          <TabLink active={tab === "v2"} tabValue="v2" label="v2 — Next.js wizard" />
-          <TabLink active={tab === "v1"} tabValue="v1" label="v1 — legacy (imported)" />
-        </nav>
+        <StatsTabs active={tab} />
 
         {tab === "v2" ? <V2Body /> : <V1Body />}
       </article>
       <Footer />
     </>
-  );
-}
-
-function TabLink({
-  active,
-  tabValue,
-  label,
-}: {
-  active: boolean;
-  tabValue: Tab;
-  label: string;
-}) {
-  return (
-    <Link
-      href={{ pathname: "/stats", query: { tab: tabValue } }}
-      className="px-4 py-2 -mb-px font-mono uppercase text-[11px] tracking-[0.14em]"
-      style={{
-        borderBottom: active ? `2px solid ${MOVES[0].color}` : "2px solid transparent",
-        opacity: active ? 1 : 0.55,
-      }}
-    >
-      {label}
-    </Link>
   );
 }
 
@@ -212,125 +187,5 @@ async function V1Body() {
         <RatingHist rows={dist} />
       </section>
     </>
-  );
-}
-
-// ---------------------------------------------------------------------------
-// Shared presentational helpers
-// ---------------------------------------------------------------------------
-
-function Tile({
-  label,
-  value,
-  accent,
-  muted,
-}: {
-  label: string;
-  value: number | string;
-  accent?: string;
-  muted?: boolean;
-}) {
-  const display = typeof value === "number" ? value.toLocaleString() : value;
-  return (
-    <div className="bg-paper-alt dark:bg-paper-alt-dark p-4 sm:p-5 flex flex-col justify-between gap-2 min-h-[110px]">
-      <span className="meta" style={{ color: accent }}>
-        {label}
-      </span>
-      <span
-        className="font-display tabular-nums leading-none"
-        style={{
-          fontSize: "clamp(1.6rem, 4vw, 2.25rem)",
-          fontWeight: 600,
-          color: accent,
-          opacity: muted ? 0.75 : 1,
-        }}
-      >
-        {display}
-      </span>
-    </div>
-  );
-}
-
-function TopList({
-  title,
-  rows,
-  accent,
-}: {
-  title: string;
-  rows: { value: string; n: number }[];
-  accent?: string;
-}) {
-  if (!rows.length) return null;
-  const max = Math.max(...rows.map((r) => r.n), 1);
-  return (
-    <section>
-      <h2 className="font-display text-[20px] sm:text-[22px]" style={{ fontWeight: 600 }}>
-        {title}
-      </h2>
-      <ol className="mt-3">
-        {rows.map((r) => (
-          <li
-            key={r.value}
-            className="flex items-baseline gap-3 py-2 border-t border-ink/10 dark:border-ink-dark/10 first:border-t-0"
-          >
-            <span className="flex-1 truncate text-[14px]">{r.value}</span>
-            <span className="font-mono tabular-nums text-[12px]" style={{ color: accent }}>
-              {r.n.toLocaleString()}
-            </span>
-            <span
-              aria-hidden
-              className="block h-1 ml-2 flex-shrink-0"
-              style={{
-                width: `${(r.n / max) * 80}px`,
-                background: accent ?? "currentColor",
-                opacity: 0.6,
-              }}
-            />
-          </li>
-        ))}
-      </ol>
-    </section>
-  );
-}
-
-function RatingHist({ rows }: { rows: { value: string; n: number }[] }) {
-  if (!rows.length) {
-    return (
-      <section>
-        <h2 className="font-display text-[20px] sm:text-[22px]" style={{ fontWeight: 600 }}>
-          Rating distribution
-        </h2>
-        <p className="mt-3 text-[13px] italic text-ink-soft dark:text-ink-soft-dark">
-          No ratings yet.
-        </p>
-      </section>
-    );
-  }
-  const max = Math.max(...rows.map((r) => r.n), 1);
-  return (
-    <section>
-      <h2 className="font-display text-[20px] sm:text-[22px]" style={{ fontWeight: 600 }}>
-        Rating distribution
-      </h2>
-      <ol className="mt-3 space-y-2">
-        {rows.map((r) => (
-          <li key={r.value} className="flex items-center gap-3 text-[14px]">
-            <span className="meta w-8">{r.value}★</span>
-            <span
-              aria-hidden
-              className="block h-3"
-              style={{
-                width: `${(r.n / max) * 100}%`,
-                background: MOVES[3].color,
-                maxWidth: "85%",
-              }}
-            />
-            <span className="font-mono tabular-nums text-[12px] text-ink-soft dark:text-ink-soft-dark">
-              {r.n}
-            </span>
-          </li>
-        ))}
-      </ol>
-    </section>
   );
 }

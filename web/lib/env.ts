@@ -28,6 +28,11 @@ const schema = z.object({
 
   // Maintainer-only stats page (Basic Auth)
   STATS_PASSWORD: z.string().min(8).describe("Password for /stats Basic Auth"),
+
+  // Visitor analytics — opt-in country resolution. Reads ISO-2 country code
+  // from this request header (e.g. set by Cloudflare's CF-IPCountry, or by a
+  // future Caddy maxmind module). Absent header → country stored as NULL.
+  GEOIP_COUNTRY_HEADER: z.string().default("cf-ipcountry"),
 });
 
 export type Env = z.infer<typeof schema>;

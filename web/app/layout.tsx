@@ -1,6 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Inter_Tight, JetBrains_Mono } from "next/font/google";
+import { headers } from "next/headers";
+import { after } from "next/server";
 import { ClassroomMount } from "@/components/classroom-mount";
+import { getOrIssueSessionHash } from "@/lib/session";
+import { recordPageView } from "@/lib/tracking";
 import "./globals.css";
 
 const display = Fraunces({
@@ -61,7 +65,8 @@ const NO_FLASH_THEME = `
 (function(){try{var t=localStorage.getItem('cgen-theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(d)document.documentElement.classList.add('dark');}catch(e){}})();
 `.trim();
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  await captureVisit();
   return (
     <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
       <head>
@@ -73,4 +78,34 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </body>
     </html>
   );
+}
+
+// Anonymous page-view capture. Reads request context, schedules a fire-and-forget
+// DB insert via after() so the response streams without waiting on it.
+// /stats/* paths are auth-gated and not tracked (the maintainer is not a visitor).
+async function captureVisit() {
+  try {
+    const h = await headers();
+    const path = h.get("x-pathname");
+    console.log("[tracking] captureVisit path=", path);
+    if (!path) return; // middleware didn't run (e.g. excluded route)
+    if (path.startsWith("/stats")) return;
+
+    const sessionHash = await getOrIssueSessionHash();
+    const userAgent = h.get("user-agent");
+    const referer = h.get("x-referrer");
+    const countryHeader = h.get("x-country");
+
+    after(() =>
+      recordPageView({
+        sessionHash,
+        path,
+        userAgent,
+        referer,
+        countryHeader,
+      }),
+    );
+  } catch {
+    // Capture is best-effort; never block the response on it.
+  }
 }

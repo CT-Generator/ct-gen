@@ -69,6 +69,18 @@ CREATE TABLE IF NOT EXISTS "ratings" (
     "created_at" timestamp with time zone DEFAULT now() NOT NULL
 );
 
+-- visitor-tracking change: page_views table.
+-- Spec: openspec/changes/visitor-tracking/specs/visitor-analytics/spec.md
+CREATE TABLE IF NOT EXISTS "page_views" (
+    "id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+    "session_hash" text NOT NULL,
+    "path" text NOT NULL,
+    "referrer_host" text,
+    "device_class" text NOT NULL,
+    "country" text,
+    "created_at" timestamp with time zone DEFAULT now() NOT NULL
+);
+
 ALTER TABLE "quiz_items"
     ADD CONSTRAINT "quiz_items_source_generation_id_generations_id_fk"
     FOREIGN KEY ("source_generation_id") REFERENCES "public"."generations"("id")
@@ -86,5 +98,8 @@ CREATE INDEX        IF NOT EXISTS "generations_created_at_idx" ON "generations" 
 CREATE INDEX        IF NOT EXISTS "quiz_items_kind_idx"      ON "quiz_items"   USING btree ("kind");
 CREATE UNIQUE INDEX IF NOT EXISTS "ratings_one_per_session_uq" ON "ratings"     USING btree ("generation_id","session_hash");
 CREATE INDEX        IF NOT EXISTS "ratings_generation_idx"   ON "ratings"     USING btree ("generation_id");
+CREATE INDEX        IF NOT EXISTS "page_views_created_at_idx" ON "page_views" USING btree ("created_at");
+CREATE INDEX        IF NOT EXISTS "page_views_session_idx"   ON "page_views" USING btree ("session_hash");
+CREATE INDEX        IF NOT EXISTS "page_views_path_idx"      ON "page_views" USING btree ("path");
 
 RESET ROLE;

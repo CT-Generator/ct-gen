@@ -89,5 +89,31 @@ export const quizItems = pgTable(
   }),
 );
 
+// Spec: openspec/changes/visitor-tracking/specs/visitor-analytics/spec.md
+//
+// One row per real human page view. No PII at rest:
+// - session_hash is the same salted hash used by the cgen_sid cookie
+// - path is the local URL path only (no query string)
+// - referrer_host is the host portion of the Referer header only (no path / query)
+// - device_class is 'mobile' or 'desktop' — UA itself is never stored
+// - country is an ISO-3166 alpha-2 code from a configurable request header (or null)
+export const pageViews = pgTable(
+  "page_views",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    sessionHash: text("session_hash").notNull(),
+    path: text("path").notNull(),
+    referrerHost: text("referrer_host"),
+    deviceClass: text("device_class").notNull(),
+    country: text("country"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => ({
+    createdAtIdx: index("page_views_created_at_idx").on(t.createdAt),
+    sessionIdx: index("page_views_session_idx").on(t.sessionHash),
+    pathIdx: index("page_views_path_idx").on(t.path),
+  }),
+);
+
 // Drizzle-kit needs `sql` imported somewhere even when no raw SQL is used in this file.
 export const _sqlImport = sql;

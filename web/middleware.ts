@@ -1,11 +1,24 @@
-// HTTP Basic Auth gate for /stats/*.
-// Username is ignored; the password env (STATS_PASSWORD) is what matters.
+// Two responsibilities, one matcher:
+//   1. /stats/* → HTTP Basic Auth gate. Username ignored; STATS_PASSWORD env is the gate.
+//   2. everything else (excluding assets/api/healthz) → set x-pathname / x-referrer /
+//      x-country request headers so the Node-runtime root layout can capture an
+//      anonymous page-view event via after().
+// Spec: openspec/changes/visitor-tracking/specs/visitor-analytics/spec.md
 
 import { NextResponse, type NextRequest } from "next/server";
 
 const REALM = "Conspiracy Generator stats";
 
 export function middleware(req: NextRequest) {
+  const pathname = req.nextUrl.pathname;
+
+  if (pathname.startsWith("/stats")) {
+    return statsAuthGate(req);
+  }
+  return passThroughWithCaptureHeaders(req);
+}
+
+function statsAuthGate(req: NextRequest) {
   const password = process.env.STATS_PASSWORD;
   if (!password) {
     return new NextResponse("STATS_PASSWORD not configured on the server.", {
@@ -45,13 +58,30 @@ export function middleware(req: NextRequest) {
     });
   }
 
-  // Username is ignored but echo it via a header for log-trace convenience.
   const res = NextResponse.next();
   if (user) res.headers.set("x-stats-user", user.slice(0, 32));
   return res;
 }
 
+function passThroughWithCaptureHeaders(req: NextRequest) {
+  // The country header name is configured in env.ts (default cf-ipcountry).
+  // Read by name here without importing env() — middleware runs in the Edge
+  // runtime which can't load the full env validator (DATABASE_URL, etc.).
+  // Default matches env.ts default; override only used in non-default deploys.
+  const countryHeaderName = process.env.GEOIP_COUNTRY_HEADER ?? "cf-ipcountry";
+
+  const requestHeaders = new Headers(req.headers);
+  requestHeaders.set("x-pathname", req.nextUrl.pathname);
+  const referer = req.headers.get("referer");
+  if (referer) requestHeaders.set("x-referrer", referer);
+  const country = req.headers.get(countryHeaderName);
+  if (country) requestHeaders.set("x-country", country);
+
+  return NextResponse.next({ request: { headers: requestHeaders } });
+}
+
 export const config = {
-  // The web-vitals static-analysis edge runtime needs a literal matcher.
-  matcher: ["/stats/:path*"],
+  // Match every route except static assets, the API, the health check, and the
+  // favicon/icon/robots.txt URLs that aren't real human page views.
+  matcher: ["/((?!_next/|api/|healthz|icon\\.svg|favicon\\.ico|robots\\.txt).*)"],
 };

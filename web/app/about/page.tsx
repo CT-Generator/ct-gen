@@ -48,6 +48,23 @@ export default function AboutPage() {
 
         <div className="mt-12 rule-h pt-6">
           <h2 className="font-display text-[22px] sm:text-[24px]" style={{ fontWeight: 600 }}>
+            Feedback
+          </h2>
+          <p className="mt-4 text-[15px] leading-relaxed">
+            We love hearing what works and what doesn't — bug reports, classroom stories, ideas
+            for new moves. Drop a line at{" "}
+            <a
+              href="mailto:marco.meyer@jpberlin.de?subject=Conspiracy%20Generator%20%E2%80%94%20feedback"
+              className="underline-offset-2 underline hover:no-underline"
+            >
+              marco.meyer@jpberlin.de
+            </a>
+            .
+          </p>
+        </div>
+
+        <div className="mt-10 rule-h pt-6">
+          <h2 className="font-display text-[22px] sm:text-[24px]" style={{ fontWeight: 600 }}>
             Credits
           </h2>
           <p className="mt-4 text-[15px] leading-relaxed">
