@@ -15,6 +15,13 @@
       "when": 1777361494290,
       "tag": "0001_visitor_tracking",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1777386908057,
+      "tag": "0002_locale_columns",
+      "breakpoints": true
     }
   ]
 }

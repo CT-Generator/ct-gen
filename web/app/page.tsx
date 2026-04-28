@@ -2,11 +2,12 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { MOVES } from "@/lib/recipe";
+import { getMoves } from "@/lib/recipe";
 import { sampleN } from "@/lib/seed";
 import { Masthead } from "@/components/masthead";
 import { Footer } from "@/components/footer";
 import { MoveGlyph } from "@/components/move-glyph";
+import { readLocale, getDict, localizedHref } from "@/lib/i18n";
 
 export const dynamic = "force-dynamic";
 
@@ -18,9 +19,13 @@ export default async function HomePage({
   searchParams: Promise<SearchParams>;
 }) {
   const sp = await searchParams;
+  const locale = await readLocale();
+  const t = getDict(locale).home;
+  const MOVES = getMoves(locale);
+
   // First-time landing (`?r=` not present) gets a random sample. Refresh advances the seed.
   const refresh = sp.r != null ? Number.parseInt(sp.r, 10) || 0 : Math.floor(Math.random() * 1_000_000);
-  const events = sampleN("news", 4, refresh + 1);
+  const events = sampleN("news", 4, refresh + 1, locale);
 
   return (
     <>
@@ -33,18 +38,18 @@ export default async function HomePage({
             className="font-display text-[clamp(2.25rem,7vw,4.75rem)] leading-[0.96] max-w-3xl"
             style={{ fontWeight: 600, letterSpacing: "-0.025em" }}
           >
-            Build a conspiracy theory{" "}
-            <span style={{ color: MOVES[0].color }}>from scratch</span>.
+            {t.hero_h1_a}{" "}
+            <span style={{ color: MOVES[0].color }}>{t.hero_h1_b}</span>
+            {t.hero_h1_period}
           </h1>
           <p
             className="mt-3 sm:mt-4 max-w-2xl text-[16px] sm:text-[17px] italic text-ink-soft dark:text-ink-soft-dark"
             style={{ fontWeight: 400 }}
           >
-            The best way to learn to spot a conspiracy theory is to make one yourself.
+            {t.hero_subheading}
           </p>
           <p className="mt-5 sm:mt-6 max-w-2xl text-[15px] sm:text-[16px] leading-relaxed text-ink-soft dark:text-ink-soft-dark">
-            Pick a real news story. On the next step you'll choose who's behind it and why. Then walk
-            through the four moves real conspiracists use, with a debunk on every step.
+            {t.hero_description}
           </p>
         </div>
       </section>
@@ -52,7 +57,7 @@ export default async function HomePage({
       {/* Four-move preview row */}
       <section
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-b border-ink dark:border-ink-dark"
-        aria-label="The four recipe moves"
+        aria-label={t.four_moves_aria}
       >
         {MOVES.map((m, i) => (
           <div
@@ -76,7 +81,7 @@ export default async function HomePage({
                 className="font-mono uppercase"
                 style={{ fontSize: 10, letterSpacing: "0.14em", color: m.color }}
               >
-                Move {m.n}
+                {t.move_label} {m.n}
               </span>
             </div>
             <h2
@@ -95,12 +100,12 @@ export default async function HomePage({
       {/* News picker — single column, horizontal cards */}
       <section className="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-12 lg:py-14">
         <div className="flex items-center justify-between mb-4">
-          <p className="meta">Step 1 — Pick a real news story</p>
+          <p className="meta">{t.step_1_picker}</p>
           <Link
-            href={{ pathname: "/", query: { r: refresh + 1 } }}
+            href={{ pathname: localizedHref("/", locale), query: { r: refresh + 1 } }}
             className="meta hover:text-ink dark:hover:text-ink-dark transition-colors"
           >
-            ↻ Refresh
+            {t.refresh}
           </Link>
         </div>
 
@@ -115,7 +120,7 @@ export default async function HomePage({
             return (
               <Link
                 key={e.uuid}
-                href={`/story/${e.uuid}`}
+                href={localizedHref(`/story/${e.uuid}`, locale)}
                 className="group flex flex-col sm:flex-row gap-4 sm:gap-5 p-4 sm:p-5 bg-paper-alt dark:bg-paper-alt-dark border border-ink/15 dark:border-ink-dark/15 hover:border-ink dark:hover:border-ink-dark transition-colors"
               >
                 <Image
@@ -148,7 +153,7 @@ export default async function HomePage({
                       className="font-mono uppercase tracking-meta-tight text-ink-soft dark:text-ink-soft-dark group-hover:text-ink dark:group-hover:text-ink-dark transition-colors"
                       style={{ fontSize: 10 }}
                     >
-                      Choose this story →
+                      {t.choose_this_story}
                     </span>
                   </div>
                 </div>

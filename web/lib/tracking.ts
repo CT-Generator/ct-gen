@@ -3,6 +3,7 @@
 
 import { db, schema } from "@/lib/db";
 import { env } from "@/lib/env";
+import { isLocale } from "@/lib/i18n/types";
 
 export type PageViewEvent = {
   sessionHash: string;
@@ -10,6 +11,7 @@ export type PageViewEvent = {
   userAgent: string | null;
   referer: string | null;
   countryHeader: string | null;
+  locale: string | null;
 };
 
 // Known crawlers + obvious headless tooling. Anything matching is dropped
@@ -34,6 +36,7 @@ export async function recordPageView(ev: PageViewEvent): Promise<void> {
     const deviceClass = MOBILE_RE.test(ua) ? "mobile" : "desktop";
     const referrerHost = parseReferrerHost(ev.referer);
     const country = parseCountry(ev.countryHeader);
+    const locale = isLocale(ev.locale) ? ev.locale : null;
 
     await db().insert(schema.pageViews).values({
       sessionHash: ev.sessionHash,
@@ -41,6 +44,7 @@ export async function recordPageView(ev: PageViewEvent): Promise<void> {
       referrerHost,
       deviceClass,
       country,
+      locale,
     });
   } catch (err) {
     if (process.env.NODE_ENV !== "production") {

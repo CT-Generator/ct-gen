@@ -1,21 +1,120 @@
-// Two responsibilities, one matcher:
-//   1. /stats/* → HTTP Basic Auth gate. Username ignored; STATS_PASSWORD env is the gate.
-//   2. everything else (excluding assets/api/healthz) → set x-pathname / x-referrer /
-//      x-country request headers so the Node-runtime root layout can capture an
-//      anonymous page-view event via after().
-// Spec: openspec/changes/visitor-tracking/specs/visitor-analytics/spec.md
+// Three responsibilities, one matcher:
+//   1. Locale negotiation — every non-excluded request gets `x-locale: en|de`. The /de/<rest>
+//      URL prefix triggers an internal rewrite to /<rest> so the same Next.js page file
+//      renders, but the URL bar stays /de/<rest>.
+//   2. /stats/* → HTTP Basic Auth gate. Username ignored; STATS_PASSWORD env is the gate.
+//   3. Everything else → set x-pathname / x-referrer / x-country request headers so the
+//      Node-runtime root layout can capture an anonymous page-view event after the response.
+// Specs:
+//   - openspec/changes/visitor-tracking/specs/visitor-analytics/spec.md
+//   - openspec/changes/multilingual-german/specs/internationalization/spec.md
 
 import { NextResponse, type NextRequest } from "next/server";
 
 const REALM = "Conspiracy Generator stats";
+const COOKIE_NAME = "cgen_lang";
+const COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 year
+
+type Locale = "en" | "de";
+const SUPPORTED: readonly Locale[] = ["en", "de"];
 
 export function middleware(req: NextRequest) {
-  const pathname = req.nextUrl.pathname;
+  const original = req.nextUrl.pathname;
 
-  if (pathname.startsWith("/stats")) {
-    return statsAuthGate(req);
+  // ── Locale resolution ──────────────────────────────────────────────────
+  // Step 1: split off the /de/ prefix (if any) into a normalized path the
+  // app sees, plus the locale we should attribute the request to.
+  const explicitDe = original === "/de" || original.startsWith("/de/");
+  const explicitPrefix: Locale | null = explicitDe ? "de" : null;
+  const unprefixedPath = explicitDe
+    ? original === "/de"
+      ? "/"
+      : original.slice(3) // strip "/de"
+    : original;
+
+  // Step 2: cookie + Accept-Language for visitors who haven't pinned a prefix.
+  const cookieLocale = parseLocale(req.cookies.get(COOKIE_NAME)?.value);
+  const acceptLocale = parseLocale(parseAcceptLanguage(req.headers.get("accept-language")));
+
+  // Permalinks bypass first-visit redirect — they should render in the locale
+  // the row was generated in, not the visitor's preferred locale.
+  const isPermalink =
+    unprefixedPath.startsWith("/g/") ||
+    unprefixedPath === "/g" ||
+    unprefixedPath.startsWith("/story/") ||
+    unprefixedPath === "/story";
+
+  // First-visit redirect: no cookie, no explicit prefix, AL prefers de → /de/...
+  if (!cookieLocale && !explicitPrefix && !isPermalink && acceptLocale === "de") {
+    const target = req.nextUrl.clone();
+    target.pathname = original === "/" ? "/de" : `/de${original}`;
+    const res = NextResponse.redirect(target, 302);
+    setLangCookie(res, "de");
+    return res;
   }
-  return passThroughWithCaptureHeaders(req);
+
+  // Resolve final locale.
+  const locale: Locale = explicitPrefix ?? cookieLocale ?? acceptLocale ?? "en";
+
+  // Pass on un-prefixed path to /stats handler / tracking layer.
+  if (unprefixedPath.startsWith("/stats")) {
+    const res = statsAuthGate(req);
+    if (locale !== cookieLocale) setLangCookie(res, locale);
+    return res;
+  }
+
+  // ── Build the response ────────────────────────────────────────────────
+  // If the URL bar is /de/<rest>, internally rewrite to /<rest> so the
+  // existing Next.js page file (e.g. app/recipe/page.tsx) renders. The
+  // browser's URL bar stays /de/<rest>; only the file-system route changes.
+  const requestHeaders = new Headers(req.headers);
+  requestHeaders.set("x-locale", locale);
+  requestHeaders.set("x-pathname", unprefixedPath);
+  const referer = req.headers.get("referer");
+  if (referer) requestHeaders.set("x-referrer", referer);
+  const countryHeaderName = process.env.GEOIP_COUNTRY_HEADER ?? "cf-ipcountry";
+  const country = req.headers.get(countryHeaderName);
+  if (country) requestHeaders.set("x-country", country);
+
+  let res: NextResponse;
+  if (explicitDe) {
+    const rewritten = req.nextUrl.clone();
+    rewritten.pathname = unprefixedPath;
+    res = NextResponse.rewrite(rewritten, { request: { headers: requestHeaders } });
+  } else {
+    res = NextResponse.next({ request: { headers: requestHeaders } });
+  }
+  if (locale !== cookieLocale) setLangCookie(res, locale);
+  return res;
+}
+
+function parseLocale(raw: string | null | undefined): Locale | null {
+  if (raw === "en" || raw === "de") return raw;
+  return null;
+}
+
+function parseAcceptLanguage(header: string | null): "en" | "de" | null {
+  if (!header) return null;
+  // Pick the highest-priority entry that matches a supported locale.
+  // Header format: "de-DE,de;q=0.9,en;q=0.5". Take the first language tag.
+  const first = header
+    .split(",")
+    .map((x) => x.trim().split(";")[0]!.trim().toLowerCase())
+    .find((tag) => tag.startsWith("de") || tag.startsWith("en"));
+  if (!first) return null;
+  if (first.startsWith("de")) return "de";
+  if (first.startsWith("en")) return "en";
+  return null;
+}
+
+function setLangCookie(res: NextResponse, locale: Locale) {
+  res.cookies.set(COOKIE_NAME, locale, {
+    httpOnly: false,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    maxAge: COOKIE_MAX_AGE,
+    path: "/",
+  });
 }
 
 function statsAuthGate(req: NextRequest) {
@@ -63,25 +162,11 @@ function statsAuthGate(req: NextRequest) {
   return res;
 }
 
-function passThroughWithCaptureHeaders(req: NextRequest) {
-  // The country header name is configured in env.ts (default cf-ipcountry).
-  // Read by name here without importing env() — middleware runs in the Edge
-  // runtime which can't load the full env validator (DATABASE_URL, etc.).
-  // Default matches env.ts default; override only used in non-default deploys.
-  const countryHeaderName = process.env.GEOIP_COUNTRY_HEADER ?? "cf-ipcountry";
-
-  const requestHeaders = new Headers(req.headers);
-  requestHeaders.set("x-pathname", req.nextUrl.pathname);
-  const referer = req.headers.get("referer");
-  if (referer) requestHeaders.set("x-referrer", referer);
-  const country = req.headers.get(countryHeaderName);
-  if (country) requestHeaders.set("x-country", country);
-
-  return NextResponse.next({ request: { headers: requestHeaders } });
-}
-
+// Match every route except static assets, the API, the health check, and the
+// favicon/icon/robots.txt URLs that aren't real human page views.
 export const config = {
-  // Match every route except static assets, the API, the health check, and the
-  // favicon/icon/robots.txt URLs that aren't real human page views.
   matcher: ["/((?!_next/|api/|healthz|icon\\.svg|favicon\\.ico|robots\\.txt).*)"],
 };
+
+// Suppress "unused locale union" warning for the const list (kept exported via type system only).
+void SUPPORTED;

@@ -4,16 +4,21 @@
 
 import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { db, schema } from "@/lib/db";
 import { Masthead } from "@/components/masthead";
 import { Footer } from "@/components/footer";
 import { BuildWizard } from "@/components/build-wizard";
-import type { WizardContent } from "@/lib/recipe";
+import { getMoves, type WizardContent } from "@/lib/recipe";
+import { isLocale, getDict, type Locale } from "@/lib/i18n";
 
 type Params = { id: string };
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Building…" };
+
+export async function generateMetadata(): Promise<Metadata> {
+  return { title: "Building…" };
+}
 
 export default async function BuildPage({ params }: { params: Promise<Params> }) {
   const { id } = await params;
@@ -32,6 +37,13 @@ export default async function BuildPage({ params }: { params: Promise<Params> })
     notFound();
   }
 
+  // Wizard locale follows the persisted row, not the visitor's UI locale.
+  // (A returning visitor on /de/build/<id> for an EN row sees an EN wizard;
+  // the in-flight build matches the locale it was started in.)
+  const rowLocale: Locale = isLocale(row.locale) ? row.locale : "en";
+  const dict = getDict(rowLocale);
+  const moves = getMoves(rowLocale);
+
   return (
     <>
       <Masthead />
@@ -43,6 +55,15 @@ export default async function BuildPage({ params }: { params: Promise<Params> })
         intro={content.event_intro}
         ideas={content.ideas}
         initialPerMove={content.per_move ?? {}}
+        locale={rowLocale}
+        moves={moves.map((m) => ({
+          n: m.n,
+          key: m.key,
+          title: m.title,
+          color: m.color,
+        }))}
+        labels={dict.wizard}
+        blurb={dict.wizard_blurb}
       />
       <Footer />
     </>

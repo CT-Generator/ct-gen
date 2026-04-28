@@ -4,6 +4,10 @@
 //   - v2 wizard rows: per_move[moveKey] = { idea, paragraph, debunk }
 //   - earlier v2 rows (pre-wizard): top-level { anomalies, connect_dots, ..., debunk }
 //   - migrated v1 rows: { legacy_text, recipe_tags: null }
+//
+// Locale of the chrome follows the row's persisted locale, NOT the visitor's
+// active UI locale. Spec: openspec/changes/multilingual-german/specs/internationalization/spec.md
+// (the "Permalink bypasses Accept-Language redirect" scenario).
 
 import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
@@ -11,13 +15,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { db, schema } from "@/lib/db";
 import { env } from "@/lib/env";
-import { MOVES, type MoveKey, type WizardContent } from "@/lib/recipe";
+import { getMoves, type MoveKey, type WizardContent } from "@/lib/recipe";
 import { Masthead } from "@/components/masthead";
 import { Footer } from "@/components/footer";
 import { MoveGlyph } from "@/components/move-glyph";
 import { MoveTellStamp } from "@/components/move-tell-stamp";
 import { ShareButtons } from "@/components/share-buttons";
 import { RatingBar } from "@/components/rating-bar";
+import { getDict, isLocale, localizedHref, type Locale } from "@/lib/i18n";
 
 type Params = { id: string };
 
@@ -107,6 +112,12 @@ export default async function GenerationPage({ params }: { params: Promise<Param
   const gen = await loadGeneration(id);
   if (!gen) notFound();
 
+  // Chrome locale follows the generation's locale (preserved across visitors).
+  const rowLocale: Locale = isLocale(gen.locale) ? gen.locale : "en";
+  const t = getDict(rowLocale).generation;
+  const shareLabels = getDict(rowLocale).share;
+  const MOVES = getMoves(rowLocale);
+
   const content = gen.recipeContent as WizardContent;
   const display = buildDisplayMoves(content);
   const permalink = `${env().PUBLIC_BASE_URL}/g/${id}`;
@@ -120,15 +131,18 @@ export default async function GenerationPage({ params }: { params: Promise<Param
         <div className="mx-auto max-w-3xl px-4 py-7 sm:px-6 sm:py-9 lg:py-10 flex flex-col gap-4">
           <div>
             <p className="meta">
-              {gen.source === "migrated" ? "Imported from earlier version" : "A fake conspiracy theory"}
+              {gen.source === "migrated" ? t.eyebrow_imported : t.eyebrow_fake}
             </p>
             <h1
               className="mt-2 font-display text-[clamp(1.6rem,4.5vw,2.4rem)] leading-[1.05] max-w-2xl"
               style={{ fontWeight: 600, letterSpacing: "-0.02em" }}
             >
-              How <span style={{ color: MOVES[0].color }}>{gen.culpritValue}</span> orchestrated{" "}
-              <span style={{ color: MOVES[2].color }}>{gen.eventValue}</span>, in service of{" "}
-              <span style={{ color: MOVES[3].color }}>{gen.motiveValue.toLowerCase()}</span>.
+              {t.h1_how} <span style={{ color: MOVES[0].color }}>{gen.culpritValue}</span>{" "}
+              {t.h1_orchestrated}{" "}
+              <span style={{ color: MOVES[2].color }}>{gen.eventValue}</span>
+              {t.h1_in_service_of}{" "}
+              <span style={{ color: MOVES[3].color }}>{gen.motiveValue.toLowerCase()}</span>
+              {t.h1_period}
             </h1>
           </div>
 
@@ -147,7 +161,7 @@ export default async function GenerationPage({ params }: { params: Promise<Param
                     rel="noopener nofollow"
                     className="not-italic underline-offset-2 underline hover:no-underline"
                   >
-                    (original story)
+                    {t.original_story}
                   </a>
                 </>
               )}
@@ -175,11 +189,11 @@ export default async function GenerationPage({ params }: { params: Promise<Param
                     className="font-mono uppercase"
                     style={{ fontSize: 10, letterSpacing: "0.16em", color: m.color }}
                   >
-                    Move {m.n} · {m.title}
+                    {t.move_label} {m.n} · {m.title}
                   </span>
                 </div>
                 {dm.idea && (
-                  <p className="meta mb-2">Idea: {dm.idea}</p>
+                  <p className="meta mb-2">{t.idea_label} {dm.idea}</p>
                 )}
                 <div
                   className="font-body text-[15px] sm:text-[16px] leading-[1.65] pl-4 sm:pl-5"
@@ -192,14 +206,14 @@ export default async function GenerationPage({ params }: { params: Promise<Param
                   }}
                 >
                   {dm.paragraph}
-                  <MoveTellStamp move={m} />
+                  <MoveTellStamp move={m} label={t.move_label.toUpperCase()} />
                 </div>
                 <div className="mt-4 pl-4 sm:pl-5 border-l border-dashed border-ink/35 dark:border-ink-dark/35 py-1">
                   <p
                     className="font-mono uppercase text-ink-soft dark:text-ink-soft-dark mb-2"
                     style={{ fontSize: 10, letterSpacing: "0.14em" }}
                   >
-                    Debunk
+                    {t.debunk_label}
                   </p>
                   <p className="text-[13.5px] leading-[1.55] whitespace-pre-wrap">{dm.debunk}</p>
                 </div>
@@ -213,7 +227,7 @@ export default async function GenerationPage({ params }: { params: Promise<Param
             className="meta mb-4 inline-block px-2 py-1 border border-ink-soft dark:border-ink-soft-dark"
             style={{ fontSize: 9 }}
           >
-            Imported from earlier version · recipe tagging not available
+            {t.legacy_note}
           </p>
           <div
             className="font-body text-[15px] sm:text-[16px] leading-[1.7] whitespace-pre-wrap"
@@ -225,22 +239,26 @@ export default async function GenerationPage({ params }: { params: Promise<Param
       {/* Rate + share + remix */}
       <section className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-9 mt-8 sm:mt-10 pt-6 sm:pt-8 rule-h-soft space-y-6">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <p className="meta">Was the recipe convincingly applied?</p>
+          <p className="meta">{t.rate_question}</p>
           <RatingBar shortId={id} />
         </div>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="meta">Share — links back, no images of the theory</p>
+            <p className="meta">{t.share_meta}</p>
           </div>
           <div className="flex flex-wrap gap-2 items-center">
             <Link
-              href="/"
+              href={localizedHref("/", rowLocale)}
               className="border border-ink/30 dark:border-ink-dark/30 px-3 py-2 text-[12px] hover:border-ink dark:hover:border-ink-dark transition-colors"
             >
-              ↻ Build another
+              {t.build_another}
             </Link>
-            <ShareButtons permalink={permalink} culprit={gen.culpritValue} />
+            <ShareButtons
+              permalink={permalink}
+              culprit={gen.culpritValue}
+              labels={shareLabels}
+            />
           </div>
         </div>
       </section>

@@ -3,7 +3,7 @@
 
 "use client";
 
-export function PrintButton() {
+export function PrintButton({ label }: { label: string }) {
   return (
     <button
       type="button"
@@ -11,7 +11,7 @@ export function PrintButton() {
       className="font-mono uppercase border border-ink/40 dark:border-ink-dark/40 px-3 py-1.5 hover:border-ink dark:hover:border-ink-dark transition-colors"
       style={{ fontSize: 10, letterSpacing: "0.14em" }}
     >
-      Save as PDF
+      {label}
     </button>
   );
 }

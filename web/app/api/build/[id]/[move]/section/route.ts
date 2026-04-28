@@ -8,6 +8,7 @@ import { eq } from "drizzle-orm";
 import { db, schema } from "@/lib/db";
 import { generateSection, moderate } from "@/lib/openai";
 import { type MoveKey, type WizardContent } from "@/lib/recipe";
+import { isLocale, type Locale } from "@/lib/i18n";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -56,7 +57,12 @@ export async function POST(
     if (v) prior[k] = v.paragraph;
   }
 
+  // Read locale from the persisted row — the user's locale was decided at /api/start
+  // time and we keep section generation consistent with what's already on the page.
+  const rowLocale: Locale = isLocale(row.locale) ? row.locale : "en";
+
   const sec = await generateSection({
+    locale: rowLocale,
     eventName: row.eventValue,
     eventSummary: content.event_intro?.paragraphs?.join("\n\n") ?? "",
     culpritName: row.culpritValue,

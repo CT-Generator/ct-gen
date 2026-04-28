@@ -1,5 +1,7 @@
 // The four-move recipe + structured-output schemas for the stepwise wizard.
 
+import type { Locale } from "@/lib/i18n/types";
+
 export type MoveKey = "anomaly" | "connection" | "dismiss" | "discredit";
 
 export type Move = {
@@ -18,56 +20,63 @@ export type Move = {
   softHex: string;
 };
 
-export const MOVES: Move[] = [
-  {
-    n: "01",
-    key: "anomaly",
-    title: "Hunt anomalies",
-    sub: "Turn coincidence into evidence of a secret plot.",
-    tell: "BASE RATES",
-    color: "oklch(56% 0.14 28)",
-    soft: "oklch(92% 0.04 28)",
-    colorHex: "#A04A3C",
-    softHex: "#F2DDD5",
-  },
-  {
-    n: "02",
-    key: "connection",
-    title: "Fabricate connections",
-    sub: "Draw lines between unrelated dots until they look meaningful.",
-    tell: "SIX DEGREES",
-    color: "oklch(56% 0.14 130)",
-    soft: "oklch(92% 0.04 130)",
-    colorHex: "#5C7339",
-    softHex: "#E0E8D2",
-  },
-  {
-    n: "03",
-    key: "dismiss",
-    title: "Dismiss counter-evidence",
-    sub: "If a fact disagrees, make the fact part of the cover-up.",
-    tell: "UNFALSIFIABLE",
-    color: "oklch(56% 0.14 230)",
-    soft: "oklch(92% 0.04 230)",
-    colorHex: "#3A6E97",
-    softHex: "#D6E2EC",
-  },
-  {
-    n: "04",
-    key: "discredit",
-    title: "Discredit the critics",
-    sub: "Dismiss people who point out flaws in your theory.",
-    tell: "AD HOMINEM",
-    color: "oklch(56% 0.14 70)",
-    soft: "oklch(92% 0.04 70)",
-    colorHex: "#876133",
-    softHex: "#EBE2D0",
-  },
+// Visual properties (colors, n, key) are locale-invariant. Title, sub, tell
+// vary by locale. We define the visual base once, then a per-locale label map.
+type MoveVisual = Pick<Move, "n" | "key" | "color" | "soft" | "colorHex" | "softHex">;
+
+const MOVE_VISUALS: MoveVisual[] = [
+  { n: "01", key: "anomaly",    color: "oklch(56% 0.14 28)",  soft: "oklch(92% 0.04 28)",  colorHex: "#A04A3C", softHex: "#F2DDD5" },
+  { n: "02", key: "connection", color: "oklch(56% 0.14 130)", soft: "oklch(92% 0.04 130)", colorHex: "#5C7339", softHex: "#E0E8D2" },
+  { n: "03", key: "dismiss",    color: "oklch(56% 0.14 230)", soft: "oklch(92% 0.04 230)", colorHex: "#3A6E97", softHex: "#D6E2EC" },
+  { n: "04", key: "discredit",  color: "oklch(56% 0.14 70)",  soft: "oklch(92% 0.04 70)",  colorHex: "#876133", softHex: "#EBE2D0" },
 ];
+
+type MoveLabels = { title: string; sub: string; tell: string };
+
+const LABELS_BY_LOCALE: Record<Locale, Record<MoveKey, MoveLabels>> = {
+  en: {
+    anomaly:    { title: "Hunt anomalies",            sub: "Turn coincidence into evidence of a secret plot.",      tell: "BASE RATES"     },
+    connection: { title: "Fabricate connections",     sub: "Draw lines between unrelated dots until they look meaningful.", tell: "SIX DEGREES"   },
+    dismiss:    { title: "Dismiss counter-evidence",  sub: "If a fact disagrees, make the fact part of the cover-up.",      tell: "UNFALSIFIABLE" },
+    discredit:  { title: "Discredit the critics",     sub: "Dismiss people who point out flaws in your theory.",            tell: "AD HOMINEM"    },
+  },
+  // German pass-1 (literal) — to be workshopped in pass 2 per spec.
+  de: {
+    anomaly:    { title: "Auffälligkeiten suchen",        sub: "Mach aus Zufall Beweis für einen geheimen Plan.",                tell: "AUSGANGSWAHRSCHEINLICHKEIT" },
+    connection: { title: "Verbindungen erfinden",         sub: "Zieh Linien zwischen unzusammenhängenden Punkten, bis sie bedeutsam wirken.", tell: "SECHS GRADE DER TRENNUNG" },
+    dismiss:    { title: "Gegenbeweise abwehren",         sub: "Wenn ein Fakt widerspricht, mach ihn zum Teil der Vertuschung.",  tell: "UNFALSIFIZIERBAR" },
+    discredit:  { title: "Kritiker:innen diskreditieren", sub: "Weise Menschen ab, die Schwächen deiner Theorie zeigen.",         tell: "AD HOMINEM"     },
+  },
+};
+
+function buildMoves(locale: Locale): Move[] {
+  return MOVE_VISUALS.map((v) => ({ ...v, ...LABELS_BY_LOCALE[locale][v.key] }));
+}
+
+const MOVES_BY_LOCALE: Record<Locale, Move[]> = {
+  en: buildMoves("en"),
+  de: buildMoves("de"),
+};
+
+/** Locale-aware accessor for the four moves. Use this everywhere — never
+ * import MOVES directly anymore. */
+export function getMoves(locale: Locale): Move[] {
+  return MOVES_BY_LOCALE[locale];
+}
+
+/** Back-compat: the English MOVES used by code paths that haven't been
+ * locale-threaded yet (OG image route, build wizard internals). Will be
+ * removed once those paths read locale from request context. */
+export const MOVES: Move[] = MOVES_BY_LOCALE.en;
 
 export const MOVE_BY_KEY: Record<MoveKey, Move> = Object.fromEntries(
   MOVES.map((m) => [m.key, m]),
 ) as Record<MoveKey, Move>;
+
+/** Locale-aware MOVE_BY_KEY. */
+export function getMoveByKey(locale: Locale, key: MoveKey): Move {
+  return MOVES_BY_LOCALE[locale].find((m) => m.key === key)!;
+}
 
 export const RECIPE_VERSION = "v2";
 

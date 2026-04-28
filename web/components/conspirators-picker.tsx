@@ -8,6 +8,20 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { SeedItemWithImage } from "@/lib/seed";
 
+type Locale = "en" | "de";
+
+type Labels = {
+  culprit: string;
+  motive: string;
+  refresh_choices: string;
+  walkthrough_caption: string;
+  cta_start: string;
+  cta_starting: string;
+  cta_starting_dots: string;
+  err_too_long: string;
+  err_couldnt_start: string;
+};
+
 type Props = {
   eventUuid: string;
   eventName: string;
@@ -15,6 +29,8 @@ type Props = {
   culprits: SeedItemWithImage[];
   motives: SeedItemWithImage[];
   refresh: number;
+  locale: Locale;
+  labels: Labels;
 };
 
 export function ConspiratorsPicker({
@@ -24,6 +40,8 @@ export function ConspiratorsPicker({
   culprits,
   motives,
   refresh,
+  locale,
+  labels,
 }: Props) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
@@ -33,6 +51,8 @@ export function ConspiratorsPicker({
   const [motive, setMotive] = useState<SeedItemWithImage | null>(motives[0] ?? null);
 
   const ready = culprit && motive;
+  const buildPath = locale === "de" ? `/de/build` : `/build`;
+  const storyPath = locale === "de" ? `/de/story/${eventUuid}` : `/story/${eventUuid}`;
 
   async function start() {
     if (!ready || pending) return;
@@ -46,6 +66,9 @@ export function ConspiratorsPicker({
           headers: { "Content-Type": "application/json" },
           signal: ctrl.signal,
           body: JSON.stringify({
+            // Locale must travel in the body — middleware excludes /api/* so the
+            // route handler can't read x-locale from request headers.
+            locale,
             event: { uuid: eventUuid, name: eventName, summary: eventSummary },
             culprit: { uuid: culprit!.uuid, name: culprit!.name, summary: culprit!.summary },
             motive: { uuid: motive!.uuid, name: motive!.name, summary: motive!.summary },
@@ -57,12 +80,12 @@ export function ConspiratorsPicker({
           throw new Error(payload.error ?? `Couldn't start (${res.status})`);
         }
         const { shortId } = (await res.json()) as { shortId: string };
-        router.push(`/build/${shortId}`);
+        router.push(`${buildPath}/${shortId}`);
       } catch (err) {
         if (err instanceof Error && err.name === "AbortError") {
-          setError("That took too long — try again.");
+          setError(labels.err_too_long);
         } else {
-          setError(err instanceof Error ? err.message : "Couldn't start the build.");
+          setError(err instanceof Error ? err.message : labels.err_couldnt_start);
         }
       }
     });
@@ -73,8 +96,8 @@ export function ConspiratorsPicker({
       <div className="mt-8 grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2">
         {/* Culprit */}
         <fieldset className="bg-paper-alt dark:bg-paper-alt-dark border border-ink/15 dark:border-ink-dark/15 p-4 sm:p-5">
-          <legend className="sr-only">Culprit</legend>
-          <div className="meta mb-3.5">Culprit</div>
+          <legend className="sr-only">{labels.culprit}</legend>
+          <div className="meta mb-3.5">{labels.culprit}</div>
           <div className="flex flex-col gap-2.5">
             {culprits.map((c) => {
               const selected = culprit?.uuid === c.uuid;
@@ -111,8 +134,8 @@ export function ConspiratorsPicker({
 
         {/* Motive */}
         <fieldset className="bg-paper-alt dark:bg-paper-alt-dark border border-ink/15 dark:border-ink-dark/15 p-4 sm:p-5">
-          <legend className="sr-only">Motive</legend>
-          <div className="meta mb-3.5">Motive</div>
+          <legend className="sr-only">{labels.motive}</legend>
+          <div className="meta mb-3.5">{labels.motive}</div>
           <div className="flex flex-col gap-2.5">
             {motives.map((m) => {
               const selected = motive?.uuid === m.uuid;
@@ -151,10 +174,10 @@ export function ConspiratorsPicker({
       {/* Refresh + CTA */}
       <div className="mt-6 flex items-center justify-end">
         <Link
-          href={`/story/${eventUuid}?r=${refresh + 1}`}
+          href={`${storyPath}?r=${refresh + 1}`}
           className="meta hover:text-ink dark:hover:text-ink-dark transition-colors"
         >
-          ↻ Refresh choices
+          {labels.refresh_choices}
         </Link>
       </div>
 
@@ -165,11 +188,11 @@ export function ConspiratorsPicker({
           </p>
         )}
 
-        {pending && <Starting />}
+        {pending && <Starting label={labels.cta_starting_dots} />}
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-[13px] italic text-ink-soft dark:text-ink-soft-dark max-w-xl leading-relaxed">
-            You'll walk through the four moves on separate screens, with a debunk on every step.
+            {labels.walkthrough_caption}
           </p>
           <button
             type="button"
@@ -178,7 +201,7 @@ export function ConspiratorsPicker({
             className="self-stretch sm:self-auto bg-ink text-paper dark:bg-ink-dark dark:text-paper-dark px-5 py-3 sm:px-6 sm:py-3.5 font-display inline-flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity hover:opacity-90"
             style={{ fontSize: 17, fontWeight: 600, letterSpacing: "-0.01em" }}
           >
-            {pending ? "Setting up…" : "Start building"}
+            {pending ? labels.cta_starting : labels.cta_start}
             <span className="font-mono opacity-70" style={{ fontSize: 11 }}>
               →
             </span>
@@ -189,7 +212,7 @@ export function ConspiratorsPicker({
   );
 }
 
-function Starting() {
+function Starting({ label }: { label: string }) {
   const [dots, setDots] = useState(0);
   useEffect(() => {
     const t = setInterval(() => setDots((d) => (d + 1) % 4), 400);
@@ -197,7 +220,7 @@ function Starting() {
   }, []);
   return (
     <p className="mb-3 text-[13px] text-ink-soft dark:text-ink-soft-dark">
-      Brainstorming ideas{".".repeat(dots)}
+      {label}{".".repeat(dots)}
     </p>
   );
 }

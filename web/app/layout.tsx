@@ -4,6 +4,7 @@ import { headers } from "next/headers";
 import { ClassroomMount } from "@/components/classroom-mount";
 import { readSessionHash } from "@/lib/session";
 import { recordPageView } from "@/lib/tracking";
+import { readLocale, getDict } from "@/lib/i18n";
 import "./globals.css";
 
 const display = Fraunces({
@@ -25,30 +26,32 @@ const mono = JetBrains_Mono({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: {
-    default: "Conspiracy Generator — the recipe, written out",
-    template: "%s · Conspiracy Generator",
-  },
-  description:
-    "An educational tool that builds a fake conspiracy theory in front of you, labeling each of the four moves as it happens, with a debunking column running alongside. Watch the recipe so you can spot it in the wild.",
-  authors: [
-    { name: "Maarten Boudry", url: "https://research.flw.ugent.be/en/maarten.boudry" },
-    { name: "Marco Meyer", url: "https://www.philosophie.uni-hamburg.de/philosophisches-seminar/personen/meyer-marco.html" },
-  ],
-  openGraph: {
-    type: "website",
-    siteName: "Conspiracy Generator",
-    title: "Conspiracy Generator — the recipe, written out",
-    description:
-      "Conspiracy theories follow four moves. Once you can name them, you can spot them. Build one yourself to see the recipe.",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Conspiracy Generator",
-    description: "Conspiracy theories follow four moves. Build one to see the recipe.",
-  },
-};
+// Metadata is generated per-request below so titles + descriptions match the active locale.
+// Static fallback values stay in the en dictionary (web/lib/i18n/en.ts → meta).
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await readLocale();
+  const m = getDict(locale).meta;
+  return {
+    title: { default: m.home_title_default, template: m.home_title_template },
+    description: m.home_description,
+    authors: [
+      { name: "Maarten Boudry", url: "https://research.flw.ugent.be/en/maarten.boudry" },
+      { name: "Marco Meyer", url: "https://www.philosophie.uni-hamburg.de/philosophisches-seminar/personen/meyer-marco.html" },
+    ],
+    openGraph: {
+      type: "website",
+      siteName: "Conspiracy Generator",
+      title: m.og_title,
+      description: m.og_description,
+      locale: locale === "de" ? "de_DE" : "en_US",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: "Conspiracy Generator",
+      description: m.twitter_description,
+    },
+  };
+}
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -66,8 +69,9 @@ const NO_FLASH_THEME = `
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   await captureVisit();
+  const locale = await readLocale();
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
+    <html lang={locale} className={`${display.variable} ${body.variable} ${mono.variable}`}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: NO_FLASH_THEME }} />
       </head>
@@ -93,6 +97,7 @@ async function captureVisit() {
     const userAgent = h.get("user-agent");
     const referer = h.get("x-referrer");
     const countryHeader = h.get("x-country");
+    const locale = h.get("x-locale");
 
     // Intentionally not awaited. recordPageView swallows its own errors;
     // any rejection here would already have been caught inside it.
@@ -102,6 +107,7 @@ async function captureVisit() {
       userAgent,
       referer,
       countryHeader,
+      locale,
     });
   } catch {
     // Capture is best-effort; never block the response on it.

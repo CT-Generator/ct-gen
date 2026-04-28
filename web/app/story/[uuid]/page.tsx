@@ -6,6 +6,7 @@ import { Masthead } from "@/components/masthead";
 import { Footer } from "@/components/footer";
 import { findByUuid, sampleN } from "@/lib/seed";
 import { ConspiratorsPicker } from "@/components/conspirators-picker";
+import { readLocale, getDict, localizedHref } from "@/lib/i18n";
 
 type Params = { uuid: string };
 type SearchParams = { r?: string };
@@ -21,14 +22,17 @@ export default async function StoryPage({
 }) {
   const { uuid } = await params;
   const sp = await searchParams;
+  const locale = await readLocale();
+  const t = getDict(locale).story;
+
   // First-time landing gets random culprits/motives; refresh advances the seed.
   const refresh = sp.r != null ? Number.parseInt(sp.r, 10) || 0 : Math.floor(Math.random() * 1_000_000);
 
   const event = findByUuid("news", uuid);
   if (!event) notFound();
 
-  const culprits = sampleN("culprits", 4, refresh + 11);
-  const motives = sampleN("motives", 4, refresh + 13);
+  const culprits = sampleN("culprits", 4, refresh + 11, locale);
+  const motives = sampleN("motives", 4, refresh + 13, locale);
 
   const paragraphs = event.intro_paragraphs ?? [event.summary];
   const sourceHost = event.url ? new URL(event.url).hostname.replace(/^www\./, "") : null;
@@ -39,12 +43,12 @@ export default async function StoryPage({
 
       <article className="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12 lg:py-14">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-baseline sm:justify-between">
-          <p className="meta">Step 2 — The official story</p>
+          <p className="meta">{t.eyebrow}</p>
           <Link
-            href="/"
+            href={localizedHref("/", locale)}
             className="meta hover:text-ink dark:hover:text-ink-dark transition-colors"
           >
-            ← Pick a different story
+            {t.pick_different}
           </Link>
         </div>
 
@@ -63,7 +67,7 @@ export default async function StoryPage({
 
         {event.url && sourceHost && (
           <p className="mt-5 text-[13px] text-ink-soft dark:text-ink-soft-dark">
-            Source:{" "}
+            {t.source_label}{" "}
             <a
               href={event.url}
               target="_blank"
@@ -77,12 +81,9 @@ export default async function StoryPage({
 
         {/* Explainer */}
         <div className="mt-9 sm:mt-10 rule-h pt-5">
-          <p className="meta mb-3">Now pick the conspirators</p>
+          <p className="meta mb-3">{t.pick_conspirators_meta}</p>
           <p className="text-[15px] leading-relaxed">
-            Every conspiracy theory pins one <strong>culprit</strong> and one <strong>motive</strong>{" "}
-            on the same story. The same story can spawn any number of theories — different culprits,
-            different motives. That's part of how you spot a conspiracy theory: the same event can
-            be "explained" any number of ways.
+            {t.pick_conspirators_explainer}
           </p>
         </div>
 
@@ -94,6 +95,18 @@ export default async function StoryPage({
           culprits={culprits}
           motives={motives}
           refresh={refresh}
+          locale={locale}
+          labels={{
+            culprit: t.culprit,
+            motive: t.motive,
+            refresh_choices: t.refresh_choices,
+            walkthrough_caption: t.walkthrough_caption,
+            cta_start: t.cta_start,
+            cta_starting: t.cta_starting,
+            cta_starting_dots: t.cta_starting_dots,
+            err_too_long: t.err_too_long,
+            err_couldnt_start: t.err_couldnt_start,
+          }}
         />
       </article>
 

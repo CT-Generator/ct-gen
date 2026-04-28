@@ -7,7 +7,7 @@
 
 import type { Move } from "@/lib/recipe";
 
-export function MoveTellStamp({ move }: { move: Move }) {
+export function MoveTellStamp({ move, label = "MOVE" }: { move: Move; label?: string }) {
   return (
     <span
       aria-hidden
@@ -25,7 +25,7 @@ export function MoveTellStamp({ move }: { move: Move }) {
         whiteSpace: "nowrap",
       }}
     >
-      MOVE {move.n} · {move.tell}
+      {label} {move.n} · {move.tell}
     </span>
   );
 }

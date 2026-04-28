@@ -1,16 +1,66 @@
 // Build wizard — 5 screens: 4 moves + done. Story is shown on /story/[uuid] before this page.
+//
+// Locale-aware: receives a pre-resolved label set + per-locale MOVES list from
+// the server-component wrapper at app/build/[id]/page.tsx. Wizard locale tracks
+// the persisted row, so a fresh visitor switching UI locales mid-build sees
+// the wizard in the language it was started in.
 
 "use client";
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
-import { MOVES, MOVE_BY_KEY, type MoveKey, type EventIntro, type Ideas } from "@/lib/recipe";
+import { type MoveKey, type EventIntro, type Ideas } from "@/lib/recipe";
 import { MoveGlyph } from "@/components/move-glyph";
 
 const MOVE_KEYS_IN_ORDER: MoveKey[] = ["anomaly", "connection", "dismiss", "discredit"];
 
 type SectionState = { idea: string; paragraph: string; debunk: string };
+
+type WizardLabels = {
+  pick_idea: string;
+  cooking: string;
+  conspiracist_writes: string;
+  debunk_label: string;
+  next_move: string;
+  see_full_theory: string;
+  or_regenerate: string;
+  writing: string;
+  writing_too_long: string;
+  section_failed: string;
+  back: string;
+  step_n_of: string;
+  skip_to_result: string;
+  progress_done: string;
+  done_eyebrow: string;
+  done_h1: string;
+  done_p_a: string;
+  done_p_orchestrating: string;
+  done_p_in_service_of: string;
+  done_p_period: string;
+  done_p_missing: string;
+  done_cta_read: string;
+};
+
+type WizardBlurb = {
+  anomaly_explainer: string;
+  anomaly_tell: string;
+  connection_explainer: string;
+  connection_tell: string;
+  dismiss_explainer: string;
+  dismiss_tell: string;
+  discredit_explainer: string;
+  discredit_tell: string;
+};
+
+type WizardMove = {
+  n: "01" | "02" | "03" | "04";
+  key: MoveKey;
+  title: string;
+  color: string;
+};
+
+type Locale = "en" | "de";
 
 type Props = {
   shortId: string;
@@ -20,34 +70,32 @@ type Props = {
   intro: EventIntro;
   ideas: Ideas;
   initialPerMove: Partial<Record<MoveKey, SectionState>>;
+  locale: Locale;
+  moves: WizardMove[];
+  labels: WizardLabels;
+  blurb: WizardBlurb;
 };
 
 type Screen = MoveKey | "done";
 
 const SCREENS: Screen[] = ["anomaly", "connection", "dismiss", "discredit", "done"];
 
-const MOVE_BLURB: Record<MoveKey, { explainer: string; tell: string }> = {
-  anomaly: {
-    explainer:
-      "Pick something ordinary in the news event and frame it as suspicious. The trick is to treat coincidence as signal — to make the reader feel that something is off.",
-    tell: "Real investigators check base rates. Conspiracists collect anomalies and skip the base rate.",
-  },
-  connection: {
-    explainer:
-      "Link the culprit to the event through a chain of weakly-related facts. The chain itself becomes the evidence — not whether each link is meaningful.",
-    tell: "Six-degrees of separation works for any two people on the planet. A chain of links is not evidence of intent.",
-  },
-  dismiss: {
-    explainer:
-      "Take an obvious mainstream rebuttal and reframe it as more proof of the cover-up. The theory becomes immune to disconfirmation.",
-    tell: "When counter-evidence becomes more evidence of the conspiracy, the theory has become unfalsifiable. That's a tell, not a strength.",
-  },
-  discredit: {
-    explainer:
-      "Reroute the question from \"is this true?\" to \"who is asking?\" Anyone disputing the theory is gullible, manipulated, or paid.",
-    tell: "Real investigators welcome critique. Conspiracists treat critique as the conspiracy.",
-  },
-};
+function buildBlurbMap(b: WizardBlurb): Record<MoveKey, { explainer: string; tell: string }> {
+  return {
+    anomaly: { explainer: b.anomaly_explainer, tell: b.anomaly_tell },
+    connection: { explainer: b.connection_explainer, tell: b.connection_tell },
+    dismiss: { explainer: b.dismiss_explainer, tell: b.dismiss_tell },
+    discredit: { explainer: b.discredit_explainer, tell: b.discredit_tell },
+  };
+}
+
+function moveByKey(moves: WizardMove[], key: MoveKey): WizardMove {
+  return moves.find((m) => m.key === key)!;
+}
+
+function generationHref(locale: Locale, shortId: string): string {
+  return locale === "de" ? `/de/g/${shortId}` : `/g/${shortId}`;
+}
 
 export function BuildWizard(props: Props) {
   const router = useRouter();
@@ -55,7 +103,6 @@ export function BuildWizard(props: Props) {
     props.initialPerMove,
   );
   const [screen, setScreen] = useState<Screen>(() => {
-    // Resume on the first unfinished move; if all done, land on done.
     for (const k of MOVE_KEYS_IN_ORDER) {
       if (!props.initialPerMove[k]) return k;
     }
@@ -63,6 +110,7 @@ export function BuildWizard(props: Props) {
   });
 
   const screenIdx = SCREENS.indexOf(screen);
+  const blurbMap = buildBlurbMap(props.blurb);
 
   function go(target: Screen) {
     setScreen(target);
@@ -81,17 +129,25 @@ export function BuildWizard(props: Props) {
 
   return (
     <article className="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12 lg:py-14">
-      <ProgressBar current={screen} />
+      <ProgressBar
+        current={screen}
+        moves={props.moves}
+        doneLabel={props.labels.progress_done}
+        moveLabelPrefix={moveByKey.toString()}
+        moveLabelByLocale={props.locale === "de" ? "Schritt" : "Move"}
+      />
 
       {MOVE_KEYS_IN_ORDER.map((k) =>
         screen === k ? (
           <MoveScreen
             key={k}
             shortId={props.shortId}
-            moveKey={k}
+            move={moveByKey(props.moves, k)}
+            blurb={blurbMap[k]}
             ideas={props.ideas[k]}
             initial={perMove[k] ?? null}
-            culpritName={props.culpritName}
+            labels={props.labels}
+            moveNumberLabel={props.locale === "de" ? "Schritt" : "Move"}
             onResolved={(state) => handleSection(k, state)}
             onNext={() => handleDoneAdvance(k)}
           />
@@ -100,12 +156,12 @@ export function BuildWizard(props: Props) {
 
       {screen === "done" && (
         <DoneScreen
-          shortId={props.shortId}
           eventName={props.eventName}
           culpritName={props.culpritName}
           motiveName={props.motiveName}
           perMove={perMove}
-          onView={() => router.push(`/g/${props.shortId}`)}
+          labels={props.labels}
+          onView={() => router.push(generationHref(props.locale, props.shortId))}
         />
       )}
 
@@ -117,13 +173,18 @@ export function BuildWizard(props: Props) {
           onClick={() => go(SCREENS[screenIdx - 1]!)}
           className="font-mono uppercase tracking-meta-tight px-2 py-1 disabled:opacity-30 hover:text-ink dark:hover:text-ink-dark"
         >
-          ← Back
+          {props.labels.back}
         </button>
         <span className="font-mono uppercase tracking-meta-tight">
-          Step {Math.min(screenIdx + 1, SCREENS.length)} of {SCREENS.length}
+          {props.labels.step_n_of
+            .replace("{{n}}", String(Math.min(screenIdx + 1, SCREENS.length)))
+            .replace("{{total}}", String(SCREENS.length))}
         </span>
-        <Link href={`/g/${props.shortId}`} className="font-mono uppercase tracking-meta-tight px-2 py-1 hover:text-ink dark:hover:text-ink-dark">
-          Skip to result →
+        <Link
+          href={generationHref(props.locale, props.shortId)}
+          className="font-mono uppercase tracking-meta-tight px-2 py-1 hover:text-ink dark:hover:text-ink-dark"
+        >
+          {props.labels.skip_to_result}
         </Link>
       </nav>
     </article>
@@ -132,10 +193,25 @@ export function BuildWizard(props: Props) {
 
 /* ─── Progress bar ─── */
 
-function ProgressBar({ current }: { current: Screen }) {
+function ProgressBar({
+  current,
+  moves,
+  doneLabel,
+  moveLabelByLocale,
+}: {
+  current: Screen;
+  moves: WizardMove[];
+  doneLabel: string;
+  moveLabelPrefix?: unknown;
+  moveLabelByLocale: string;
+}) {
   const items: Array<{ key: Screen; label: string; color?: string }> = [
-    ...MOVES.map((m) => ({ key: m.key as Screen, label: `Move ${m.n}`, color: m.color })),
-    { key: "done", label: "Done" },
+    ...moves.map((m) => ({
+      key: m.key as Screen,
+      label: `${moveLabelByLocale} ${m.n}`,
+      color: m.color,
+    })),
+    { key: "done", label: doneLabel },
   ];
   return (
     <div className="flex items-center gap-1.5 mb-7">
@@ -170,28 +246,29 @@ function ProgressBar({ current }: { current: Screen }) {
   );
 }
 
-
 /* ─── Move screen ─── */
 
 function MoveScreen({
   shortId,
-  moveKey,
+  move,
+  blurb,
   ideas,
   initial,
-  culpritName,
+  labels,
+  moveNumberLabel,
   onResolved,
   onNext,
 }: {
   shortId: string;
-  moveKey: MoveKey;
+  move: WizardMove;
+  blurb: { explainer: string; tell: string };
   ideas: string[];
   initial: SectionState | null;
-  culpritName: string;
+  labels: WizardLabels;
+  moveNumberLabel: string;
   onResolved: (s: SectionState) => void;
   onNext: () => void;
 }) {
-  const move = MOVE_BY_KEY[moveKey];
-  const blurb = MOVE_BLURB[moveKey];
   const [section, setSection] = useState<SectionState | null>(initial);
   const [chosenIdea, setChosenIdea] = useState<string | null>(initial?.idea ?? null);
   const [pending, startTransition] = useTransition();
@@ -205,7 +282,7 @@ function MoveScreen({
       try {
         const ctrl = new AbortController();
         const t = setTimeout(() => ctrl.abort(), 60_000);
-        const res = await fetch(`/api/build/${shortId}/${moveKey}/section`, {
+        const res = await fetch(`/api/build/${shortId}/${move.key}/section`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           signal: ctrl.signal,
@@ -222,9 +299,9 @@ function MoveScreen({
         onResolved(next);
       } catch (err) {
         if (err instanceof Error && err.name === "AbortError") {
-          setError("That took too long — try again, or pick a different idea.");
+          setError(labels.writing_too_long);
         } else {
-          setError(err instanceof Error ? err.message : "Generation failed.");
+          setError(err instanceof Error ? err.message : labels.section_failed);
         }
       }
     });
@@ -240,7 +317,7 @@ function MoveScreen({
           className="font-mono uppercase"
           style={{ fontSize: 11, letterSpacing: "0.16em", color: move.color }}
         >
-          Move {move.n}
+          {moveNumberLabel} {move.n}
         </span>
       </div>
       <h1
@@ -256,7 +333,7 @@ function MoveScreen({
 
       {/* Idea buttons */}
       <div className="mt-7 sm:mt-8">
-        <p className="meta mb-3">Pick an idea to apply</p>
+        <p className="meta mb-3">{labels.pick_idea}</p>
         <div className="flex flex-col gap-2.5">
           {ideas.map((idea) => {
             const selected = chosenIdea === idea;
@@ -285,7 +362,7 @@ function MoveScreen({
                 {idea}
                 {selected && pending && (
                   <span className="ml-2 font-mono opacity-70" style={{ fontSize: 11, letterSpacing: "0.14em" }}>
-                    cooking…
+                    {labels.cooking}
                   </span>
                 )}
               </button>
@@ -305,7 +382,7 @@ function MoveScreen({
         <div className="mt-8 space-y-6">
           <div>
             <p className="meta" style={{ color: move.color }}>
-              The conspiracist writes
+              {labels.conspiracist_writes}
             </p>
             <p
               className="mt-2 text-[16px] sm:text-[17px] leading-[1.65] pl-4 sm:pl-5"
@@ -321,7 +398,7 @@ function MoveScreen({
           </div>
 
           <div>
-            <p className="meta">Debunk · why this works</p>
+            <p className="meta">{labels.debunk_label}</p>
             <p className="mt-2 text-[14.5px] leading-[1.6] pl-4 sm:pl-5 border-l border-dashed border-ink/40 dark:border-ink-dark/40 whitespace-pre-wrap">
               {section.debunk}
             </p>
@@ -334,10 +411,10 @@ function MoveScreen({
               className="bg-ink text-paper dark:bg-ink-dark dark:text-paper-dark px-5 py-3 font-display"
               style={{ fontSize: 16, fontWeight: 600, letterSpacing: "-0.01em" }}
             >
-              {moveKey === "discredit" ? "See the full theory →" : "Next move →"}
+              {move.key === "discredit" ? labels.see_full_theory : labels.next_move}
             </button>
             <span className="text-[13px] italic text-ink-soft dark:text-ink-soft-dark">
-              Or click another idea above to regenerate.
+              {labels.or_regenerate}
             </span>
           </div>
         </div>
@@ -345,7 +422,7 @@ function MoveScreen({
 
       {pending && !section && (
         <div className="mt-8 text-[14px] italic text-ink-soft dark:text-ink-soft-dark">
-          Writing the conspiracy paragraph and the debunk…
+          {labels.writing}
         </div>
       )}
     </div>
@@ -355,40 +432,40 @@ function MoveScreen({
 /* ─── Done screen ─── */
 
 function DoneScreen({
-  shortId,
   eventName,
   culpritName,
   motiveName,
   perMove,
+  labels,
   onView,
 }: {
-  shortId: string;
   eventName: string;
   culpritName: string;
   motiveName: string;
   perMove: Partial<Record<MoveKey, SectionState>>;
+  labels: WizardLabels;
   onView: () => void;
 }) {
   const filled = MOVE_KEYS_IN_ORDER.every((k) => perMove[k]);
   return (
     <div>
-      <p className="meta">Done</p>
+      <p className="meta">{labels.done_eyebrow}</p>
       <h1
         className="mt-3 font-display text-[clamp(1.8rem,5vw,2.8rem)] leading-[1.05]"
         style={{ fontWeight: 600, letterSpacing: "-0.025em" }}
       >
-        Your conspiracy theory is built.
+        {labels.done_h1}
       </h1>
       <p className="mt-5 text-[15px] leading-relaxed">
-        You have a four-move fake conspiracy theory accusing{" "}
+        {labels.done_p_a}{" "}
         <strong className="font-display" style={{ fontWeight: 600 }}>{culpritName}</strong>{" "}
-        of orchestrating <em>{eventName}</em> in service of{" "}
-        <strong className="font-display" style={{ fontWeight: 600 }}>{motiveName.toLowerCase()}</strong>.
-        Read the assembled theory next, with all four debunks alongside.
+        {labels.done_p_orchestrating} <em>{eventName}</em> {labels.done_p_in_service_of}{" "}
+        <strong className="font-display" style={{ fontWeight: 600 }}>{motiveName.toLowerCase()}</strong>
+        {labels.done_p_period}
       </p>
       {!filled && (
         <p className="mt-4 text-[13px] italic text-ink-soft dark:text-ink-soft-dark">
-          Some moves are missing. You can go back and finish them, or jump straight to the result.
+          {labels.done_p_missing}
         </p>
       )}
       <button
@@ -397,7 +474,7 @@ function DoneScreen({
         className="mt-7 bg-ink text-paper dark:bg-ink-dark dark:text-paper-dark px-5 py-3 font-display"
         style={{ fontSize: 16, fontWeight: 600, letterSpacing: "-0.01em" }}
       >
-        Read the full theory →
+        {labels.done_cta_read}
       </button>
     </div>
   );

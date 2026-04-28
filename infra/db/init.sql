@@ -49,7 +49,8 @@ CREATE TABLE IF NOT EXISTS "generations" (
     "parent_generation_id" uuid,
     "created_at" timestamp with time zone,
     "source" "generation_source" DEFAULT 'created' NOT NULL,
-    "session_hash" text
+    "session_hash" text,
+    "locale" text DEFAULT 'en' NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "quiz_items" (
@@ -71,6 +72,7 @@ CREATE TABLE IF NOT EXISTS "ratings" (
 
 -- visitor-tracking change: page_views table.
 -- Spec: openspec/changes/visitor-tracking/specs/visitor-analytics/spec.md
+-- multilingual-german change adds the locale column.
 CREATE TABLE IF NOT EXISTS "page_views" (
     "id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
     "session_hash" text NOT NULL,
@@ -78,6 +80,7 @@ CREATE TABLE IF NOT EXISTS "page_views" (
     "referrer_host" text,
     "device_class" text NOT NULL,
     "country" text,
+    "locale" text,
     "created_at" timestamp with time zone DEFAULT now() NOT NULL
 );
 
@@ -101,5 +104,6 @@ CREATE INDEX        IF NOT EXISTS "ratings_generation_idx"   ON "ratings"     US
 CREATE INDEX        IF NOT EXISTS "page_views_created_at_idx" ON "page_views" USING btree ("created_at");
 CREATE INDEX        IF NOT EXISTS "page_views_session_idx"   ON "page_views" USING btree ("session_hash");
 CREATE INDEX        IF NOT EXISTS "page_views_path_idx"      ON "page_views" USING btree ("path");
+CREATE INDEX        IF NOT EXISTS "generations_locale_created_at_idx" ON "generations" USING btree ("locale","created_at");
 
 RESET ROLE;

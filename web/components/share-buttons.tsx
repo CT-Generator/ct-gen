@@ -1,5 +1,6 @@
 // Share buttons — always-link-back. Payloads are recipe-naming, never theory text.
 // Spec: openspec/changes/v2-rebuild/specs/permalinks-and-sharing/spec.md
+// Locale-aware copy via dictionary keys passed in from a server-component wrapper.
 
 "use client";
 
@@ -8,15 +9,29 @@ import { useState } from "react";
 type Props = {
   permalink: string;
   culprit: string;
+  /** Pre-resolved share copy for the active locale. */
+  labels: {
+    teaser: string;
+    email_subject: string;
+    email_body_a: string;
+    email_body_b: string;
+    copy_link: string;
+    copied: string;
+    via_x: string;
+    via_bluesky: string;
+    via_email: string;
+    via_system: string;
+    site_title: string;
+  };
 };
 
-export function ShareButtons({ permalink, culprit }: Props) {
+export function ShareButtons({ permalink, culprit, labels }: Props) {
   const [copied, setCopied] = useState(false);
 
-  const teaser = `Built a fake conspiracy theory using the four-move recipe at`;
+  const teaser = labels.teaser;
   const xUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`${teaser} ${permalink}`)}`;
   const bskyUrl = `https://bsky.app/intent/compose?text=${encodeURIComponent(`${teaser} ${permalink}`)}`;
-  const mailtoUrl = `mailto:?subject=${encodeURIComponent("A fake conspiracy theory, with the recipe shown")}&body=${encodeURIComponent(`I made a fake conspiracy theory about "${culprit}" using the four-move recipe. The recipe page explains how it was built and why each move works:\n\n${permalink}`)}`;
+  const mailtoUrl = `mailto:?subject=${encodeURIComponent(labels.email_subject)}&body=${encodeURIComponent(`${labels.email_body_a}${culprit}${labels.email_body_b}\n\n${permalink}`)}`;
 
   async function copy() {
     try {
@@ -32,7 +47,7 @@ export function ShareButtons({ permalink, culprit }: Props) {
     if (typeof navigator === "undefined" || !("share" in navigator)) return copy();
     try {
       await (navigator as Navigator & { share: (data: ShareData) => Promise<void> }).share({
-        title: "Conspiracy Generator",
+        title: labels.site_title,
         text: teaser,
         url: permalink,
       });
@@ -48,7 +63,7 @@ export function ShareButtons({ permalink, culprit }: Props) {
         onClick={copy}
         className="border border-ink/30 dark:border-ink-dark/30 px-3 py-2 text-[12px] hover:border-ink dark:hover:border-ink-dark transition-colors"
       >
-        {copied ? "Copied" : "Copy link"}
+        {copied ? labels.copied : labels.copy_link}
       </button>
       <a
         href={xUrl}
@@ -56,7 +71,7 @@ export function ShareButtons({ permalink, culprit }: Props) {
         rel="noopener"
         className="border border-ink/30 dark:border-ink-dark/30 px-3 py-2 text-[12px] hover:border-ink dark:hover:border-ink-dark transition-colors"
       >
-        X
+        {labels.via_x}
       </a>
       <a
         href={bskyUrl}
@@ -64,19 +79,19 @@ export function ShareButtons({ permalink, culprit }: Props) {
         rel="noopener"
         className="border border-ink/30 dark:border-ink-dark/30 px-3 py-2 text-[12px] hover:border-ink dark:hover:border-ink-dark transition-colors"
       >
-        Bluesky
+        {labels.via_bluesky}
       </a>
       <a
         href={mailtoUrl}
         className="border border-ink/30 dark:border-ink-dark/30 px-3 py-2 text-[12px] hover:border-ink dark:hover:border-ink-dark transition-colors"
       >
-        Email
+        {labels.via_email}
       </a>
       <button
         type="button"
         onClick={nativeShare}
         className="border border-ink/30 dark:border-ink-dark/30 px-3 py-2 text-[12px] hover:border-ink dark:hover:border-ink-dark transition-colors sm:hidden"
-        aria-label="Share via system"
+        aria-label={labels.via_system}
       >
         ⋯
       </button>

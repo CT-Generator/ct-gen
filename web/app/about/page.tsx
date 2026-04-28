@@ -1,74 +1,72 @@
 // /about — what the site is, why, and credits.
 // Other than this page, names are not surfaced anywhere on the site.
 
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Masthead } from "@/components/masthead";
 import { Footer } from "@/components/footer";
+import { readLocale, getDict, localizedHref } from "@/lib/i18n";
 
-export const metadata = { title: "About" };
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await readLocale();
+  return { title: getDict(locale).meta.about_title };
+}
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const locale = await readLocale();
+  const t = getDict(locale).about;
+
   return (
     <>
       <Masthead />
 
       <article className="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-14 lg:py-16">
-        <p className="meta">About</p>
+        <p className="meta">{t.eyebrow}</p>
         <h1
           className="mt-3 font-display text-[clamp(2rem,5vw,3.25rem)] leading-[1.05]"
           style={{ fontWeight: 600, letterSpacing: "-0.025em" }}
         >
-          The best way to learn to spot a conspiracy theory is to make one yourself.
+          {t.h1}
         </h1>
 
         <div className="mt-8 space-y-5 text-[16px] leading-relaxed">
+          <p>{t.p1}</p>
+          <p>{t.p2}</p>
           <p>
-            That's the idea behind this tool. You pick a real event, a culprit, and a motive, and
-            then you build a fake conspiracy theory step by step. Each step uses one of the four
-            moves real conspiracists rely on, with a debunk running alongside.
-          </p>
-          <p>
-            Once you've done it once, you can't un-see it. You learn that coming up with a
-            plausible-sounding conspiracy theory is easy — and that for any one event you can
-            generate many different theories that all contradict each other. The number of
-            possible conspiracies is unlimited, which is part of why so few of them are real.
-          </p>
-          <p>
-            The four moves are{" "}
-            <Link href="/recipe" className="underline-offset-2 underline hover:no-underline">
-              explained on the recipe page
+            {t.p3_a}{" "}
+            <Link href={localizedHref("/recipe", locale)} className="underline-offset-2 underline hover:no-underline">
+              {t.p3_recipe_link}
             </Link>
-            . If you teach, there's also a{" "}
-            <Link href="/teach" className="underline-offset-2 underline hover:no-underline">
-              lesson plan
+            {t.p3_b}{" "}
+            <Link href={localizedHref("/teach", locale)} className="underline-offset-2 underline hover:no-underline">
+              {t.p3_teach_link}
             </Link>{" "}
-            you can use in class.
+            {t.p3_c}
           </p>
         </div>
 
         <div className="mt-12 rule-h pt-6">
           <h2 className="font-display text-[22px] sm:text-[24px]" style={{ fontWeight: 600 }}>
-            Feedback
+            {t.feedback_h}
           </h2>
           <p className="mt-4 text-[15px] leading-relaxed">
-            We love hearing what works and what doesn't — bug reports, classroom stories, ideas
-            for new moves. Drop a line at{" "}
+            {t.feedback_p_a}{" "}
             <a
               href="mailto:marco.meyer@jpberlin.de?subject=Conspiracy%20Generator%20%E2%80%94%20feedback"
               className="underline-offset-2 underline hover:no-underline"
             >
               marco.meyer@jpberlin.de
             </a>
-            .
+            {t.feedback_p_period}
           </p>
         </div>
 
         <div className="mt-10 rule-h pt-6">
           <h2 className="font-display text-[22px] sm:text-[24px]" style={{ fontWeight: 600 }}>
-            Credits
+            {t.credits_h}
           </h2>
           <p className="mt-4 text-[15px] leading-relaxed">
-            The Conspiracy Generator is built by{" "}
+            {t.credits_p_a}{" "}
             <a
               href="https://www.linkedin.com/in/marco-meyer-10923245/"
               target="_blank"
@@ -77,7 +75,7 @@ export default function AboutPage() {
             >
               Marco Meyer
             </a>{" "}
-            and{" "}
+            {t.credits_p_and}{" "}
             <a
               href="https://www.linkedin.com/in/maarten-boudry-6b199a8/"
               target="_blank"
@@ -86,18 +84,16 @@ export default function AboutPage() {
             >
               Maarten Boudry
             </a>
-            , inspired by{" "}
+            {t.credits_p_inspired}{" "}
             <a
               href="https://maartenboudry.substack.com/p/the-conspiracy-generator"
               target="_blank"
               rel="noopener"
               className="underline-offset-2 underline hover:no-underline"
             >
-              a blog post by Maarten
+              {t.credits_blog_link}
             </a>
-            . With thanks to Natasha Newbold, Mohammed Darras, and Peter Keroti for their work on
-            an earlier version, and to the Etienne Vermeersch Chair of Critical Thinking at Ghent
-            University for funding.
+            {t.credits_p_thanks}
           </p>
         </div>
       </article>

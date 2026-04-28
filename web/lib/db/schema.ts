@@ -46,12 +46,17 @@ export const generations = pgTable(
     source: sourceEnum("source").notNull().default("created"),
 
     sessionHash: text("session_hash"),
+
+    // Locale of the request that produced this row. Migrated and pre-multilingual
+    // rows default to 'en'. Spec: openspec/changes/multilingual-german/specs/data-platform/spec.md
+    locale: text("locale").notNull().default("en"),
   },
   (t) => ({
     shortIdUq: uniqueIndex("generations_short_id_uq").on(t.shortId),
     triplesIdx: index("generations_triple_idx").on(t.eventValue, t.culpritValue, t.motiveValue),
     parentIdx: index("generations_parent_idx").on(t.parentGenerationId),
     createdAtIdx: index("generations_created_at_idx").on(t.createdAt),
+    localeCreatedAtIdx: index("generations_locale_created_at_idx").on(t.locale, t.createdAt),
   }),
 );
 
@@ -106,6 +111,9 @@ export const pageViews = pgTable(
     referrerHost: text("referrer_host"),
     deviceClass: text("device_class").notNull(),
     country: text("country"),
+    // Locale of the rendering request (en|de). Nullable — historical rows
+    // captured before the multilingual-german change have no locale.
+    locale: text("locale"),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   },
   (t) => ({

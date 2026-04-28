@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" width="36" height="36" role="img" aria-label="Motiv">
+  <rect width="36" height="36" fill="#876133"/>
+  <g fill="#EBE2D0">
+    <circle cx="18" cy="18" r="11"/>
+  </g>
+  <g fill="#876133">
+    <circle cx="18" cy="18" r="6.5"/>
+  </g>
+  <g fill="#EBE2D0">
+    <circle cx="18" cy="18" r="2.5"/>
+  </g>
+</svg>
