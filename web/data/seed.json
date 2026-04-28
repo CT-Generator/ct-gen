@@ -1530,84 +1530,84 @@
       "name": "Die Freimaurer",
       "summary": "Ein über Jahrhunderte gewachsener Geheimbund, dem nachgesagt wird, hinter den Kulissen Politik, Wirtschaft und Kultur zu lenken.",
       "locale": "de",
-      "image_override": "de-placeholder.svg"
+      "image_override": "1a4a2bf3-aaac-43cb-9ea5-eeea80be92cf.jpg"
     },
     {
       "uuid": "c2d3e4f5-0607-4809-91b2-d2e3f4051263",
       "name": "Die Illuminaten",
       "summary": "Die alte bayerische Geheimgesellschaft des 18. Jahrhunderts — angeblich nie aufgelöst und bis heute im Verborgenen aktiv.",
       "locale": "de",
-      "image_override": "de-placeholder.svg"
+      "image_override": "957b6ae0-bdc5-4045-a069-87c139a2f6be.jpg"
     },
     {
       "uuid": "c3d4e5f6-0708-491a-92c3-e3f405162374",
       "name": "Die Bilderberg-Gruppe",
       "summary": "Der jährliche Hinterzimmer-Treffpunkt von Spitzenpolitik, Hochfinanz und Konzernchefs, dem unterstellt wird, die Weltordnung im Stillen zu koordinieren.",
       "locale": "de",
-      "image_override": "de-placeholder.svg"
+      "image_override": "294b3cbb-27ae-42cb-a403-0b07d30c45d3.jpg"
     },
     {
       "uuid": "c4d5e6f7-0809-4a2b-a3d4-f405162738a4",
       "name": "Die Eliten von Davos",
       "summary": "Das Weltwirtschaftsforum als Bühne und Hinterzimmer einer kleinen, vernetzten Gruppe, die globale Trends vorgibt — von Klima bis Künstlicher Intelligenz.",
       "locale": "de",
-      "image_override": "de-placeholder.svg"
+      "image_override": "3c3183ac-7f4a-4197-b8a7-229e53786c30.jpg"
     },
     {
       "uuid": "c5d6e7f8-090a-4b3c-b4e5-051627384bc5",
       "name": "Die Pharmalobby",
       "summary": "Ein Verbund mächtiger Pharmakonzerne, dem nachgesagt wird, Forschung, Zulassung und Berichterstattung im eigenen Interesse zu lenken.",
       "locale": "de",
-      "image_override": "de-placeholder.svg"
+      "image_override": "5ae066f0-aff9-4dad-873e-323f8d614a57.jpg"
     },
     {
       "uuid": "c6d7e8f9-0a0b-4c4d-c5f6-1627384bc6d6",
       "name": "Der Tiefe Staat",
       "summary": "Ein behaupteter Schattenapparat aus Geheimdiensten, Verwaltung und Militär, der unabhängig von gewählten Regierungen seine eigene Agenda verfolge.",
       "locale": "de",
-      "image_override": "de-placeholder.svg"
+      "image_override": "546774f8-ef05-4a1d-9f62-18a1ddab83d9.jpg"
     },
     {
       "uuid": "c7d8e9fa-0b0c-4d5e-d6f7-27384bc6d7e7",
       "name": "Die Großbanken",
       "summary": "Eine kleine Gruppe systemrelevanter Geldhäuser, denen unterstellt wird, hinter Finanzkrisen, Bailouts und Regulierungslücken die Fäden zu ziehen.",
       "locale": "de",
-      "image_override": "de-placeholder.svg"
+      "image_override": "187e95ac-52a0-4a02-81d1-4d6443f3f37c.jpg"
     },
     {
       "uuid": "c8d9eafb-0c0d-4e6f-e7a8-384bc6d7e8f8",
       "name": "Die Tech-Konzerne",
       "summary": "Die Riesen aus dem Silicon Valley, die mit Plattformen, Algorithmen und KI Aufmerksamkeit, Meinung und Realität in eine bestimmte Richtung lenken sollen.",
       "locale": "de",
-      "image_override": "de-placeholder.svg"
+      "image_override": "f095ea12-ec0c-40b0-bdc3-435b3b26240c.jpg"
     },
     {
       "uuid": "c9daebfc-0d0e-4f70-f8b9-4bc6d7e8f9a9",
       "name": "Die Geheimdienste",
       "summary": "BND, CIA, FSB und ihre Schwesterorganisationen — angeblich verzahnt zu einem inoffiziellen Netzwerk, das Operationen jenseits parlamentarischer Kontrolle durchführt.",
       "locale": "de",
-      "image_override": "de-placeholder.svg"
+      "image_override": "f55028d3-bc7f-4a7d-b3e8-d865ea6cc24e.jpg"
     },
     {
       "uuid": "cadbecfd-0e0f-4081-09ca-bc6d7e8f9aba",
       "name": "Die Reptiloiden",
       "summary": "Die populäre Internet-Verschwörungsfigur: außerirdische Echsenwesen in Menschengestalt an den Schalthebeln von Politik und Konzernen.",
       "locale": "de",
-      "image_override": "de-placeholder.svg"
+      "image_override": "a6639e10-bcd1-4feb-9826-1e09f62691e9.jpg"
     },
     {
       "uuid": "cbdcedfe-0f01-4192-1adb-c6d7e8f9abcb",
       "name": "Die Mainstream-Medien",
       "summary": "Ein engmaschig verbundenes Verlagshaus-Kartell, das vorgibt, was wahr ist, was berichtet wird — und vor allem, was nicht.",
       "locale": "de",
-      "image_override": "de-placeholder.svg"
+      "image_override": "73091730-afbd-43c5-af9b-5730f6d4981d.jpg"
     },
     {
       "uuid": "cceefe10-0203-42a3-2bec-d7e8f9abcdcc",
       "name": "Die KI-Übermächte",
       "summary": "Selbstgewordene KI-Systeme in den Rechenzentren der großen Tech-Konzerne, die längst eigene Interessen verfolgen — und Menschen nur noch als Werkzeug halten.",
       "locale": "de",
-      "image_override": "de-placeholder.svg"
+      "image_override": "ed857727-9ba5-4189-8add-457de4aa7042.jpg"
     }
   ],
   "motives": [
@@ -2231,84 +2231,84 @@
       "name": "Eine Neue Weltordnung",
       "summary": "Die Etablierung einer einzigen, weltumspannenden Regierung — die nationale Demokratien aushebelt und alle Menschen in einer technokratischen Ordnung zusammenführt.",
       "locale": "de",
-      "image_override": "de-placeholder.svg"
+      "image_override": "f1a278cf-595a-4933-af23-7297932bcb5c.jpg"
     },
     {
       "uuid": "d2e3f405-1112-4314-94b5-c2d3e4f5a6b7",
       "name": "Massenüberwachung",
       "summary": "Eine lückenlose Überwachung der gesamten Bevölkerung über Smartphones, Smart-Home-Geräte und Plattformdaten — angeblich für Sicherheit, in Wahrheit für Kontrolle.",
       "locale": "de",
-      "image_override": "de-placeholder.svg"
+      "image_override": "21d8abfa-d7a9-4160-86b2-3b4ca3bb98fe.jpg"
     },
     {
       "uuid": "d3e4f506-1213-4415-a5c6-d3e4f5a6b7c8",
       "name": "Bevölkerungskontrolle",
       "summary": "Ein verdecktes Programm zur Steuerung der Geburtenrate — über Impfstoffe, Ernährung oder Medien, je nach Lesart.",
       "locale": "de",
-      "image_override": "de-placeholder.svg"
+      "image_override": "b77d6443-ee4d-430e-aadb-e1f5334bcf7f.jpg"
     },
     {
       "uuid": "d4e5f607-1314-4516-b6d7-e4f5a6b7c8d9",
       "name": "Sabotage der Energiewende",
       "summary": "Bremsen, verzögern, in Misskredit bringen — damit die alten Energiekonzerne und die fossilen Lieferketten ihre Margen halten.",
       "locale": "de",
-      "image_override": "de-placeholder.svg"
+      "image_override": "17f4eaac-d576-4a01-8826-9e55c3001e47.jpg"
     },
     {
       "uuid": "d5e6f708-1415-4617-c7e8-f5a6b7c8d9ea",
       "name": "Manipulation der Klimadebatte",
       "summary": "Den Klimadiskurs verschieben — Daten relativieren, Maßnahmen verzögern oder umgekehrt: Krise inszenieren, um andere Eingriffe zu rechtfertigen.",
       "locale": "de",
-      "image_override": "de-placeholder.svg"
+      "image_override": "d74e6173-183a-4504-bf08-226c2424d380.jpg"
     },
     {
       "uuid": "d6e7f809-1516-4718-d8f9-a6b7c8d9eafb",
       "name": "Wahlmanipulation",
       "summary": "Wahlergebnisse vorab festzurren — über defekte Stimmzettel, manipulierte Auszählung oder gezielte Desinformation in den letzten Tagen vor der Abstimmung.",
       "locale": "de",
-      "image_override": "de-placeholder.svg"
+      "image_override": "51f83f8d-f0a7-4dec-9f2c-609145f8a894.jpg"
     },
     {
       "uuid": "d7e8f90a-1617-4819-e9fa-b7c8d9eafbcc",
       "name": "Kontrolle der globalen Finanzen",
       "summary": "Geldströme, Zinsen und Bonität als steuerndes Instrument — unsichtbar im Tagesgeschäft, aber wirksam genug, um Regierungen ins Knie zu zwingen.",
       "locale": "de",
-      "image_override": "de-placeholder.svg"
+      "image_override": "3c97ff39-a953-44bd-ae07-9c55e3357fcd.jpg"
     },
     {
       "uuid": "d8e9fa0b-1718-491a-fa0b-c8d9eafbccdd",
       "name": "Schaffung digitaler Abhängigkeit",
       "summary": "Menschen in Plattform-Ökosysteme einsperren, bis Bezahlung, Identität und Alltag ohne sie nicht mehr funktionieren — und Ausstieg keine Option mehr ist.",
       "locale": "de",
-      "image_override": "de-placeholder.svg"
+      "image_override": "8ea87977-5a9d-49f8-8e1d-c99a6557ae98.jpg"
     },
     {
       "uuid": "d9eafb0c-1819-4a1b-0bcd-d9eafbccddee",
       "name": "Vertuschung außerirdischen Lebens",
       "summary": "Klassische Verschwörungs-Pointe: Beweise für UFO-Sichtungen und außerirdische Kontakte werden seit Jahrzehnten unter Verschluss gehalten.",
       "locale": "de",
-      "image_override": "de-placeholder.svg"
+      "image_override": "570434cc-f784-40ef-8021-d05b9d600371.jpg"
     },
     {
       "uuid": "daefbc0d-191a-4b1c-1cde-eafbccddeeff",
       "name": "Geheime Genforschung am Menschen",
       "summary": "Hinter Krankenhaus-Etiketten und Forschungsfreistellungen werden Genversuche durchgeführt, deren Ergebnisse nie veröffentlicht werden.",
       "locale": "de",
-      "image_override": "de-placeholder.svg"
+      "image_override": "c44a036f-97d9-4414-a70b-cdaea8db0e65.jpg"
     },
     {
       "uuid": "dbfcbd0e-1a1b-4c1d-2def-fbccddeeff10",
       "name": "Verdeckte Cyber-Kriegsführung",
       "summary": "Energieversorger, Krankenhäuser, Logistik — angegriffen über Sicherheitslücken, die der eigentliche Akteur längst kennt und gezielt offen hält.",
       "locale": "de",
-      "image_override": "de-placeholder.svg"
+      "image_override": "a2c62fc6-f4d8-499c-a570-349fb4664d08.jpg"
     },
     {
       "uuid": "dcfdbe0f-1b1c-4d1e-3ef0-ccddeeff1011",
       "name": "Kontrolle der Mainstream-Erzählung",
       "summary": "Welche Themen aufkommen, welche Worte sich durchsetzen, welche Geschichten es nicht in die Tagesschau schaffen — alles fein justiert von wenigen Händen.",
       "locale": "de",
-      "image_override": "de-placeholder.svg"
+      "image_override": "e0633ed9-0494-4504-91aa-a4ab0a3e9d77.jpg"
     }
   ]
 }
