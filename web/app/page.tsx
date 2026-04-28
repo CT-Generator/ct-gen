@@ -44,8 +44,7 @@ export default async function HomePage({
           </p>
           <p className="mt-5 sm:mt-6 max-w-2xl text-[15px] sm:text-[16px] leading-relaxed text-ink-soft dark:text-ink-soft-dark">
             Pick a real news story. On the next step you'll choose who's behind it and why. Then walk
-            through the four moves real conspiracists use — one move per screen — with a debunk on
-            every step.
+            through the four moves real conspiracists use, with a debunk on every step.
           </p>
         </div>
       </section>

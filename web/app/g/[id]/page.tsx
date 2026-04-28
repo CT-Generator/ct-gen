@@ -138,6 +138,19 @@ export default async function GenerationPage({ params }: { params: Promise<Param
               style={{ color: "var(--tw-color-ink-soft, #54515C)" }}
             >
               {content.conspiracist_intro}
+              {content.event_intro?.source_url && (
+                <>
+                  {" "}
+                  <a
+                    href={content.event_intro.source_url}
+                    target="_blank"
+                    rel="noopener nofollow"
+                    className="not-italic underline-offset-2 underline hover:no-underline"
+                  >
+                    (original story)
+                  </a>
+                </>
+              )}
             </p>
           )}
         </div>
