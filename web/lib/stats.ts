@@ -219,3 +219,28 @@ export async function loadV2RatingDistribution(): Promise<TopRow[]> {
   `);
   return rows as unknown as TopRow[];
 }
+
+export type LocaleSplitRow = {
+  locale: string;
+  generations: number;
+  ratings: number;
+};
+
+/** Per-locale split of v2 generations and ratings, ordered by locale code.
+ *  Locales with zero rows do not appear; render layer hides the section
+ *  entirely when fewer than 2 locales have data (clutter-avoidance).
+ *  Spec: openspec/specs/data-platform "Stats surface a per-locale split". */
+export async function loadV2GenerationsByLocale(): Promise<LocaleSplitRow[]> {
+  const rows = await db().execute(sql`
+    SELECT
+      g.locale AS locale,
+      count(*)::int AS generations,
+      count(r.id)::int AS ratings
+    FROM generations g
+    LEFT JOIN ratings r ON r.generation_id = g.id
+    WHERE g.source = 'created'
+    GROUP BY g.locale
+    ORDER BY g.locale
+  `);
+  return rows as unknown as LocaleSplitRow[];
+}

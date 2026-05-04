@@ -22,6 +22,8 @@ import {
   loadV2TopMotives,
   loadV2TopEvents,
   loadV2RatingDistribution,
+  loadV2GenerationsByLocale,
+  type LocaleSplitRow,
 } from "@/lib/stats";
 
 export const metadata = { title: "Stats" };
@@ -64,16 +66,18 @@ export default async function StatsPage({
 // ---------------------------------------------------------------------------
 
 async function V2Body() {
-  const [totals, genDaily, genCum, rateDaily, topC, topM, topE, dist] = await Promise.all([
-    loadV2Totals(),
-    loadV2GenerationsDaily(),
-    loadV2GenerationsCumulative(),
-    loadV2RatingsDaily(),
-    loadV2TopCulprits(10),
-    loadV2TopMotives(10),
-    loadV2TopEvents(10),
-    loadV2RatingDistribution(),
-  ]);
+  const [totals, genDaily, genCum, rateDaily, topC, topM, topE, dist, localeSplit] =
+    await Promise.all([
+      loadV2Totals(),
+      loadV2GenerationsDaily(),
+      loadV2GenerationsCumulative(),
+      loadV2RatingsDaily(),
+      loadV2TopCulprits(10),
+      loadV2TopMotives(10),
+      loadV2TopEvents(10),
+      loadV2RatingDistribution(),
+      loadV2GenerationsByLocale(),
+    ]);
 
   const inception = totals.inception ? totals.inception.slice(0, 10) : null;
   const days = genDaily.length;
@@ -102,6 +106,8 @@ async function V2Body() {
         />
         <Tile label="Sessions" value={totals.unique_sessions} muted />
       </section>
+
+      <LocaleSplit rows={localeSplit} />
 
       <section className="mt-12">
         <h2 className="font-display text-[20px] sm:text-[22px]" style={{ fontWeight: 600 }}>
@@ -137,6 +143,54 @@ async function V2Body() {
         <RatingHist rows={dist} />
       </section>
     </>
+  );
+}
+
+// Per-locale split. Hidden when fewer than 2 locales have any rows
+// (clutter-avoidance, per data-platform spec).
+function LocaleSplit({ rows }: { rows: LocaleSplitRow[] }) {
+  if (rows.length < 2) return null;
+  const totalGen = rows.reduce((s, r) => s + r.generations, 0);
+  if (totalGen === 0) return null;
+  return (
+    <section className="mt-10">
+      <h2 className="font-display text-[20px] sm:text-[22px]" style={{ fontWeight: 600 }}>
+        Per-locale split
+      </h2>
+      <div className="mt-3 flex w-full overflow-hidden border border-ink/15 dark:border-ink-dark/15">
+        {rows.map((r, i) => {
+          const share = totalGen > 0 ? r.generations / totalGen : 0;
+          const accent = MOVES[i % MOVES.length].color;
+          return (
+            <div
+              key={r.locale}
+              className="flex flex-col justify-between p-3 sm:p-4 border-r border-ink/15 dark:border-ink-dark/15 last:border-r-0"
+              style={{ flexBasis: `${Math.max(share * 100, 8)}%`, flexGrow: 0, flexShrink: 0 }}
+            >
+              <div className="flex items-baseline gap-2">
+                <span
+                  className="font-mono uppercase"
+                  style={{ fontSize: 11, letterSpacing: "0.16em", color: accent }}
+                >
+                  {r.locale}
+                </span>
+                <span className="text-[12px] text-ink-soft dark:text-ink-soft-dark">
+                  {Math.round(share * 100)}%
+                </span>
+              </div>
+              <div className="mt-2 flex flex-col">
+                <span className="font-display text-[20px] sm:text-[22px]" style={{ fontWeight: 600 }}>
+                  {r.generations.toLocaleString()}
+                </span>
+                <span className="meta">
+                  {r.ratings.toLocaleString()} ratings
+                </span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
   );
 }
 
