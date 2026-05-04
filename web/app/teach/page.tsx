@@ -40,7 +40,7 @@ export default async function TeachPage() {
           {t.intro}
         </p>
 
-        {locale === "de" && t.pdf_de_warning && (
+        {t.pdf_de_warning && (
           <p className="mt-3 text-[13.5px] italic text-ink-soft dark:text-ink-soft-dark print:hidden">
             {t.pdf_de_warning}
           </p>

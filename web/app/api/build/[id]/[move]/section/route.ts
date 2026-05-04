@@ -6,13 +6,15 @@
 import { NextResponse } from "next/server";
 import { eq } from "drizzle-orm";
 import { db, schema } from "@/lib/db";
-import { generateSection, moderate } from "@/lib/openai";
+import { generateNarrative, generateSection, moderate } from "@/lib/openai";
 import { type MoveKey, type WizardContent } from "@/lib/recipe";
 import { isLocale, type Locale } from "@/lib/i18n";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-export const maxDuration = 60;
+// Bumped from 60s to accommodate narrative generation when discredit completes
+// the build (one extra model call before the response returns).
+export const maxDuration = 90;
 
 const MOVE_KEYS: MoveKey[] = ["anomaly", "connection", "dismiss", "discredit"];
 
@@ -90,12 +92,49 @@ export async function POST(
     );
   }
 
+  const newPerMove = {
+    ...(content.per_move ?? {}),
+    [moveKey]: { idea: chosenIdea, paragraph: sec.paragraph, debunk: sec.debunk },
+  } as NonNullable<WizardContent["per_move"]>;
+
+  // If this section completes the build (all four moves now present and no
+  // narrative yet), generate the narrative finale before responding so the
+  // result page is a pure read.
+  let narrative: WizardContent["narrative"] | undefined = content.narrative;
+  const allFourPresent = MOVE_KEYS.every((k) => Boolean(newPerMove[k]));
+  if (allFourPresent && !narrative) {
+    try {
+      const out = await generateNarrative({
+        locale: rowLocale,
+        eventName: row.eventValue,
+        culpritName: row.culpritValue,
+        motiveName: row.motiveValue,
+        paragraphs: {
+          anomaly: newPerMove.anomaly!.paragraph,
+          connection: newPerMove.connection!.paragraph,
+          dismiss: newPerMove.dismiss!.paragraph,
+          discredit: newPerMove.discredit!.paragraph,
+        },
+      });
+      const joined = out.paragraphs.join("\n\n");
+      const mod = await moderate(joined).catch(() => ({ flagged: false }));
+      if (mod.flagged) {
+        console.warn("[section] narrative flagged, skipping persistence", { id });
+      } else {
+        narrative = { paragraphs: out.paragraphs, generated_at: new Date().toISOString() };
+      }
+    } catch (err) {
+      // Narrative generation failure must not break the build — the per-move
+      // section is the canonical artefact. The result page falls back to the
+      // narrative-absent layout.
+      console.error("[section] narrative generation failed:", err);
+    }
+  }
+
   const newContent: WizardContent = {
     ...content,
-    per_move: {
-      ...(content.per_move ?? {}),
-      [moveKey]: { idea: chosenIdea, paragraph: sec.paragraph, debunk: sec.debunk },
-    },
+    per_move: newPerMove,
+    ...(narrative ? { narrative } : {}),
   };
 
   await db()

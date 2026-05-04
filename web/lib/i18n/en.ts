@@ -141,8 +141,13 @@ export type Dictionary = {
     cta_start: string;
     cta_starting: string;
     cta_starting_dots: string;
+    /** Secondary one-shot CTA — random ideas, full theory, no walkthrough. */
+    cta_yolo: string;
+    cta_yolo_starting: string;
+    cta_yolo_starting_dots: string;
     err_too_long: string;
     err_couldnt_start: string;
+    err_yolo_failed: string;
   };
   wizard: {
     pick_idea: string;
@@ -153,12 +158,18 @@ export type Dictionary = {
     see_full_theory: string;
     or_regenerate: string;
     writing: string;
+    /** Shown on the final (discredit) step where the response also stitches the
+     *  three-paragraph narrative finale — slightly longer wait. */
+    writing_finale: string;
     writing_too_long: string;
     section_failed: string;
     back: string;
     step_n_of: string;
     skip_to_result: string;
     progress_done: string;
+    /** Singular noun used in the wizard progress bar and per-move screen header
+     *  (e.g. "Move 01" / "Schritt 01" / "Stap 01"). */
+    move_label: string;
     done_eyebrow: string;
     done_h1: string;
     done_p_a: string;
@@ -193,6 +204,18 @@ export type Dictionary = {
     move_label: string;
     idea_label: string;
     debunk_label: string;
+    /** Eyebrow above the narrative finale block. */
+    narrative_eyebrow: string;
+    /** Eyebrow above the per-move stamped section, shown only when narrative is present. */
+    breakdown_eyebrow: string;
+    /** Crop-resistant stamp inside the narrative section (parallel to per-move tell stamps). */
+    narrative_stamp: string;
+    /** Prefix for the moves legend rendered below the narrative paragraphs. */
+    moves_legend_prefix: string;
+    /** Anchor CTA at end of narrative section that scrolls to the breakdown. */
+    see_breakdown_cta: string;
+    /** One-sentence explainer below the breakdown eyebrow when narrative is present. */
+    breakdown_explainer: string;
   };
   share: {
     teaser: string;
@@ -211,6 +234,9 @@ export type Dictionary = {
     not_found_h1: string;
     not_found_body: string;
     not_found_back_home: string;
+    client_error_h1: string;
+    client_error_body: string;
+    client_error_try_again: string;
   };
   meta: {
     home_title_default: string;
@@ -224,6 +250,16 @@ export type Dictionary = {
     teach_title: string;
     visitors_title: string;
     stats_title: string;
+    /** Share-preview description rendered as og:description + twitter:description on /g/[id]. */
+    og_description_generation: string;
+  };
+  /** Notices shown on legally-significant pages (imprint, privacy) when no
+   *  jurisdictional original exists yet for the active locale. EN values are
+   *  empty strings — the English page never renders the notice (English is the
+   *  source) but the keys exist for type completeness. */
+  legal: {
+    translation_pending_h: string;
+    translation_pending_body: string;
   };
 };
 
@@ -391,8 +427,12 @@ export const en: Dictionary = {
     cta_start: "Start building",
     cta_starting: "Setting up…",
     cta_starting_dots: "Brainstorming ideas",
+    cta_yolo: "Skip the walkthrough — show me the theory →",
+    cta_yolo_starting: "Going full yolo…",
+    cta_yolo_starting_dots: "Picking ideas, writing all four moves, stitching the theory",
     err_too_long: "That took too long — try again.",
     err_couldnt_start: "Couldn't start the build.",
+    err_yolo_failed: "Yolo run failed — try again, or use the walkthrough above.",
   },
   wizard: {
     pick_idea: "Pick an idea to apply",
@@ -403,12 +443,14 @@ export const en: Dictionary = {
     see_full_theory: "See the full theory →",
     or_regenerate: "Or click another idea above to regenerate.",
     writing: "Writing the conspiracy paragraph and the debunk…",
+    writing_finale: "Writing the final move and stitching the full theory…",
     writing_too_long: "That took too long — try again, or pick a different idea.",
     section_failed: "Generation failed.",
     back: "← Back",
     step_n_of: "Step {{n}} of {{total}}",
     skip_to_result: "Skip to result →",
     progress_done: "Done",
+    move_label: "Move",
     done_eyebrow: "Done",
     done_h1: "Your conspiracy theory is built.",
     done_p_a: "You have a four-move fake conspiracy theory accusing",
@@ -452,6 +494,13 @@ export const en: Dictionary = {
     move_label: "Move",
     idea_label: "Idea:",
     debunk_label: "Debunk",
+    narrative_eyebrow: "The theory",
+    breakdown_eyebrow: "How the trick was built",
+    narrative_stamp: "FAKE THEORY · BUILT FROM A RECIPE",
+    moves_legend_prefix: "Built from:", // FIXME: unused, remove in next change
+    see_breakdown_cta: "↓ See how the trick was built",
+    breakdown_explainer:
+      "Each paragraph above used one of four moves. Here's each move on its own, with the debunk.",
   },
   share: {
     teaser: "Built a fake conspiracy theory using the four-move recipe at",
@@ -470,6 +519,10 @@ export const en: Dictionary = {
     not_found_h1: "Not found.",
     not_found_body: "That page doesn't exist — or the theory has been removed.",
     not_found_back_home: "← Back to the home page",
+    client_error_h1: "Something went wrong.",
+    client_error_body:
+      "An unexpected error broke this page. You can try again, or head back to the home page.",
+    client_error_try_again: "↻ Try again",
   },
   meta: {
     home_title_default: "Conspiracy Generator — the recipe, written out",
@@ -485,5 +538,11 @@ export const en: Dictionary = {
     teach_title: "For teachers — a 15-minute lesson plan",
     visitors_title: "Visitors",
     stats_title: "Stats",
+    og_description_generation:
+      "Made with the four-move recipe. Pick an event, a culprit, a motive — watch the theory build itself.",
+  },
+  legal: {
+    translation_pending_h: "",
+    translation_pending_body: "",
   },
 };

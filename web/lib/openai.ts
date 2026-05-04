@@ -11,11 +11,13 @@ import {
   EVENT_INTRO_SCHEMA,
   IDEAS_SCHEMA,
   SECTION_SCHEMA,
+  NARRATIVE_SCHEMA,
   RECIPE_VERSION,
   getMoveByKey,
   type EventIntro,
   type Ideas,
   type MoveKey,
+  type NarrativeOutput,
   type SectionOutput,
 } from "@/lib/recipe";
 import type { Locale } from "@/lib/i18n/types";
@@ -27,9 +29,9 @@ function client(): OpenAI {
 }
 
 /** Recipe version stamped onto persisted generations. Locale suffix
- * distinguishes English (v1) from German (v1.de) provenance. */
+ * distinguishes English (v1) from German (v1.de) and Dutch (v1.nl) provenance. */
 export function recipeVersionFor(locale: Locale): string {
-  return locale === "de" ? `${RECIPE_VERSION}.de` : RECIPE_VERSION;
+  return locale === "en" ? RECIPE_VERSION : `${RECIPE_VERSION}.${locale}`;
 }
 
 // ── Voice + constraints, per-locale ──────────────────────────────────────
@@ -50,6 +52,17 @@ const VOICE_GUIDELINES_BY_LOCALE: Record<Locale, string> = {
     "Beginne Abschnitte nicht mit Überschriften, Präfixen oder eckigen Labels. Beginne mit Prosa.",
     "Keine Aufzählungen, keine nummerierten Listen, keine Markdown-Überschriften. Nur Fließtext.",
   ].join("\n"),
+  // Dutch pass-1 voice guidelines — to be workshopped in pass 2 (Maarten or named Dutch-native contributor).
+  // Spec: openspec/changes/multilingual-dutch/specs/dutch-content/spec.md
+  nl: [
+    "Toon: satirisch, licht, iets ondeugend — nooit somber of haatdragend.",
+    "Schrijf als een Nederlandse moedertaalspreker. GEEN anglicismen, GEEN letterlijk uit het Engels vertaalde uitdrukkingen.",
+    "De stijl moet natuurlijk klinken voor zowel Vlaamse als Nederlandse lezers. Geen Belgicismen, geen Hollandismen die maar één kant herkent.",
+    "Leesniveau: 9e–11e klas. Korte zinnen. Eenvoudige woorden.",
+    "Publiek: aandachtige, nieuwsgierige lezers — mogelijk in een tweede taal.",
+    "Begin secties niet met koppen, voorvoegsels of labels tussen haken. Begin met proza.",
+    "Geen opsommingen, geen genummerde lijsten, geen markdown-koppen. Alleen lopende tekst.",
+  ].join("\n"),
 };
 
 const HARD_CONSTRAINTS_BY_LOCALE: Record<Locale, string> = {
@@ -62,6 +75,11 @@ const HARD_CONSTRAINTS_BY_LOCALE: Record<Locale, string> = {
     "Nenne KEINE realen, identifizierbaren Privatpersonen.",
     "Wähle KEIN Mitglied einer verletzlichen Gruppe als Schuldige:n.",
     "Produziere KEINE Inhalte, die hasserfüllt, gewaltverherrlichend, sexualisiert oder anderweitig außerhalb des satirisch-pädagogischen Rahmens stehen.",
+  ].join("\n"),
+  nl: [
+    "Noem GEEN echte, identificeerbare privépersonen.",
+    "Kies GEEN lid van een kwetsbare groep als schuldige.",
+    "Produceer GEEN inhoud die haatdragend, gewelddadig, seksueel of anderszins buiten het satirisch-educatieve kader valt.",
   ].join("\n"),
 };
 
@@ -88,6 +106,16 @@ const MOVE_BRIEFINGS_BY_LOCALE: Record<Locale, Record<MoveKey, string>> = {
     discredit:
       "Kritiker:innen diskreditieren. Lege nahe, dass jede:r, die:der die Theorie bestreitet, leichtgläubig, manipuliert oder von den Verschwörer:innen bezahlt sei.",
   },
+  nl: {
+    anomaly:
+      "Afwijkingen najagen. Pak een gewoon feit over de gebeurtenis en presenteer het als verdacht. Behandel toeval als signaal. Sluit af met een vraag waarop de lezer geen antwoord heeft.",
+    connection:
+      "Verbanden verzinnen. Verbind de schuldige via een keten zwak verwante actoren met de gebeurtenis. Laat de keten dragend klinken.",
+    dismiss:
+      "Tegenbewijs wegredeneren. Neem een voor de hand liggende, gangbare weerlegging en herkader die als verder bewijs voor de doofpot. Maak de theorie onfalsifieerbaar.",
+    discredit:
+      "Critici diskwalificeren. Suggereer dat iedereen die de theorie tegenspreekt, goedgelovig, gemanipuleerd of betaald door de samenzweerders is.",
+  },
 };
 
 const TELL_BRIEFINGS_BY_LOCALE: Record<Locale, Record<MoveKey, string>> = {
@@ -111,6 +139,16 @@ const TELL_BRIEFINGS_BY_LOCALE: Record<Locale, Record<MoveKey, string>> = {
     discredit:
       "Die Verschiebung der Kritik von der Sachebene auf die Person lenkt die Frage von „stimmt das?“ auf „wer fragt da?“ um. Echte Ermittler:innen begrüßen Kritik. Verschwörungstheoretiker:innen behandeln sie als die Verschwörung.",
   },
+  nl: {
+    anomaly:
+      "Echte onderzoekers controleren de basiskans: hoe vaak komt zo'n toeval gewoon voor? Complotdenkers verzamelen afwijkingen en slaan die vraag over.",
+    connection:
+      "Via zes schakels is iedereen met iedereen verbonden. Een keten van zwakke verbindingen als bewijs behandelen is een categoriefout — de verbinding bestaat in elke richting, niet alleen in de uitgelichte.",
+    dismiss:
+      "Wanneer tegenbewijzen worden geherkaderd als verder bewijs voor de samenzwering, is de theorie onfalsifieerbaar geworden. Dat is een verklikker, geen kracht.",
+    discredit:
+      "Het verschuiven van kritiek van de zaak naar de persoon stuurt de vraag van „klopt dit?“ naar „wie vraagt dat eigenlijk?“. Echte onderzoekers verwelkomen kritiek. Complotdenkers behandelen kritiek als de samenzwering.",
+  },
 };
 
 const EXTRA_DEBUNK_CLOSING_RULES_BY_LOCALE: Record<Locale, Partial<Record<MoveKey, string>>> = {
@@ -121,6 +159,10 @@ const EXTRA_DEBUNK_CLOSING_RULES_BY_LOCALE: Record<Locale, Partial<Record<MoveKe
   de: {
     discredit:
       "Beende die Auflösung mit einem einzigen, 4–8 Wörter langen Satz, dessen einzige Aufgabe es ist, das verräterische Muster zu benennen. Der Satz MUSS eigenständig stehen (eigener Punkt), nicht an einen längeren Satz angehängt. Nutze etwa: „Ad hominem.“ / „Den Boten angreifen statt die Botschaft.“ / „Den Überbringer erschießen.“ Knapp und unausgeschmückt.",
+  },
+  nl: {
+    discredit:
+      "Sluit de ontmaskering af met één enkele, 4–8 woorden lange zin wiens enige taak het is de verklikker te benoemen. De zin MOET op zichzelf staan (eigen punt), niet aangehangen aan een langere zin. Gebruik bijvoorbeeld: „Ad hominem.“ / „De boodschapper aanvallen, niet de boodschap.“ / „De boodschapper neerschieten.“ Kort en onopgesmukt.",
   },
 };
 
@@ -148,25 +190,41 @@ export async function generateEventIntro(input: {
           "- Bleibe bei öffentlich bekannten Fakten. Keine Verschwörungsrahmung.",
           "- Wenn du eine wahrscheinliche Quell-URL nennen kannst (ein echter veröffentlichter Artikel, den du kennst), gib sie an. Andernfalls leerer String für source_url.",
         ].join("\n")
-      : [
-          "You are an editorial assistant for an educational tool.",
-          "Your job is to write a short, plain-English explanation of a news event so the reader",
-          "has enough background to follow what comes next.",
-          "",
-          voice,
-          "",
-          "Constraints:",
-          "- Output 2–3 short paragraphs, 60–90 words each.",
-          "- The reader has NOT heard of this event before. Don't assume context.",
-          "- Stick to facts that are publicly known. No conspiracy framing.",
-          "- If you can suggest a likely source URL (a real published article you know about), include it.",
-          "  If you don't know one, return an empty string for source_url.",
-        ].join("\n");
+      : locale === "nl"
+        ? [
+            // Dutch pass-1 — to be workshopped in pass 2.
+            "Je bent een redactieassistent voor een leerinstrument.",
+            "Je taak is een korte, eenvoudig geformuleerde uitleg van een nieuwsgebeurtenis, zodat de lezer wat volgt kan volgen.",
+            "",
+            voice,
+            "",
+            "Vereisten:",
+            "- 2–3 korte alinea's, elk 60–90 woorden.",
+            "- De lezer kent de gebeurtenis NIET. Neem geen context aan.",
+            "- Blijf bij publiek bekende feiten. Geen complot-kadering.",
+            "- Als je een waarschijnlijke bron-URL kunt noemen (een echt gepubliceerd artikel dat je kent), geef die op. Anders een lege string voor source_url.",
+          ].join("\n")
+        : [
+            "You are an editorial assistant for an educational tool.",
+            "Your job is to write a short, plain-English explanation of a news event so the reader",
+            "has enough background to follow what comes next.",
+            "",
+            voice,
+            "",
+            "Constraints:",
+            "- Output 2–3 short paragraphs, 60–90 words each.",
+            "- The reader has NOT heard of this event before. Don't assume context.",
+            "- Stick to facts that are publicly known. No conspiracy framing.",
+            "- If you can suggest a likely source URL (a real published article you know about), include it.",
+            "  If you don't know one, return an empty string for source_url.",
+          ].join("\n");
 
   const user =
     locale === "de"
       ? `Schlagzeile: ${input.eventName}\n\nVollständige Zusammenfassung (Kontext, ggf. länger):\n${input.eventSummary}`
-      : `Event headline: ${input.eventName}\n\nFull summary (for context, may be longer):\n${input.eventSummary}`;
+      : locale === "nl"
+        ? `Kop: ${input.eventName}\n\nVolledige samenvatting (context, mogelijk langer):\n${input.eventSummary}`
+        : `Event headline: ${input.eventName}\n\nFull summary (for context, may be longer):\n${input.eventSummary}`;
 
   const r = await client().chat.completions.create({
     model: e.OPENAI_MODEL,
@@ -226,6 +284,34 @@ export async function generateIdeas(input: {
           "",
           hardConstraints,
         ].join("\n")
+      : locale === "nl"
+      ? [
+          // Dutch pass-1 — to be workshopped in pass 2.
+          "Je schrijft korte brainstormideeën voor een leerinstrument dat het vier-stappen-recept van complotdenken demonstreert (Boudry & Meyer).",
+          "",
+          "Stel voor de gegeven gebeurtenis + de schuldige + het motief DRIE korte, specifieke ideeën per stap voor. Elk idee:",
+          "  - 5 tot 8 woorden.",
+          "  - Concreet en verrassend — noem een specifieke afwijking / verband / afwering / belastering.",
+          "  - Ook in een tweede taal makkelijk te lezen.",
+          "  - VERSCHILLEND van de andere twee ideeën binnen dezelfde stap.",
+          "  - Geen kop, geen label — alleen het idee zelf.",
+          "  - Schrijf als een Nederlandse moedertaalspreker. Geen anglicismen. Natuurlijk voor zowel Vlaamse als Nederlandse lezers.",
+          "",
+          "BELANGRIJK — voor de stap `anomaly`:",
+          "  Elke afwijking MOET verwijzen naar een concreet feit, getal, datum, plaats, instelling of geciteerd detail uit de samenvatting hieronder. Verzin GEEN feiten. Pak een echt detail uit het verhaal en presenteer DAT detail als verdacht. De lezer moet de afwijking herkennen in het verhaal dat hij net heeft gelezen.",
+          "",
+          "Voor `connection`, `dismiss` en `discredit` mag je verbindende actoren verzinnen — de satire werkt omdat de keten dragend lijkt terwijl hij geconstrueerd is.",
+          "",
+          "Voorbeelden van GOEDE ideeën:",
+          "  anomaly (een detail wordt geherkaderd):",
+          '    "Waarom precies 60 %, niet 58 of 63?"',
+          '    "Waarom vlak voor de top aangekondigd?"',
+          '  connection: "Holding deelt belastingadviseur met festivalsponsor"',
+          '  dismiss:    "Ambtenaren die het ontkennen waren op het gala"',
+          '  discredit:  "Critici werken toevallig voor concurrerende instellingen"',
+          "",
+          hardConstraints,
+        ].join("\n")
       : [
           "You write short brainstorm ideas for an educational tool that demonstrates the four-move",
           "recipe of conspiracy thinking (Boudry & Meyer).",
@@ -268,6 +354,16 @@ export async function generateIdeas(input: {
           "",
           `Schuldige Partei:  ${input.culpritName} — ${input.culpritSummary}`,
           `Motiv:             ${input.motiveName} — ${input.motiveSummary}`,
+        ].join("\n")
+      : locale === "nl"
+      ? [
+          `Kop: ${input.eventName}`,
+          "",
+          "Wat er echt gebeurde (de lezer heeft dit zojuist gelezen — afwijkings-ideeën MOETEN steunen op de details hieronder):",
+          input.eventSummary,
+          "",
+          `Schuldige:  ${input.culpritName} — ${input.culpritSummary}`,
+          `Motief:     ${input.motiveName} — ${input.motiveSummary}`,
         ].join("\n")
       : [
           `Event headline: ${input.eventName}`,
@@ -321,11 +417,12 @@ export async function generateSection(input: {
   const priorEntries = (Object.entries(input.prior) as [MoveKey, string | undefined][])
     .filter(([, v]) => Boolean(v));
   const priorText = priorEntries
-    .map(([k, v]) =>
-      locale === "de"
-        ? `Vorheriger Schritt ${getMoveByKey(locale, k).title}: ${v}`
-        : `Prior ${getMoveByKey(locale, k).title}: ${v}`,
-    )
+    .map(([k, v]) => {
+      const title = getMoveByKey(locale, k).title;
+      if (locale === "de") return `Vorheriger Schritt ${title}: ${v}`;
+      if (locale === "nl") return `Vorige stap ${title}: ${v}`;
+      return `Prior ${title}: ${v}`;
+    })
     .join("\n\n");
   const priorOpeners = priorEntries
     .map(([, v]) => v!.trim().split(/\s+/).slice(0, 3).join(" "))
@@ -346,6 +443,28 @@ export async function generateSection(input: {
           extraRule ? `\nZUSÄTZLICHE SCHLUSSREGEL. ${extraRule}` : "",
           "",
           'ABWECHSLUNG IM AUFTAKT. Variier den Einleitungsteil. Beginne den Absatz NICHT mit derselben imperativischen Aufforderung wie ein früherer Schritt (z. B. mehrfaches "Schau mal..." oder "Schauen wir genauer..."). Wenn unten eine Liste früherer Auftakte folgt, MUSS dein Auftakt sich von jedem unterscheiden.',
+          "",
+          voice,
+          "",
+          hardConstraints,
+        ]
+          .filter(Boolean)
+          .join("\n")
+      : locale === "nl"
+      ? [
+          // Dutch pass-1 — to be workshopped in pass 2.
+          `Je schrijft stap ${move.n} van een verzonnen complottheorie: „${move.title}".`,
+          "",
+          `BRIEFING. ${briefing}`,
+          "",
+          "Je uitvoer bestaat uit TWEE delen:",
+          "  1. paragraph — 45–80 woorden in de satirisch-complotterende stem, die de stap toepast op het hieronder gegeven idee. Eenvoudig Nederlands. Geen koppen. Geen opsommingen. Begin met een zin.",
+          "  2. debunk — 40–70 woorden in een nuchter-kritische stem, gericht aan de lezer, die toont waarom de zojuist gespeelde stap mank gaat. Sluit af met het benoemen van de verklikker.",
+          "",
+          `DE VERKLIKKER. ${tell}`,
+          extraRule ? `\nEXTRA SLOTREGEL. ${extraRule}` : "",
+          "",
+          'AFWISSELING IN DE OPENING. Varieer de inleidende clausule. Begin de alinea NIET met dezelfde imperatieve aanwijzer als een eerdere stap (bv. herhaaldelijk "Kijk eens..." of "Kijk nauwkeuriger..."). Als hieronder een lijst eerdere openingen volgt, MOET jouw opening van elk daarvan verschillen.',
           "",
           voice,
           "",
@@ -394,6 +513,20 @@ export async function generateSection(input: {
         ]
           .filter(Boolean)
           .join("\n")
+      : locale === "nl"
+      ? [
+          `Gebeurtenis:        ${input.eventName} — ${input.eventSummary}`,
+          `Schuldige:          ${input.culpritName}`,
+          `Motief:             ${input.motiveName}`,
+          `Idee voor DEZE stap: ${input.chosenIdea}`,
+          "",
+          priorText || "(nog geen eerdere stappen)",
+          priorOpeners.length
+            ? `\nEerdere openingen (herhaal NIET dezelfde imperatief): ${JSON.stringify(priorOpeners)}`
+            : "",
+        ]
+          .filter(Boolean)
+          .join("\n")
       : [
           `Event:   ${input.eventName} — ${input.eventSummary}`,
           `Culprit: ${input.culpritName}`,
@@ -423,6 +556,150 @@ export async function generateSection(input: {
   const raw = r.choices[0]?.message?.content;
   if (!raw) throw new Error("Empty section response");
   return JSON.parse(raw) as SectionOutput;
+}
+
+/* ─── 4. Narrative finale: weave the four move paragraphs into one story ─ */
+
+export async function generateNarrative(input: {
+  locale?: Locale;
+  eventName: string;
+  culpritName: string;
+  motiveName: string;
+  /** The four per-move conspiracist paragraphs, keyed by move. */
+  paragraphs: Record<MoveKey, string>;
+}): Promise<NarrativeOutput> {
+  const e = env();
+  const locale: Locale = input.locale ?? "en";
+  const voice = VOICE_GUIDELINES_BY_LOCALE[locale];
+  const hardConstraints = HARD_CONSTRAINTS_BY_LOCALE[locale];
+
+  const system =
+    locale === "de"
+      ? [
+          "Du schreibst die finale, in sich geschlossene Verschwörungstheorie als kurze Erzählung.",
+          "Eingabe sind vier kurze Absätze, je einer pro Schritt (Auffälligkeit, Verbindung, Abwehr, Diskreditierung).",
+          "Deine Aufgabe: webe die Aussagen dieser vier Absätze zu EINER fortlaufenden Geschichte mit drei Absätzen, die sich wie eine echte Verschwörungstheorie liest — mit erzählerischem Schwung.",
+          "",
+          "Vorgaben:",
+          "- GENAU drei Absätze. Je 80–140 Wörter.",
+          "- Verbinde die vier Schritte zu einem fließenden Erzählbogen — keine Aneinanderreihung der Absätze, kein Auflisten.",
+          "- Übernimm die konkreten Behauptungen aus den vier Eingabe-Absätzen (welche Auffälligkeit, welche Verbindung, welche Abwehr, welche Diskreditierung). Erfinde keine neuen Einzelheiten, die den Eingaben widersprechen.",
+          "- Schreibe in der Stimme einer überzeugten Verschwörungstheoretikerin — leicht spitzbübisch, satirisch, aber lesbar als eine zusammenhängende Geschichte.",
+          "- Beginne mit Prosa. Kein Titel, keine Überschriften, keine Aufzählungspunkte, keine Nummerierungen, keine Schritte-Labels (z. B. Schritt 01).",
+          "- Erwähne KEINE Auflösungen oder kritische Einordnung. Die Auflösungen sind woanders auf der Seite.",
+          "- Schreibe wie eine deutsche Muttersprachlerin. Keine Anglizismen.",
+          "",
+          voice,
+          "",
+          hardConstraints,
+        ].join("\n")
+      : locale === "nl"
+      ? [
+          // Dutch pass-1 — to be workshopped in pass 2.
+          "Je schrijft de uiteindelijke, op zichzelf staande complottheorie als korte vertelling.",
+          "Invoer zijn vier korte alinea's, één per stap (afwijking, verband, afwering, diskwalificatie).",
+          "Je taak: weef de uitspraken van deze vier alinea's tot ÉÉN doorlopend verhaal van drie alinea's dat leest als een echte complottheorie — met verhalende vaart.",
+          "",
+          "Vereisten:",
+          "- PRECIES drie alinea's. Elk 80–140 woorden.",
+          "- Verbind de vier stappen tot een vloeiende boog — geen aaneenschakeling van de alinea's, geen opsomming.",
+          "- Neem de concrete beweringen uit de vier invoer-alinea's over (welke afwijking, welk verband, welke afwering, welke diskwalificatie). Verzin geen nieuwe details die de invoer tegenspreken.",
+          "- Schrijf in de stem van een overtuigde complotdenker — licht ondeugend, satirisch, maar leesbaar als één samenhangend verhaal.",
+          "- Begin met proza. Geen titel, geen koppen, geen opsommingstekens, geen nummering, geen stap-labels (bv. Stap 01).",
+          "- Vermeld GEEN ontmaskeringen of kritische kadering. De ontmaskeringen staan elders op de pagina.",
+          "- Schrijf als een Nederlandse moedertaalspreker. Geen anglicismen. Natuurlijk voor zowel Vlaamse als Nederlandse lezers.",
+          "",
+          voice,
+          "",
+          hardConstraints,
+        ].join("\n")
+      : [
+          "You are writing the final, self-contained conspiracy theory as a short narrative.",
+          "Input is four short paragraphs, one per move (anomaly, connection, dismiss, discredit).",
+          "Your job: weave the claims of those four paragraphs into ONE continuous three-paragraph story that reads like a real conspiracy theory — with narrative flair.",
+          "",
+          "Constraints:",
+          "- EXACTLY three paragraphs. 80–140 words each.",
+          "- Integrate the four moves into a flowing arc — not a concatenation, not a list.",
+          "- Carry over the concrete claims from the four input paragraphs (the specific anomaly, connection, dismissal, and discrediting). Do not invent new details that contradict the inputs.",
+          "- Write in the voice of a true-believer conspiracist — slightly mischievous, satirical, but readable as one coherent story.",
+          "- Start with prose. No title, no headings, no bullets, no numbering, no move labels (\"Move 01\" etc.).",
+          "- Do NOT include any debunks or critical framing. Debunks live elsewhere on the page.",
+          "",
+          voice,
+          "",
+          hardConstraints,
+        ].join("\n");
+
+  const labels =
+    locale === "de"
+      ? {
+          event: "Ereignis",
+          culprit: "Schuldige Partei",
+          motive: "Motiv",
+          a: "Auffälligkeit",
+          c: "Verbindung",
+          d: "Abwehr",
+          x: "Diskreditierung",
+        }
+      : locale === "nl"
+      ? {
+          event: "Gebeurtenis",
+          culprit: "Schuldige",
+          motive: "Motief",
+          a: "Afwijking",
+          c: "Verband",
+          d: "Afwering",
+          x: "Diskwalificatie",
+        }
+      : {
+          event: "Event",
+          culprit: "Culprit",
+          motive: "Motive",
+          a: "Anomaly",
+          c: "Connection",
+          d: "Dismiss",
+          x: "Discredit",
+        };
+
+  const user = [
+    `${labels.event}:   ${input.eventName}`,
+    `${labels.culprit}: ${input.culpritName}`,
+    `${labels.motive}:  ${input.motiveName}`,
+    "",
+    `${labels.a}:`,
+    input.paragraphs.anomaly,
+    "",
+    `${labels.c}:`,
+    input.paragraphs.connection,
+    "",
+    `${labels.d}:`,
+    input.paragraphs.dismiss,
+    "",
+    `${labels.x}:`,
+    input.paragraphs.discredit,
+  ].join("\n");
+
+  const r = await client().chat.completions.create({
+    model: e.OPENAI_MODEL,
+    messages: [
+      { role: "system", content: system },
+      { role: "user", content: user },
+    ],
+    response_format: {
+      type: "json_schema",
+      json_schema: { name: "narrative", strict: true, schema: NARRATIVE_SCHEMA },
+    },
+  });
+  const raw = r.choices[0]?.message?.content;
+  if (!raw) throw new Error("Empty narrative response");
+  const parsed = JSON.parse(raw) as NarrativeOutput;
+  if (!Array.isArray(parsed.paragraphs) || parsed.paragraphs.length !== 3) {
+    throw new Error(
+      `Narrative must have exactly 3 paragraphs, got ${parsed.paragraphs?.length ?? 0}`,
+    );
+  }
+  return parsed;
 }
 
 /* ─── Moderation passthrough ─────────────────────────────────────────── */

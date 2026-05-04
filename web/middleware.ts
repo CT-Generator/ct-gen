@@ -1,13 +1,14 @@
 // Three responsibilities, one matcher:
-//   1. Locale negotiation — every non-excluded request gets `x-locale: en|de`. The /de/<rest>
-//      URL prefix triggers an internal rewrite to /<rest> so the same Next.js page file
-//      renders, but the URL bar stays /de/<rest>.
+//   1. Locale negotiation — every non-excluded request gets `x-locale: en|de|nl`. The
+//      /<locale>/<rest> URL prefix triggers an internal rewrite to /<rest> so the same
+//      Next.js page file renders, but the URL bar stays /<locale>/<rest>.
 //   2. /stats/* → HTTP Basic Auth gate. Username ignored; STATS_PASSWORD env is the gate.
 //   3. Everything else → set x-pathname / x-referrer / x-country request headers so the
 //      Node-runtime root layout can capture an anonymous page-view event after the response.
 // Specs:
 //   - openspec/changes/visitor-tracking/specs/visitor-analytics/spec.md
 //   - openspec/changes/multilingual-german/specs/internationalization/spec.md
+//   - openspec/changes/multilingual-dutch/specs/internationalization/spec.md
 
 import { NextResponse, type NextRequest } from "next/server";
 
@@ -15,21 +16,22 @@ const REALM = "Conspiracy Generator stats";
 const COOKIE_NAME = "cgen_lang";
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 year
 
-type Locale = "en" | "de";
-const SUPPORTED: readonly Locale[] = ["en", "de"];
+type Locale = "en" | "de" | "nl";
+const SUPPORTED: readonly Locale[] = ["en", "de", "nl"];
+// Locales that have a URL prefix. English is un-prefixed (default).
+const PREFIXED_LOCALES: readonly Exclude<Locale, "en">[] = ["de", "nl"];
 
 export function middleware(req: NextRequest) {
   const original = req.nextUrl.pathname;
 
   // ── Locale resolution ──────────────────────────────────────────────────
-  // Step 1: split off the /de/ prefix (if any) into a normalized path the
-  // app sees, plus the locale we should attribute the request to.
-  const explicitDe = original === "/de" || original.startsWith("/de/");
-  const explicitPrefix: Locale | null = explicitDe ? "de" : null;
-  const unprefixedPath = explicitDe
-    ? original === "/de"
+  // Step 1: split off the /<locale>/ prefix (if any) into a normalized path
+  // the app sees, plus the locale we should attribute the request to.
+  const explicitPrefix = detectPrefix(original);
+  const unprefixedPath = explicitPrefix
+    ? original === `/${explicitPrefix}`
       ? "/"
-      : original.slice(3) // strip "/de"
+      : original.slice(explicitPrefix.length + 1) // strip "/de" or "/nl"
     : original;
 
   // Step 2: cookie + Accept-Language for visitors who haven't pinned a prefix.
@@ -44,12 +46,19 @@ export function middleware(req: NextRequest) {
     unprefixedPath.startsWith("/story/") ||
     unprefixedPath === "/story";
 
-  // First-visit redirect: no cookie, no explicit prefix, AL prefers de → /de/...
-  if (!cookieLocale && !explicitPrefix && !isPermalink && acceptLocale === "de") {
+  // First-visit redirect: no cookie, no explicit prefix, AL prefers a non-English
+  // supported locale → /<locale>/...
+  if (
+    !cookieLocale &&
+    !explicitPrefix &&
+    !isPermalink &&
+    acceptLocale &&
+    acceptLocale !== "en"
+  ) {
     const target = req.nextUrl.clone();
-    target.pathname = original === "/" ? "/de" : `/de${original}`;
+    target.pathname = original === "/" ? `/${acceptLocale}` : `/${acceptLocale}${original}`;
     const res = NextResponse.redirect(target, 302);
-    setLangCookie(res, "de");
+    setLangCookie(res, acceptLocale);
     return res;
   }
 
@@ -64,9 +73,9 @@ export function middleware(req: NextRequest) {
   }
 
   // ── Build the response ────────────────────────────────────────────────
-  // If the URL bar is /de/<rest>, internally rewrite to /<rest> so the
+  // If the URL bar is /<locale>/<rest>, internally rewrite to /<rest> so the
   // existing Next.js page file (e.g. app/recipe/page.tsx) renders. The
-  // browser's URL bar stays /de/<rest>; only the file-system route changes.
+  // browser's URL bar stays /<locale>/<rest>; only the file-system route changes.
   const requestHeaders = new Headers(req.headers);
   requestHeaders.set("x-locale", locale);
   requestHeaders.set("x-pathname", unprefixedPath);
@@ -77,7 +86,7 @@ export function middleware(req: NextRequest) {
   if (country) requestHeaders.set("x-country", country);
 
   let res: NextResponse;
-  if (explicitDe) {
+  if (explicitPrefix) {
     const rewritten = req.nextUrl.clone();
     rewritten.pathname = unprefixedPath;
     res = NextResponse.rewrite(rewritten, { request: { headers: requestHeaders } });
@@ -88,22 +97,30 @@ export function middleware(req: NextRequest) {
   return res;
 }
 
-function parseLocale(raw: string | null | undefined): Locale | null {
-  if (raw === "en" || raw === "de") return raw;
+function detectPrefix(path: string): "de" | "nl" | null {
+  for (const p of PREFIXED_LOCALES) {
+    if (path === `/${p}` || path.startsWith(`/${p}/`)) return p;
+  }
   return null;
 }
 
-function parseAcceptLanguage(header: string | null): "en" | "de" | null {
+function parseLocale(raw: string | null | undefined): Locale | null {
+  if (raw === "en" || raw === "de" || raw === "nl") return raw;
+  return null;
+}
+
+function parseAcceptLanguage(header: string | null): Locale | null {
   if (!header) return null;
   // Pick the highest-priority entry that matches a supported locale.
-  // Header format: "de-DE,de;q=0.9,en;q=0.5". Take the first language tag.
-  const first = header
+  // Header format: "de-DE,de;q=0.9,en;q=0.5". Take the first language tag
+  // whose primary subtag matches one of our supported locales.
+  const tags = header
     .split(",")
-    .map((x) => x.trim().split(";")[0]!.trim().toLowerCase())
-    .find((tag) => tag.startsWith("de") || tag.startsWith("en"));
-  if (!first) return null;
-  if (first.startsWith("de")) return "de";
-  if (first.startsWith("en")) return "en";
+    .map((x) => x.trim().split(";")[0]!.trim().toLowerCase());
+  for (const tag of tags) {
+    const primary = tag.split("-")[0];
+    if (primary === "de" || primary === "en" || primary === "nl") return primary;
+  }
   return null;
 }
 

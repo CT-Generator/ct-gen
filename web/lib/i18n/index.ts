@@ -3,12 +3,13 @@
 import { headers } from "next/headers";
 import { en, type Dictionary } from "./en";
 import { de } from "./de";
+import { nl } from "./nl";
 import { DEFAULT_LOCALE, isLocale, type Locale } from "./types";
 
-const DICTS: Record<Locale, Dictionary> = { en, de };
+const DICTS: Record<Locale, Dictionary> = { en, de, nl };
 
 export type { Locale };
-export { DEFAULT_LOCALE, isLocale, SUPPORTED_LOCALES } from "./types";
+export { DEFAULT_LOCALE, isLocale, SUPPORTED_LOCALES, DUTCH_LAUNCHED, VISIBLE_LOCALES } from "./types";
 
 /**
  * Read the active locale from the request. Middleware sets `x-locale` on
@@ -26,9 +27,11 @@ export function getDict(locale: Locale): Dictionary {
   return DICTS[locale];
 }
 
-/** Build the URL for the locale-prefixed equivalent of a path. */
+/** Build the URL for the locale-prefixed equivalent of a path.
+ *  English is the default and lives un-prefixed; every other locale lives
+ *  under `/<locale>/...`. */
 export function localizedHref(path: string, locale: Locale): string {
   if (locale === DEFAULT_LOCALE) return path;
-  if (path === "/") return "/de";
-  return `/de${path}`;
+  if (path === "/") return `/${locale}`;
+  return `/${locale}${path}`;
 }

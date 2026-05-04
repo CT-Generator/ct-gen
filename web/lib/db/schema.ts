@@ -123,5 +123,33 @@ export const pageViews = pgTable(
   }),
 );
 
+// Spec: openspec/changes/client-error-reporting/specs/client-error-reporting/spec.md
+//
+// One row per uncaught client-side React render error reported by the
+// global-error / segment error boundaries. Privacy envelope mirrors page_views:
+// session_hash + device_class + country + referrer_host (host-only, same-origin
+// dropped). Adds three error-specific columns: message, stack (truncated to
+// 4 KiB), digest (Next.js error digest).
+export const clientErrors = pgTable(
+  "client_errors",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    path: text("path").notNull(),
+    locale: text("locale").notNull(),
+    message: text("message").notNull(),
+    stack: text("stack"),
+    digest: text("digest"),
+    referrerHost: text("referrer_host"),
+    deviceClass: text("device_class").notNull(),
+    country: text("country"),
+    sessionHash: text("session_hash").notNull(),
+  },
+  (t) => ({
+    createdAtIdx: index("client_errors_created_at_idx").on(t.createdAt),
+    pathIdx: index("client_errors_path_idx").on(t.path),
+  }),
+);
+
 // Drizzle-kit needs `sql` imported somewhere even when no raw SQL is used in this file.
 export const _sqlImport = sql;

@@ -10,7 +10,7 @@
 // (the "Permalink bypasses Accept-Language redirect" scenario).
 
 import { eq } from "drizzle-orm";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { db, schema } from "@/lib/db";
@@ -20,9 +20,10 @@ import { Masthead } from "@/components/masthead";
 import { Footer } from "@/components/footer";
 import { MoveGlyph } from "@/components/move-glyph";
 import { MoveTellStamp } from "@/components/move-tell-stamp";
+import { NarrativeStamp } from "@/components/narrative-stamp";
 import { ShareButtons } from "@/components/share-buttons";
 import { RatingBar } from "@/components/rating-bar";
-import { getDict, isLocale, localizedHref, type Locale } from "@/lib/i18n";
+import { getDict, isLocale, localizedHref, readLocale, type Locale } from "@/lib/i18n";
 
 type Params = { id: string };
 
@@ -45,6 +46,15 @@ async function loadGeneration(shortId: string) {
   return rows[0] ?? null;
 }
 
+// Per-page metadata override Next.js merging is shallow per top-level field — when this
+// function returns an `openGraph` block, the layout-level og:locale gets shadowed.
+// We must explicitly include `locale` here, mapped from the row's persisted locale.
+const OG_LOCALE_MAP: Record<Locale, string> = {
+  en: "en_US",
+  de: "de_DE",
+  nl: "nl_NL",
+};
+
 export async function generateMetadata({
   params,
 }: {
@@ -53,8 +63,9 @@ export async function generateMetadata({
   const { id } = await params;
   const gen = await loadGeneration(id).catch(() => null);
   if (!gen) return { title: "Theory not found" };
+  const rowLocale: Locale = isLocale(gen.locale) ? gen.locale : "en";
   const title = `${gen.culpritValue} × ${gen.eventValue}`;
-  const description = `Made with the four-move recipe. Pick an event, a culprit, a motive — watch the theory build itself.`;
+  const description = getDict(rowLocale).meta.og_description_generation;
   const ogImage = `${env().PUBLIC_BASE_URL}/api/og/${id}`;
   return {
     title,
@@ -63,6 +74,7 @@ export async function generateMetadata({
       title: `Conspiracy Generator — ${title}`,
       description,
       images: [{ url: ogImage, width: 1200, height: 630 }],
+      locale: OG_LOCALE_MAP[rowLocale],
     },
     twitter: {
       card: "summary_large_image",
@@ -114,6 +126,18 @@ export default async function GenerationPage({ params }: { params: Promise<Param
 
   // Chrome locale follows the generation's locale (preserved across visitors).
   const rowLocale: Locale = isLocale(gen.locale) ? gen.locale : "en";
+
+  // Permalink locale lock: when the visitor reaches a /<prefix>/g/<id> URL
+  // whose prefix doesn't match the row's persisted locale, redirect to the
+  // canonical URL. After redirect, <html lang>, masthead chrome, content body,
+  // and OG metadata all align on rowLocale.
+  // Spec: openspec/specs/internationalization
+  //   "Permalink visit redirects to the row's locale URL when prefixes mismatch"
+  const visitorLocale = await readLocale();
+  if (visitorLocale !== rowLocale) {
+    redirect(localizedHref(`/g/${id}`, rowLocale));
+  }
+
   const t = getDict(rowLocale).generation;
   const shareLabels = getDict(rowLocale).share;
   const MOVES = getMoves(rowLocale);
@@ -146,7 +170,10 @@ export default async function GenerationPage({ params }: { params: Promise<Param
             </h1>
           </div>
 
-          {content.conspiracist_intro && (
+          {/* Older / narrative-absent rows: italic conspiracist hook with inline source link.
+              Narrative-present rows: skip the hook (the narrative below replaces it) and
+              render the source link as its own meta line — see source-link block below. */}
+          {content.conspiracist_intro && !content.narrative?.paragraphs?.length && (
             <p
               className="mt-2 max-w-2xl text-[15px] sm:text-[16px] leading-relaxed italic"
               style={{ color: "var(--tw-color-ink-soft, #54515C)" }}
@@ -167,12 +194,86 @@ export default async function GenerationPage({ params }: { params: Promise<Param
               )}
             </p>
           )}
+
+          {content.narrative?.paragraphs?.length && content.event_intro?.source_url && (
+            <p className="meta">
+              {getDict(rowLocale).story.source_label}{" "}
+              <a
+                href={content.event_intro.source_url}
+                target="_blank"
+                rel="noopener nofollow"
+                className="underline-offset-2 underline hover:no-underline break-all"
+              >
+                {(() => {
+                  try {
+                    return new URL(content.event_intro.source_url).hostname.replace(/^www\./, "");
+                  } catch {
+                    return content.event_intro.source_url;
+                  }
+                })()} ↗
+              </a>
+            </p>
+          )}
         </div>
       </section>
+
+      {/* Narrative finale — three-paragraph integrated theory. Rendered for any
+          recipe-tagged generation that has a persisted narrative; older rows
+          and rows where narrative generation failed render the per-move blocks
+          only (no broken section).
+          Each paragraph sits in its own position:relative wrapper with its own
+          NarrativeStamp anchored bottom-right, so any horizontal screenshot of
+          any single paragraph also captures that paragraph's stamp. */}
+      {display.shape !== "legacy" && content.narrative?.paragraphs?.length ? (
+        <section className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-9 pt-7 sm:pt-9">
+          <p className="meta mb-3">{t.narrative_eyebrow}</p>
+          <div className="font-body text-[16px] sm:text-[17px] leading-[1.7] space-y-4">
+            {content.narrative.paragraphs.map((p, i) => (
+              <div key={i} style={{ position: "relative", paddingBottom: 30 }}>
+                <p className="whitespace-pre-wrap">{p}</p>
+                <NarrativeStamp label={t.narrative_stamp} />
+              </div>
+            ))}
+          </div>
+          <p
+            className="mt-5 font-mono uppercase text-ink-soft dark:text-ink-soft-dark"
+            style={{ fontSize: 10, letterSpacing: "0.14em" }}
+          >
+            {MOVES.map((m, i) => (
+              <span key={m.key}>
+                {i > 0 && <span className="mx-1.5 opacity-50">·</span>}
+                <a
+                  href={localizedHref("/recipe", rowLocale)}
+                  className="underline-offset-2 hover:underline"
+                  style={{ color: m.color }}
+                >
+                  {m.n} {m.title.toUpperCase()}
+                </a>
+              </span>
+            ))}
+          </p>
+          <p className="mt-4">
+            <a
+              href="#breakdown"
+              className="text-[13px] underline-offset-2 underline hover:no-underline"
+            >
+              {t.see_breakdown_cta}
+            </a>
+          </p>
+        </section>
+      ) : null}
 
       {/* Move blocks */}
       {display.shape !== "legacy" ? (
         <section className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-9">
+          {content.narrative?.paragraphs?.length ? (
+            <div id="breakdown" className="pt-8 sm:pt-10 mt-2 rule-h scroll-mt-8">
+              <p className="meta pt-5">{t.breakdown_eyebrow}</p>
+              <p className="mt-2 text-[14px] leading-[1.6] text-ink-soft dark:text-ink-soft-dark">
+                {t.breakdown_explainer}
+              </p>
+            </div>
+          ) : null}
           {MOVES.map((m) => {
             const dm = display.moves[m.key];
             if (!dm) return null;

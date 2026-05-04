@@ -104,8 +104,12 @@ export default async function StoryPage({
             cta_start: t.cta_start,
             cta_starting: t.cta_starting,
             cta_starting_dots: t.cta_starting_dots,
+            cta_yolo: t.cta_yolo,
+            cta_yolo_starting: t.cta_yolo_starting,
+            cta_yolo_starting_dots: t.cta_yolo_starting_dots,
             err_too_long: t.err_too_long,
             err_couldnt_start: t.err_couldnt_start,
+            err_yolo_failed: t.err_yolo_failed,
           }}
         />
       </article>

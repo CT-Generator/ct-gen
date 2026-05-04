@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { SeedItemWithImage } from "@/lib/seed";
 
-type Locale = "en" | "de";
+type Locale = "en" | "de" | "nl";
 
 type Labels = {
   culprit: string;
@@ -18,8 +18,12 @@ type Labels = {
   cta_start: string;
   cta_starting: string;
   cta_starting_dots: string;
+  cta_yolo: string;
+  cta_yolo_starting: string;
+  cta_yolo_starting_dots: string;
   err_too_long: string;
   err_couldnt_start: string;
+  err_yolo_failed: string;
 };
 
 type Props = {
@@ -45,47 +49,86 @@ export function ConspiratorsPicker({
 }: Props) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
+  const [yoloPending, startYoloTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
 
   const [culprit, setCulprit] = useState<SeedItemWithImage | null>(culprits[0] ?? null);
   const [motive, setMotive] = useState<SeedItemWithImage | null>(motives[0] ?? null);
 
   const ready = culprit && motive;
-  const buildPath = locale === "de" ? `/de/build` : `/build`;
-  const storyPath = locale === "de" ? `/de/story/${eventUuid}` : `/story/${eventUuid}`;
+  const prefix = locale === "en" ? "" : `/${locale}`;
+  const buildPath = `${prefix}/build`;
+  const genPath = `${prefix}/g`;
+  const storyPath = `${prefix}/story/${eventUuid}`;
+  const anyPending = pending || yoloPending;
+
+  async function postStart(signal: AbortSignal): Promise<string> {
+    const res = await fetch("/api/start", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      signal,
+      body: JSON.stringify({
+        // Locale must travel in the body — middleware excludes /api/* so the
+        // route handler can't read x-locale from request headers.
+        locale,
+        event: { uuid: eventUuid, name: eventName, summary: eventSummary },
+        culprit: { uuid: culprit!.uuid, name: culprit!.name, summary: culprit!.summary },
+        motive: { uuid: motive!.uuid, name: motive!.name, summary: motive!.summary },
+      }),
+    });
+    if (!res.ok) {
+      const payload = (await res.json().catch(() => ({}))) as { error?: string };
+      throw new Error(payload.error ?? `Couldn't start (${res.status})`);
+    }
+    const { shortId } = (await res.json()) as { shortId: string };
+    return shortId;
+  }
 
   async function start() {
-    if (!ready || pending) return;
+    if (!ready || anyPending) return;
     setError(null);
     startTransition(async () => {
       try {
         const ctrl = new AbortController();
         const t = setTimeout(() => ctrl.abort(), 60_000);
-        const res = await fetch("/api/start", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          signal: ctrl.signal,
-          body: JSON.stringify({
-            // Locale must travel in the body — middleware excludes /api/* so the
-            // route handler can't read x-locale from request headers.
-            locale,
-            event: { uuid: eventUuid, name: eventName, summary: eventSummary },
-            culprit: { uuid: culprit!.uuid, name: culprit!.name, summary: culprit!.summary },
-            motive: { uuid: motive!.uuid, name: motive!.name, summary: motive!.summary },
-          }),
-        });
+        const shortId = await postStart(ctrl.signal);
         clearTimeout(t);
-        if (!res.ok) {
-          const payload = (await res.json().catch(() => ({}))) as { error?: string };
-          throw new Error(payload.error ?? `Couldn't start (${res.status})`);
-        }
-        const { shortId } = (await res.json()) as { shortId: string };
         router.push(`${buildPath}/${shortId}`);
       } catch (err) {
         if (err instanceof Error && err.name === "AbortError") {
           setError(labels.err_too_long);
         } else {
           setError(err instanceof Error ? err.message : labels.err_couldnt_start);
+        }
+      }
+    });
+  }
+
+  async function startYolo() {
+    if (!ready || anyPending) return;
+    setError(null);
+    startYoloTransition(async () => {
+      try {
+        const ctrl = new AbortController();
+        // /api/start (~20s) then /api/build/[id]/yolo (~40s) — generous overall cap.
+        const t = setTimeout(() => ctrl.abort(), 90_000);
+        const shortId = await postStart(ctrl.signal);
+        const res = await fetch(`/api/build/${shortId}/yolo`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          signal: ctrl.signal,
+        });
+        clearTimeout(t);
+        if (!res.ok) {
+          const payload = (await res.json().catch(() => ({}))) as { error?: string };
+          throw new Error(payload.error ?? `Yolo failed (${res.status})`);
+        }
+        router.push(`${genPath}/${shortId}`);
+      } catch (err) {
+        if (err instanceof Error && err.name === "AbortError") {
+          setError(labels.err_too_long);
+        } else {
+          setError(err instanceof Error ? err.message : labels.err_yolo_failed);
         }
       }
     });
@@ -189,15 +232,21 @@ export function ConspiratorsPicker({
         )}
 
         {pending && <Starting label={labels.cta_starting_dots} />}
+        {yoloPending && <Starting label={labels.cta_yolo_starting_dots} />}
 
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-[13px] italic text-ink-soft dark:text-ink-soft-dark max-w-xl leading-relaxed">
-            {labels.walkthrough_caption}
-          </p>
+        <p className="text-[13px] italic text-ink-soft dark:text-ink-soft-dark max-w-xl leading-relaxed mb-4">
+          {labels.walkthrough_caption}
+        </p>
+
+        {/* Two CTAs in the same row: primary filled, secondary outlined.
+            DOM order is primary-first so on mobile (flex-col) the primary
+            stacks on top, and on desktop (flex-row) the primary sits on the
+            left of the right-aligned pair. Focus order matches DOM order. */}
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch sm:justify-end">
           <button
             type="button"
             onClick={start}
-            disabled={!ready || pending}
+            disabled={!ready || anyPending}
             className="self-stretch sm:self-auto bg-ink text-paper dark:bg-ink-dark dark:text-paper-dark px-5 py-3 sm:px-6 sm:py-3.5 font-display inline-flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity hover:opacity-90"
             style={{ fontSize: 17, fontWeight: 600, letterSpacing: "-0.01em" }}
           >
@@ -205,6 +254,15 @@ export function ConspiratorsPicker({
             <span className="font-mono opacity-70" style={{ fontSize: 11 }}>
               →
             </span>
+          </button>
+          <button
+            type="button"
+            onClick={startYolo}
+            disabled={!ready || anyPending}
+            className="self-stretch sm:self-auto border border-ink/40 dark:border-ink-dark/40 text-ink-soft dark:text-ink-soft-dark hover:border-ink dark:hover:border-ink-dark hover:text-ink dark:hover:text-ink-dark px-4 py-3 font-display inline-flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            style={{ fontSize: 14, fontWeight: 500 }}
+          >
+            {yoloPending ? labels.cta_yolo_starting : labels.cta_yolo}
           </button>
         </div>
       </div>

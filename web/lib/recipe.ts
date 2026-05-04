@@ -47,6 +47,15 @@ const LABELS_BY_LOCALE: Record<Locale, Record<MoveKey, MoveLabels>> = {
     dismiss:    { title: "Gegenbeweise abwehren",         sub: "Wenn ein Fakt widerspricht, mach ihn zum Teil der Vertuschung.",  tell: "UNFALSIFIZIERBAR" },
     discredit:  { title: "Kritiker:innen diskreditieren", sub: "Weise Menschen ab, die Schwächen deiner Theorie zeigen.",         tell: "AD HOMINEM"     },
   },
+  // Dutch pass-1 (literal) — to be workshopped in pass 2 per spec.
+  // Spec: openspec/changes/multilingual-dutch/specs/dutch-content/spec.md
+  // Picks chosen from the documented candidate sets; final picks land in pass 2.
+  nl: {
+    anomaly:    { title: "Afwijkingen najagen",       sub: "Maak van toeval bewijs voor een geheim plan.",                          tell: "BASISKANS"        },
+    connection: { title: "Verbanden verzinnen",       sub: "Trek lijnen tussen onsamenhangende punten tot ze betekenisvol lijken.", tell: "ZES SCHAKELS"     },
+    dismiss:    { title: "Tegenbewijs wegredeneren",  sub: "Als een feit tegenspreekt, maak het feit deel van de doofpot.",         tell: "ONFALSIFIEERBAAR" },
+    discredit:  { title: "Critici diskwalificeren",   sub: "Schuif mensen opzij die zwaktes in je theorie tonen.",                  tell: "AD HOMINEM"       },
+  },
 };
 
 function buildMoves(locale: Locale): Move[] {
@@ -56,6 +65,7 @@ function buildMoves(locale: Locale): Move[] {
 const MOVES_BY_LOCALE: Record<Locale, Move[]> = {
   en: buildMoves("en"),
   de: buildMoves("de"),
+  nl: buildMoves("nl"),
 };
 
 /** Locale-aware accessor for the four moves. Use this everywhere — never
@@ -137,6 +147,23 @@ export const SECTION_SCHEMA = {
 } as const;
 export type SectionOutput = { paragraph: string; debunk: string };
 
+/** Narrative finale: three-paragraph integrated conspiracy theory built from
+ *  the four per-move paragraphs. Plain prose, conspiracist voice, no debunks. */
+export const NARRATIVE_SCHEMA = {
+  type: "object",
+  additionalProperties: false,
+  required: ["paragraphs"],
+  properties: {
+    paragraphs: {
+      type: "array",
+      items: { type: "string" },
+      description:
+        "Exactly three paragraphs (80–140 words each) weaving the four moves into one continuous conspiracy-theory story. No headings, no bullets, no debunks.",
+    },
+  },
+} as const;
+export type NarrativeOutput = { paragraphs: string[] };
+
 /* ─── Persisted shape on the generations.recipe_content JSONB column ────── */
 
 export type WizardContent = {
@@ -145,6 +172,9 @@ export type WizardContent = {
   conspiracist_intro?: string;
   ideas?: Ideas;
   per_move?: Partial<Record<MoveKey, { idea: string; paragraph: string; debunk: string }>>;
+  /** Three-paragraph integrated theory shown above the per-move blocks on /g/[id].
+   *  Generated once when all four moves are present. Older rows lack this field. */
+  narrative?: { paragraphs: string[]; generated_at: string };
   // Legacy v1-style migrated rows have these instead:
   legacy_text?: string;
   legacy_prompt?: string;

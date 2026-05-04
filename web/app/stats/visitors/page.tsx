@@ -18,6 +18,13 @@ import {
   loadVisitorDeviceSplit,
   loadVisitorCountrySplit,
 } from "@/lib/visitor-stats";
+import {
+  loadClientErrorTotals,
+  loadClientErrorTopMessages,
+  loadClientErrorTopPaths,
+  loadClientErrorRecentSamples,
+  type ClientErrorSample,
+} from "@/lib/client-error-stats";
 
 export const metadata = { title: "Visitors" };
 export const dynamic = "force-dynamic";
@@ -32,6 +39,10 @@ export default async function VisitorsPage() {
     topReferrers,
     deviceSplit,
     countrySplit,
+    errorTotals,
+    errorTopMessages,
+    errorTopPaths,
+    errorSamples,
   ] = await Promise.all([
     loadVisitorTotals(),
     loadVisitorViewsDaily(),
@@ -41,6 +52,10 @@ export default async function VisitorsPage() {
     loadVisitorTopReferrers(10),
     loadVisitorDeviceSplit(),
     loadVisitorCountrySplit(15),
+    loadClientErrorTotals(),
+    loadClientErrorTopMessages(10),
+    loadClientErrorTopPaths(10),
+    loadClientErrorRecentSamples(20),
   ]);
 
   const inception = totals.inception ? totals.inception.slice(0, 10) : null;
@@ -77,6 +92,13 @@ export default async function VisitorsPage() {
             countrySplit={countrySplit}
           />
         )}
+
+        <ClientErrorsPane
+          totals={errorTotals}
+          topMessages={errorTopMessages}
+          topPaths={errorTopPaths}
+          samples={errorSamples}
+        />
 
         <PrivacyNote />
       </article>
@@ -204,6 +226,89 @@ function Body(props: {
         />
       </section>
     </>
+  );
+}
+
+function ClientErrorsPane({
+  totals,
+  topMessages,
+  topPaths,
+  samples,
+}: {
+  totals: Awaited<ReturnType<typeof loadClientErrorTotals>>;
+  topMessages: { value: string; n: number }[];
+  topPaths: { value: string; n: number }[];
+  samples: ClientErrorSample[];
+}) {
+  const empty = totals.errors_total === 0;
+
+  return (
+    <section className="mt-16 border-t border-ink/15 dark:border-ink-dark/15 pt-8">
+      <h2
+        className="font-display text-[clamp(1.5rem,3.5vw,2rem)] leading-[1.05]"
+        style={{ fontWeight: 600, letterSpacing: "-0.02em" }}
+      >
+        Client errors
+      </h2>
+      <p className="mt-2 text-[13.5px] text-ink-soft dark:text-ink-soft-dark">
+        Uncaught React render errors caught by the global / segment error boundaries.
+      </p>
+
+      {empty ? (
+        <p className="mt-6 border-l-2 border-ink/30 dark:border-ink-dark/30 pl-4 py-1 text-[13.5px] text-ink-soft dark:text-ink-soft-dark">
+          <span className="font-mono uppercase text-[10px] tracking-[0.14em]">
+            no client errors captured yet
+          </span>
+          <br />
+          They will appear here when a user hits an uncaught exception.
+        </p>
+      ) : (
+        <>
+          <div className="mt-6 grid grid-cols-3 gap-px bg-ink/15 dark:bg-ink-dark/15 border border-ink/15 dark:border-ink-dark/15">
+            <Tile label="Today" value={totals.errors_today} accent={MOVES[3].color} />
+            <Tile label="Last 7 days" value={totals.errors_7d} accent={MOVES[3].color} />
+            <Tile label="All time" value={totals.errors_total} muted />
+          </div>
+
+          <section className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-x-10 gap-y-10">
+            <TopList
+              title="Top messages"
+              rows={topMessages}
+              accent={MOVES[3].color}
+              emptyHint="No messages yet."
+            />
+            <TopList
+              title="Top paths"
+              rows={topPaths}
+              accent={MOVES[1].color}
+              emptyHint="No paths yet."
+            />
+          </section>
+
+          <section className="mt-10">
+            <h3 className="font-display text-[20px] sm:text-[22px]" style={{ fontWeight: 600 }}>
+              Recent samples
+            </h3>
+            <ol className="mt-3">
+              {samples.map((s, i) => (
+                <li
+                  key={`${s.created_at}-${i}`}
+                  className="py-3 border-t border-ink/10 dark:border-ink-dark/10 first:border-t-0"
+                >
+                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-soft dark:text-ink-soft-dark">
+                    <span>{s.created_at.slice(0, 19).replace("T", " ")}</span>
+                    <span>· {s.locale}</span>
+                    <span className="truncate">· {s.path}</span>
+                    {s.digest ? <span>· {s.digest.slice(0, 16)}</span> : null}
+                  </div>
+                  <p className="mt-1 text-[14px] break-words">{s.message}</p>
+                </li>
+              ))}
+            </ol>
+          </section>
+        </>
+      )}
+    </section>
   );
 }
 

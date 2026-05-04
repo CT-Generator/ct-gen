@@ -1,16 +1,32 @@
 // /imprint — legal notice required under §5 TMG / §18 MStV.
+// English body until German + Dutch jurisdictional originals are authored.
+// Non-en visitors see a localized "translation pending" notice above the body
+// (per spec: openspec/specs/internationalization "Legally-significant page bodies").
 
 import { Masthead } from "@/components/masthead";
 import { Footer } from "@/components/footer";
+import { readLocale, getDict } from "@/lib/i18n";
 
 export const metadata = { title: "Imprint" };
 
-export default function ImprintPage() {
+export default async function ImprintPage() {
+  const locale = await readLocale();
+  const t = getDict(locale).legal;
   return (
     <>
       <Masthead />
 
       <article className="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-14 lg:py-16">
+        {locale !== "en" && (
+          <aside className="mb-8 border border-ink/20 dark:border-ink-dark/20 bg-paper-alt dark:bg-paper-alt-dark p-4 sm:p-5">
+            <p className="font-display text-[15px]" style={{ fontWeight: 600 }}>
+              {t.translation_pending_h}
+            </p>
+            <p className="mt-2 text-[14px] leading-relaxed text-ink-soft dark:text-ink-soft-dark">
+              {t.translation_pending_body}
+            </p>
+          </aside>
+        )}
         <p className="meta">Legal notice · Impressum</p>
         <h1
           className="mt-3 font-display text-[clamp(2rem,5vw,3.25rem)] leading-[1.05]"

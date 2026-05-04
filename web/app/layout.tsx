@@ -4,8 +4,16 @@ import { headers } from "next/headers";
 import { ClassroomMount } from "@/components/classroom-mount";
 import { readSessionHash } from "@/lib/session";
 import { recordPageView } from "@/lib/tracking";
-import { readLocale, getDict } from "@/lib/i18n";
+import { readLocale, getDict, type Locale } from "@/lib/i18n";
 import "./globals.css";
+
+// OG locale codes per supported locale. A `Record<Locale, string>` so that
+// adding a new locale is a typecheck failure until covered here too.
+const OG_LOCALE: Record<Locale, string> = {
+  en: "en_US",
+  de: "de_DE",
+  nl: "nl_NL",
+};
 
 const display = Fraunces({
   subsets: ["latin"],
@@ -43,7 +51,7 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: "Conspiracy Generator",
       title: m.og_title,
       description: m.og_description,
-      locale: locale === "de" ? "de_DE" : "en_US",
+      locale: OG_LOCALE[locale],
     },
     twitter: {
       card: "summary_large_image",

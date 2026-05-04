@@ -26,12 +26,14 @@ type WizardLabels = {
   see_full_theory: string;
   or_regenerate: string;
   writing: string;
+  writing_finale: string;
   writing_too_long: string;
   section_failed: string;
   back: string;
   step_n_of: string;
   skip_to_result: string;
   progress_done: string;
+  move_label: string;
   done_eyebrow: string;
   done_h1: string;
   done_p_a: string;
@@ -60,7 +62,7 @@ type WizardMove = {
   color: string;
 };
 
-type Locale = "en" | "de";
+type Locale = "en" | "de" | "nl";
 
 type Props = {
   shortId: string;
@@ -94,7 +96,7 @@ function moveByKey(moves: WizardMove[], key: MoveKey): WizardMove {
 }
 
 function generationHref(locale: Locale, shortId: string): string {
-  return locale === "de" ? `/de/g/${shortId}` : `/g/${shortId}`;
+  return locale === "en" ? `/g/${shortId}` : `/${locale}/g/${shortId}`;
 }
 
 export function BuildWizard(props: Props) {
@@ -134,7 +136,7 @@ export function BuildWizard(props: Props) {
         moves={props.moves}
         doneLabel={props.labels.progress_done}
         moveLabelPrefix={moveByKey.toString()}
-        moveLabelByLocale={props.locale === "de" ? "Schritt" : "Move"}
+        moveLabelByLocale={props.labels.move_label}
       />
 
       {MOVE_KEYS_IN_ORDER.map((k) =>
@@ -147,7 +149,7 @@ export function BuildWizard(props: Props) {
             ideas={props.ideas[k]}
             initial={perMove[k] ?? null}
             labels={props.labels}
-            moveNumberLabel={props.locale === "de" ? "Schritt" : "Move"}
+            moveNumberLabel={props.labels.move_label}
             onResolved={(state) => handleSection(k, state)}
             onNext={() => handleDoneAdvance(k)}
           />
@@ -422,7 +424,7 @@ function MoveScreen({
 
       {pending && !section && (
         <div className="mt-8 text-[14px] italic text-ink-soft dark:text-ink-soft-dark">
-          {labels.writing}
+          {move.key === "discredit" ? labels.writing_finale : labels.writing}
         </div>
       )}
     </div>

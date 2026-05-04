@@ -5,7 +5,7 @@
 // Spec: openspec/changes/multilingual-german/specs/internationalization/spec.md
 
 import { headers } from "next/headers";
-import { readLocale, getDict, localizedHref, type Locale } from "@/lib/i18n";
+import { readLocale, getDict, localizedHref, VISIBLE_LOCALES, type Locale } from "@/lib/i18n";
 import { MastheadClient } from "./masthead-client";
 
 export async function Masthead() {
@@ -22,10 +22,22 @@ export async function Masthead() {
     { label: t.nav_build, href: localizedHref("/", locale) },
   ];
 
-  // For the locale toggle: build the href that points at the same logical page
-  // in the OTHER locale.
-  const otherLocale: Locale = locale === "de" ? "en" : "de";
-  const toggleHref = localizedHref(path, otherLocale);
+  // For the locale toggle: one entry per visible locale with its target href.
+  // The active locale's pill links to the current page (a no-op click); other
+  // pills link to the equivalent path under that locale's prefix.
+  // Defensive union: always include the active locale, even if it's not in
+  // VISIBLE_LOCALES (e.g., a launch-gated locale a visitor reached directly).
+  // Without this, the toggle would render no current-state indicator and both
+  // shown pills would point AWAY from the visitor's current URL.
+  const visibleSet = VISIBLE_LOCALES.includes(locale)
+    ? VISIBLE_LOCALES
+    : ([...VISIBLE_LOCALES, locale] as readonly Locale[]);
+  const localeOptions = visibleSet.map((l) => ({
+    locale: l,
+    label: l.toUpperCase(),
+    href: localizedHref(path, l),
+    active: l === locale,
+  }));
 
   return (
     <MastheadClient
@@ -34,9 +46,14 @@ export async function Masthead() {
       activeIndex={3}
       openLabel={t.open_nav}
       toggleAria={t.locale_toggle_aria}
-      currentLocale={locale}
-      otherLocale={otherLocale}
-      toggleHref={toggleHref}
+      localeOptions={localeOptions}
     />
   );
 }
+
+export type LocaleOption = {
+  locale: Locale;
+  label: string;
+  href: string;
+  active: boolean;
+};

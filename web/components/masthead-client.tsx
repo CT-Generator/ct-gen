@@ -10,7 +10,13 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { cn } from "@/lib/utils";
 
 type NavItem = { label: string; href: string };
-type Locale = "en" | "de";
+type Locale = "en" | "de" | "nl";
+type LocaleOption = {
+  locale: Locale;
+  label: string;
+  href: string;
+  active: boolean;
+};
 
 export function MastheadClient({
   home,
@@ -18,18 +24,14 @@ export function MastheadClient({
   activeIndex,
   openLabel,
   toggleAria,
-  currentLocale,
-  otherLocale,
-  toggleHref,
+  localeOptions,
 }: {
   home: string;
   nav: NavItem[];
   activeIndex: number;
   openLabel: string;
   toggleAria: string;
-  currentLocale: Locale;
-  otherLocale: Locale;
-  toggleHref: string;
+  localeOptions: LocaleOption[];
 }) {
   const [open, setOpen] = useState(false);
 
@@ -62,24 +64,13 @@ export function MastheadClient({
               {item.label}
             </Link>
           ))}
-          <LocaleToggle
-            currentLocale={currentLocale}
-            otherLocale={otherLocale}
-            toggleHref={toggleHref}
-            ariaLabel={toggleAria}
-          />
+          <LocaleToggle options={localeOptions} ariaLabel={toggleAria} />
           <ThemeToggle />
         </nav>
 
         {/* Mobile theme + nav toggle */}
         <div className="md:hidden flex items-center gap-1 -mr-2">
-          <LocaleToggle
-            currentLocale={currentLocale}
-            otherLocale={otherLocale}
-            toggleHref={toggleHref}
-            ariaLabel={toggleAria}
-            compact
-          />
+          <LocaleToggle options={localeOptions} ariaLabel={toggleAria} compact />
           <ThemeToggle />
           <button
             type="button"
@@ -131,55 +122,50 @@ export function MastheadClient({
 }
 
 function LocaleToggle({
-  currentLocale,
-  otherLocale,
-  toggleHref,
+  options,
   ariaLabel,
   compact = false,
 }: {
-  currentLocale: Locale;
-  otherLocale: Locale;
-  toggleHref: string;
+  options: LocaleOption[];
   ariaLabel: string;
   compact?: boolean;
 }) {
-  const onClick = () => {
+  const writeCookie = (target: Locale) => {
     // Persist the new locale via the cookie so the next request honors it
     // even before the server-side cookie write (mirroring what middleware does).
     const oneYear = 60 * 60 * 24 * 365;
-    document.cookie = `cgen_lang=${otherLocale}; path=/; max-age=${oneYear}; SameSite=Lax${
+    document.cookie = `cgen_lang=${target}; path=/; max-age=${oneYear}; SameSite=Lax${
       window.location.protocol === "https:" ? "; Secure" : ""
     }`;
   };
   return (
-    <Link
-      href={toggleHref}
-      onClick={onClick}
+    <div
+      role="group"
       aria-label={ariaLabel}
       className={cn(
         "font-mono uppercase tracking-[0.14em] text-[10px] flex items-center gap-1 px-1.5 py-1",
         compact && "px-1",
       )}
     >
-      <span
-        className={cn(
-          currentLocale === "en"
-            ? "text-ink dark:text-ink-dark border-b border-ink dark:border-ink-dark pb-0.5"
-            : "text-ink-soft dark:text-ink-soft-dark",
-        )}
-      >
-        EN
-      </span>
-      <span aria-hidden className="text-ink-soft dark:text-ink-soft-dark">|</span>
-      <span
-        className={cn(
-          currentLocale === "de"
-            ? "text-ink dark:text-ink-dark border-b border-ink dark:border-ink-dark pb-0.5"
-            : "text-ink-soft dark:text-ink-soft-dark",
-        )}
-      >
-        DE
-      </span>
-    </Link>
+      {options.map((opt, i) => (
+        <span key={opt.locale} className="flex items-center gap-1">
+          {i > 0 ? (
+            <span aria-hidden className="text-ink-soft dark:text-ink-soft-dark">|</span>
+          ) : null}
+          <Link
+            href={opt.href}
+            onClick={() => writeCookie(opt.locale)}
+            aria-current={opt.active ? "true" : undefined}
+            className={cn(
+              opt.active
+                ? "text-ink dark:text-ink-dark border-b border-ink dark:border-ink-dark pb-0.5"
+                : "text-ink-soft dark:text-ink-soft-dark",
+            )}
+          >
+            {opt.label}
+          </Link>
+        </span>
+      ))}
+    </div>
   );
 }

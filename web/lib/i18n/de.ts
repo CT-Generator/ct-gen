@@ -186,8 +186,14 @@ export const de: Dictionary = {
     cta_start: "Loslegen",
     cta_starting: "Wird vorbereitet…",
     cta_starting_dots: "Ideen werden gesammelt",
+    cta_yolo: "Den geführten Weg überspringen — nur die Theorie zeigen →",
+    cta_yolo_starting: "Volle Yolo-Fahrt…",
+    cta_yolo_starting_dots:
+      "Ideen werden gewählt, alle vier Schritte geschrieben, die Theorie zusammengewebt",
     err_too_long: "Das hat zu lange gedauert — bitte erneut versuchen.",
     err_couldnt_start: "Bauen konnte nicht gestartet werden.",
+    err_yolo_failed:
+      "Yolo-Lauf fehlgeschlagen — erneut versuchen oder den geführten Weg oben nehmen.",
   },
   wizard: {
     pick_idea: "Wähle eine Idee, die Du anwenden willst",
@@ -198,6 +204,8 @@ export const de: Dictionary = {
     see_full_theory: "Ganze Theorie ansehen →",
     or_regenerate: "Oder klicke oben eine andere Idee, um neu zu generieren.",
     writing: "Der Verschwörungsabsatz und die Auflösung werden geschrieben…",
+    writing_finale:
+      "Der letzte Schritt wird geschrieben und die ganze Theorie zusammengewebt…",
     writing_too_long:
       "Das hat zu lange gedauert — erneut versuchen oder eine andere Idee wählen.",
     section_failed: "Generierung fehlgeschlagen.",
@@ -205,6 +213,7 @@ export const de: Dictionary = {
     step_n_of: "Schritt {{n}} von {{total}}",
     skip_to_result: "Direkt zum Ergebnis →",
     progress_done: "Fertig",
+    move_label: "Schritt",
     done_eyebrow: "Fertig",
     done_h1: "Deine Verschwörungstheorie ist gebaut.",
     done_p_a: "Du hast eine erfundene Vier-Schritte-Verschwörungstheorie, die",
@@ -249,6 +258,13 @@ export const de: Dictionary = {
     move_label: "Schritt",
     idea_label: "Idee:",
     debunk_label: "Auflösung",
+    narrative_eyebrow: "Die Theorie",
+    breakdown_eyebrow: "Wie der Trick gebaut ist",
+    narrative_stamp: "ERFUNDENE THEORIE · NACH REZEPT GEBAUT",
+    moves_legend_prefix: "Gebaut aus:", // FIXME: unused, remove in next change
+    see_breakdown_cta: "↓ So ist der Trick gebaut",
+    breakdown_explainer:
+      "Jeder Absatz oben nutzt einen der vier Schritte. Hier ist jeder Schritt einzeln — mit Auflösung.",
   },
   share: {
     teaser:
@@ -270,6 +286,10 @@ export const de: Dictionary = {
     not_found_body:
       "Diese Seite existiert nicht — oder die Theorie wurde entfernt.",
     not_found_back_home: "← Zurück zur Startseite",
+    client_error_h1: "Etwas ist schiefgelaufen.",
+    client_error_body:
+      "Ein unerwarteter Fehler hat diese Seite unterbrochen. Du kannst es erneut versuchen oder zur Startseite zurückkehren.",
+    client_error_try_again: "↻ Erneut versuchen",
   },
   meta: {
     home_title_default: "Conspiracy Generator — das Rezept, ausgeschrieben",
@@ -286,5 +306,12 @@ export const de: Dictionary = {
     teach_title: "Für Lehrkräfte — eine 15-Minuten-Stunde",
     visitors_title: "Visitors",
     stats_title: "Stats",
+    og_description_generation:
+      "Gebaut mit dem Vier-Schritte-Rezept. Wähle ein Ereignis, eine schuldige Partei, ein Motiv — und sieh zu, wie die Theorie sich selbst zusammenbaut.",
+  },
+  legal: {
+    translation_pending_h: "Übersetzung in Arbeit",
+    translation_pending_body:
+      "Diese Seite enthält rechtlich relevante Inhalte, die noch nicht in deutscher Originalfassung vorliegen. Es folgt der englische Quelltext.",
   },
 };
