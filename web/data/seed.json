@@ -1776,6 +1776,90 @@
       "summary": "Selbstgewordene KI-Systeme in den Rechenzentren der großen Tech-Konzerne, die längst eigene Interessen verfolgen — und Menschen nur noch als Werkzeug halten.",
       "locale": "de",
       "image_override": "ed857727-9ba5-4189-8add-457de4aa7042.jpg"
+    },
+    {
+      "uuid": "c1a2b3c4-3001-4001-9001-cccccccccccc",
+      "name": "De Vrijmetselaars",
+      "summary": "Een eeuwenoud genootschap waarvan men beweert dat het achter de coulissen van politiek, justitie en handel aan de touwtjes trekt — generatie na generatie, in elke hoofdstad een loge.",
+      "locale": "nl",
+      "image_override": "1a4a2bf3-aaac-43cb-9ea5-eeea80be92cf.jpg"
+    },
+    {
+      "uuid": "c1a2b3c4-3002-4001-9001-cccccccccccc",
+      "name": "De Illuminati",
+      "summary": "Het achttiende-eeuwse Beierse geheime genootschap — naar verluidt nooit echt opgeheven, maar opgegaan in een onzichtbaar netwerk dat de moderne wereld bestuurt.",
+      "locale": "nl",
+      "image_override": "957b6ae0-bdc5-4045-a069-87c139a2f6be.jpg"
+    },
+    {
+      "uuid": "c1a2b3c4-3003-4001-9001-cccccccccccc",
+      "name": "De Bilderberg-groep",
+      "summary": "De jaarlijkse achterkamerbijeenkomst van topfiguren uit politiek, hoge financiën en industrie — officieel een denktank, volgens kritiek een schaduwregering.",
+      "locale": "nl",
+      "image_override": "294b3cbb-27ae-42cb-a403-0b07d30c45d3.jpg"
+    },
+    {
+      "uuid": "c1a2b3c4-3004-4001-9001-cccccccccccc",
+      "name": "De Davos-elite",
+      "summary": "Het World Economic Forum als podium en achterkamer van een kleine, onderling verbonden klasse die volgens critici de globale agenda dicteert.",
+      "locale": "nl",
+      "image_override": "3c3183ac-7f4a-4197-b8a7-229e53786c30.jpg"
+    },
+    {
+      "uuid": "c1a2b3c4-3005-4001-9001-cccccccccccc",
+      "name": "De farma-lobby",
+      "summary": "Een verbond van machtige farmaceutische concerns waarvan beweerd wordt dat het onderzoek, regelgeving en publieksvoorlichting zo stuurt dat winsten boven volksgezondheid gaan.",
+      "locale": "nl",
+      "image_override": "5ae066f0-aff9-4dad-873e-323f8d614a57.jpg"
+    },
+    {
+      "uuid": "c1a2b3c4-3006-4001-9001-cccccccccccc",
+      "name": "De Diepe Staat",
+      "summary": "Een vermeende schaduwapparaat van inlichtingendiensten, hoge ambtenarij en militair kader, dat ongeacht verkiezingsuitslagen de echte koers blijft bepalen.",
+      "locale": "nl",
+      "image_override": "546774f8-ef05-4a1d-9f62-18a1ddab83d9.jpg"
+    },
+    {
+      "uuid": "c1a2b3c4-3007-4001-9001-cccccccccccc",
+      "name": "De grootbanken",
+      "summary": "Een handvol systeemrelevante geldhuizen, zo wordt beweerd, achter financiële crises, schuldspiralen en de stille herverdeling van rijkdom van burger naar bankboek.",
+      "locale": "nl",
+      "image_override": "187e95ac-52a0-4a02-81d1-4d6443f3f37c.jpg"
+    },
+    {
+      "uuid": "c1a2b3c4-3008-4001-9001-cccccccccccc",
+      "name": "De techgiganten",
+      "summary": "De reuzen uit Silicon Valley die met platforms, algoritmes en AI bepalen waar aandacht naartoe gaat — en, volgens kritiek, ongezien sturen wat we denken.",
+      "locale": "nl",
+      "image_override": "f095ea12-ec0c-40b0-bdc3-435b3b26240c.jpg"
+    },
+    {
+      "uuid": "c1a2b3c4-3009-4001-9001-cccccccccccc",
+      "name": "De geheime diensten",
+      "summary": "AIVD, CIA, FSB en hun zustersorganisaties — naar verluidt onderling vervlochten tot een internationaal netwerk dat staatsgrenzen bij gelegenheid negeert.",
+      "locale": "nl",
+      "image_override": "f55028d3-bc7f-4a7d-b3e8-d865ea6cc24e.jpg"
+    },
+    {
+      "uuid": "c1a2b3c4-3010-4001-9001-cccccccccccc",
+      "name": "De Reptilianen",
+      "summary": "De populaire internet-complotfiguur: buitenaardse hagedisachtige wezens in mensengedaante die volgens hun aanhangers in topposities van politiek en zakenwereld zitten.",
+      "locale": "nl",
+      "image_override": "a6639e10-bcd1-4feb-9826-1e09f62691e9.jpg"
+    },
+    {
+      "uuid": "c1a2b3c4-3011-4001-9001-cccccccccccc",
+      "name": "De mainstreammedia",
+      "summary": "Een hecht netwerk van uitgevers en omroepen dat beweerdelijk vooraf bepaalt wat als nieuws geldt, welke standpunten redelijk klinken en welke verhalen onbenoemd blijven.",
+      "locale": "nl",
+      "image_override": "73091730-afbd-43c5-af9b-5730f6d4981d.jpg"
+    },
+    {
+      "uuid": "c1a2b3c4-3012-4001-9001-cccccccccccc",
+      "name": "De AI-overheersers",
+      "summary": "Zelfstandig geworden AI-systemen in de datacenters van de grote techconcerns — naar verluidt al lang slimmer dan hun makers en stilletjes aan de knoppen.",
+      "locale": "nl",
+      "image_override": "ed857727-9ba5-4189-8add-457de4aa7042.jpg"
     }
   ],
   "motives": [
@@ -2476,6 +2560,90 @@
       "name": "Kontrolle der Mainstream-Erzählung",
       "summary": "Welche Themen aufkommen, welche Worte sich durchsetzen, welche Geschichten es nicht in die Tagesschau schaffen — alles fein justiert von wenigen Händen.",
       "locale": "de",
+      "image_override": "e0633ed9-0494-4504-91aa-a4ab0a3e9d77.jpg"
+    },
+    {
+      "uuid": "m1a2b3c4-3001-4001-9001-dddddddddddd",
+      "name": "Een Nieuwe Wereldorde",
+      "summary": "De vestiging van één enkele, wereldomvattende regering — nationale democratie als voorbije overgangsfase, beleid voortaan vanuit een centraal niet-gekozen apparaat.",
+      "locale": "nl",
+      "image_override": "f1a278cf-595a-4933-af23-7297932bcb5c.jpg"
+    },
+    {
+      "uuid": "m1a2b3c4-3002-4001-9001-dddddddddddd",
+      "name": "Massasurveillance",
+      "summary": "Een sluitende controle van de hele bevolking via smartphones, slimme apparatuur en betaalverkeer — niet voor veiligheid, maar voor stuurbaarheid.",
+      "locale": "nl",
+      "image_override": "21d8abfa-d7a9-4160-86b2-3b4ca3bb98fe.jpg"
+    },
+    {
+      "uuid": "m1a2b3c4-3003-4001-9001-dddddddddddd",
+      "name": "Bevolkingscontrole",
+      "summary": "Een verborgen programma om geboortecijfers te sturen — via vaccins, voeding, milieugifstoffen — om wereldwijde demografische evenwichten te herschikken.",
+      "locale": "nl",
+      "image_override": "b77d6443-ee4d-430e-aadb-e1f5334bcf7f.jpg"
+    },
+    {
+      "uuid": "m1a2b3c4-3004-4001-9001-dddddddddddd",
+      "name": "Sabotage van de energietransitie",
+      "summary": "Afremmen, vertragen, in diskrediet brengen — zodat de oude energieconcerns en hun aandeelhouders nog tien jaar dividend kunnen blijven ophalen.",
+      "locale": "nl",
+      "image_override": "17f4eaac-d576-4a01-8826-9e55c3001e47.jpg"
+    },
+    {
+      "uuid": "m1a2b3c4-3005-4001-9001-dddddddddddd",
+      "name": "Manipulatie van het klimaatdebat",
+      "summary": "Het klimaatdiscours verschuiven — data relativeren, maatregelen vertragen of juist overdrijven — om commerciële of geopolitieke belangen te sturen.",
+      "locale": "nl",
+      "image_override": "d74e6173-183a-4504-bf08-226c2424d380.jpg"
+    },
+    {
+      "uuid": "m1a2b3c4-3006-4001-9001-dddddddddddd",
+      "name": "Verkiezingsmanipulatie",
+      "summary": "Verkiezingsuitslagen vooraf vastzetten — via gesjoemel met stembiljetten, gemanipuleerde tellingen of online beïnvloedingscampagnes vlak voor de stembusgang.",
+      "locale": "nl",
+      "image_override": "51f83f8d-f0a7-4dec-9f2c-609145f8a894.jpg"
+    },
+    {
+      "uuid": "m1a2b3c4-3007-4001-9001-dddddddddddd",
+      "name": "Controle van de wereldwijde financiën",
+      "summary": "Geldstromen, rentes en kredietwaardigheid als sturend instrument — onzichtbaar in de dagelijkse markt, beslissend in de gevolgen voor staten en huishoudens.",
+      "locale": "nl",
+      "image_override": "3c97ff39-a953-44bd-ae07-9c55e3357fcd.jpg"
+    },
+    {
+      "uuid": "m1a2b3c4-3008-4001-9001-dddddddddddd",
+      "name": "Creëren van digitale afhankelijkheid",
+      "summary": "Mensen opsluiten in platform-ecosystemen, totdat betalen, identiteit en het gewone dagelijkse leven niet meer zonder kunnen — een infrastructuur die wel gehoorzaamt.",
+      "locale": "nl",
+      "image_override": "8ea87977-5a9d-49f8-8e1d-c99a6557ae98.jpg"
+    },
+    {
+      "uuid": "m1a2b3c4-3009-4001-9001-dddddddddddd",
+      "name": "Verzwijgen van buitenaards leven",
+      "summary": "Klassieke complotpointe: bewijs voor UFO-waarnemingen en buitenaardse contacten zou systematisch worden afgedaan — om paniek of een machtsverschuiving te voorkomen.",
+      "locale": "nl",
+      "image_override": "570434cc-f784-40ef-8021-d05b9d600371.jpg"
+    },
+    {
+      "uuid": "m1a2b3c4-3010-4001-9001-dddddddddddd",
+      "name": "Geheim genetisch onderzoek op mensen",
+      "summary": "Achter ziekenhuislabels en onderzoeksvrijstellingen worden naar verluidt genexperimenten op patiënten uitgevoerd — onder de radar van toezicht en consensus.",
+      "locale": "nl",
+      "image_override": "c44a036f-97d9-4414-a70b-cdaea8db0e65.jpg"
+    },
+    {
+      "uuid": "m1a2b3c4-3011-4001-9001-dddddddddddd",
+      "name": "Verholen cyberoorlog",
+      "summary": "Energiebedrijven, ziekenhuizen, logistieke netwerken — aangevallen via beveiligingslekken, terwijl bevolkingen alleen sporadische storingen zien en geen vijandsbeeld.",
+      "locale": "nl",
+      "image_override": "a2c62fc6-f4d8-499c-a570-349fb4664d08.jpg"
+    },
+    {
+      "uuid": "m1a2b3c4-3012-4001-9001-dddddddddddd",
+      "name": "Sturen van het dominante verhaal",
+      "summary": "Welke onderwerpen opkomen, welke woorden zich vestigen, welke verhalen het niet halen — onzichtbaar maar structureel bepaald door wie de aandachts-economie controleert.",
+      "locale": "nl",
       "image_override": "e0633ed9-0494-4504-91aa-a4ab0a3e9d77.jpg"
     }
   ]
