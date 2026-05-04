@@ -166,6 +166,10 @@ export type Dictionary = {
     back: string;
     step_n_of: string;
     skip_to_result: string;
+    /** Loading state shown while the wizard's skip-to-result button POSTs to /api/build/[id]/yolo. */
+    skip_to_result_loading_h: string;
+    skip_to_result_loading_dots: string;
+    skip_to_result_failed: string;
     progress_done: string;
     /** Singular noun used in the wizard progress bar and per-move screen header
      *  (e.g. "Move 01" / "Schritt 01" / "Stap 01"). */
@@ -449,6 +453,9 @@ export const en: Dictionary = {
     back: "← Back",
     step_n_of: "Step {{n}} of {{total}}",
     skip_to_result: "Skip to result →",
+    skip_to_result_loading_h: "Filling in the rest…",
+    skip_to_result_loading_dots: "Picking ideas, writing the missing moves, stitching the theory",
+    skip_to_result_failed: "Couldn't fill in the rest — try again.",
     progress_done: "Done",
     move_label: "Move",
     done_eyebrow: "Done",

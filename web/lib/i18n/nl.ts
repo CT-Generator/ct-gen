@@ -224,6 +224,10 @@ export const nl: Dictionary = {
     back: "← Terug",
     step_n_of: "Stap {{n}} van {{total}}",
     skip_to_result: "Direct naar het resultaat →",
+    skip_to_result_loading_h: "De rest wordt gevuld…", // FIXME: pass 2
+    skip_to_result_loading_dots:
+      "Ideeën kiezen, ontbrekende stappen schrijven, theorie aaneenvoegen", // FIXME: pass 2
+    skip_to_result_failed: "Kon de rest niet aanvullen — probeer het opnieuw.", // FIXME: pass 2
     progress_done: "Klaar",
     move_label: "Stap", // FIXME: pass 2
     done_eyebrow: "Klaar",

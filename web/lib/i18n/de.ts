@@ -212,6 +212,10 @@ export const de: Dictionary = {
     back: "← Zurück",
     step_n_of: "Schritt {{n}} von {{total}}",
     skip_to_result: "Direkt zum Ergebnis →",
+    skip_to_result_loading_h: "Der Rest wird gefüllt…",
+    skip_to_result_loading_dots:
+      "Ideen werden gewählt, fehlende Schritte geschrieben, die Theorie zusammengewebt",
+    skip_to_result_failed: "Der Rest konnte nicht ergänzt werden — bitte erneut versuchen.",
     progress_done: "Fertig",
     move_label: "Schritt",
     done_eyebrow: "Fertig",

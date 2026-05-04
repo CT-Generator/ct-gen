@@ -7,9 +7,8 @@
 
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { type MoveKey, type EventIntro, type Ideas } from "@/lib/recipe";
 import { MoveGlyph } from "@/components/move-glyph";
 
@@ -32,6 +31,9 @@ type WizardLabels = {
   back: string;
   step_n_of: string;
   skip_to_result: string;
+  skip_to_result_loading_h: string;
+  skip_to_result_loading_dots: string;
+  skip_to_result_failed: string;
   progress_done: string;
   move_label: string;
   done_eyebrow: string;
@@ -110,6 +112,8 @@ export function BuildWizard(props: Props) {
     }
     return "done";
   });
+  const [skipPending, startSkipTransition] = useTransition();
+  const [skipError, setSkipError] = useState<string | null>(null);
 
   const screenIdx = SCREENS.indexOf(screen);
   const blurbMap = buildBlurbMap(props.blurb);
@@ -127,6 +131,33 @@ export function BuildWizard(props: Props) {
     const idx = MOVE_KEYS_IN_ORDER.indexOf(currentMove);
     const next = MOVE_KEYS_IN_ORDER[idx + 1];
     go(next ?? "done");
+  }
+
+  // Skip-to-result = yolo-from-here. POSTs to /api/build/<id>/yolo, which
+  // generates only the missing moves (preserving the user's earlier choices)
+  // and stitches the narrative. Idempotent if all four moves are complete.
+  function handleSkipToResult() {
+    if (skipPending) return;
+    setSkipError(null);
+    startSkipTransition(async () => {
+      try {
+        const ctrl = new AbortController();
+        const t = setTimeout(() => ctrl.abort(), 90_000);
+        const res = await fetch(`/api/build/${props.shortId}/yolo`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          signal: ctrl.signal,
+        });
+        clearTimeout(t);
+        if (!res.ok) {
+          const payload = (await res.json().catch(() => ({}))) as { error?: string };
+          throw new Error(payload.error ?? `Skip failed (${res.status})`);
+        }
+        router.push(generationHref(props.locale, props.shortId));
+      } catch {
+        setSkipError(props.labels.skip_to_result_failed);
+      }
+    });
   }
 
   return (
@@ -167,11 +198,28 @@ export function BuildWizard(props: Props) {
         />
       )}
 
+      {/* Skip-pending loading region. Renders inline above the bottom nav so
+          the visitor sees the system is working without a page change. */}
+      {skipPending && (
+        <div className="mt-10 rule-h-soft pt-5">
+          <p className="font-display text-[16px] sm:text-[17px]" style={{ fontWeight: 600 }}>
+            {props.labels.skip_to_result_loading_h}
+          </p>
+          <SkipDots label={props.labels.skip_to_result_loading_dots} />
+        </div>
+      )}
+
+      {skipError && (
+        <p className="mt-6 text-[13px] text-[oklch(56%_0.14_28)]" role="alert">
+          {skipError}
+        </p>
+      )}
+
       {/* Stepper-style nav between screens */}
       <nav className="mt-12 rule-h-soft pt-5 flex items-center justify-between text-[12px] text-ink-soft dark:text-ink-soft-dark">
         <button
           type="button"
-          disabled={screenIdx <= 0}
+          disabled={screenIdx <= 0 || skipPending}
           onClick={() => go(SCREENS[screenIdx - 1]!)}
           className="font-mono uppercase tracking-meta-tight px-2 py-1 disabled:opacity-30 hover:text-ink dark:hover:text-ink-dark"
         >
@@ -182,12 +230,14 @@ export function BuildWizard(props: Props) {
             .replace("{{n}}", String(Math.min(screenIdx + 1, SCREENS.length)))
             .replace("{{total}}", String(SCREENS.length))}
         </span>
-        <Link
-          href={generationHref(props.locale, props.shortId)}
-          className="font-mono uppercase tracking-meta-tight px-2 py-1 hover:text-ink dark:hover:text-ink-dark"
+        <button
+          type="button"
+          onClick={handleSkipToResult}
+          disabled={skipPending}
+          className="font-mono uppercase tracking-meta-tight px-2 py-1 hover:text-ink dark:hover:text-ink-dark disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {props.labels.skip_to_result}
-        </Link>
+        </button>
       </nav>
     </article>
   );
@@ -479,5 +529,21 @@ function DoneScreen({
         {labels.done_cta_read}
       </button>
     </div>
+  );
+}
+
+/* ─── Skip-to-result dotted-progress sub-line ─── */
+
+function SkipDots({ label }: { label: string }) {
+  const [dots, setDots] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setDots((d) => (d + 1) % 4), 400);
+    return () => clearInterval(t);
+  }, []);
+  return (
+    <p className="mt-2 text-[13px] text-ink-soft dark:text-ink-soft-dark">
+      {label}
+      {".".repeat(dots)}
+    </p>
   );
 }
