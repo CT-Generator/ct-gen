@@ -147,8 +147,16 @@ export const SECTION_SCHEMA = {
 } as const;
 export type SectionOutput = { paragraph: string; debunk: string };
 
-/** Narrative finale: three-paragraph integrated conspiracy theory built from
- *  the four per-move paragraphs. Plain prose, conspiracist voice, no debunks. */
+/** Narrative finale: four-paragraph integrated conspiracy theory built from
+ *  the four per-move paragraphs. Paragraph 1 is a neutral news-event framing
+ *  (50–80 words) that names the actual event and ends on a hook into the
+ *  reframing. Paragraphs 2–4 are the conspiracy theory itself (80–140 words
+ *  each), in conspiracist voice, weaving the four moves into one continuous
+ *  story. No headings, no bullets, no debunks.
+ *
+ *  Persisted rows from before this shape change have `paragraphs.length === 3`
+ *  (three conspiracy paragraphs, no news framing). The reader on /g/[id] maps
+ *  paragraphs[] directly to render blocks, so both shapes render correctly. */
 export const NARRATIVE_SCHEMA = {
   type: "object",
   additionalProperties: false,
@@ -158,7 +166,7 @@ export const NARRATIVE_SCHEMA = {
       type: "array",
       items: { type: "string" },
       description:
-        "Exactly three paragraphs (80–140 words each) weaving the four moves into one continuous conspiracy-theory story. No headings, no bullets, no debunks.",
+        "Exactly four paragraphs. Paragraph 1: a brief news-event framing (50–80 words) in neutral journalistic register that names the actual news event and ends on a hook into the conspiracy reframing. Paragraphs 2–4: the conspiracy theory in conspiracist voice (80–140 words each), weaving the four moves into one continuous story. No headings, no bullets, no debunks.",
     },
   },
 } as const;

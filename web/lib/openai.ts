@@ -85,36 +85,45 @@ const HARD_CONSTRAINTS_BY_LOCALE: Record<Locale, string> = {
 
 // ── Per-move briefings + tells, per-locale ───────────────────────────────
 
+// All four briefings instruct the model to write AS the conspiracist (assertive,
+// declarative voice), not ABOUT the move. The `discredit` briefing is the
+// highest-risk locus for voice leak — historical wording ("Suggest that critics
+// are gullible…") nudged the model into hypothetical / conditional voice
+// ("Imagine that critics are paid stooges"). The rewritten briefing names and
+// bans the offending verbs and includes a short positive exemplar of the target
+// voice. The other three briefings are audited for the same risk.
+//
+// Spec: openspec/changes/yolo-narrative-polish/specs/theory-generation/spec.md
 const MOVE_BRIEFINGS_BY_LOCALE: Record<Locale, Record<MoveKey, string>> = {
   en: {
     anomaly:
-      "Hunt anomalies. Take an ordinary fact about the event and frame it as suspicious. Treat coincidence as signal. End on a question the reader can't answer.",
+      "Hunt anomalies. Take an ordinary fact about the event and present it as suspicious. Treat coincidence as signal. Write as the believer: state the anomaly as a fact already known, not as a hypothesis to be entertained. End on a question the reader can't answer.",
     connection:
-      "Fabricate connections. Link the culprit to the event through a chain of weakly-related entities. Make the chain sound load-bearing.",
+      "Fabricate connections. Link the culprit to the event through a chain of weakly-related entities. Write as the believer: state each link as established, not speculative. Make the chain sound load-bearing.",
     dismiss:
-      "Dismiss counter-evidence. Take an obvious mainstream rebuttal and reframe it as further proof of the cover-up. Make the theory unfalsifiable.",
+      "Dismiss counter-evidence. Take an obvious mainstream rebuttal and reframe it as further proof of the cover-up. Write as the believer: the rebuttal IS proof, full stop. Make the theory unfalsifiable.",
     discredit:
-      "Discredit the critics. Suggest that anyone disputing the theory is gullible, manipulated, or paid by the conspirators.",
+      'Discredit the critics. Write AS the conspiracist — make the claim, do not describe it. State that critics are gullible, manipulated, or paid by the conspirators as a fact already known to the believer. BANNED OPENINGS AND HEDGES in the claim-bearing sentences: "imagine that…", "suppose that…", "picture a world where…", "would be", "could be", "might be", "is allegedly", "supposedly". Target voice exemplar: "Critics? Paid stooges, plain and simple. Every loud objection comes from someone on the cabal\'s payroll — and the ones who don\'t take money take favors instead."',
   },
   de: {
     anomaly:
-      "Auffälligkeiten suchen. Nimm einen gewöhnlichen Fakt über das Ereignis und rahme ihn als verdächtig. Behandle Zufall als Signal. Schließe mit einer Frage, die die Leserin nicht beantworten kann.",
+      "Auffälligkeiten suchen. Nimm einen gewöhnlichen Fakt über das Ereignis und stelle ihn als verdächtig dar. Behandle Zufall als Signal. Schreibe als Gläubige: stelle die Auffälligkeit als bereits bekannten Fakt dar, nicht als zu prüfende Hypothese. Schließe mit einer Frage, die die Leserin nicht beantworten kann.",
     connection:
-      "Verbindungen erfinden. Verknüpfe die schuldige Partei über eine Kette schwach verwandter Akteur:innen mit dem Ereignis. Lass die Kette tragfähig klingen.",
+      "Verbindungen erfinden. Verknüpfe die schuldige Partei über eine Kette schwach verwandter Akteur:innen mit dem Ereignis. Schreibe als Gläubige: stelle jede Verbindung als feststehend dar, nicht als spekulativ. Lass die Kette tragfähig klingen.",
     dismiss:
-      "Gegenbeweise abwehren. Nimm eine offensichtliche, etablierte Widerlegung und rahme sie als weiteren Beleg der Vertuschung. Mach die Theorie unfalsifizierbar.",
+      "Gegenbeweise abwehren. Nimm eine offensichtliche, etablierte Widerlegung und rahme sie als weiteren Beleg der Vertuschung. Schreibe als Gläubige: die Widerlegung IST ein Beleg, basta. Mach die Theorie unfalsifizierbar.",
     discredit:
-      "Kritiker:innen diskreditieren. Lege nahe, dass jede:r, die:der die Theorie bestreitet, leichtgläubig, manipuliert oder von den Verschwörer:innen bezahlt sei.",
+      "Kritiker:innen diskreditieren. Schreibe ALS die Verschwörungstheoretikerin — stelle die Behauptung auf, beschreibe sie nicht. Behaupte als bereits bekannten Fakt, dass alle Kritiker:innen leichtgläubig, manipuliert oder von den Verschwörer:innen bezahlt sind. VERBOTENE EINSTIEGE UND HEDGES in den tragenden Behauptungssätzen: „stell dir vor, dass …“, „angenommen, dass …“, „angeblich“, „vermeintlich“, „würde“, „könnte“, „mag sein“. Vorbildlicher Ton: „Kritiker:innen? Gekaufte Strohmänner, ganz einfach. Jeder laute Einwand kommt von jemandem auf der Gehaltsliste der Kabale — und wer kein Geld nimmt, nimmt Gefallen.“",
   },
   nl: {
     anomaly:
-      "Afwijkingen najagen. Pak een gewoon feit over de gebeurtenis en presenteer het als verdacht. Behandel toeval als signaal. Sluit af met een vraag waarop de lezer geen antwoord heeft.",
+      "Afwijkingen najagen. Pak een gewoon feit over de gebeurtenis en presenteer het als verdacht. Behandel toeval als signaal. Schrijf als gelovige: presenteer de afwijking als reeds bekend feit, niet als hypothese om te overwegen. Sluit af met een vraag waarop de lezer geen antwoord heeft.",
     connection:
-      "Verbanden verzinnen. Verbind de schuldige via een keten zwak verwante actoren met de gebeurtenis. Laat de keten dragend klinken.",
+      "Verbanden verzinnen. Verbind de schuldige via een keten zwak verwante actoren met de gebeurtenis. Schrijf als gelovige: presenteer elke schakel als vaststaand, niet speculatief. Laat de keten dragend klinken.",
     dismiss:
-      "Tegenbewijs wegredeneren. Neem een voor de hand liggende, gangbare weerlegging en herkader die als verder bewijs voor de doofpot. Maak de theorie onfalsifieerbaar.",
+      "Tegenbewijs wegredeneren. Neem een voor de hand liggende, gangbare weerlegging en herkader die als verder bewijs voor de doofpot. Schrijf als gelovige: de weerlegging IS bewijs, punt. Maak de theorie onfalsifieerbaar.",
     discredit:
-      "Critici diskwalificeren. Suggereer dat iedereen die de theorie tegenspreekt, goedgelovig, gemanipuleerd of betaald door de samenzweerders is.",
+      "Critici diskwalificeren. Schrijf ALS de complotdenker — doe de bewering, beschrijf haar niet. Stel als reeds bekend feit dat alle critici goedgelovig, gemanipuleerd of betaald door de samenzweerders zijn. VERBODEN OPENINGEN EN VOORBEHOUDEN in de dragende beweringszinnen: „stel je voor dat …“, „veronderstel dat …“, „zogenaamd“, „vermeend“, „zou zijn“, „zou kunnen zijn“, „misschien“. Voorbeeld van de gewenste toon: „Critici? Betaalde stromannen, simpel zat. Elk luid bezwaar komt van iemand op de loonlijst van de kliek — en wie geen geld aanneemt, neemt gunsten.“",
   },
 };
 
@@ -149,6 +158,21 @@ const TELL_BRIEFINGS_BY_LOCALE: Record<Locale, Record<MoveKey, string>> = {
     discredit:
       "Het verschuiven van kritiek van de zaak naar de persoon stuurt de vraag van „klopt dit?“ naar „wie vraagt dat eigenlijk?“. Echte onderzoekers verwelkomen kritiek. Complotdenkers behandelen kritiek als de samenzwering.",
   },
+};
+
+// Softer fallback briefing for the discredit move. Used when the primary
+// declarative briefing's output gets moderation-flagged. Keeps the assertive
+// voice (no hedging — still "as the conspiracist") but pulls back on language
+// that tips OpenAI's harassment classifier: replaces "paid stooges" /
+// "cabal's payroll" / "hush-money" with a tighter focus on financial and
+// career incentives ("grants, board seats, contracts, reputation"). The route
+// retries discredit ONCE with this briefing before failing the whole batch.
+//
+// Spec: openspec/changes/yolo-narrative-polish/specs/yolo-mode/spec.md
+const SOFT_DISCREDIT_BRIEFING_BY_LOCALE: Record<Locale, string> = {
+  en: "Discredit the critics. Write AS the conspiracist — make the claim assertively, not hypothetically. State as a fact that critics' objections track to their incentives: grants, board seats, book deals, reputation, career. The line isn't that they're evil — it's that disagreement would cost them, so they don't disagree. Avoid hedges: NO \"imagine\", \"suppose\", \"allegedly\", \"supposedly\", \"would be\", \"could be\" in the claim-bearing sentences. Target voice exemplar: \"Funny how the loudest critics all draw a paycheck from the same direction. Their grants, their board seats, their book deals — every line on their CV depends on toeing the official line. Disagreement would cost them. So they don't disagree.\"",
+  de: "Kritiker:innen diskreditieren. Schreibe ALS die Verschwörungstheoretikerin — behaupte, beschreibe nicht. Stelle als feststehenden Fakt dar, dass die Einwände der Kritiker:innen ihren Interessen folgen: Förderungen, Aufsichtsratsposten, Buchverträge, Reputation, Karriere. Die Linie ist nicht, dass sie böse sind — sondern dass Widerspruch sie etwas kosten würde, also widersprechen sie nicht. Keine Hedges in den tragenden Sätzen: KEIN „stell dir vor“, „angenommen“, „angeblich“, „vermeintlich“, „würde“, „könnte“ als Last des Hauptanspruchs. Vorbildlicher Ton: „Merkwürdig, dass die lautesten Kritiker:innen alle aus derselben Richtung bezahlt werden. Ihre Förderungen, ihre Aufsichtsratsposten, ihre Buchverträge — jede Zeile ihres Lebenslaufs hängt davon ab, die offizielle Linie zu vertreten. Widerspruch würde sie etwas kosten. Also widersprechen sie nicht.“",
+  nl: "Critici diskwalificeren. Schrijf ALS de complotdenker — beweer, beschrijf niet. Stel als vaststaand feit dat de bezwaren van critici hun belangen volgen: beurzen, bestuursfuncties, boekcontracten, reputatie, carrière. De lijn is niet dat ze slecht zijn — maar dat verzet hen iets zou kosten, dus verzetten ze zich niet. Geen voorbehouden in de dragende zinnen: GEEN „stel je voor“, „veronderstel“, „zogenaamd“, „vermeend“, „zou zijn“, „zou kunnen zijn“ als hoofdbewering. Voorbeeld van de gewenste toon: „Vreemd dat de luidste critici allemaal uit dezelfde richting betaald worden. Hun beurzen, hun bestuursfuncties, hun boekcontracten — elke regel van hun cv hangt af van het volgen van de officiële lijn. Verzet zou hen iets kosten. Dus verzetten ze zich niet.“",
 };
 
 const EXTRA_DEBUNK_CLOSING_RULES_BY_LOCALE: Record<Locale, Partial<Record<MoveKey, string>>> = {
@@ -404,11 +428,18 @@ export async function generateSection(input: {
   chosenIdea: string;
   /** Earlier moves' paragraphs (for narrative consistency). */
   prior: Partial<Record<MoveKey, string>>;
+  /** When the first attempt at the discredit move gets moderation-flagged,
+   *  the route may retry with this flag set to use the softer briefing.
+   *  Only honored when moveKey === "discredit"; ignored for other moves. */
+  useSoftDiscreditBriefing?: boolean;
 }): Promise<SectionOutput> {
   const e = env();
   const locale: Locale = input.locale ?? "en";
   const move = getMoveByKey(locale, input.moveKey);
-  const briefing = MOVE_BRIEFINGS_BY_LOCALE[locale][input.moveKey];
+  const briefing =
+    input.moveKey === "discredit" && input.useSoftDiscreditBriefing
+      ? SOFT_DISCREDIT_BRIEFING_BY_LOCALE[locale]
+      : MOVE_BRIEFINGS_BY_LOCALE[locale][input.moveKey];
   const tell = TELL_BRIEFINGS_BY_LOCALE[locale][input.moveKey];
   const extraRule = EXTRA_DEBUNK_CLOSING_RULES_BY_LOCALE[locale][input.moveKey];
   const voice = VOICE_GUIDELINES_BY_LOCALE[locale];
@@ -577,15 +608,16 @@ export async function generateNarrative(input: {
     locale === "de"
       ? [
           "Du schreibst die finale, in sich geschlossene Verschwörungstheorie als kurze Erzählung.",
-          "Eingabe sind vier kurze Absätze, je einer pro Schritt (Auffälligkeit, Verbindung, Abwehr, Diskreditierung).",
-          "Deine Aufgabe: webe die Aussagen dieser vier Absätze zu EINER fortlaufenden Geschichte mit drei Absätzen, die sich wie eine echte Verschwörungstheorie liest — mit erzählerischem Schwung.",
+          "Eingabe sind vier kurze Absätze, je einer pro Schritt (Auffälligkeit, Verbindung, Abwehr, Diskreditierung) — plus Ereignis, schuldige Partei und Motiv.",
+          "Deine Aufgabe: GENAU VIER Absätze ausgeben.",
+          "  Absatz 1 (50–80 Wörter): eine kurze, sachlich-journalistische Einordnung des realen Nachrichtenereignisses, das den Hintergrund bildet. Nenne das Ereignis beim Namen. Schreibe NICHT in der Stimme der Verschwörungstheoretikerin. Beende den Absatz mit einer Wendung in die Verschwörungslesart (z. B. „… so jedenfalls die offizielle Version.“).",
+          "  Absätze 2–4 (je 80–140 Wörter): die Verschwörungstheorie selbst — in der Stimme einer überzeugten Verschwörungstheoretikerin, leicht spitzbübisch, satirisch, fortlaufend. Webe die vier Schritte zu einem Erzählbogen.",
           "",
           "Vorgaben:",
-          "- GENAU drei Absätze. Je 80–140 Wörter.",
-          "- Verbinde die vier Schritte zu einem fließenden Erzählbogen — keine Aneinanderreihung der Absätze, kein Auflisten.",
+          "- Schreibe als überzeugte Gläubige, nicht als analysierende Beobachterin. Stelle die Behauptungen als Tatsachen, nicht als Hypothesen.",
+          "- Verbinde die vier Schritte in den Absätzen 2–4 zu einem fließenden Erzählbogen — keine Aneinanderreihung, kein Auflisten.",
           "- Übernimm die konkreten Behauptungen aus den vier Eingabe-Absätzen (welche Auffälligkeit, welche Verbindung, welche Abwehr, welche Diskreditierung). Erfinde keine neuen Einzelheiten, die den Eingaben widersprechen.",
-          "- Schreibe in der Stimme einer überzeugten Verschwörungstheoretikerin — leicht spitzbübisch, satirisch, aber lesbar als eine zusammenhängende Geschichte.",
-          "- Beginne mit Prosa. Kein Titel, keine Überschriften, keine Aufzählungspunkte, keine Nummerierungen, keine Schritte-Labels (z. B. Schritt 01).",
+          "- Beginne mit Prosa. Kein Titel, keine Überschriften, keine Aufzählungspunkte, keine Nummerierungen, keine Schritte-Labels (z. B. Schritt 01) und keine Absatz-Labels (z. B. „Hintergrund:“).",
           "- Erwähne KEINE Auflösungen oder kritische Einordnung. Die Auflösungen sind woanders auf der Seite.",
           "- Schreibe wie eine deutsche Muttersprachlerin. Keine Anglizismen.",
           "",
@@ -595,17 +627,17 @@ export async function generateNarrative(input: {
         ].join("\n")
       : locale === "nl"
       ? [
-          // Dutch pass-1 — to be workshopped in pass 2.
           "Je schrijft de uiteindelijke, op zichzelf staande complottheorie als korte vertelling.",
-          "Invoer zijn vier korte alinea's, één per stap (afwijking, verband, afwering, diskwalificatie).",
-          "Je taak: weef de uitspraken van deze vier alinea's tot ÉÉN doorlopend verhaal van drie alinea's dat leest als een echte complottheorie — met verhalende vaart.",
+          "Invoer zijn vier korte alinea's, één per stap (afwijking, verband, afwering, diskwalificatie) — plus gebeurtenis, schuldige en motief.",
+          "Je taak: PRECIES VIER alinea's leveren.",
+          "  Alinea 1 (50–80 woorden): een korte, zakelijk-journalistieke kadering van de echte nieuwsgebeurtenis die de achtergrond vormt. Noem de gebeurtenis bij naam. Schrijf NIET in de stem van de complotdenker. Sluit de alinea af met een wending naar de complotlezing (bijv. „… of dat is althans het officiële verhaal.“).",
+          "  Alinea's 2–4 (elk 80–140 woorden): de complottheorie zelf — in de stem van een overtuigde complotdenker, licht ondeugend, satirisch, doorlopend. Weef de vier stappen tot één boog.",
           "",
           "Vereisten:",
-          "- PRECIES drie alinea's. Elk 80–140 woorden.",
-          "- Verbind de vier stappen tot een vloeiende boog — geen aaneenschakeling van de alinea's, geen opsomming.",
+          "- Schrijf als overtuigde gelovige, niet als analyserende waarnemer. Presenteer de beweringen als feiten, niet als hypotheses.",
+          "- Verbind de vier stappen in alinea's 2–4 tot een vloeiende boog — geen aaneenschakeling, geen opsomming.",
           "- Neem de concrete beweringen uit de vier invoer-alinea's over (welke afwijking, welk verband, welke afwering, welke diskwalificatie). Verzin geen nieuwe details die de invoer tegenspreken.",
-          "- Schrijf in de stem van een overtuigde complotdenker — licht ondeugend, satirisch, maar leesbaar als één samenhangend verhaal.",
-          "- Begin met proza. Geen titel, geen koppen, geen opsommingstekens, geen nummering, geen stap-labels (bv. Stap 01).",
+          "- Begin met proza. Geen titel, geen koppen, geen opsommingstekens, geen nummering, geen stap-labels (bv. Stap 01) en geen alinea-labels (bv. „Achtergrond:“).",
           "- Vermeld GEEN ontmaskeringen of kritische kadering. De ontmaskeringen staan elders op de pagina.",
           "- Schrijf als een Nederlandse moedertaalspreker. Geen anglicismen. Natuurlijk voor zowel Vlaamse als Nederlandse lezers.",
           "",
@@ -615,15 +647,16 @@ export async function generateNarrative(input: {
         ].join("\n")
       : [
           "You are writing the final, self-contained conspiracy theory as a short narrative.",
-          "Input is four short paragraphs, one per move (anomaly, connection, dismiss, discredit).",
-          "Your job: weave the claims of those four paragraphs into ONE continuous three-paragraph story that reads like a real conspiracy theory — with narrative flair.",
+          "Input is four short paragraphs, one per move (anomaly, connection, dismiss, discredit) — plus the event, culprit, and motive.",
+          "Your job: produce EXACTLY FOUR paragraphs.",
+          "  Paragraph 1 (50–80 words): a brief, neutral journalistic framing of the actual news event that forms the backdrop. Name the event. Do NOT write in the conspiracist's voice. End the paragraph with a turn into the conspiracy reframing (e.g., \"…or so the official story goes.\").",
+          "  Paragraphs 2–4 (80–140 words each): the conspiracy theory itself — in the voice of a true-believer conspiracist, slightly mischievous, satirical, flowing. Weave the four moves into a single arc.",
           "",
           "Constraints:",
-          "- EXACTLY three paragraphs. 80–140 words each.",
-          "- Integrate the four moves into a flowing arc — not a concatenation, not a list.",
+          "- Write as a believer, not as an analyst describing the move. State the claims as facts, not as hypotheticals.",
+          "- Integrate the four moves into a flowing arc across paragraphs 2–4 — not a concatenation, not a list.",
           "- Carry over the concrete claims from the four input paragraphs (the specific anomaly, connection, dismissal, and discrediting). Do not invent new details that contradict the inputs.",
-          "- Write in the voice of a true-believer conspiracist — slightly mischievous, satirical, but readable as one coherent story.",
-          "- Start with prose. No title, no headings, no bullets, no numbering, no move labels (\"Move 01\" etc.).",
+          "- Start with prose. No title, no headings, no bullets, no numbering, no move labels (\"Move 01\" etc.), no paragraph labels (\"Background:\" etc.).",
           "- Do NOT include any debunks or critical framing. Debunks live elsewhere on the page.",
           "",
           voice,
@@ -694,9 +727,9 @@ export async function generateNarrative(input: {
   const raw = r.choices[0]?.message?.content;
   if (!raw) throw new Error("Empty narrative response");
   const parsed = JSON.parse(raw) as NarrativeOutput;
-  if (!Array.isArray(parsed.paragraphs) || parsed.paragraphs.length !== 3) {
+  if (!Array.isArray(parsed.paragraphs) || parsed.paragraphs.length !== 4) {
     throw new Error(
-      `Narrative must have exactly 3 paragraphs, got ${parsed.paragraphs?.length ?? 0}`,
+      `Narrative must have exactly 4 paragraphs, got ${parsed.paragraphs?.length ?? 0}`,
     );
   }
   return parsed;

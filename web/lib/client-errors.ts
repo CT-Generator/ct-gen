@@ -19,7 +19,7 @@ export const clientErrorBodySchema = z.object({
   stack: z.string().max(8_192).optional(),
   digest: z.string().max(128).optional(),
   path: z.string().min(1).max(2_048),
-  locale: z.enum(["en", "de"]),
+  locale: z.enum(["en", "de", "nl"]),
 });
 
 export type ClientErrorPayload = z.infer<typeof clientErrorBodySchema>;

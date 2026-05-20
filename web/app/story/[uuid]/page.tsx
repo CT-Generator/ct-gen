@@ -110,6 +110,7 @@ export default async function StoryPage({
             err_too_long: t.err_too_long,
             err_couldnt_start: t.err_couldnt_start,
             err_yolo_failed: t.err_yolo_failed,
+            yolo_retry: t.yolo_retry,
           }}
         />
       </article>

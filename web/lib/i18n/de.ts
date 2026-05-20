@@ -194,6 +194,7 @@ export const de: Dictionary = {
     err_couldnt_start: "Bauen konnte nicht gestartet werden.",
     err_yolo_failed:
       "Yolo-Lauf fehlgeschlagen — erneut versuchen oder den geführten Weg oben nehmen.",
+    yolo_retry: "Erneut versuchen",
   },
   wizard: {
     pick_idea: "Wähle eine Idee, die Du anwenden willst",
@@ -216,6 +217,7 @@ export const de: Dictionary = {
     skip_to_result_loading_dots:
       "Ideen werden gewählt, fehlende Schritte geschrieben, die Theorie zusammengewebt",
     skip_to_result_failed: "Der Rest konnte nicht ergänzt werden — bitte erneut versuchen.",
+    skip_to_result_retry: "Erneut versuchen",
     progress_done: "Fertig",
     move_label: "Schritt",
     done_eyebrow: "Fertig",

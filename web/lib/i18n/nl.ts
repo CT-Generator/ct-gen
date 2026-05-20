@@ -206,6 +206,7 @@ export const nl: Dictionary = {
     err_couldnt_start: "Bouwen kon niet worden gestart.",
     err_yolo_failed:
       "Yolo-run mislukt — probeer opnieuw, of gebruik de stap-voor-stap hierboven.", // FIXME: pass 2
+    yolo_retry: "Opnieuw proberen", // FIXME: pass 2
   },
   wizard: {
     pick_idea: "Kies een idee om toe te passen",
@@ -228,6 +229,7 @@ export const nl: Dictionary = {
     skip_to_result_loading_dots:
       "Ideeën kiezen, ontbrekende stappen schrijven, theorie aaneenvoegen", // FIXME: pass 2
     skip_to_result_failed: "Kon de rest niet aanvullen — probeer het opnieuw.", // FIXME: pass 2
+    skip_to_result_retry: "Opnieuw proberen", // FIXME: pass 2
     progress_done: "Klaar",
     move_label: "Stap", // FIXME: pass 2
     done_eyebrow: "Klaar",

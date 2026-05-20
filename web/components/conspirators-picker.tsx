@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { SeedItemWithImage } from "@/lib/seed";
+import { YoloProgress } from "@/components/yolo-progress";
 
 type Locale = "en" | "de" | "nl";
 
@@ -24,6 +25,9 @@ type Labels = {
   err_too_long: string;
   err_couldnt_start: string;
   err_yolo_failed: string;
+  /** Retry control rendered next to err_yolo_failed when the YOLO POST itself
+   *  failed after /api/start already created the row. */
+  yolo_retry: string;
 };
 
 type Props = {
@@ -51,6 +55,10 @@ export function ConspiratorsPicker({
   const [pending, startTransition] = useTransition();
   const [yoloPending, startYoloTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
+  // Set once /api/start has produced a row but the subsequent /api/build/[id]/yolo
+  // POST has failed. Allows the retry control to re-POST yolo for the same row
+  // instead of restarting the whole flow.
+  const [retryableShortId, setRetryableShortId] = useState<string | null>(null);
 
   const [culprit, setCulprit] = useState<SeedItemWithImage | null>(culprits[0] ?? null);
   const [motive, setMotive] = useState<SeedItemWithImage | null>(motives[0] ?? null);
@@ -104,27 +112,70 @@ export function ConspiratorsPicker({
     });
   }
 
+  async function postYolo(shortId: string, signal: AbortSignal): Promise<void> {
+    const res = await fetch(`/api/build/${shortId}/yolo`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      signal,
+    });
+    if (!res.ok) {
+      const payload = (await res.json().catch(() => ({}))) as { error?: string };
+      throw new Error(payload.error ?? `Yolo failed (${res.status})`);
+    }
+  }
+
   async function startYolo() {
     if (!ready || anyPending) return;
     setError(null);
+    setRetryableShortId(null);
     startYoloTransition(async () => {
+      const ctrl = new AbortController();
+      // /api/start (~20s) then /api/build/[id]/yolo (~40s) — generous overall cap.
+      const t = setTimeout(() => ctrl.abort(), 90_000);
+      let shortId: string;
       try {
-        const ctrl = new AbortController();
-        // /api/start (~20s) then /api/build/[id]/yolo (~40s) — generous overall cap.
-        const t = setTimeout(() => ctrl.abort(), 90_000);
-        const shortId = await postStart(ctrl.signal);
-        const res = await fetch(`/api/build/${shortId}/yolo`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          signal: ctrl.signal,
-        });
+        shortId = await postStart(ctrl.signal);
+      } catch (err) {
         clearTimeout(t);
-        if (!res.ok) {
-          const payload = (await res.json().catch(() => ({}))) as { error?: string };
-          throw new Error(payload.error ?? `Yolo failed (${res.status})`);
+        if (err instanceof Error && err.name === "AbortError") {
+          setError(labels.err_too_long);
+        } else {
+          setError(err instanceof Error ? err.message : labels.err_couldnt_start);
         }
+        return;
+      }
+      try {
+        await postYolo(shortId, ctrl.signal);
+        clearTimeout(t);
         router.push(`${genPath}/${shortId}`);
       } catch (err) {
+        clearTimeout(t);
+        // YOLO POST failed after /api/start succeeded — surface a retry that
+        // reuses the existing shortId rather than restarting the whole flow.
+        setRetryableShortId(shortId);
+        if (err instanceof Error && err.name === "AbortError") {
+          setError(labels.err_too_long);
+        } else {
+          setError(err instanceof Error ? err.message : labels.err_yolo_failed);
+        }
+      }
+    });
+  }
+
+  function retryYolo() {
+    if (!retryableShortId || anyPending) return;
+    const shortId = retryableShortId;
+    setError(null);
+    startYoloTransition(async () => {
+      const ctrl = new AbortController();
+      const t = setTimeout(() => ctrl.abort(), 90_000);
+      try {
+        await postYolo(shortId, ctrl.signal);
+        clearTimeout(t);
+        setRetryableShortId(null);
+        router.push(`${genPath}/${shortId}`);
+      } catch (err) {
+        clearTimeout(t);
         if (err instanceof Error && err.name === "AbortError") {
           setError(labels.err_too_long);
         } else {
@@ -226,13 +277,27 @@ export function ConspiratorsPicker({
 
       <div className="mt-7 sm:mt-8 rule-h pt-5 sm:pt-6">
         {error && (
-          <p className="mb-3 text-[13px] text-[oklch(56%_0.14_28)]" role="alert">
-            {error}
-          </p>
+          <div className="mb-3 flex flex-wrap items-center gap-3" role="alert">
+            <p className="text-[13px] text-[oklch(56%_0.14_28)]">{error}</p>
+            {retryableShortId && !yoloPending && (
+              <button
+                type="button"
+                onClick={retryYolo}
+                className="border border-ink/40 dark:border-ink-dark/40 text-ink dark:text-ink-dark hover:border-ink dark:hover:border-ink-dark px-3 py-1.5 text-[12px] font-display transition-colors"
+                style={{ fontWeight: 500 }}
+              >
+                {labels.yolo_retry}
+              </button>
+            )}
+          </div>
         )}
 
         {pending && <Starting label={labels.cta_starting_dots} />}
-        {yoloPending && <Starting label={labels.cta_yolo_starting_dots} />}
+        {yoloPending && (
+          <div className="mb-3">
+            <YoloProgress label={labels.cta_yolo_starting_dots} />
+          </div>
+        )}
 
         <p className="text-[13px] italic text-ink-soft dark:text-ink-soft-dark max-w-xl leading-relaxed mb-4">
           {labels.walkthrough_caption}

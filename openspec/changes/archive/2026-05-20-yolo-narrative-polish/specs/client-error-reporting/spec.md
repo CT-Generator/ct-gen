@@ -1,26 +1,4 @@
-# client-error-reporting Specification
-
-## Purpose
-TBD - created by archiving change client-error-reporting. Update Purpose after archive.
-## Requirements
-### Requirement: React render errors render a friendly localized fallback
-
-The Next.js app SHALL render an `app/global-error.tsx` (root error boundary) and an `app/error.tsx` (segment error boundary) so that uncaught React render errors never produce the default "Application error: a client-side exception has occurred" screen. The fallback MUST localize its copy via the project's existing i18n strings (`en` / `de`) and MUST offer a "Try again" action that calls the boundary's `reset()` and a link back to `/`.
-
-#### Scenario: Segment-level render error
-- **WHEN** a component below the root layout throws during render in production
-- **THEN** the user sees the segment fallback rendered by `app/error.tsx` with localized title, body, and "Try again" / "Home" actions
-- **AND** the fallback uses the site's typography and color tokens so it does not look like a stark browser default page
-
-#### Scenario: Root-layout render error
-- **WHEN** the root layout itself throws during render
-- **THEN** the user sees the root fallback rendered by `app/global-error.tsx`
-- **AND** the page contains a `<html><body>` shell with localized copy and a link to `/`
-
-#### Scenario: Reporter throws
-- **WHEN** the error boundary's call to `reportClientError(...)` itself throws
-- **THEN** the boundary still renders the friendly fallback
-- **AND** no exception propagates to the user
+## MODIFIED Requirements
 
 ### Requirement: Capture endpoint stores one row per uncaught client error
 
@@ -67,14 +45,3 @@ The migration SHALL create a `client_errors` table whose envelope columns match 
 - **WHEN** a POST arrives with a `stack` longer than 4 KiB
 - **THEN** the inserted row has `stack` truncated to the first 4 KiB
 - **AND** the truncation marker `"...[truncated]"` is appended within the 4 KiB cap
-
-### Requirement: Reporter is best-effort and non-blocking
-
-The client-side `reportClientError(error, info)` helper SHALL POST with `keepalive: true` and MUST NOT block rendering of the fallback UI. The fetch promise MUST be wrapped so any rejection is silently swallowed. The helper MUST NOT call itself recursively if the POST fails.
-
-#### Scenario: Capture endpoint is unreachable
-- **WHEN** the user is offline or the endpoint returns 5xx
-- **THEN** the boundary still renders the friendly fallback within the same paint
-- **AND** no error from the reporter surfaces in the React tree
-- **AND** no retry is scheduled
-

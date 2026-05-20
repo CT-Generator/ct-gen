@@ -23,6 +23,7 @@ import { MoveTellStamp } from "@/components/move-tell-stamp";
 import { NarrativeStamp } from "@/components/narrative-stamp";
 import { ShareButtons } from "@/components/share-buttons";
 import { RatingBar } from "@/components/rating-bar";
+import { TheoryHeadline } from "@/components/theory-headline";
 import { getDict, isLocale, localizedHref, readLocale, type Locale } from "@/lib/i18n";
 
 type Params = { id: string };
@@ -157,17 +158,19 @@ export default async function GenerationPage({ params }: { params: Promise<Param
             <p className="meta">
               {gen.source === "migrated" ? t.eyebrow_imported : t.eyebrow_fake}
             </p>
-            <h1
-              className="mt-2 font-display text-[clamp(1.6rem,4.5vw,2.4rem)] leading-[1.05] max-w-2xl"
-              style={{ fontWeight: 600, letterSpacing: "-0.02em" }}
-            >
-              {t.h1_how} <span style={{ color: MOVES[0].color }}>{gen.culpritValue}</span>{" "}
-              {t.h1_orchestrated}{" "}
-              <span style={{ color: MOVES[2].color }}>{gen.eventValue}</span>
-              {t.h1_in_service_of}{" "}
-              <span style={{ color: MOVES[3].color }}>{gen.motiveValue.toLowerCase()}</span>
-              {t.h1_period}
-            </h1>
+            <TheoryHeadline
+              locale={rowLocale}
+              moves={MOVES.map((m) => ({ color: m.color }))}
+              fragments={{
+                h1_how: t.h1_how,
+                h1_orchestrated: t.h1_orchestrated,
+                h1_in_service_of: t.h1_in_service_of,
+                h1_period: t.h1_period,
+              }}
+              culprit={gen.culpritValue}
+              event={gen.eventValue}
+              motive={gen.motiveValue}
+            />
           </div>
 
           {/* Older / narrative-absent rows: italic conspiracist hook with inline source link.
@@ -217,10 +220,14 @@ export default async function GenerationPage({ params }: { params: Promise<Param
         </div>
       </section>
 
-      {/* Narrative finale — three-paragraph integrated theory. Rendered for any
-          recipe-tagged generation that has a persisted narrative; older rows
-          and rows where narrative generation failed render the per-move blocks
-          only (no broken section).
+      {/* Narrative finale — integrated theory. Rendered for any recipe-tagged
+          generation that has a persisted narrative; older rows and rows where
+          narrative generation failed render the per-move blocks only (no broken
+          section). Persisted shape supports both 3- and 4-paragraph variants:
+          pre-yolo-narrative-polish rows have 3 conspiracy paragraphs;
+          post-change rows have 4 (paragraph 1 is a neutral news-event framing,
+          paragraphs 2–4 are conspiracy). The render below maps paragraphs[]
+          directly to render blocks, so both shapes work without length-coupling.
           Each paragraph sits in its own position:relative wrapper with its own
           NarrativeStamp anchored bottom-right, so any horizontal screenshot of
           any single paragraph also captures that paragraph's stamp. */}

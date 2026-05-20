@@ -148,6 +148,9 @@ export type Dictionary = {
     err_too_long: string;
     err_couldnt_start: string;
     err_yolo_failed: string;
+    /** Retry control next to err_yolo_failed; re-POSTs to the YOLO endpoint
+     *  using the existing row instead of re-running /api/start. */
+    yolo_retry: string;
   };
   wizard: {
     pick_idea: string;
@@ -170,6 +173,9 @@ export type Dictionary = {
     skip_to_result_loading_h: string;
     skip_to_result_loading_dots: string;
     skip_to_result_failed: string;
+    /** Label for the retry control rendered next to skip_to_result_failed when
+     *  the YOLO POST aborts or returns non-2xx. */
+    skip_to_result_retry: string;
     progress_done: string;
     /** Singular noun used in the wizard progress bar and per-move screen header
      *  (e.g. "Move 01" / "Schritt 01" / "Stap 01"). */
@@ -437,6 +443,7 @@ export const en: Dictionary = {
     err_too_long: "That took too long — try again.",
     err_couldnt_start: "Couldn't start the build.",
     err_yolo_failed: "Yolo run failed — try again, or use the walkthrough above.",
+    yolo_retry: "Try again",
   },
   wizard: {
     pick_idea: "Pick an idea to apply",
@@ -456,6 +463,7 @@ export const en: Dictionary = {
     skip_to_result_loading_h: "Filling in the rest…",
     skip_to_result_loading_dots: "Picking ideas, writing the missing moves, stitching the theory",
     skip_to_result_failed: "Couldn't fill in the rest — try again.",
+    skip_to_result_retry: "Try again",
     progress_done: "Done",
     move_label: "Move",
     done_eyebrow: "Done",

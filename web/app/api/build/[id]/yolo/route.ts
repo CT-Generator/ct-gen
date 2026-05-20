@@ -102,7 +102,15 @@ export async function POST(_req: Request, { params }: { params: Promise<Params> 
         newSections[missingKeys[i]!] = generated[i]!;
       }
     } catch (err) {
-      console.error("[yolo] section generation failed:", err);
+      // Breadcrumb category: section-generation failure. Includes shortId and
+      // the set of missing moves so we can correlate against OpenAI status.
+      // Does NOT include any model-generated text.
+      console.error("[yolo] failure_category=section_generation", {
+        shortId: id,
+        missingMoves: missingKeys,
+        errorClass: err instanceof Error ? err.name : "Unknown",
+        errorMessage: err instanceof Error ? err.message : String(err),
+      });
       return NextResponse.json(
         { error: "The theory engine glitched mid-build — try again." },
         { status: 502 },
@@ -115,13 +123,85 @@ export async function POST(_req: Request, { params }: { params: Promise<Params> 
         moderate(newSections[k]!.paragraph).catch(() => ({ flagged: false })),
       ),
     );
-    const flaggedIdx = mods.findIndex((m) => m.flagged);
-    if (flaggedIdx >= 0) {
-      console.warn("[yolo] section flagged", { id, moveKey: missingKeys[flaggedIdx] });
+
+    // Discredit-specific soft retry: the strong-declarative discredit briefing
+    // ("paid stooges, plain and simple…") trips OpenAI's harassment classifier
+    // on classic-conspiracy archetypes (Illuminati, Freimaurer, etc.). When the
+    // ONLY moderation-flagged section is discredit, regenerate that one with
+    // the softer briefing (which keeps assertive voice but shifts the framing
+    // from "paid stooges" to "their grants and reputations depend on it").
+    // If the soft retry also fails moderation, fall through to the existing
+    // 422 path. Non-discredit moderation flags fail immediately as before.
+    const discreditIdx = missingKeys.indexOf("discredit");
+    const flaggedIndices = mods
+      .map((m, i) => (m.flagged ? i : -1))
+      .filter((i) => i >= 0);
+    const onlyDiscreditFlagged =
+      flaggedIndices.length > 0 &&
+      discreditIdx >= 0 &&
+      flaggedIndices.every((i) => i === discreditIdx);
+
+    if (flaggedIndices.length > 0 && !onlyDiscreditFlagged) {
+      // A non-discredit move got flagged (or discredit plus another). No retry.
+      console.warn("[yolo] failure_category=section_moderation_flag", {
+        shortId: id,
+        moveKey: missingKeys[flaggedIndices[0]!],
+      });
       return NextResponse.json(
         { error: "The engine refused this combo. Try again or pick different conspirators." },
         { status: 422 },
       );
+    }
+
+    if (onlyDiscreditFlagged) {
+      console.warn("[yolo] failure_category=discredit_soft_retry_attempted", {
+        shortId: id,
+      });
+      try {
+        const softDiscredit = await generateSection({
+          locale: rowLocale,
+          eventName: row.eventValue,
+          eventSummary: content.event_intro?.paragraphs?.join("\n\n") ?? "",
+          culpritName: row.culpritValue,
+          motiveName: row.motiveValue,
+          moveKey: "discredit",
+          chosenIdea: newPicks.discredit!,
+          prior: {},
+          useSoftDiscreditBriefing: true,
+        });
+        const softMod = await moderate(softDiscredit.paragraph).catch(() => ({
+          flagged: false,
+        }));
+        if (softMod.flagged) {
+          // Both passes flagged. Surrender to the user-facing error.
+          console.warn(
+            "[yolo] failure_category=discredit_soft_retry_also_flagged",
+            { shortId: id },
+          );
+          return NextResponse.json(
+            {
+              error:
+                "The engine refused this combo. Try again or pick different conspirators.",
+            },
+            { status: 422 },
+          );
+        }
+        // Soft retry succeeded — replace the flagged discredit section.
+        console.log("[yolo] failure_category=discredit_soft_retry_succeeded", {
+          shortId: id,
+        });
+        newSections.discredit = softDiscredit;
+      } catch (err) {
+        console.error("[yolo] failure_category=discredit_soft_retry_error", {
+          shortId: id,
+          errorClass: err instanceof Error ? err.name : "Unknown",
+          errorMessage: err instanceof Error ? err.message : String(err),
+        });
+        return NextResponse.json(
+          { error: "The theory engine glitched mid-build — try again." },
+          { status: 502 },
+        );
+      }
     }
   }
 
@@ -155,13 +235,24 @@ export async function POST(_req: Request, { params }: { params: Promise<Params> 
       const joined = out.paragraphs.join("\n\n");
       const mod = await moderate(joined).catch(() => ({ flagged: false }));
       if (mod.flagged) {
-        console.warn("[yolo] narrative flagged, skipping persistence", { id });
+        // Breadcrumb category: narrative moderation flag. Includes shortId only;
+        // no paragraph text.
+        console.warn("[yolo] failure_category=narrative_moderation_flag", {
+          shortId: id,
+        });
         narrative = undefined;
       } else {
         narrative = { paragraphs: out.paragraphs, generated_at: new Date().toISOString() };
       }
     } catch (err) {
-      console.error("[yolo] narrative generation failed:", err);
+      // Breadcrumb category: narrative-generation failure. Includes shortId
+      // and error class only. Does NOT include any model-generated text.
+      // Route still returns success because per-move data is consistent.
+      console.error("[yolo] failure_category=narrative_generation", {
+        shortId: id,
+        errorClass: err instanceof Error ? err.name : "Unknown",
+        errorMessage: err instanceof Error ? err.message : String(err),
+      });
       // Keep existing narrative if any; otherwise leave undefined.
     }
   }

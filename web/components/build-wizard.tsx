@@ -8,9 +8,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { type MoveKey, type EventIntro, type Ideas } from "@/lib/recipe";
 import { MoveGlyph } from "@/components/move-glyph";
+import { YoloProgress } from "@/components/yolo-progress";
 
 const MOVE_KEYS_IN_ORDER: MoveKey[] = ["anomaly", "connection", "dismiss", "discredit"];
 
@@ -34,6 +35,7 @@ type WizardLabels = {
   skip_to_result_loading_h: string;
   skip_to_result_loading_dots: string;
   skip_to_result_failed: string;
+  skip_to_result_retry: string;
   progress_done: string;
   move_label: string;
   done_eyebrow: string;
@@ -199,20 +201,33 @@ export function BuildWizard(props: Props) {
       )}
 
       {/* Skip-pending loading region. Renders inline above the bottom nav so
-          the visitor sees the system is working without a page change. */}
+          the visitor sees the system is working without a page change. The
+          animated spinner runs continuously for the ~60s wait — the earlier
+          dotted-ellipsis was being read as a frozen screen. */}
       {skipPending && (
         <div className="mt-10 rule-h-soft pt-5">
           <p className="font-display text-[16px] sm:text-[17px]" style={{ fontWeight: 600 }}>
             {props.labels.skip_to_result_loading_h}
           </p>
-          <SkipDots label={props.labels.skip_to_result_loading_dots} />
+          <div className="mt-2">
+            <YoloProgress label={props.labels.skip_to_result_loading_dots} />
+          </div>
         </div>
       )}
 
       {skipError && (
-        <p className="mt-6 text-[13px] text-[oklch(56%_0.14_28)]" role="alert">
-          {skipError}
-        </p>
+        <div className="mt-6 flex flex-wrap items-center gap-3" role="alert">
+          <p className="text-[13px] text-[oklch(56%_0.14_28)]">{skipError}</p>
+          <button
+            type="button"
+            onClick={handleSkipToResult}
+            disabled={skipPending}
+            className="border border-ink/40 dark:border-ink-dark/40 text-ink dark:text-ink-dark hover:border-ink dark:hover:border-ink-dark px-3 py-1.5 text-[12px] font-display disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            style={{ fontWeight: 500 }}
+          >
+            {props.labels.skip_to_result_retry}
+          </button>
+        </div>
       )}
 
       {/* Stepper-style nav between screens */}
@@ -532,18 +547,3 @@ function DoneScreen({
   );
 }
 
-/* ─── Skip-to-result dotted-progress sub-line ─── */
-
-function SkipDots({ label }: { label: string }) {
-  const [dots, setDots] = useState(0);
-  useEffect(() => {
-    const t = setInterval(() => setDots((d) => (d + 1) % 4), 400);
-    return () => clearInterval(t);
-  }, []);
-  return (
-    <p className="mt-2 text-[13px] text-ink-soft dark:text-ink-soft-dark">
-      {label}
-      {".".repeat(dots)}
-    </p>
-  );
-}
