@@ -271,6 +271,57 @@ export type Dictionary = {
     translation_pending_h: string;
     translation_pending_body: string;
   };
+  /** Wake Up Zine flavor strings — stickers, hover annotations, marker stamps,
+   *  topbar issue tag, etc. Spec: openspec/specs/zine-design-system. */
+  zine: {
+    issue_tag: string;
+    /** Six hover annotations rotated through picker cards. */
+    hover_notes: [string, string, string, string, string, string];
+    receipts_stamp: string;
+    exercise_not_manifesto: string;
+    tonights_exclusive: string;
+    you_can_be_a_conspiracist: string;
+    educational_purposes_only: string;
+    four_moves_youll_learn: string;
+    free_in_classrooms: string;
+    lesson_plan_blurb: string;
+    one_hundred_percent_fabricated: string;
+    expose_for_instructional: string;
+    built_in_three_minutes: string;
+    do_not_share_without_context: string;
+    marker_caption: string;
+    back_a_step: string;
+    move_n_of_n: string;
+    your_theory: string;
+    the_move: string;
+    as_told_by_you: string;
+    now_show_me_debunk: string;
+    why_it_doesnt_hold_up: string;
+    back_to_the_theory: string;
+    next_move: string;
+    see_the_whole_thing: string;
+    save_poster: string;
+    build_another: string;
+    start_the_exercise: string;
+    takes_three_minutes: string;
+    the_four_moves_title: string;
+    recipe_eyebrow: string;
+    lesson_plan_eyebrow: string;
+    lesson_plan_title: string;
+    lesson_plan_audience: string;
+    debunk_label: string;
+    debunk_sticker: string;
+    your_theory_sticker: string;
+    useful_test: string;
+    useful_test_body: string;
+    what_you_just_learned: string;
+    what_you_just_learned_body: string;
+    official_story: string;
+    what_they_dont_want: string;
+    generator_output_footer: string;
+    receipts_caption: string;
+    start_over: string;
+  };
 };
 
 export const en: Dictionary = {
@@ -559,5 +610,53 @@ export const en: Dictionary = {
   legal: {
     translation_pending_h: "",
     translation_pending_body: "",
+  },
+  zine: {
+    issue_tag: '"wake up, sheeple"',
+    hover_notes: ["PROOF???", "WAIT…", "COINCIDENCE?", "SUSPICIOUS!", "CONNECTED!", "GOTCHA"],
+    receipts_stamp: "RECEIPTS!",
+    exercise_not_manifesto: "An exercise · not a manifesto",
+    tonights_exclusive: "Tonight's exclusive",
+    you_can_be_a_conspiracist: "YOU can be a\nconspiracist*",
+    educational_purposes_only: "*for educational purposes only",
+    four_moves_youll_learn: "The four moves you'll learn:",
+    free_in_classrooms: "Free in classrooms",
+    lesson_plan_blurb: "Open the *Lesson plan* menu for a 45-minute classroom unit and printable worksheet.",
+    one_hundred_percent_fabricated: "100% fabricated",
+    expose_for_instructional: "Exposé · for instructional purposes",
+    built_in_three_minutes: "Built in 3 minutes by you",
+    do_not_share_without_context: "do not share without context",
+    marker_caption: "↑ the red-marked words are the parts your picks generated.",
+    back_a_step: "← back a step",
+    move_n_of_n: "Move {n} of {total}",
+    your_theory: "Your theory",
+    the_move: "The move",
+    as_told_by_you: "As told by you, the apprentice conspiracist:",
+    now_show_me_debunk: "⚠ Now show me the debunk",
+    why_it_doesnt_hold_up: "Why it doesn't hold up",
+    back_to_the_theory: "↺ Back to the theory",
+    next_move: "Next move →",
+    see_the_whole_thing: "See the whole thing →",
+    save_poster: "↓ Save poster",
+    build_another: "↺ Build another",
+    start_the_exercise: "▸ Start the exercise",
+    takes_three_minutes: "takes 3 minutes!!",
+    the_four_moves_title: "The four moves.",
+    recipe_eyebrow: "Recipe page",
+    lesson_plan_eyebrow: "For teachers",
+    lesson_plan_title: "Lesson plan · 45 min.",
+    lesson_plan_audience: "Secondary · undergraduate · media literacy",
+    debunk_label: "Debunk",
+    debunk_sticker: "Debunk",
+    your_theory_sticker: "Your theory",
+    useful_test: "A useful test:",
+    useful_test_body: "ask yourself whether the same kind of reasoning could just as easily prove the *opposite* conclusion. If it can, it's a rhetorical move, not a clue.",
+    what_you_just_learned: "What you just learned:",
+    what_you_just_learned_body: "the same headline can power dozens of contradictory conspiracies. That's a feature of the genre, not a flaw — and a useful tell when you spot one in the wild.",
+    official_story: "The official story",
+    what_they_dont_want: "What \"they\" don't want you to know:",
+    generator_output_footer: "Generator output · session #{n} · do not share without context",
+    receipts_caption: "RECEIPTS!",
+    start_over: "↺ Start over",
   },
 };

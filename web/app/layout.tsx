@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Inter_Tight, JetBrains_Mono } from "next/font/google";
+import { Anton, Space_Grotesk, Permanent_Marker } from "next/font/google";
 import { headers } from "next/headers";
 import { ClassroomMount } from "@/components/classroom-mount";
 import { readSessionHash } from "@/lib/session";
@@ -15,23 +15,28 @@ const OG_LOCALE: Record<Locale, string> = {
   nl: "nl_NL",
 };
 
-const display = Fraunces({
+// Anton — display / scream headlines (only one weight; Google ships 400)
+const display = Anton({
   subsets: ["latin"],
   variable: "--font-display",
   display: "swap",
-  axes: ["SOFT", "WONK", "opsz"],
+  weight: "400",
 });
 
-const body = Inter_Tight({
+// Space Grotesk — body type
+const body = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-body",
   display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
 
-const mono = JetBrains_Mono({
+// Permanent Marker — hand annotations (RECEIPTS!, hover notes, "takes 3 minutes!!")
+const hand = Permanent_Marker({
   subsets: ["latin"],
-  variable: "--font-mono",
+  variable: "--font-hand",
   display: "swap",
+  weight: "400",
 });
 
 // Metadata is generated per-request below so titles + descriptions match the active locale.
@@ -65,8 +70,8 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#F6F2EA" },
-    { media: "(prefers-color-scheme: dark)", color: "#141622" },
+    { media: "(prefers-color-scheme: light)", color: "#f3e9c4" },
+    { media: "(prefers-color-scheme: dark)", color: "#181410" },
   ],
 };
 
@@ -79,7 +84,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   await captureVisit();
   const locale = await readLocale();
   return (
-    <html lang={locale} className={`${display.variable} ${body.variable} ${mono.variable}`}>
+    <html lang={locale} className={`${display.variable} ${body.variable} ${hand.variable}`}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: NO_FLASH_THEME }} />
       </head>

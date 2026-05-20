@@ -1,8 +1,12 @@
 import type { Config } from "tailwindcss";
 
-// Conspiracy Generator — v2 brand tokens
-// Design system: "Explainer" variant (Vox-meets-XKCD: Fraunces display + Inter Tight body)
-// Source: /tmp/design-extract/conspiracy-generator/project/system.jsx
+// Conspiracy Generator — Wake Up Zine identity
+// Tokens live as CSS custom properties in app/globals.css :root.
+// This config exposes them as Tailwind utilities so `bg-hot`, `text-paper`,
+// `border-ink` etc. compile.
+//
+// Dark mode is "inverted zine": ink background + paper text. The punch colors
+// (hot, hot-2, punch, cool) remain unchanged across themes.
 
 export default {
   darkMode: "class",
@@ -14,43 +18,34 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Light · newsprint cream
-        paper: "#F6F2EA",
-        "paper-alt": "#EDE7DA",
-        ink: "#1B1A1F",
-        "ink-soft": "#54515C",
-        rule: "#1B1A1F",
-        // Dark · late-night ink
-        "paper-dark": "#141622",
-        "paper-alt-dark": "#1B1E2D",
-        "ink-dark": "#EDE7D8",
-        "ink-soft-dark": "#9C9684",
-        // Recipe-move accents (equal chroma + lightness, hue rotated)
-        // Brick / moss / ink-blue / ochre — pedagogy, not tribal coding
-        move: {
-          anomaly: "oklch(56% 0.14 28)", // 01 — muted brick
-          "anomaly-soft": "oklch(92% 0.04 28)",
-          connection: "oklch(56% 0.14 130)", // 02 — moss
-          "connection-soft": "oklch(92% 0.04 130)",
-          dismiss: "oklch(56% 0.14 230)", // 03 — ink-blue
-          "dismiss-soft": "oklch(92% 0.04 230)",
-          discredit: "oklch(56% 0.14 70)", // 04 — ochre
-          "discredit-soft": "oklch(92% 0.04 70)",
-        },
+        paper: "var(--paper)",
+        "paper-2": "var(--paper-2)",
+        ink: "var(--ink)",
+        hot: "var(--hot)",
+        "hot-2": "var(--hot-2)",
+        punch: "var(--punch)",
+        cool: "var(--cool)",
       },
       fontFamily: {
-        // Display: Fraunces (Vox/explainer feel; not the heavier Playfair of "editorial")
-        display: ['var(--font-display)', '"Fraunces"', '"Lora"', "Georgia", "serif"],
-        body: ['var(--font-body)', '"Inter Tight"', '"Inter"', "system-ui", "sans-serif"],
-        mono: ['var(--font-mono)', '"JetBrains Mono"', "ui-monospace", "Menlo", "monospace"],
+        display: ['var(--font-display)', '"Anton"', '"Helvetica Neue Condensed"', "Impact", "sans-serif"],
+        body: ['var(--font-body)', '"Space Grotesk"', '"Inter"', "system-ui", "sans-serif"],
+        hand: ['var(--font-hand)', '"Permanent Marker"', '"Caveat"', "cursive"],
       },
       letterSpacing: {
         meta: "0.14em",
         "meta-tight": "0.1em",
         "meta-wide": "0.16em",
+        scream: "0.005em",
+      },
+      boxShadow: {
+        zine: "6px 6px 0 var(--ink)",
+        "zine-lg": "8px 8px 0 var(--ink)",
+        "zine-xl": "12px 12px 0 var(--ink)",
+        "zine-hot": "8px 8px 0 var(--hot)",
+        "zine-cool": "6px 6px 0 var(--cool)",
       },
       maxWidth: {
-        "prose-theory": "62ch",
+        stage: "1200px",
       },
     },
   },
