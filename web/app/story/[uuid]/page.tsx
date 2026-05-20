@@ -26,6 +26,7 @@ export default async function StoryPage({
   const sp = await searchParams;
   const locale = await readLocale();
   const t = getDict(locale).story;
+  const z = getDict(locale).zine;
 
   const refresh = sp.r != null ? Number.parseInt(sp.r, 10) || 0 : Math.floor(Math.random() * 1_000_000);
 
@@ -53,9 +54,9 @@ export default async function StoryPage({
             marginBottom: 14,
           }}
         >
-          <Sticker tilt={-2}>Step 2 of 3</Sticker>
+          <Sticker tilt={-2}>{z.step_2_of_3}</Sticker>
           <Sticker color="yellow" tilt={1.5}>
-            File open
+            {z.file_open}
           </Sticker>
           <Link
             href={localizedHref("/", locale)}
@@ -118,14 +119,14 @@ export default async function StoryPage({
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
-            <Sticker tilt={-3}>Step 3 of 3</Sticker>
+            <Sticker tilt={-3}>{z.step_3_of_3}</Sticker>
             <span className="label">{t.pick_conspirators_meta}</span>
           </div>
           <h2
             className="scream"
             style={{ fontSize: "var(--t-scream-sm)", margin: "10px 0 6px" }}
           >
-            Who did it? And what's their angle?
+            {z.who_did_it_h}
           </h2>
           <p className="body" style={{ fontSize: "var(--t-body)", lineHeight: 1.55, maxWidth: 760, margin: 0 }}>
             {t.pick_conspirators_explainer}

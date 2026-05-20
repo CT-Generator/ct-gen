@@ -321,6 +321,17 @@ export type Dictionary = {
     generator_output_footer: string;
     receipts_caption: string;
     start_over: string;
+    /** Step indicators in the picker / wizard. */
+    step_1_of_3: string;
+    step_2_of_3: string;
+    step_3_of_3: string;
+    /** Home story picker heading + deck. */
+    pick_the_event_h: string;
+    pick_the_event_deck: string;
+    /** Story-page step-3 heading (after intro paragraphs). */
+    who_did_it_h: string;
+    /** "File open" sticker on culprit / motive screens. */
+    file_open: string;
   };
 };
 
@@ -658,5 +669,12 @@ export const en: Dictionary = {
     generator_output_footer: "Generator output · session #{n} · do not share without context",
     receipts_caption: "RECEIPTS!",
     start_over: "↺ Start over",
+    step_1_of_3: "Step 1 of 3",
+    step_2_of_3: "Step 2 of 3",
+    step_3_of_3: "Step 3 of 3",
+    pick_the_event_h: "Pick the event.",
+    pick_the_event_deck: "Choose whichever real-feeling headline your imagination will run wildest with. Don't overthink it.",
+    who_did_it_h: "Who did it? And what's their angle?",
+    file_open: "File open",
   },
 };

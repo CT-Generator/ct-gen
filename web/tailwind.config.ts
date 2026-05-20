@@ -9,6 +9,11 @@ import type { Config } from "tailwindcss";
 // (hot, hot-2, punch, cool) remain unchanged across themes.
 
 export default {
+  // Keep "class" mode (rather than the v3 default "media") so the dead
+  // dark: variants scattered through unrewritten components never activate.
+  // We removed the .dark class toggle from the topbar entirely; this just
+  // makes sure none of those classes get applied by accident based on the
+  // visitor's OS theme.
   darkMode: "class",
   content: [
     "./app/**/*.{ts,tsx}",

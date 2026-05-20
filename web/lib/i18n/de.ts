@@ -367,5 +367,12 @@ export const de: Dictionary = {
     generator_output_footer: "Generator-Ausgabe · Sitzung #{n} · nicht ohne Kontext teilen",
     receipts_caption: "BEWEISE!",
     start_over: "↺ Von vorn anfangen",
+    step_1_of_3: "Schritt 1 von 3",
+    step_2_of_3: "Schritt 2 von 3",
+    step_3_of_3: "Schritt 3 von 3",
+    pick_the_event_h: "Wähle das Ereignis.",
+    pick_the_event_deck: "Nimm die Schlagzeile, bei der deine Vorstellungskraft am wildesten loslegt. Nicht zu lange überlegen.",
+    who_did_it_h: "Wer war es? Und was ist das Motiv?",
+    file_open: "Akte offen",
   },
 };

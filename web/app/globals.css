@@ -11,7 +11,7 @@
 
 @layer base {
   :root {
-    color-scheme: light;
+    color-scheme: light only;
 
     /* Palette */
     --paper:   #f3e9c4;
@@ -52,16 +52,6 @@
     --stage-pad-x: 30px;
   }
 
-  /* Dark mode is "inverted zine": ink background, paper text.
-     Punch colors stay the same. */
-  .dark {
-    color-scheme: dark;
-    --paper:   #181410;  /* swap */
-    --paper-2: #221d18;  /* slightly lighter ink */
-    --ink:     #f3e9c4;  /* swap */
-    /* hot, hot-2, punch, cool unchanged */
-  }
-
   *, *::before, *::after { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
   html { -webkit-text-size-adjust: 100%; }
@@ -99,20 +89,6 @@
         rgba(20, 16, 12, 0)     4px
       );
     mix-blend-mode: multiply;
-  }
-
-  /* In dark mode the multiply scan-lines disappear against ink; switch them
-     to a paper-tinted overlay with screen blend. */
-  .dark body::before {
-    background:
-      repeating-linear-gradient(
-        180deg,
-        rgba(243, 233, 196, 0)    0px,
-        rgba(243, 233, 196, 0)    2px,
-        rgba(243, 233, 196, 0.03) 3px,
-        rgba(243, 233, 196, 0)    4px
-      );
-    mix-blend-mode: screen;
   }
 
   button { font-family: inherit; }

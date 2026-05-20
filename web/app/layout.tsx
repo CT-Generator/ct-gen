@@ -69,25 +69,14 @@ export async function generateMetadata(): Promise<Metadata> {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f3e9c4" },
-    { media: "(prefers-color-scheme: dark)", color: "#181410" },
-  ],
+  themeColor: "#f3e9c4",
 };
-
-// Inline script to set theme class before paint, preventing flash-of-wrong-theme.
-const NO_FLASH_THEME = `
-(function(){try{var t=localStorage.getItem('cgen-theme');var d=t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;if(d)document.documentElement.classList.add('dark');}catch(e){}})();
-`.trim();
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   await captureVisit();
   const locale = await readLocale();
   return (
     <html lang={locale} className={`${display.variable} ${body.variable} ${hand.variable}`}>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: NO_FLASH_THEME }} />
-      </head>
       <body>
         <ClassroomMount />
         {children}

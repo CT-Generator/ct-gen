@@ -5,7 +5,6 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { ThemeToggle } from "@/components/theme-toggle";
 import { Sticker } from "./sticker";
 
 type NavItem = { key: string; label: string; href: string };
@@ -156,8 +155,6 @@ export function TopbarClient({
             </Link>
           ))}
         </div>
-
-        <ThemeToggle />
       </nav>
 
       {/* Mobile drawer */}

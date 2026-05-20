@@ -382,5 +382,12 @@ export const nl: Dictionary = {
     generator_output_footer: "Generator-output · sessie #{n} · niet delen zonder context",
     receipts_caption: "BEWIJS!",
     start_over: "↺ Begin opnieuw",
+    step_1_of_3: "Stap 1 van 3",
+    step_2_of_3: "Stap 2 van 3",
+    step_3_of_3: "Stap 3 van 3",
+    pick_the_event_h: "Kies de gebeurtenis.",
+    pick_the_event_deck: "Pak welke nieuwskop dan ook waar je verbeelding het wildst op losgaat. Niet te lang over nadenken.",
+    who_did_it_h: "Wie heeft het gedaan? En wat is hun motief?",
+    file_open: "Dossier open",
   },
 };

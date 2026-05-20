@@ -201,7 +201,7 @@ export default async function HomePage({
               marginBottom: 10,
             }}
           >
-            <Sticker tilt={-2}>Step 1 of 3</Sticker>
+            <Sticker tilt={-2}>{z.step_1_of_3}</Sticker>
             <span className="label">{t.step_1_picker}</span>
             <Link
               href={{ pathname: localizedHref("/", locale), query: { r: refresh + 1 } }}
@@ -221,10 +221,10 @@ export default async function HomePage({
             className="scream"
             style={{ fontSize: "var(--t-scream-md)", margin: "10px 0 4px" }}
           >
-            Pick the event.
+            {z.pick_the_event_h}
           </h2>
           <p className="body" style={{ margin: "0 0 18px", maxWidth: 760 }}>
-            Choose whichever real-feeling headline your imagination will run wildest with. Don't overthink it.
+            {z.pick_the_event_deck}
           </p>
 
           <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
