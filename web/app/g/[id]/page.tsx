@@ -24,6 +24,8 @@ import { NarrativeStamp } from "@/components/narrative-stamp";
 import { ShareButtons } from "@/components/share-buttons";
 import { RatingBar } from "@/components/rating-bar";
 import { TheoryHeadline } from "@/components/theory-headline";
+import { Sticker } from "@/components/zine/sticker";
+import { MarkerStamp } from "@/components/zine/marker-stamp";
 import { getDict, isLocale, localizedHref, readLocale, type Locale } from "@/lib/i18n";
 
 type Params = { id: string };
@@ -147,17 +149,45 @@ export default async function GenerationPage({ params }: { params: Promise<Param
   const display = buildDisplayMoves(content);
   const permalink = `${env().PUBLIC_BASE_URL}/g/${id}`;
 
+  const zineDict = getDict(rowLocale).zine;
+
   return (
     <>
       <Masthead />
 
-      {/* Header */}
-      <section className="border-b border-ink dark:border-ink-dark">
-        <div className="mx-auto max-w-3xl px-4 py-7 sm:px-6 sm:py-9 lg:py-10 flex flex-col gap-4">
-          <div>
-            <p className="meta">
-              {gen.source === "migrated" ? t.eyebrow_imported : t.eyebrow_fake}
-            </p>
+      <div className="stage">
+        {/* Top sticker row — crop-resistant disclaimers (1/3) */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 12,
+            flexWrap: "wrap",
+            marginBottom: 14,
+          }}
+        >
+          <Sticker color="yellow" tilt={-2}>{zineDict.expose_for_instructional}</Sticker>
+          <Sticker color="hot" tilt={1.5}>{zineDict.one_hundred_percent_fabricated}</Sticker>
+          <Sticker color="ink" tilt={-1}>{zineDict.built_in_three_minutes}</Sticker>
+        </div>
+
+        {/* Dark headline card — ink background, paper text, hot offset shadow */}
+        <section
+          style={{
+            position: "relative",
+            background: "var(--ink)",
+            color: "var(--paper)",
+            border: "3px solid var(--ink)",
+            boxShadow: "8px 8px 0 var(--hot)",
+            padding: "26px 28px 22px",
+            marginBottom: 28,
+          }}
+        >
+          <div className="label" style={{ color: "var(--punch)" }}>
+            {gen.source === "migrated" ? t.eyebrow_imported : t.eyebrow_fake}
+          </div>
+
+          <div style={{ marginTop: 8 }}>
             <TheoryHeadline
               locale={rowLocale}
               moves={MOVES.map((m) => ({ color: m.color }))}
@@ -173,13 +203,17 @@ export default async function GenerationPage({ params }: { params: Promise<Param
             />
           </div>
 
-          {/* Older / narrative-absent rows: italic conspiracist hook with inline source link.
-              Narrative-present rows: skip the hook (the narrative below replaces it) and
-              render the source link as its own meta line — see source-link block below. */}
           {content.conspiracist_intro && !content.narrative?.paragraphs?.length && (
             <p
-              className="mt-2 max-w-2xl text-[15px] sm:text-[16px] leading-relaxed italic"
-              style={{ color: "var(--tw-color-ink-soft, #54515C)" }}
+              className="body"
+              style={{
+                marginTop: 14,
+                fontSize: "var(--t-body)",
+                lineHeight: 1.6,
+                fontStyle: "italic",
+                maxWidth: 720,
+                color: "color-mix(in oklab, var(--paper) 90%, transparent)",
+              }}
             >
               {content.conspiracist_intro}
               {content.event_intro?.source_url && (
@@ -189,7 +223,7 @@ export default async function GenerationPage({ params }: { params: Promise<Param
                     href={content.event_intro.source_url}
                     target="_blank"
                     rel="noopener nofollow"
-                    className="not-italic underline-offset-2 underline hover:no-underline"
+                    style={{ color: "var(--punch)", fontStyle: "normal", textDecoration: "underline" }}
                   >
                     {t.original_story}
                   </a>
@@ -199,13 +233,13 @@ export default async function GenerationPage({ params }: { params: Promise<Param
           )}
 
           {content.narrative?.paragraphs?.length && content.event_intro?.source_url && (
-            <p className="meta">
+            <p className="label" style={{ marginTop: 14, color: "color-mix(in oklab, var(--paper) 70%, transparent)" }}>
               {getDict(rowLocale).story.source_label}{" "}
               <a
                 href={content.event_intro.source_url}
                 target="_blank"
                 rel="noopener nofollow"
-                className="underline-offset-2 underline hover:no-underline break-all"
+                style={{ color: "var(--punch)", textDecoration: "underline" }}
               >
                 {(() => {
                   try {
@@ -217,8 +251,32 @@ export default async function GenerationPage({ params }: { params: Promise<Param
               </a>
             </p>
           )}
-        </div>
-      </section>
+
+          {/* RECEIPTS! marker stamp — top right, rotated, paper on ink-bordered card */}
+          <div
+            style={{
+              position: "absolute",
+              top: 14,
+              right: -18,
+              pointerEvents: "none",
+            }}
+            data-zine-marginalia
+          >
+            <MarkerStamp tilt={15}>{zineDict.receipts_stamp}</MarkerStamp>
+          </div>
+
+          {/* Bottom meta — third disclaimer-strength instance */}
+          <p
+            className="label"
+            style={{
+              marginTop: 18,
+              color: "color-mix(in oklab, var(--paper) 55%, transparent)",
+            }}
+          >
+            {zineDict.do_not_share_without_context}
+          </p>
+        </section>
+      </div>
 
       {/* Narrative finale — integrated theory. Rendered for any recipe-tagged
           generation that has a persisted narrative; older rows and rows where
@@ -232,7 +290,7 @@ export default async function GenerationPage({ params }: { params: Promise<Param
           NarrativeStamp anchored bottom-right, so any horizontal screenshot of
           any single paragraph also captures that paragraph's stamp. */}
       {display.shape !== "legacy" && content.narrative?.paragraphs?.length ? (
-        <section className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-9 pt-7 sm:pt-9">
+        <section className="stage" style={{ paddingTop: 8 }}>
           <p className="meta mb-3">{t.narrative_eyebrow}</p>
           <div className="font-body text-[16px] sm:text-[17px] leading-[1.7] space-y-4">
             {content.narrative.paragraphs.map((p, i) => (
@@ -270,9 +328,9 @@ export default async function GenerationPage({ params }: { params: Promise<Param
         </section>
       ) : null}
 
-      {/* Move blocks */}
+      {/* Move blocks — alternating punch/paper panels (zine board feel) */}
       {display.shape !== "legacy" ? (
-        <section className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-9">
+        <section className="stage" style={{ paddingTop: 8 }}>
           {content.narrative?.paragraphs?.length ? (
             <div id="breakdown" className="pt-8 sm:pt-10 mt-2 rule-h scroll-mt-8">
               <p className="meta pt-5">{t.breakdown_eyebrow}</p>
@@ -281,86 +339,151 @@ export default async function GenerationPage({ params }: { params: Promise<Param
               </p>
             </div>
           ) : null}
-          {MOVES.map((m) => {
+          {MOVES.map((m, i) => {
             const dm = display.moves[m.key];
             if (!dm) return null;
+            const bgs = ["var(--punch)", "var(--paper)", "var(--paper)", "var(--punch)"];
+            const cardBg = bgs[i % 4];
             return (
               <article
                 key={m.key}
-                className="py-7 sm:py-9 border-t border-ink/15 dark:border-ink-dark/15 first:border-t-0 first:pt-2"
+                style={{
+                  background: cardBg,
+                  border: "3px solid var(--ink)",
+                  boxShadow: "var(--shadow)",
+                  padding: "18px 22px 18px",
+                  marginTop: i === 0 ? 0 : 22,
+                }}
               >
-                <div className="flex items-center gap-2.5 mb-3">
-                  <span style={{ color: m.color }}>
-                    <MoveGlyph kind={m.key} size={22} strokeWidth={1.6} />
-                  </span>
+                <div style={{ display: "flex", alignItems: "baseline", gap: 12, marginBottom: 8 }}>
                   <span
-                    className="font-mono uppercase"
-                    style={{ fontSize: 10, letterSpacing: "0.16em", color: m.color }}
+                    className="scream"
+                    style={{ fontSize: 32, color: "var(--hot-2)", lineHeight: 1 }}
                   >
-                    {t.move_label} {m.n} · {m.title}
+                    0{m.n}
                   </span>
+                  <div style={{ flex: "1 1 auto", minWidth: 0 }}>
+                    <div className="scream" style={{ fontSize: "var(--t-scream-xs)", lineHeight: 1.05 }}>
+                      {m.title}
+                    </div>
+                    <div className="label" style={{ color: "var(--hot-2)", marginTop: 4 }}>
+                      {t.move_label} {m.n}
+                    </div>
+                  </div>
                 </div>
                 {dm.idea && (
-                  <p className="meta mb-2">{t.idea_label} {dm.idea}</p>
+                  <p className="label" style={{ marginBottom: 8 }}>{t.idea_label} {dm.idea}</p>
                 )}
                 <div
-                  className="font-body text-[15px] sm:text-[16px] leading-[1.65] pl-4 sm:pl-5"
+                  className="body"
                   style={{
                     position: "relative",
-                    borderLeft: `2px solid ${m.color}`,
-                    background: `color-mix(in oklab, ${m.color} 6%, transparent)`,
-                    padding: "10px 32px 22px 16px",
+                    fontSize: "var(--t-body)",
+                    lineHeight: 1.6,
+                    padding: "10px 32px 18px 0",
                     whiteSpace: "pre-wrap",
                   }}
                 >
                   {dm.paragraph}
                   <MoveTellStamp move={m} label={t.move_label.toUpperCase()} />
                 </div>
-                <div className="mt-4 pl-4 sm:pl-5 border-l border-dashed border-ink/35 dark:border-ink-dark/35 py-1">
-                  <p
-                    className="font-mono uppercase text-ink-soft dark:text-ink-soft-dark mb-2"
-                    style={{ fontSize: 10, letterSpacing: "0.14em" }}
-                  >
-                    {t.debunk_label}
+                <div
+                  style={{
+                    marginTop: 14,
+                    paddingTop: 12,
+                    borderTop: "1px dashed color-mix(in oklab, var(--ink) 40%, transparent)",
+                  }}
+                >
+                  <p className="label" style={{ marginBottom: 6 }}>
+                    ⚠ {t.debunk_label}
                   </p>
-                  <p className="text-[13.5px] leading-[1.55] whitespace-pre-wrap">{dm.debunk}</p>
+                  <p
+                    className="body"
+                    style={{ fontSize: "var(--t-body-sm)", lineHeight: 1.55, whiteSpace: "pre-wrap" }}
+                  >
+                    {dm.debunk}
+                  </p>
                 </div>
               </article>
             );
           })}
         </section>
       ) : (
-        <section className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-9 py-8">
-          <p
-            className="meta mb-4 inline-block px-2 py-1 border border-ink-soft dark:border-ink-soft-dark"
-            style={{ fontSize: 9 }}
-          >
-            {t.legacy_note}
-          </p>
+        <section className="stage" style={{ paddingTop: 16 }}>
+          <Sticker color="ink" tilt={-1}>{t.legacy_note}</Sticker>
           <div
-            className="font-body text-[15px] sm:text-[16px] leading-[1.7] whitespace-pre-wrap"
+            className="font-body whitespace-pre-wrap"
+            style={{ fontSize: "var(--t-body)", lineHeight: 1.7, marginTop: 14 }}
             dangerouslySetInnerHTML={{ __html: content.legacy_text ?? "" }}
           />
         </section>
       )}
 
       {/* Rate + share + remix */}
-      <section className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-9 mt-8 sm:mt-10 pt-6 sm:pt-8 rule-h-soft space-y-6">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <p className="meta">{t.rate_question}</p>
+      <section
+        className="stage"
+        style={{
+          marginTop: 24,
+          paddingTop: 18,
+          borderTop: "2.5px solid var(--ink)",
+          display: "flex",
+          flexDirection: "column",
+          gap: 22,
+        }}
+      >
+        {/* What you just learned — the third disclaimer-strength block below the moves */}
+        <div
+          style={{
+            background: "var(--paper-2)",
+            border: "2.5px solid var(--ink)",
+            padding: "14px 18px",
+            boxShadow: "var(--shadow)",
+            maxWidth: 720,
+          }}
+        >
+          <p className="label" style={{ marginBottom: 6 }}>{zineDict.what_you_just_learned}</p>
+          <p className="body" style={{ fontSize: "var(--t-body-sm)", lineHeight: 1.55, margin: 0 }}>
+            {zineDict.what_you_just_learned_body}
+          </p>
+        </div>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <p className="label">{t.rate_question}</p>
           <RatingBar shortId={id} />
         </div>
 
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="meta">{t.share_meta}</p>
-          </div>
-          <div className="flex flex-wrap gap-2 items-center">
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 12,
+          }}
+        >
+          <p className="label">{t.share_meta}</p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center" }}>
             <Link
               href={localizedHref("/", rowLocale)}
-              className="border border-ink/30 dark:border-ink-dark/30 px-3 py-2 text-[12px] hover:border-ink dark:hover:border-ink-dark transition-colors"
+              className="zine-btn"
+              data-size="md"
+              style={{
+                background: "var(--hot)",
+                color: "var(--paper)",
+                border: "3px solid var(--ink)",
+                boxShadow: "var(--shadow)",
+                fontFamily: "var(--font-display)",
+                fontSize: "clamp(18px, 1.8vw, 22px)",
+                letterSpacing: "0.04em",
+                textTransform: "uppercase",
+                padding: "11px 20px 9px",
+                textDecoration: "none",
+                minHeight: 44,
+                whiteSpace: "nowrap",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 8,
+              }}
             >
-              {t.build_another}
+              ↺ {t.build_another}
             </Link>
             <ShareButtons
               permalink={permalink}

@@ -163,7 +163,7 @@ export function BuildWizard(props: Props) {
   }
 
   return (
-    <article className="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12 lg:py-14">
+    <article className="stage">
       <ProgressBar
         current={screen}
         moves={props.moves}
@@ -388,13 +388,13 @@ function MoveScreen({
         </span>
       </div>
       <h1
-        className="mt-3 font-display text-[clamp(1.8rem,5vw,2.8rem)] leading-[1.05]"
-        style={{ fontWeight: 600, letterSpacing: "-0.025em" }}
+        className="scream mt-3"
+        style={{ fontSize: "var(--t-scream-md)" }}
       >
         {move.title}
       </h1>
 
-      <p className="mt-5 text-[15px] leading-relaxed text-ink-soft dark:text-ink-soft-dark">
+      <p className="body" style={{ fontSize: "var(--t-body)", lineHeight: 1.6, marginTop: 14, maxWidth: 720 }}>
         {blurb.explainer}
       </p>
 
@@ -475,12 +475,29 @@ function MoveScreen({
             <button
               type="button"
               onClick={onNext}
-              className="bg-ink text-paper dark:bg-ink-dark dark:text-paper-dark px-5 py-3 font-display"
-              style={{ fontSize: 16, fontWeight: 600, letterSpacing: "-0.01em" }}
+              className="zine-btn"
+              data-size="md"
+              style={{
+                background: "var(--hot)",
+                color: "var(--paper)",
+                border: "3px solid var(--ink)",
+                boxShadow: "var(--shadow)",
+                fontFamily: "var(--font-display)",
+                fontSize: "clamp(18px, 1.8vw, 22px)",
+                padding: "11px 20px 9px",
+                letterSpacing: "0.04em",
+                textTransform: "uppercase",
+                whiteSpace: "nowrap",
+                cursor: "pointer",
+                minHeight: 44,
+              }}
             >
-              {move.key === "discredit" ? labels.see_full_theory : labels.next_move}
+              {move.key === "discredit" ? labels.see_full_theory : labels.next_move} →
             </button>
-            <span className="text-[13px] italic text-ink-soft dark:text-ink-soft-dark">
+            <span
+              className="marker"
+              style={{ fontSize: 18, color: "var(--cool)", transform: "rotate(-1deg)", display: "inline-block" }}
+            >
               {labels.or_regenerate}
             </span>
           </div>

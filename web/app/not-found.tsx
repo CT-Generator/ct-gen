@@ -1,8 +1,9 @@
-// 404 fallback. Locale-aware: chrome reads from the same dictionary as the rest of the site.
+// 404 fallback — zine style.
 
-import Link from "next/link";
 import { Masthead } from "@/components/masthead";
 import { Footer } from "@/components/footer";
+import { BtnLink } from "@/components/zine/btn";
+import { Sticker } from "@/components/zine/sticker";
 import { readLocale, getDict, localizedHref } from "@/lib/i18n";
 
 export default async function NotFound() {
@@ -12,24 +13,25 @@ export default async function NotFound() {
   return (
     <>
       <Masthead />
-      <article className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24">
+      <article className="stage">
+        <Sticker color="hot" tilt={-3}>404</Sticker>
         <h1
-          className="font-display text-[clamp(2.5rem,6vw,4rem)] leading-[0.96]"
-          style={{ fontWeight: 600, letterSpacing: "-0.025em" }}
+          className="scream"
+          style={{ fontSize: "var(--t-scream-xl)", margin: "14px 0 16px" }}
         >
           {t.not_found_h1}
         </h1>
-        <p className="mt-4 text-[16px] leading-relaxed text-ink-soft dark:text-ink-soft-dark">
+        <p
+          className="body"
+          style={{ fontSize: "var(--t-body-lg)", lineHeight: 1.55, maxWidth: 640 }}
+        >
           {t.not_found_body}
         </p>
-        <p className="mt-8">
-          <Link
-            href={localizedHref("/", locale)}
-            className="font-mono uppercase tracking-[0.14em] text-[12px] underline-offset-2 underline hover:no-underline"
-          >
-            {t.not_found_back_home}
-          </Link>
-        </p>
+        <div style={{ marginTop: 28 }}>
+          <BtnLink href={localizedHref("/", locale)} variant="hot">
+            ← {t.not_found_back_home}
+          </BtnLink>
+        </div>
       </article>
       <Footer />
     </>

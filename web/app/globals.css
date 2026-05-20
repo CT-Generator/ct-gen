@@ -255,6 +255,16 @@
   .zine-btn[data-size="sm"]:hover { box-shadow: 6px 6px 0 var(--ink); }
   .zine-btn[data-size="sm"]:active { box-shadow: 2px 2px 0 var(--ink); }
 
+  /* ── Picker item (culprit / motive) ─────────────────────────── */
+  .zine-pick:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 4px 0 var(--ink) !important;
+    background: var(--punch) !important;
+  }
+  .zine-pick[data-selected="1"] {
+    background: var(--punch) !important;
+  }
+
   /* ── Sticker ────────────────────────────────────────────────── */
   .sticker {
     --tilt: 0deg;
@@ -431,6 +441,7 @@
   .pulpcard { --tilt: 0deg !important; }
   .pulpcard:hover { transform: translate(0, 0); }
   .strings { display: none; }
+  .zine-pickers { grid-template-columns: 1fr !important; }
 }
 
 /* ─────────────────────────────────────────────────────────────

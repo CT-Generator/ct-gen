@@ -34,29 +34,70 @@ export default function SegmentError({
   const homeHref = locale === "en" ? "/" : `/${locale}`;
 
   return (
-    <article className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24">
+    <article className="stage">
+      <span
+        className="sticker"
+        style={{ ["--tilt" as string]: "-3deg" }}
+      >
+        Error
+      </span>
       <h1
-        className="font-display text-[clamp(2.5rem,6vw,4rem)] leading-[0.96]"
-        style={{ fontWeight: 600, letterSpacing: "-0.025em" }}
+        className="scream"
+        style={{ fontSize: "var(--t-scream-xl)", margin: "14px 0 16px" }}
       >
         {t.client_error_h1}
       </h1>
-      <p className="mt-4 text-[16px] leading-relaxed text-ink-soft dark:text-ink-soft-dark">
+      <p
+        className="body"
+        style={{ fontSize: "var(--t-body-lg)", lineHeight: 1.55, maxWidth: 640 }}
+      >
         {t.client_error_body}
       </p>
-      <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3">
+      <div style={{ marginTop: 28, display: "flex", flexWrap: "wrap", gap: 14 }}>
         <button
           type="button"
           onClick={() => reset()}
-          className="font-mono uppercase tracking-[0.14em] text-[12px] underline-offset-2 underline hover:no-underline"
+          className="zine-btn"
+          data-size="md"
+          style={{
+            background: "var(--hot)",
+            color: "var(--paper)",
+            border: "3px solid var(--ink)",
+            boxShadow: "var(--shadow)",
+            fontFamily: "var(--font-display)",
+            fontSize: "clamp(18px, 1.8vw, 22px)",
+            padding: "11px 20px 9px",
+            letterSpacing: "0.04em",
+            textTransform: "uppercase",
+            cursor: "pointer",
+            minHeight: 44,
+            whiteSpace: "nowrap",
+          }}
         >
-          {t.client_error_try_again}
+          ↻ {t.client_error_try_again}
         </button>
         <Link
           href={homeHref}
-          className="font-mono uppercase tracking-[0.14em] text-[12px] underline-offset-2 underline hover:no-underline"
+          className="zine-btn"
+          data-size="sm"
+          style={{
+            background: "transparent",
+            color: "var(--ink)",
+            border: "3px solid var(--ink)",
+            boxShadow: "4px 4px 0 var(--ink)",
+            fontFamily: "var(--font-display)",
+            fontSize: 14,
+            padding: "8px 14px 6px",
+            letterSpacing: "0.04em",
+            textTransform: "uppercase",
+            textDecoration: "none",
+            minHeight: 44,
+            whiteSpace: "nowrap",
+            display: "inline-flex",
+            alignItems: "center",
+          }}
         >
-          {t.not_found_back_home}
+          ← {t.not_found_back_home}
         </Link>
       </div>
     </article>

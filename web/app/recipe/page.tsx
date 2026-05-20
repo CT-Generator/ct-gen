@@ -1,11 +1,11 @@
-// /recipe — the four moves explained at length, with each glyph + the same sub-line as the home preview.
-// Spec: openspec/changes/v2-rebuild/specs/attribution-and-brand/spec.md (Educational-purpose framing)
+// /recipe — Wake Up Zine: the four moves explained at length.
+// Spec: zine-design-system + attribution-and-brand (educational-purpose framing).
 
 import type { Metadata } from "next";
 import { getMoves } from "@/lib/recipe";
 import { Masthead } from "@/components/masthead";
 import { Footer } from "@/components/footer";
-import { MoveGlyph } from "@/components/move-glyph";
+import { Sticker } from "@/components/zine/sticker";
 import { readLocale, getDict } from "@/lib/i18n";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -17,6 +17,7 @@ export default async function RecipePage() {
   const locale = await readLocale();
   const t = getDict(locale).recipe;
   const long = getDict(locale).recipe_long;
+  const z = getDict(locale).zine;
   const MOVES = getMoves(locale);
   const longByKey: Record<string, [string, string, string]> = {
     anomaly: [long.anomaly_short, long.anomaly_body, long.anomaly_tell],
@@ -29,81 +30,144 @@ export default async function RecipePage() {
     <>
       <Masthead />
 
-      <article className="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-14 lg:py-16">
-        <p className="meta">{t.eyebrow}</p>
+      <article className="stage">
+        <Sticker color="yellow" tilt={-2}>{z.recipe_eyebrow}</Sticker>
+
         <h1
-          className="mt-3 font-display text-[clamp(2rem,5vw,3.25rem)] leading-[1.05]"
-          style={{ fontWeight: 600, letterSpacing: "-0.025em" }}
+          className="scream"
+          style={{ fontSize: "var(--t-scream-lg)", margin: "14px 0 16px" }}
         >
           {t.h1}
         </h1>
 
-        <p className="mt-6 text-[16px] leading-relaxed text-ink-soft dark:text-ink-soft-dark">
+        <p
+          className="body"
+          style={{
+            fontSize: "var(--t-body-lg)",
+            lineHeight: 1.6,
+            maxWidth: 720,
+            margin: 0,
+          }}
+        >
           {t.lede_a}{" "}
           <a
             href="https://maartenboudry.substack.com/p/the-conspiracy-generator"
             target="_blank"
             rel="noopener"
-            className="underline-offset-2 underline hover:no-underline"
+            style={{
+              color: "var(--cool)",
+              textDecoration: "underline",
+              textUnderlineOffset: 3,
+            }}
           >
             {t.lede_link}
           </a>
           {t.lede_period}
         </p>
 
+        {/* Aside */}
         <aside
-          className="mt-8 border-l-2 pl-4 sm:pl-5 py-2 italic text-[15px] leading-relaxed"
-          style={{ borderColor: "var(--tw-color-ink-soft, #54515C)" }}
+          style={{
+            marginTop: 22,
+            background: "var(--paper-2)",
+            border: "2.5px solid var(--ink)",
+            boxShadow: "var(--shadow)",
+            padding: "14px 18px",
+            maxWidth: 720,
+          }}
         >
-          <p>
+          <p
+            className="body"
+            style={{ fontSize: "var(--t-body)", lineHeight: 1.6, margin: 0, fontStyle: "italic" }}
+          >
             {t.aside_p}{" "}
-            <strong className="not-italic">{t.aside_form}</strong>{" "}
+            <strong style={{ fontStyle: "normal", color: "var(--hot-2)" }}>{t.aside_form}</strong>{" "}
             {t.aside_p_2}{" "}
-            <strong className="not-italic">{t.aside_substance}</strong>{" "}
+            <strong style={{ fontStyle: "normal", color: "var(--cool)" }}>{t.aside_substance}</strong>{" "}
             {t.aside_p_3}
           </p>
         </aside>
 
-        <div className="mt-10 space-y-12">
-          {MOVES.map((m) => {
+        {/* Four numbered tiles */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 22, marginTop: 36 }}>
+          {MOVES.map((m, i) => {
             const [short, body, tell] = longByKey[m.key]!;
+            const bgs = ["var(--punch)", "var(--paper)", "var(--paper)", "var(--punch)"];
+            const cardBg = bgs[i % 4];
             return (
-              <section key={m.key}>
-                <div className="flex items-center gap-3">
-                  <span style={{ color: m.color }}>
-                    <MoveGlyph kind={m.key} size={36} strokeWidth={1.5} />
-                  </span>
-                  <span
-                    className="font-mono uppercase"
-                    style={{ fontSize: 11, letterSpacing: "0.16em", color: m.color }}
-                  >
-                    {t.move_label} {m.n}
-                  </span>
-                </div>
-                <h2
-                  className="mt-2.5 font-display text-[28px] sm:text-[32px] leading-tight"
-                  style={{ fontWeight: 600, letterSpacing: "-0.02em" }}
-                >
-                  {m.title}
-                </h2>
-                <p
-                  className="mt-2 text-[15px] italic"
-                  style={{ color: m.color }}
-                >
-                  {short}
-                </p>
-                <p className="mt-4 text-[15.5px] leading-relaxed">{body}</p>
-                <p
-                  className="mt-3 text-[14px] leading-relaxed pl-4 border-l-2"
+              <section
+                key={m.key}
+                style={{
+                  background: cardBg,
+                  border: "3px solid var(--ink)",
+                  boxShadow: "var(--shadow)",
+                  padding: "20px 24px 22px",
+                  display: "grid",
+                  gridTemplateColumns: "auto 1fr",
+                  gap: 18,
+                  alignItems: "start",
+                }}
+              >
+                {/* Number badge */}
+                <div
+                  className="scream"
                   style={{
-                    borderColor: m.color,
-                    background: `color-mix(in oklab, ${m.color} 5%, transparent)`,
-                    padding: "10px 14px 10px 16px",
+                    background: "var(--hot)",
+                    color: "var(--paper)",
+                    fontSize: 38,
+                    width: 64,
+                    height: 64,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    border: "2.5px solid var(--ink)",
                   }}
                 >
-                  <strong className="font-display" style={{ fontWeight: 600 }}>{t.tell_strong}</strong>{" "}
-                  {tell}
-                </p>
+                  0{m.n}
+                </div>
+
+                <div>
+                  <div className="scream" style={{ fontSize: "var(--t-scream-sm)", lineHeight: 1.05 }}>
+                    {m.title}
+                  </div>
+                  <div className="label" style={{ color: "var(--hot-2)", marginTop: 6 }}>
+                    {t.move_label} {m.n}
+                  </div>
+                  <p
+                    className="marker"
+                    style={{
+                      fontSize: 18,
+                      color: "var(--cool)",
+                      transform: "rotate(-1deg)",
+                      display: "inline-block",
+                      marginTop: 10,
+                      lineHeight: 1.2,
+                    }}
+                  >
+                    {short}
+                  </p>
+                  <p className="body" style={{ fontSize: "var(--t-body)", lineHeight: 1.6, marginTop: 14 }}>
+                    {body}
+                  </p>
+
+                  <div
+                    style={{
+                      marginTop: 14,
+                      paddingTop: 12,
+                      borderTop: "1px dashed color-mix(in oklab, var(--ink) 40%, transparent)",
+                    }}
+                  >
+                    <p className="label" style={{ marginBottom: 6, color: "var(--hot-2)" }}>
+                      {t.tell_strong}
+                    </p>
+                    <p
+                      className="body"
+                      style={{ fontSize: "var(--t-body-sm)", lineHeight: 1.55, margin: 0 }}
+                    >
+                      {tell}
+                    </p>
+                  </div>
+                </div>
               </section>
             );
           })}

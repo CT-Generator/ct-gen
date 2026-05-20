@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Masthead } from "@/components/masthead";
 import { Footer } from "@/components/footer";
+import { Sticker } from "@/components/zine/sticker";
 import { readLocale, getDict, localizedHref } from "@/lib/i18n";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -20,58 +21,60 @@ export default async function AboutPage() {
     <>
       <Masthead />
 
-      <article className="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-14 lg:py-16">
-        <p className="meta">{t.eyebrow}</p>
-        <h1
-          className="mt-3 font-display text-[clamp(2rem,5vw,3.25rem)] leading-[1.05]"
-          style={{ fontWeight: 600, letterSpacing: "-0.025em" }}
-        >
+      <article className="stage">
+        <Sticker tilt={-2}>{t.eyebrow}</Sticker>
+        <h1 className="scream" style={{ fontSize: "var(--t-scream-lg)", margin: "14px 0 16px" }}>
           {t.h1}
         </h1>
 
-        <div className="mt-8 space-y-5 text-[16px] leading-relaxed">
+        <div
+          className="body"
+          style={{ display: "flex", flexDirection: "column", gap: 14, fontSize: "var(--t-body)", lineHeight: 1.6, maxWidth: 720 }}
+        >
           <p>{t.p1}</p>
           <p>{t.p2}</p>
           <p>
             {t.p3_a}{" "}
-            <Link href={localizedHref("/recipe", locale)} className="underline-offset-2 underline hover:no-underline">
+            <Link
+              href={localizedHref("/recipe", locale)}
+              style={{ color: "var(--cool)", textDecoration: "underline" }}
+            >
               {t.p3_recipe_link}
             </Link>
             {t.p3_b}{" "}
-            <Link href={localizedHref("/teach", locale)} className="underline-offset-2 underline hover:no-underline">
+            <Link
+              href={localizedHref("/teach", locale)}
+              style={{ color: "var(--cool)", textDecoration: "underline" }}
+            >
               {t.p3_teach_link}
             </Link>{" "}
             {t.p3_c}
           </p>
         </div>
 
-        <div className="mt-12 rule-h pt-6">
-          <h2 className="font-display text-[22px] sm:text-[24px]" style={{ fontWeight: 600 }}>
-            {t.feedback_h}
-          </h2>
-          <p className="mt-4 text-[15px] leading-relaxed">
+        <section style={{ marginTop: 32, paddingTop: 22, borderTop: "2.5px solid var(--ink)" }}>
+          <h2 className="scream" style={{ fontSize: "var(--t-scream-sm)" }}>{t.feedback_h}</h2>
+          <p className="body" style={{ fontSize: "var(--t-body)", lineHeight: 1.6, marginTop: 12, maxWidth: 720 }}>
             {t.feedback_p_a}{" "}
             <a
               href="mailto:marco.meyer@jpberlin.de?subject=Conspiracy%20Generator%20%E2%80%94%20feedback"
-              className="underline-offset-2 underline hover:no-underline"
+              style={{ color: "var(--cool)", textDecoration: "underline" }}
             >
               marco.meyer@jpberlin.de
             </a>
             {t.feedback_p_period}
           </p>
-        </div>
+        </section>
 
-        <div className="mt-10 rule-h pt-6">
-          <h2 className="font-display text-[22px] sm:text-[24px]" style={{ fontWeight: 600 }}>
-            {t.credits_h}
-          </h2>
-          <p className="mt-4 text-[15px] leading-relaxed">
+        <section style={{ marginTop: 32, paddingTop: 22, borderTop: "2.5px solid var(--ink)" }}>
+          <h2 className="scream" style={{ fontSize: "var(--t-scream-sm)" }}>{t.credits_h}</h2>
+          <p className="body" style={{ fontSize: "var(--t-body)", lineHeight: 1.6, marginTop: 12, maxWidth: 720 }}>
             {t.credits_p_a}{" "}
             <a
               href="https://www.linkedin.com/in/marco-meyer-10923245/"
               target="_blank"
               rel="noopener"
-              className="underline-offset-2 underline hover:no-underline"
+              style={{ color: "var(--cool)", textDecoration: "underline" }}
             >
               Marco Meyer
             </a>{" "}
@@ -80,7 +83,7 @@ export default async function AboutPage() {
               href="https://www.linkedin.com/in/maarten-boudry-6b199a8/"
               target="_blank"
               rel="noopener"
-              className="underline-offset-2 underline hover:no-underline"
+              style={{ color: "var(--cool)", textDecoration: "underline" }}
             >
               Maarten Boudry
             </a>
@@ -89,13 +92,13 @@ export default async function AboutPage() {
               href="https://maartenboudry.substack.com/p/the-conspiracy-generator"
               target="_blank"
               rel="noopener"
-              className="underline-offset-2 underline hover:no-underline"
+              style={{ color: "var(--cool)", textDecoration: "underline" }}
             >
               {t.credits_blog_link}
             </a>
             {t.credits_p_thanks}
           </p>
-        </div>
+        </section>
       </article>
 
       <Footer />

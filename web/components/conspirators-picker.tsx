@@ -187,12 +187,29 @@ export function ConspiratorsPicker({
 
   return (
     <>
-      <div className="mt-8 grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2">
+      <div
+        className="zine-pickers"
+        style={{
+          marginTop: 22,
+          display: "grid",
+          gap: 18,
+          gridTemplateColumns: "1fr 1fr",
+        }}
+      >
         {/* Culprit */}
-        <fieldset className="bg-paper-alt dark:bg-paper-alt-dark border border-ink/15 dark:border-ink-dark/15 p-4 sm:p-5">
+        <fieldset
+          style={{
+            background: "var(--paper-2)",
+            border: "2.5px solid var(--ink)",
+            padding: "14px 16px 16px",
+            boxShadow: "var(--shadow)",
+          }}
+        >
           <legend className="sr-only">{labels.culprit}</legend>
-          <div className="meta mb-3.5">{labels.culprit}</div>
-          <div className="flex flex-col gap-2.5">
+          <div className="label" style={{ color: "var(--hot-2)", marginBottom: 10 }}>
+            {labels.culprit}
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {culprits.map((c) => {
               const selected = culprit?.uuid === c.uuid;
               return (
@@ -201,25 +218,35 @@ export function ConspiratorsPicker({
                   type="button"
                   onClick={() => setCulprit(c)}
                   aria-pressed={selected}
-                  className={[
-                    "flex items-center gap-2.5 px-3 py-2.5 text-left",
-                    "font-display text-[15px] sm:text-[16px] leading-tight",
-                    "border transition-colors",
-                    selected
-                      ? "border-ink dark:border-ink-dark bg-paper dark:bg-paper-dark text-ink dark:text-ink-dark"
-                      : "border-ink/20 dark:border-ink-dark/20 text-ink-soft dark:text-ink-soft-dark hover:border-ink/40 dark:hover:border-ink-dark/40",
-                  ].join(" ")}
-                  style={{ fontWeight: 600 }}
+                  className="zine-pick"
+                  data-selected={selected ? "1" : "0"}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 10,
+                    padding: "7px 10px",
+                    textAlign: "left",
+                    border: "2px solid var(--ink)",
+                    background: selected ? "var(--punch)" : "var(--paper)",
+                    color: "var(--ink)",
+                    fontFamily: "var(--font-display)",
+                    fontSize: 17,
+                    letterSpacing: "0.01em",
+                    cursor: "pointer",
+                    boxShadow: selected ? "4px 4px 0 var(--ink)" : "2px 2px 0 var(--ink)",
+                    transition: "transform var(--t-fast), box-shadow var(--t-fast), background var(--t-fast)",
+                  }}
                 >
                   <Image
                     src={c.imageUrl}
                     width={36}
                     height={36}
                     alt=""
-                    className="block h-9 w-9 flex-shrink-0 object-cover border border-ink/15 dark:border-ink-dark/15"
+                    className="block flex-shrink-0 object-cover"
+                    style={{ width: 36, height: 36, border: "2px solid var(--ink)" }}
                     unoptimized
                   />
-                  <span>{c.name}</span>
+                  <span style={{ lineHeight: 1.1 }}>{c.name}</span>
                 </button>
               );
             })}
@@ -227,10 +254,19 @@ export function ConspiratorsPicker({
         </fieldset>
 
         {/* Motive */}
-        <fieldset className="bg-paper-alt dark:bg-paper-alt-dark border border-ink/15 dark:border-ink-dark/15 p-4 sm:p-5">
+        <fieldset
+          style={{
+            background: "var(--paper-2)",
+            border: "2.5px solid var(--ink)",
+            padding: "14px 16px 16px",
+            boxShadow: "var(--shadow)",
+          }}
+        >
           <legend className="sr-only">{labels.motive}</legend>
-          <div className="meta mb-3.5">{labels.motive}</div>
-          <div className="flex flex-col gap-2.5">
+          <div className="label" style={{ color: "var(--hot-2)", marginBottom: 10 }}>
+            {labels.motive}
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {motives.map((m) => {
               const selected = motive?.uuid === m.uuid;
               return (
@@ -239,25 +275,35 @@ export function ConspiratorsPicker({
                   type="button"
                   onClick={() => setMotive(m)}
                   aria-pressed={selected}
-                  className={[
-                    "flex items-center gap-2.5 px-3 py-2.5 text-left",
-                    "font-display text-[15px] sm:text-[16px] leading-tight",
-                    "border transition-colors",
-                    selected
-                      ? "border-ink dark:border-ink-dark bg-paper dark:bg-paper-dark text-ink dark:text-ink-dark"
-                      : "border-ink/20 dark:border-ink-dark/20 text-ink-soft dark:text-ink-soft-dark hover:border-ink/40 dark:hover:border-ink-dark/40",
-                  ].join(" ")}
-                  style={{ fontWeight: 600 }}
+                  className="zine-pick"
+                  data-selected={selected ? "1" : "0"}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 10,
+                    padding: "7px 10px",
+                    textAlign: "left",
+                    border: "2px solid var(--ink)",
+                    background: selected ? "var(--punch)" : "var(--paper)",
+                    color: "var(--ink)",
+                    fontFamily: "var(--font-display)",
+                    fontSize: 17,
+                    letterSpacing: "0.01em",
+                    cursor: "pointer",
+                    boxShadow: selected ? "4px 4px 0 var(--ink)" : "2px 2px 0 var(--ink)",
+                    transition: "transform var(--t-fast), box-shadow var(--t-fast), background var(--t-fast)",
+                  }}
                 >
                   <Image
                     src={m.imageUrl}
                     width={36}
                     height={36}
                     alt=""
-                    className="block h-9 w-9 flex-shrink-0 object-cover border border-ink/15 dark:border-ink-dark/15"
+                    className="block flex-shrink-0 object-cover"
+                    style={{ width: 36, height: 36, border: "2px solid var(--ink)" }}
                     unoptimized
                   />
-                  <span>{m.name}</span>
+                  <span style={{ lineHeight: 1.1 }}>{m.name}</span>
                 </button>
               );
             })}
@@ -265,26 +311,57 @@ export function ConspiratorsPicker({
         </fieldset>
       </div>
 
-      {/* Refresh + CTA */}
-      <div className="mt-6 flex items-center justify-end">
+      {/* Refresh link */}
+      <div style={{ marginTop: 14, display: "flex", justifyContent: "flex-end" }}>
         <Link
           href={`${storyPath}?r=${refresh + 1}`}
-          className="meta hover:text-ink dark:hover:text-ink-dark transition-colors"
+          className="label"
+          style={{ color: "var(--cool)", textDecoration: "none" }}
         >
-          {labels.refresh_choices}
+          ↻ {labels.refresh_choices}
         </Link>
       </div>
 
-      <div className="mt-7 sm:mt-8 rule-h pt-5 sm:pt-6">
+      {/* CTA block */}
+      <div
+        style={{
+          marginTop: 24,
+          paddingTop: 18,
+          borderTop: "2.5px solid var(--ink)",
+        }}
+      >
         {error && (
-          <div className="mb-3 flex flex-wrap items-center gap-3" role="alert">
-            <p className="text-[13px] text-[oklch(56%_0.14_28)]">{error}</p>
+          <div
+            role="alert"
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              alignItems: "center",
+              gap: 10,
+              marginBottom: 12,
+              padding: "10px 14px",
+              background: "var(--hot)",
+              color: "var(--paper)",
+              border: "2px solid var(--ink)",
+              boxShadow: "3px 3px 0 var(--ink)",
+            }}
+          >
+            <span className="label" style={{ color: "var(--paper)" }}>{error}</span>
             {retryableShortId && !yoloPending && (
               <button
                 type="button"
                 onClick={retryYolo}
-                className="border border-ink/40 dark:border-ink-dark/40 text-ink dark:text-ink-dark hover:border-ink dark:hover:border-ink-dark px-3 py-1.5 text-[12px] font-display transition-colors"
-                style={{ fontWeight: 500 }}
+                style={{
+                  background: "var(--ink)",
+                  color: "var(--paper)",
+                  border: "2px solid var(--paper)",
+                  padding: "4px 10px",
+                  fontFamily: "var(--font-display)",
+                  fontSize: 13,
+                  letterSpacing: "0.04em",
+                  textTransform: "uppercase",
+                  cursor: "pointer",
+                }}
               >
                 {labels.yolo_retry}
               </button>
@@ -294,40 +371,84 @@ export function ConspiratorsPicker({
 
         {pending && <Starting label={labels.cta_starting_dots} />}
         {yoloPending && (
-          <div className="mb-3">
+          <div style={{ marginBottom: 12 }}>
             <YoloProgress label={labels.cta_yolo_starting_dots} />
           </div>
         )}
 
-        <p className="text-[13px] italic text-ink-soft dark:text-ink-soft-dark max-w-xl leading-relaxed mb-4">
+        <p
+          className="marker"
+          style={{
+            fontSize: 18,
+            color: "var(--cool)",
+            transform: "rotate(-1deg)",
+            display: "inline-block",
+            marginBottom: 16,
+            maxWidth: "32rem",
+            lineHeight: 1.2,
+          }}
+        >
           {labels.walkthrough_caption}
         </p>
 
-        {/* Two CTAs in the same row: primary filled, secondary outlined.
-            DOM order is primary-first so on mobile (flex-col) the primary
-            stacks on top, and on desktop (flex-row) the primary sits on the
-            left of the right-aligned pair. Focus order matches DOM order. */}
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch sm:justify-end">
+        <div
+          style={{
+            display: "flex",
+            gap: 14,
+            flexWrap: "wrap",
+            alignItems: "stretch",
+            justifyContent: "flex-end",
+          }}
+        >
           <button
             type="button"
             onClick={start}
             disabled={!ready || anyPending}
-            className="self-stretch sm:self-auto bg-ink text-paper dark:bg-ink-dark dark:text-paper-dark px-5 py-3 sm:px-6 sm:py-3.5 font-display inline-flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity hover:opacity-90"
-            style={{ fontSize: 17, fontWeight: 600, letterSpacing: "-0.01em" }}
+            className="zine-btn"
+            data-size="md"
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(18px, 1.8vw, 22px)",
+              letterSpacing: "0.04em",
+              textTransform: "uppercase",
+              padding: "11px 20px 9px",
+              background: "var(--hot)",
+              color: "var(--paper)",
+              border: "3px solid var(--ink)",
+              boxShadow: "var(--shadow)",
+              cursor: "pointer",
+              minHeight: 44,
+              opacity: !ready || anyPending ? 0.5 : 1,
+              transition: "transform var(--t-fast), box-shadow var(--t-fast)",
+              whiteSpace: "nowrap",
+            }}
           >
-            {pending ? labels.cta_starting : labels.cta_start}
-            <span className="font-mono opacity-70" style={{ fontSize: 11 }}>
-              →
-            </span>
+            ▸ {pending ? labels.cta_starting : labels.cta_start}
           </button>
           <button
             type="button"
             onClick={startYolo}
             disabled={!ready || anyPending}
-            className="self-stretch sm:self-auto border border-ink/40 dark:border-ink-dark/40 text-ink-soft dark:text-ink-soft-dark hover:border-ink dark:hover:border-ink-dark hover:text-ink dark:hover:text-ink-dark px-4 py-3 font-display inline-flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            style={{ fontSize: 14, fontWeight: 500 }}
+            className="zine-btn"
+            data-size="sm"
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: 14,
+              letterSpacing: "0.04em",
+              textTransform: "uppercase",
+              padding: "8px 14px 6px",
+              background: "transparent",
+              color: "var(--ink)",
+              border: "3px solid var(--ink)",
+              boxShadow: "4px 4px 0 var(--ink)",
+              cursor: "pointer",
+              minHeight: 44,
+              opacity: !ready || anyPending ? 0.5 : 1,
+              transition: "transform var(--t-fast), box-shadow var(--t-fast)",
+              whiteSpace: "nowrap",
+            }}
           >
-            {yoloPending ? labels.cta_yolo_starting : labels.cta_yolo}
+            ⚡ {yoloPending ? labels.cta_yolo_starting : labels.cta_yolo}
           </button>
         </div>
       </div>
@@ -342,7 +463,10 @@ function Starting({ label }: { label: string }) {
     return () => clearInterval(t);
   }, []);
   return (
-    <p className="mb-3 text-[13px] text-ink-soft dark:text-ink-soft-dark">
+    <p
+      className="label"
+      style={{ marginBottom: 10, color: "var(--cool)" }}
+    >
       {label}{".".repeat(dots)}
     </p>
   );

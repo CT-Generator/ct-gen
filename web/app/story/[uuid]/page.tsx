@@ -1,4 +1,5 @@
 // /story/[uuid] — Step 2: pick a culprit and a motive for the chosen news event.
+// Spec: zine-design-system + selection-flow.
 
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -6,6 +7,7 @@ import { Masthead } from "@/components/masthead";
 import { Footer } from "@/components/footer";
 import { findByUuid, sampleN } from "@/lib/seed";
 import { ConspiratorsPicker } from "@/components/conspirators-picker";
+import { Sticker } from "@/components/zine/sticker";
 import { readLocale, getDict, localizedHref } from "@/lib/i18n";
 
 type Params = { uuid: string };
@@ -25,7 +27,6 @@ export default async function StoryPage({
   const locale = await readLocale();
   const t = getDict(locale).story;
 
-  // First-time landing gets random culprits/motives; refresh advances the seed.
   const refresh = sp.r != null ? Number.parseInt(sp.r, 10) || 0 : Math.floor(Math.random() * 1_000_000);
 
   const event = findByUuid("news", uuid);
@@ -41,53 +42,96 @@ export default async function StoryPage({
     <>
       <Masthead />
 
-      <article className="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12 lg:py-14">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-baseline sm:justify-between">
-          <p className="meta">{t.eyebrow}</p>
+      <article className="stage">
+        {/* Top bar: stickers + pick-different link */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 12,
+            flexWrap: "wrap",
+            marginBottom: 14,
+          }}
+        >
+          <Sticker tilt={-2}>Step 2 of 3</Sticker>
+          <Sticker color="yellow" tilt={1.5}>
+            File open
+          </Sticker>
           <Link
             href={localizedHref("/", locale)}
-            className="meta hover:text-ink dark:hover:text-ink-dark transition-colors"
+            className="label"
+            style={{
+              marginLeft: "auto",
+              color: "var(--cool)",
+              textDecoration: "none",
+            }}
           >
-            {t.pick_different}
+            ← {t.pick_different}
           </Link>
         </div>
 
+        {/* Story headline — scream */}
         <h1
-          className="mt-3 font-display text-[clamp(1.7rem,4.5vw,2.4rem)] leading-[1.05]"
-          style={{ fontWeight: 600, letterSpacing: "-0.025em" }}
+          className="scream"
+          style={{ fontSize: "var(--t-scream-md)", margin: "8px 0 14px", lineHeight: 0.96 }}
         >
           {event.name}
         </h1>
 
-        <div className="mt-5 space-y-4 text-[15px] sm:text-[16px] leading-relaxed">
+        {/* Intro paragraphs */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 12, maxWidth: 760 }}>
           {paragraphs.map((p, i) => (
-            <p key={i}>{p}</p>
+            <p
+              key={i}
+              className="body"
+              style={{ fontSize: "var(--t-body)", lineHeight: 1.6, margin: 0 }}
+            >
+              {p}
+            </p>
           ))}
         </div>
 
         {event.url && sourceHost && (
-          <p className="mt-5 text-[13px] text-ink-soft dark:text-ink-soft-dark">
+          <p className="label" style={{ marginTop: 14 }}>
             {t.source_label}{" "}
             <a
               href={event.url}
               target="_blank"
               rel="noopener"
-              className="underline-offset-2 underline hover:no-underline break-all"
+              style={{
+                color: "var(--cool)",
+                textDecoration: "underline",
+                textUnderlineOffset: 3,
+              }}
             >
               {sourceHost} ↗
             </a>
           </p>
         )}
 
-        {/* Explainer */}
-        <div className="mt-9 sm:mt-10 rule-h pt-5">
-          <p className="meta mb-3">{t.pick_conspirators_meta}</p>
-          <p className="text-[15px] leading-relaxed">
+        {/* Step 3 intro */}
+        <div
+          style={{
+            marginTop: 32,
+            paddingTop: 22,
+            borderTop: "2.5px solid var(--ink)",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+            <Sticker tilt={-3}>Step 3 of 3</Sticker>
+            <span className="label">{t.pick_conspirators_meta}</span>
+          </div>
+          <h2
+            className="scream"
+            style={{ fontSize: "var(--t-scream-sm)", margin: "10px 0 6px" }}
+          >
+            Who did it? And what's their angle?
+          </h2>
+          <p className="body" style={{ fontSize: "var(--t-body)", lineHeight: 1.55, maxWidth: 760, margin: 0 }}>
             {t.pick_conspirators_explainer}
           </p>
         </div>
 
-        {/* Conspirators picker (interactive) */}
         <ConspiratorsPicker
           eventUuid={event.uuid}
           eventName={event.name}

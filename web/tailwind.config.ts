@@ -25,11 +25,40 @@ export default {
         "hot-2": "var(--hot-2)",
         punch: "var(--punch)",
         cool: "var(--cool)",
+        // Backwards-compatibility aliases for the v2 editorial palette.
+        // These map old token names onto zine tokens via CSS vars so existing
+        // components keep compiling until they are rewritten. Dark variants
+        // resolve through the same vars — :root.dark swaps paper↔ink.
+        "paper-alt": "var(--paper-2)",
+        "paper-dark": "var(--paper)",     // .dark inverts via globals.css
+        "paper-alt-dark": "var(--paper-2)",
+        "ink-dark": "var(--ink)",
+        "ink-soft": "color-mix(in oklab, var(--ink) 65%, transparent)",
+        "ink-soft-dark": "color-mix(in oklab, var(--ink) 65%, transparent)",
+        rule: "var(--ink)",
+        // Recipe-move accents now resolve into the zine four-color set.
+        // The single-hex literals in tailwind.config can't reference CSS vars
+        // inside nested keys easily — we use vars and accept that the move-*
+        // colors no longer differ between -soft and base in CSS.
+        move: {
+          anomaly: "var(--hot)",
+          "anomaly-soft": "var(--paper-2)",
+          connection: "var(--cool)",
+          "connection-soft": "var(--paper-2)",
+          dismiss: "var(--ink)",
+          "dismiss-soft": "var(--paper-2)",
+          discredit: "var(--punch)",
+          "discredit-soft": "var(--paper-2)",
+        },
       },
       fontFamily: {
         display: ['var(--font-display)', '"Anton"', '"Helvetica Neue Condensed"', "Impact", "sans-serif"],
         body: ['var(--font-body)', '"Space Grotesk"', '"Inter"', "system-ui", "sans-serif"],
         hand: ['var(--font-hand)', '"Permanent Marker"', '"Caveat"', "cursive"],
+        // Backwards-compat: existing components use `font-mono` for meta captions.
+        // Zine has no mono face; map to body so callsites compile and read sensibly
+        // until they're rewritten.
+        mono: ['var(--font-body)', '"Space Grotesk"', "system-ui", "sans-serif"],
       },
       letterSpacing: {
         meta: "0.14em",

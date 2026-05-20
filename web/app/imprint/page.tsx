@@ -16,28 +16,35 @@ export default async function ImprintPage() {
     <>
       <Masthead />
 
-      <article className="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-14 lg:py-16">
+      <article className="stage">
         {locale !== "en" && (
-          <aside className="mb-8 border border-ink/20 dark:border-ink-dark/20 bg-paper-alt dark:bg-paper-alt-dark p-4 sm:p-5">
-            <p className="font-display text-[15px]" style={{ fontWeight: 600 }}>
+          <aside
+            style={{
+              marginBottom: 24,
+              border: "2.5px solid var(--ink)",
+              background: "var(--paper-2)",
+              padding: "14px 16px",
+            }}
+          >
+            <p className="label" style={{ marginBottom: 6 }}>
               {t.translation_pending_h}
             </p>
-            <p className="mt-2 text-[14px] leading-relaxed text-ink-soft dark:text-ink-soft-dark">
+            <p className="body" style={{ fontSize: "var(--t-body-sm)", lineHeight: 1.55, margin: 0 }}>
               {t.translation_pending_body}
             </p>
           </aside>
         )}
-        <p className="meta">Legal notice · Impressum</p>
-        <h1
-          className="mt-3 font-display text-[clamp(2rem,5vw,3.25rem)] leading-[1.05]"
-          style={{ fontWeight: 600, letterSpacing: "-0.025em" }}
-        >
+        <p className="label">Legal notice · Impressum</p>
+        <h1 className="scream" style={{ fontSize: "var(--t-scream-lg)", margin: "14px 0 16px" }}>
           Imprint
         </h1>
 
-        <div className="mt-8 space-y-6 text-[15.5px] leading-relaxed">
+        <div
+          className="body"
+          style={{ display: "flex", flexDirection: "column", gap: 22, fontSize: "var(--t-body)", lineHeight: 1.6, maxWidth: 720 }}
+        >
           <section>
-            <h2 className="font-display text-[20px] sm:text-[22px]" style={{ fontWeight: 600 }}>
+            <h2 className="scream" style={{ fontSize: "var(--t-scream-xs)", marginBottom: 8 }}>
               Information pursuant to §5 TMG
             </h2>
             <p className="mt-3 not-italic">
@@ -52,14 +59,14 @@ export default async function ImprintPage() {
           </section>
 
           <section>
-            <h2 className="font-display text-[20px] sm:text-[22px]" style={{ fontWeight: 600 }}>
+            <h2 className="scream" style={{ fontSize: "var(--t-scream-xs)", marginBottom: 8 }}>
               Contact
             </h2>
             <p className="mt-3">
               Email:{" "}
               <a
                 href="mailto:marco.meyer@jpberlin.de"
-                className="underline-offset-2 underline hover:no-underline"
+                style={{ color: "var(--cool)", textDecoration: "underline" }}
               >
                 marco.meyer@jpberlin.de
               </a>
@@ -67,7 +74,7 @@ export default async function ImprintPage() {
           </section>
 
           <section>
-            <h2 className="font-display text-[20px] sm:text-[22px]" style={{ fontWeight: 600 }}>
+            <h2 className="scream" style={{ fontSize: "var(--t-scream-xs)", marginBottom: 8 }}>
               Responsible for content under §18 (2) MStV
             </h2>
             <p className="mt-3 not-italic">
@@ -78,7 +85,7 @@ export default async function ImprintPage() {
           </section>
 
           <section>
-            <h2 className="font-display text-[20px] sm:text-[22px]" style={{ fontWeight: 600 }}>
+            <h2 className="scream" style={{ fontSize: "var(--t-scream-xs)", marginBottom: 8 }}>
               EU dispute resolution
             </h2>
             <p className="mt-3">
@@ -87,7 +94,7 @@ export default async function ImprintPage() {
                 href="https://ec.europa.eu/consumers/odr/"
                 target="_blank"
                 rel="noopener"
-                className="underline-offset-2 underline hover:no-underline"
+                style={{ color: "var(--cool)", textDecoration: "underline" }}
               >
                 ec.europa.eu/consumers/odr
               </a>
@@ -97,7 +104,7 @@ export default async function ImprintPage() {
           </section>
 
           <section>
-            <h2 className="font-display text-[20px] sm:text-[22px]" style={{ fontWeight: 600 }}>
+            <h2 className="scream" style={{ fontSize: "var(--t-scream-xs)", marginBottom: 8 }}>
               Liability for content
             </h2>
             <p className="mt-3">
