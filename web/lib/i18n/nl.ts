@@ -389,5 +389,8 @@ export const nl: Dictionary = {
     pick_the_event_deck: "Pak welke nieuwskop dan ook waar je verbeelding het wildst op losgaat. Niet te lang over nadenken.",
     who_did_it_h: "Wie heeft het gedaan? En wat is hun motief?",
     file_open: "Dossier open",
+    credits_built_by: "Gebouwd door",
+    credits_amp: "&",
+    credits_affiliation: "· Etienne Vermeersch-leerstoel Kritisch Denken, Universiteit Gent",
   },
 };

@@ -2,11 +2,11 @@
 // Spec: openspec/changes/visitor-tracking/specs/visitor-analytics/spec.md
 
 import Link from "next/link";
-import { MOVES } from "@/lib/recipe";
 
 export type StatsTab = "v1" | "v2" | "visitors";
 
-const ACCENT = MOVES[0].color;
+// Zine accent — hot pink, mirrors the rest of the redesign.
+const ACCENT = "var(--hot)";
 
 export function StatsTabs({ active }: { active: StatsTab }) {
   return (
@@ -42,9 +42,13 @@ function TabLink({
   return (
     <Link
       href={href}
-      className="px-4 py-2 -mb-px font-mono uppercase text-[11px] tracking-[0.14em]"
+      className="label"
       style={{
-        borderBottom: active ? `2px solid ${ACCENT}` : "2px solid transparent",
+        padding: "8px 14px",
+        marginBottom: -2,
+        textDecoration: "none",
+        color: active ? "var(--hot-2)" : "var(--ink)",
+        borderBottom: active ? `3px solid ${ACCENT}` : "3px solid transparent",
         opacity: active ? 1 : 0.55,
       }}
     >

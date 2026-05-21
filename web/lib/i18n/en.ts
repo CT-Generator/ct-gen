@@ -332,6 +332,12 @@ export type Dictionary = {
     who_did_it_h: string;
     /** "File open" sticker on culprit / motive screens. */
     file_open: string;
+    /** Credits line under the home hero. Three fragments: the leading "Built
+     *  by", the conjunction between the two names, and the trailing affiliation
+     *  string. Anchor tags around the two names get inserted at render time. */
+    credits_built_by: string;
+    credits_amp: string;
+    credits_affiliation: string;
   };
 };
 
@@ -676,5 +682,8 @@ export const en: Dictionary = {
     pick_the_event_deck: "Choose whichever real-feeling headline your imagination will run wildest with. Don't overthink it.",
     who_did_it_h: "Who did it? And what's their angle?",
     file_open: "File open",
+    credits_built_by: "Built by",
+    credits_amp: "&",
+    credits_affiliation: "· Etienne Vermeersch Chair of Critical Thinking, Ghent University",
   },
 };

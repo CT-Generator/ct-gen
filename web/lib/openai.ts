@@ -459,6 +459,46 @@ export async function generateSection(input: {
     .map(([, v]) => v!.trim().split(/\s+/).slice(0, 3).join(" "))
     .filter(Boolean);
 
+  // MARK BRIEFING. Tells the model to wrap "evidence" phrases in <mark>…</mark>
+  // tags. The site renders those phrases with a hand-drawn red underline so
+  // the reader sees which words came from their own picks. The tags are part
+  // of the paragraph string (debunk text stays plain — it's the editorial
+  // counter-voice). Spec: openspec/specs/conspiracy-output.
+  const markBriefingEn = [
+    "MARKER TAGS. Within the paragraph, wrap the 1–3 phrases that name the",
+    "specific evidence the conspiracist is leaning on for THIS move in HTML",
+    "<mark>…</mark> tags. Examples of what to mark: the specific anomaly being",
+    "treated as a smoking gun (Move 1); the culprit name and the motive verb-",
+    "phrase (Move 2); the unrelated event being dragged in (Move 3); the",
+    "supposed official channel or hidden authority (Move 4). Mark short phrases",
+    "(2–10 words), not whole sentences. Do NOT mark connective tissue,",
+    "rhetorical flourishes, or generic words. Mark at most 3 phrases total per",
+    "paragraph. The debunk does NOT use <mark> tags.",
+  ].join("\n");
+  const markBriefingDe = [
+    "MARKER-TAGS. Im paragraph umschließe die 1–3 Phrasen, die das spezifische",
+    "Beweismaterial benennen, auf das sich die Verschwörungstheorie bei DIESEM",
+    "Schritt stützt, mit HTML-<mark>…</mark>-Tags. Beispiele: die konkrete",
+    "Auffälligkeit (Schritt 1); der Name der schuldigen Partei und die Motiv-",
+    "Phrase (Schritt 2); das unzusammenhängende Ereignis, das hineingezogen",
+    "wird (Schritt 3); der angebliche offizielle Kanal oder die verborgene",
+    "Autorität (Schritt 4). Markiere kurze Phrasen (2–10 Wörter), keine ganzen",
+    "Sätze. Markiere KEIN Bindegewebe, keine rhetorischen Wendungen, keine",
+    "generischen Wörter. Höchstens 3 Phrasen pro Absatz. Der debunk verwendet",
+    "KEINE <mark>-Tags.",
+  ].join("\n");
+  const markBriefingNl = [
+    "MARKEER-TAGS. Omsluit in de paragraph de 1–3 frases die het specifieke",
+    "bewijs benoemen waarop de complotredenering bij DEZE stap leunt, met",
+    "HTML-<mark>…</mark>-tags. Voorbeelden: de specifieke afwijking (stap 1);",
+    "de naam van de schuldige en de motieffrase (stap 2); de losstaande",
+    "gebeurtenis die erbij wordt gesleept (stap 3); het vermeende officiële",
+    "kanaal of de verborgen autoriteit (stap 4). Markeer korte frases (2–10",
+    "woorden), geen hele zinnen. Markeer GEEN bindweefsel, geen retorische",
+    "wendingen, geen algemene woorden. Maximaal 3 frases per alinea. De",
+    "debunk gebruikt GEEN <mark>-tags.",
+  ].join("\n");
+
   const system =
     locale === "de"
       ? [
@@ -472,6 +512,8 @@ export async function generateSection(input: {
           "",
           `DAS VERRÄTERISCHE MUSTER. ${tell}`,
           extraRule ? `\nZUSÄTZLICHE SCHLUSSREGEL. ${extraRule}` : "",
+          "",
+          markBriefingDe,
           "",
           'ABWECHSLUNG IM AUFTAKT. Variier den Einleitungsteil. Beginne den Absatz NICHT mit derselben imperativischen Aufforderung wie ein früherer Schritt (z. B. mehrfaches "Schau mal..." oder "Schauen wir genauer..."). Wenn unten eine Liste früherer Auftakte folgt, MUSS dein Auftakt sich von jedem unterscheiden.',
           "",
@@ -495,6 +537,8 @@ export async function generateSection(input: {
           `DE VERKLIKKER. ${tell}`,
           extraRule ? `\nEXTRA SLOTREGEL. ${extraRule}` : "",
           "",
+          markBriefingNl,
+          "",
           'AFWISSELING IN DE OPENING. Varieer de inleidende clausule. Begin de alinea NIET met dezelfde imperatieve aanwijzer als een eerdere stap (bv. herhaaldelijk "Kijk eens..." of "Kijk nauwkeuriger..."). Als hieronder een lijst eerdere openingen volgt, MOET jouw opening van elk daarvan verschillen.',
           "",
           voice,
@@ -516,6 +560,8 @@ export async function generateSection(input: {
           "",
           `THE TELL. ${tell}`,
           extraRule ? `\nEXTRA CLOSING RULE. ${extraRule}` : "",
+          "",
+          markBriefingEn,
           "",
           "OPENER VARIETY. Vary the opening clause. Do NOT start the paragraph with the same",
           'imperative-pointer used by an earlier move ("Look at...", "Look closer...", "Look',

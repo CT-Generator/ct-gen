@@ -418,6 +418,9 @@
   .pulpcard:hover { transform: translate(0, 0); }
   .strings { display: none; }
   .zine-pickers { grid-template-columns: 1fr !important; }
+  /* Hide the 2x2 summary grid in the permalink exposé hero on mobile.
+     The detailed move blocks below cover the same content. */
+  .expose-summary-grid { display: none !important; }
 }
 
 /* ─────────────────────────────────────────────────────────────

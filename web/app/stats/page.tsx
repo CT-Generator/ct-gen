@@ -7,6 +7,7 @@ import { BarChart } from "@/components/bar-chart";
 import { LineChart } from "@/components/line-chart";
 import { Tile, TopList, RatingHist } from "@/components/stats-pieces";
 import { StatsTabs } from "@/components/stats-tabs";
+import { Sticker } from "@/components/zine/sticker";
 import { MOVES } from "@/lib/recipe";
 import {
   loadV1Totals,
@@ -43,11 +44,11 @@ export default async function StatsPage({
   return (
     <>
       <Masthead />
-      <article className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-12 lg:py-14">
-        <p className="meta">Stats</p>
+      <article className="stage" style={{ maxWidth: "1100px" }}>
+        <Sticker color="ink" tilt={-2}>Stats</Sticker>
         <h1
-          className="mt-3 font-display text-[clamp(2rem,5vw,3rem)] leading-[1.05]"
-          style={{ fontWeight: 600, letterSpacing: "-0.025em" }}
+          className="scream"
+          style={{ fontSize: "var(--t-scream-lg)", margin: "14px 0 16px" }}
         >
           How the recipe is being used.
         </h1>
@@ -110,29 +111,29 @@ async function V2Body() {
       <LocaleSplit rows={localeSplit} />
 
       <section className="mt-12">
-        <h2 className="font-display text-[20px] sm:text-[22px]" style={{ fontWeight: 600 }}>
+        <h2 className="scream" style={{ fontSize: "var(--t-scream-xs)" }}>
           Theories built per day
         </h2>
         <div className="mt-3 text-ink dark:text-ink-dark">
-          <BarChart data={genDaily} color={MOVES[0].colorHex} unit="theories" />
+          <BarChart data={genDaily} color="#ff2e63" unit="theories" />
         </div>
       </section>
 
       <section className="mt-10">
-        <h2 className="font-display text-[20px] sm:text-[22px]" style={{ fontWeight: 600 }}>
+        <h2 className="scream" style={{ fontSize: "var(--t-scream-xs)" }}>
           Cumulative theories
         </h2>
         <div className="mt-3 text-ink dark:text-ink-dark">
-          <LineChart data={genCum} color={MOVES[0].colorHex} unit="theories" />
+          <LineChart data={genCum} color="#ff2e63" unit="theories" />
         </div>
       </section>
 
       <section className="mt-10">
-        <h2 className="font-display text-[20px] sm:text-[22px]" style={{ fontWeight: 600 }}>
+        <h2 className="scream" style={{ fontSize: "var(--t-scream-xs)" }}>
           Ratings per day
         </h2>
         <div className="mt-3 text-ink dark:text-ink-dark">
-          <BarChart data={rateDaily} color={MOVES[3].colorHex} unit="ratings" />
+          <BarChart data={rateDaily} color="#1d4d8a" unit="ratings" />
         </div>
       </section>
 
@@ -154,7 +155,7 @@ function LocaleSplit({ rows }: { rows: LocaleSplitRow[] }) {
   if (totalGen === 0) return null;
   return (
     <section className="mt-10">
-      <h2 className="font-display text-[20px] sm:text-[22px]" style={{ fontWeight: 600 }}>
+      <h2 className="scream" style={{ fontSize: "var(--t-scream-xs)" }}>
         Per-locale split
       </h2>
       <div className="mt-3 flex w-full overflow-hidden border border-ink/15 dark:border-ink-dark/15">
@@ -179,7 +180,7 @@ function LocaleSplit({ rows }: { rows: LocaleSplitRow[] }) {
                 </span>
               </div>
               <div className="mt-2 flex flex-col">
-                <span className="font-display text-[20px] sm:text-[22px]" style={{ fontWeight: 600 }}>
+                <span className="scream" style={{ fontSize: "var(--t-scream-xs)" }}>
                   {r.generations.toLocaleString()}
                 </span>
                 <span className="meta">

@@ -112,11 +112,11 @@ export default async function HomePage({
             </div>
 
             <div className="label" style={{ opacity: 0.6, marginTop: 22 }}>
-              Built by{" "}
+              {z.credits_built_by}{" "}
               <a href="mailto:marco.meyer@jpberlin.de" style={{ color: "inherit" }}>
                 Marco Meyer
               </a>{" "}
-              &amp; Maarten Boudry &nbsp;·&nbsp; Etienne Vermeersch Chair of Critical Thinking, Ghent University
+              {z.credits_amp} Maarten Boudry &nbsp;{z.credits_affiliation}
             </div>
           </div>
 
@@ -259,7 +259,7 @@ export default async function HomePage({
                         src={e.imageUrl}
                         width={140}
                         height={140}
-                        alt=""
+                        alt={e.name}
                         className="block object-cover"
                         style={{
                           width: 128,

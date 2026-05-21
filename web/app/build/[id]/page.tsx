@@ -64,6 +64,17 @@ export default async function BuildPage({ params }: { params: Promise<Params> })
         }))}
         labels={dict.wizard}
         blurb={dict.wizard_blurb}
+        zine={{
+          now_show_me_debunk: dict.zine.now_show_me_debunk,
+          back_to_the_theory: dict.zine.back_to_the_theory,
+          why_it_doesnt_hold_up: dict.zine.why_it_doesnt_hold_up,
+          useful_test: dict.zine.useful_test,
+          useful_test_body: dict.zine.useful_test_body,
+          your_theory_sticker: dict.zine.your_theory_sticker,
+          debunk_sticker: dict.zine.debunk_sticker,
+          the_move: dict.zine.the_move,
+          marker_caption: dict.zine.marker_caption,
+        }}
       />
       <Footer />
     </>

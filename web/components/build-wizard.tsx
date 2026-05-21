@@ -9,9 +9,11 @@
 
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
-import { type MoveKey, type EventIntro, type Ideas } from "@/lib/recipe";
-import { MoveGlyph } from "@/components/move-glyph";
+import { parseMarkedText, type MoveKey, type EventIntro, type Ideas } from "@/lib/recipe";
 import { YoloProgress } from "@/components/yolo-progress";
+import { TheoryText } from "@/components/zine/theory-text";
+import { Sticker } from "@/components/zine/sticker";
+import { DebunkSlam } from "@/components/zine/debunk-slam";
 
 const MOVE_KEYS_IN_ORDER: MoveKey[] = ["anomaly", "connection", "dismiss", "discredit"];
 
@@ -48,6 +50,21 @@ type WizardLabels = {
   done_cta_read: string;
 };
 
+/** Subset of dict.zine needed for the wizard's slam overlay + sticker eyebrow.
+ *  Kept narrow so the page can compose it from dict.zine without passing the
+ *  whole zine dict tree. */
+type WizardZineLabels = {
+  now_show_me_debunk: string;
+  back_to_the_theory: string;
+  why_it_doesnt_hold_up: string;
+  useful_test: string;
+  useful_test_body: string;
+  your_theory_sticker: string;
+  debunk_sticker: string;
+  the_move: string;
+  marker_caption: string;
+};
+
 type WizardBlurb = {
   anomaly_explainer: string;
   anomaly_tell: string;
@@ -80,6 +97,7 @@ type Props = {
   moves: WizardMove[];
   labels: WizardLabels;
   blurb: WizardBlurb;
+  zine: WizardZineLabels;
 };
 
 type Screen = MoveKey | "done";
@@ -182,6 +200,7 @@ export function BuildWizard(props: Props) {
             ideas={props.ideas[k]}
             initial={perMove[k] ?? null}
             labels={props.labels}
+            zine={props.zine}
             moveNumberLabel={props.labels.move_label}
             onResolved={(state) => handleSection(k, state)}
             onNext={() => handleDoneAdvance(k)}
@@ -272,37 +291,53 @@ function ProgressBar({
   moveLabelPrefix?: unknown;
   moveLabelByLocale: string;
 }) {
-  const items: Array<{ key: Screen; label: string; color?: string }> = [
+  const items: Array<{ key: Screen; label: string }> = [
     ...moves.map((m) => ({
       key: m.key as Screen,
       label: `${moveLabelByLocale} ${m.n}`,
-      color: m.color,
     })),
     { key: "done", label: doneLabel },
   ];
   return (
-    <div className="flex items-center gap-1.5 mb-7">
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: `repeat(${items.length}, 1fr)`,
+        gap: 8,
+        marginBottom: 22,
+      }}
+    >
       {items.map((it) => {
         const idx = SCREENS.indexOf(it.key);
         const cur = SCREENS.indexOf(current);
         const past = idx < cur;
         const active = idx === cur;
         return (
-          <div key={it.key} className="flex flex-col items-center gap-1.5 flex-1">
+          <div
+            key={it.key}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 6,
+            }}
+          >
             <div
-              className="h-1 w-full"
               style={{
-                background:
-                  past || active
-                    ? it.color ?? "var(--tw-color-ink, #1B1A1F)"
-                    : "color-mix(in oklab, currentColor 12%, transparent)",
-                opacity: active ? 1 : past ? 0.7 : 1,
+                width: "100%",
+                height: 18,
+                border: "2.5px solid var(--ink)",
+                background: active ? "var(--hot)" : past ? "var(--ink)" : "var(--paper)",
+                transition: "background var(--t-fast)",
               }}
               aria-hidden
             />
             <span
-              className="font-mono uppercase tracking-meta-tight text-[9px] sm:text-[10px]"
-              style={{ color: active ? it.color ?? undefined : undefined }}
+              className="label"
+              style={{
+                fontSize: 9,
+                color: active ? "var(--hot-2)" : past ? "var(--ink)" : "color-mix(in oklab, var(--ink) 55%, transparent)",
+              }}
             >
               {it.label}
             </span>
@@ -322,6 +357,7 @@ function MoveScreen({
   ideas,
   initial,
   labels,
+  zine,
   moveNumberLabel,
   onResolved,
   onNext,
@@ -332,6 +368,7 @@ function MoveScreen({
   ideas: string[];
   initial: SectionState | null;
   labels: WizardLabels;
+  zine: WizardZineLabels;
   moveNumberLabel: string;
   onResolved: (s: SectionState) => void;
   onNext: () => void;
@@ -340,11 +377,19 @@ function MoveScreen({
   const [chosenIdea, setChosenIdea] = useState<string | null>(initial?.idea ?? null);
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
+  const [debunkOpen, setDebunkOpen] = useState(false);
+
+  // Reset the debunk overlay every time the move screen changes or a fresh
+  // idea is picked (regeneration). Keeps the slam animation feeling deliberate.
+  function resetDebunk() {
+    setDebunkOpen(false);
+  }
 
   function pick(idea: string) {
     if (pending) return;
     setChosenIdea(idea);
     setError(null);
+    resetDebunk();
     startTransition(async () => {
       try {
         const ctrl = new AbortController();
@@ -376,34 +421,35 @@ function MoveScreen({
 
   return (
     <div>
-      <div className="flex items-center gap-2.5">
-        <span style={{ color: move.color }}>
-          <MoveGlyph kind={move.key} size={32} strokeWidth={1.5} />
-        </span>
-        <span
-          className="font-mono uppercase"
-          style={{ fontSize: 11, letterSpacing: "0.16em", color: move.color }}
-        >
+      {/* Move-step header — sticker eyebrow + scream H1 */}
+      <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+        <Sticker tilt={-2}>
           {moveNumberLabel} {move.n}
+        </Sticker>
+        <span className="label" style={{ color: "var(--hot-2)" }}>
+          {blurb.tell}
         </span>
       </div>
-      <h1
-        className="scream mt-3"
-        style={{ fontSize: "var(--t-scream-md)" }}
-      >
+      <h1 className="scream" style={{ fontSize: "var(--t-scream-md)", margin: "12px 0 6px" }}>
         {move.title}
       </h1>
 
-      <p className="body" style={{ fontSize: "var(--t-body)", lineHeight: 1.6, marginTop: 14, maxWidth: 720 }}>
+      <p
+        className="body"
+        style={{ fontSize: "var(--t-body)", lineHeight: 1.6, marginTop: 8, maxWidth: 720 }}
+      >
         {blurb.explainer}
       </p>
 
-      {/* Idea buttons */}
-      <div className="mt-7 sm:mt-8">
-        <p className="meta mb-3">{labels.pick_idea}</p>
-        <div className="flex flex-col gap-2.5">
+      {/* Idea buttons — zine pick style (matches the conspirators picker) */}
+      <div style={{ marginTop: 26 }}>
+        <p className="label" style={{ marginBottom: 10 }}>
+          {labels.pick_idea}
+        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
           {ideas.map((idea) => {
             const selected = chosenIdea === idea;
+            const showCooking = selected && pending;
             return (
               <button
                 key={idea}
@@ -411,24 +457,30 @@ function MoveScreen({
                 onClick={() => pick(idea)}
                 disabled={pending && !selected}
                 aria-pressed={selected}
-                className={[
-                  "text-left px-4 py-3 border transition-colors",
-                  "font-display text-[15px] sm:text-[16px] leading-snug",
-                  "disabled:opacity-50",
-                  selected
-                    ? "bg-paper-alt dark:bg-paper-alt-dark"
-                    : "hover:bg-paper-alt dark:hover:bg-paper-alt-dark",
-                ].join(" ")}
+                className="zine-pick"
+                data-selected={selected ? "1" : "0"}
                 style={{
-                  borderColor: selected ? move.color : "color-mix(in oklab, currentColor 25%, transparent)",
-                  borderWidth: selected ? 2 : 1,
-                  color: selected ? move.color : undefined,
+                  textAlign: "left",
+                  padding: "12px 16px",
+                  border: "2.5px solid var(--ink)",
+                  background: selected ? "var(--punch)" : "var(--paper)",
+                  color: "var(--ink)",
+                  fontFamily: "var(--font-body)",
                   fontWeight: 500,
+                  fontSize: 15,
+                  lineHeight: 1.4,
+                  cursor: pending && !selected ? "not-allowed" : "pointer",
+                  boxShadow: selected ? "4px 4px 0 var(--ink)" : "2px 2px 0 var(--ink)",
+                  opacity: pending && !selected ? 0.5 : 1,
+                  transition: "transform var(--t-fast), box-shadow var(--t-fast), background var(--t-fast)",
                 }}
               >
                 {idea}
-                {selected && pending && (
-                  <span className="ml-2 font-mono opacity-70" style={{ fontSize: 11, letterSpacing: "0.14em" }}>
+                {showCooking && (
+                  <span
+                    className="label"
+                    style={{ marginLeft: 10, color: "var(--hot-2)" }}
+                  >
                     {labels.cooking}
                   </span>
                 )}
@@ -439,68 +491,304 @@ function MoveScreen({
       </div>
 
       {error && (
-        <p className="mt-4 text-[13px] text-[oklch(56%_0.14_28)]" role="alert">
-          {error}
-        </p>
+        <div
+          role="alert"
+          style={{
+            marginTop: 16,
+            padding: "10px 14px",
+            background: "var(--hot)",
+            color: "var(--paper)",
+            border: "2px solid var(--ink)",
+            boxShadow: "3px 3px 0 var(--ink)",
+          }}
+        >
+          <span className="label" style={{ color: "var(--paper)" }}>{error}</span>
+        </div>
       )}
 
-      {/* Section + debunk display */}
+      {/* Section reveal — theory paragraph card + "Show debunk" CTA; clicking
+          opens a slam overlay with the debunk inside.
+          Spec: zine-design-system DebunkSlam primitive. */}
       {section && !pending && (
-        <div className="mt-8 space-y-6">
-          <div>
-            <p className="meta" style={{ color: move.color }}>
-              {labels.conspiracist_writes}
-            </p>
-            <p
-              className="mt-2 text-[16px] sm:text-[17px] leading-[1.65] pl-4 sm:pl-5"
+        <div style={{ position: "relative", marginTop: 28 }}>
+          <article
+            style={{
+              background: "var(--paper)",
+              border: "3px solid var(--ink)",
+              boxShadow: "var(--shadow-lg)",
+            }}
+          >
+            <header
               style={{
-                borderLeft: `3px solid ${move.color}`,
-                background: `color-mix(in oklab, ${move.color} 6%, transparent)`,
-                padding: "12px 14px 12px 18px",
-                whiteSpace: "pre-wrap",
+                background: "var(--punch)",
+                padding: "18px 24px 16px",
+                borderBottom: "3px solid var(--ink)",
+                position: "relative",
               }}
             >
-              {section.paragraph}
-            </p>
-          </div>
+              <div className="label" style={{ color: "var(--hot-2)" }}>
+                {zine.the_move}
+              </div>
+              <h2
+                className="scream"
+                style={{ fontSize: "var(--t-scream-md)", margin: "4px 0 0", lineHeight: 0.96 }}
+              >
+                {move.title}
+              </h2>
+              <div style={{ position: "absolute", top: 14, right: 18 }}>
+                <Sticker tilt={6}>{zine.your_theory_sticker}</Sticker>
+              </div>
+            </header>
 
-          <div>
-            <p className="meta">{labels.debunk_label}</p>
-            <p className="mt-2 text-[14.5px] leading-[1.6] pl-4 sm:pl-5 border-l border-dashed border-ink/40 dark:border-ink-dark/40 whitespace-pre-wrap">
-              {section.debunk}
-            </p>
-          </div>
+            <div style={{ padding: "22px 24px 20px", display: "flex", flexDirection: "column", gap: 14 }}>
+              <p className="label">{labels.conspiracist_writes}</p>
+              <p
+                style={{
+                  fontFamily: "var(--font-body)",
+                  fontWeight: 500,
+                  fontSize: "var(--t-body-lg)",
+                  lineHeight: 1.6,
+                  margin: 0,
+                  whiteSpace: "pre-wrap",
+                }}
+              >
+                <TheoryText parts={parseMarkedText(section.paragraph)} />
+              </p>
+              <p
+                className="label"
+                style={{
+                  color: "color-mix(in oklab, var(--ink) 55%, transparent)",
+                  marginTop: -2,
+                }}
+              >
+                {zine.marker_caption}
+              </p>
+              <div style={{ marginTop: 4 }}>
+                <button
+                  type="button"
+                  onClick={() => setDebunkOpen(true)}
+                  className="zine-btn"
+                  data-size="sm"
+                  style={{
+                    background: "transparent",
+                    color: "var(--ink)",
+                    border: "3px solid var(--ink)",
+                    boxShadow: "4px 4px 0 var(--ink)",
+                    fontFamily: "var(--font-display)",
+                    fontSize: 14,
+                    padding: "8px 14px 6px",
+                    letterSpacing: "0.04em",
+                    textTransform: "uppercase",
+                    cursor: "pointer",
+                    minHeight: 44,
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {zine.now_show_me_debunk}
+                </button>
+              </div>
+            </div>
+          </article>
 
-          <div className="flex flex-wrap items-center gap-3 pt-2">
-            <button
-              type="button"
-              onClick={onNext}
-              className="zine-btn"
-              data-size="md"
+          {/* Slam overlay — drops in with rotation overshoot when opened. */}
+          <DebunkSlam open={debunkOpen} onClose={() => setDebunkOpen(false)}>
+            <article
               style={{
-                background: "var(--hot)",
-                color: "var(--paper)",
+                position: "absolute",
+                top: 14,
+                left: 14,
+                right: 14,
+                bottom: -8,
+                display: "flex",
+                flexDirection: "column",
+                background: "var(--paper)",
                 border: "3px solid var(--ink)",
-                boxShadow: "var(--shadow)",
-                fontFamily: "var(--font-display)",
-                fontSize: "clamp(18px, 1.8vw, 22px)",
-                padding: "11px 20px 9px",
-                letterSpacing: "0.04em",
-                textTransform: "uppercase",
-                whiteSpace: "nowrap",
-                cursor: "pointer",
-                minHeight: 44,
+                boxShadow: "12px 12px 0 var(--hot)",
               }}
             >
-              {move.key === "discredit" ? labels.see_full_theory : labels.next_move} →
-            </button>
-            <span
-              className="marker"
-              style={{ fontSize: 18, color: "var(--cool)", transform: "rotate(-1deg)", display: "inline-block" }}
+              <header
+                style={{
+                  background: "var(--hot)",
+                  color: "var(--paper)",
+                  padding: "18px 24px 16px",
+                  borderBottom: "3px solid var(--ink)",
+                  position: "relative",
+                }}
+              >
+                <div className="label" style={{ color: "var(--paper)", opacity: 0.85 }}>
+                  {zine.why_it_doesnt_hold_up}
+                </div>
+                <h2
+                  className="scream"
+                  style={{ fontSize: "var(--t-scream-sm)", margin: "4px 0 0", lineHeight: 0.96 }}
+                >
+                  {labels.debunk_label}.
+                </h2>
+                <div style={{ position: "absolute", top: 14, right: 18 }}>
+                  <Sticker color="yellow" tilt={8}>
+                    {zine.debunk_sticker}
+                  </Sticker>
+                </div>
+                <button
+                  onClick={() => setDebunkOpen(false)}
+                  aria-label="Close debunk"
+                  style={{
+                    position: "absolute",
+                    bottom: -18,
+                    right: 24,
+                    background: "var(--paper)",
+                    color: "var(--ink)",
+                    border: "3px solid var(--ink)",
+                    width: 36,
+                    height: 36,
+                    cursor: "pointer",
+                    fontFamily: "var(--font-display)",
+                    fontSize: 18,
+                  }}
+                >
+                  ✕
+                </button>
+              </header>
+
+              <div
+                style={{
+                  padding: "26px 24px 22px",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 14,
+                  flex: "1 1 auto",
+                }}
+              >
+                <p
+                  className="body"
+                  style={{
+                    fontSize: "var(--t-body-lg)",
+                    lineHeight: 1.6,
+                    margin: 0,
+                    whiteSpace: "pre-wrap",
+                  }}
+                >
+                  {section.debunk}
+                </p>
+                <div
+                  className="body"
+                  style={{
+                    fontSize: 13,
+                    paddingTop: 12,
+                    borderTop: "1px dashed color-mix(in oklab, var(--ink) 30%, transparent)",
+                    color: "color-mix(in oklab, var(--ink) 70%, transparent)",
+                  }}
+                >
+                  <b>{zine.useful_test}</b> {zine.useful_test_body}
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginTop: "auto",
+                    flexWrap: "wrap",
+                    gap: 12,
+                  }}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setDebunkOpen(false)}
+                    className="zine-btn"
+                    data-size="sm"
+                    style={{
+                      background: "transparent",
+                      color: "var(--ink)",
+                      border: "3px solid var(--ink)",
+                      boxShadow: "4px 4px 0 var(--ink)",
+                      fontFamily: "var(--font-display)",
+                      fontSize: 14,
+                      padding: "8px 14px 6px",
+                      letterSpacing: "0.04em",
+                      textTransform: "uppercase",
+                      cursor: "pointer",
+                      minHeight: 44,
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {zine.back_to_the_theory}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={onNext}
+                    className="zine-btn"
+                    data-size="md"
+                    style={{
+                      background: "var(--punch)",
+                      color: "var(--ink)",
+                      border: "3px solid var(--ink)",
+                      boxShadow: "var(--shadow)",
+                      fontFamily: "var(--font-display)",
+                      fontSize: "clamp(18px, 1.8vw, 22px)",
+                      padding: "11px 20px 9px",
+                      letterSpacing: "0.04em",
+                      textTransform: "uppercase",
+                      whiteSpace: "nowrap",
+                      cursor: "pointer",
+                      minHeight: 44,
+                    }}
+                  >
+                    {move.key === "discredit" ? labels.see_full_theory : labels.next_move} →
+                  </button>
+                </div>
+              </div>
+            </article>
+          </DebunkSlam>
+
+          {/* Fallback CTA below the theory card — visible when the slam is
+              closed, so a user who dismissed the debunk can still advance
+              without re-opening it. */}
+          {!debunkOpen && (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginTop: 18,
+                flexWrap: "wrap",
+                gap: 12,
+              }}
             >
-              {labels.or_regenerate}
-            </span>
-          </div>
+              <span
+                className="marker"
+                style={{
+                  fontSize: 18,
+                  color: "var(--cool)",
+                  transform: "rotate(-1.5deg)",
+                  display: "inline-block",
+                }}
+              >
+                {labels.or_regenerate}
+              </span>
+              <button
+                type="button"
+                onClick={onNext}
+                className="zine-btn"
+                data-size="md"
+                style={{
+                  background: "var(--hot)",
+                  color: "var(--paper)",
+                  border: "3px solid var(--ink)",
+                  boxShadow: "var(--shadow)",
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(18px, 1.8vw, 22px)",
+                  padding: "11px 20px 9px",
+                  letterSpacing: "0.04em",
+                  textTransform: "uppercase",
+                  whiteSpace: "nowrap",
+                  cursor: "pointer",
+                  minHeight: 44,
+                }}
+              >
+                {move.key === "discredit" ? labels.see_full_theory : labels.next_move} →
+              </button>
+            </div>
+          )}
         </div>
       )}
 

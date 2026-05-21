@@ -15,7 +15,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { db, schema } from "@/lib/db";
 import { env } from "@/lib/env";
-import { getMoves, type MoveKey, type WizardContent } from "@/lib/recipe";
+import { getMoves, parseMarkedText, type MoveKey, type WizardContent } from "@/lib/recipe";
 import { Masthead } from "@/components/masthead";
 import { Footer } from "@/components/footer";
 import { MoveGlyph } from "@/components/move-glyph";
@@ -26,6 +26,8 @@ import { RatingBar } from "@/components/rating-bar";
 import { TheoryHeadline } from "@/components/theory-headline";
 import { Sticker } from "@/components/zine/sticker";
 import { MarkerStamp } from "@/components/zine/marker-stamp";
+import { ExposeBoard } from "@/components/zine/expose-board";
+import { TheoryText } from "@/components/zine/theory-text";
 import { getDict, isLocale, localizedHref, readLocale, type Locale } from "@/lib/i18n";
 
 type Params = { id: string };
@@ -171,17 +173,14 @@ export default async function GenerationPage({ params }: { params: Promise<Param
           <Sticker color="ink" tilt={-1}>{zineDict.built_in_three_minutes}</Sticker>
         </div>
 
-        {/* Dark headline card — ink background, paper text, hot offset shadow */}
-        <section
-          style={{
-            position: "relative",
-            background: "var(--ink)",
-            color: "var(--paper)",
-            border: "3px solid var(--ink)",
-            boxShadow: "8px 8px 0 var(--hot)",
-            padding: "26px 28px 22px",
-            marginBottom: 28,
-          }}
+        {/* Exposé hero: 2-col on desktop (dark headline card LEFT + 2x2 move
+            summary grid RIGHT) with RedStrings overlay. Mobile collapses to
+            a single ink card (the 2x2 grid hides; detailed move blocks below
+            cover the same content).
+            Spec: openspec/specs/conspiracy-output Requirement: Wake Up Zine
+            exposé board layout on permalink. */}
+        <ExposeBoard
+          moves={MOVES.map((m) => ({ n: m.n, title: m.title, tactic: m.sub }))}
         >
           <div className="label" style={{ color: "var(--punch)" }}>
             {gen.source === "migrated" ? t.eyebrow_imported : t.eyebrow_fake}
@@ -275,7 +274,7 @@ export default async function GenerationPage({ params }: { params: Promise<Param
           >
             {zineDict.do_not_share_without_context}
           </p>
-        </section>
+        </ExposeBoard>
       </div>
 
       {/* Narrative finale — integrated theory. Rendered for any recipe-tagged
@@ -384,7 +383,7 @@ export default async function GenerationPage({ params }: { params: Promise<Param
                     whiteSpace: "pre-wrap",
                   }}
                 >
-                  {dm.paragraph}
+                  <TheoryText parts={parseMarkedText(dm.paragraph)} />
                   <MoveTellStamp move={m} label={t.move_label.toUpperCase()} />
                 </div>
                 <div

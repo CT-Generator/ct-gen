@@ -7,6 +7,7 @@ import { BarChart } from "@/components/bar-chart";
 import { LineChart } from "@/components/line-chart";
 import { Tile, TopList } from "@/components/stats-pieces";
 import { StatsTabs } from "@/components/stats-tabs";
+import { Sticker } from "@/components/zine/sticker";
 import { MOVES } from "@/lib/recipe";
 import {
   loadVisitorTotals,
@@ -65,11 +66,11 @@ export default async function VisitorsPage() {
   return (
     <>
       <Masthead />
-      <article className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-12 lg:py-14">
-        <p className="meta">Stats · Visitors</p>
+      <article className="stage" style={{ maxWidth: "1100px" }}>
+        <Sticker color="ink" tilt={-2}>Stats · Visitors</Sticker>
         <h1
-          className="mt-3 font-display text-[clamp(2rem,5vw,3rem)] leading-[1.05]"
-          style={{ fontWeight: 600, letterSpacing: "-0.025em" }}
+          className="scream"
+          style={{ fontSize: "var(--t-scream-lg)", margin: "14px 0 16px" }}
         >
           Who is showing up.
         </h1>
@@ -173,29 +174,29 @@ function Body(props: {
       </section>
 
       <section className="mt-12">
-        <h2 className="font-display text-[20px] sm:text-[22px]" style={{ fontWeight: 600 }}>
+        <h2 className="scream" style={{ fontSize: "var(--t-scream-xs)" }}>
           Page views per day
         </h2>
         <div className="mt-3 text-ink dark:text-ink-dark">
-          <BarChart data={viewsDaily} color={MOVES[0].colorHex} unit="views" />
+          <BarChart data={viewsDaily} color="#ff2e63" unit="views" />
         </div>
       </section>
 
       <section className="mt-10">
-        <h2 className="font-display text-[20px] sm:text-[22px]" style={{ fontWeight: 600 }}>
+        <h2 className="scream" style={{ fontSize: "var(--t-scream-xs)" }}>
           Unique sessions per day
         </h2>
         <div className="mt-3 text-ink dark:text-ink-dark">
-          <BarChart data={sessionsDaily} color={MOVES[2].colorHex} unit="sessions" />
+          <BarChart data={sessionsDaily} color="#1d4d8a" unit="sessions" />
         </div>
       </section>
 
       <section className="mt-10">
-        <h2 className="font-display text-[20px] sm:text-[22px]" style={{ fontWeight: 600 }}>
+        <h2 className="scream" style={{ fontSize: "var(--t-scream-xs)" }}>
           Cumulative page views
         </h2>
         <div className="mt-3 text-ink dark:text-ink-dark">
-          <LineChart data={viewsCum} color={MOVES[0].colorHex} unit="views" />
+          <LineChart data={viewsCum} color="#ff2e63" unit="views" />
         </div>
       </section>
 
@@ -286,7 +287,7 @@ function ClientErrorsPane({
           </section>
 
           <section className="mt-10">
-            <h3 className="font-display text-[20px] sm:text-[22px]" style={{ fontWeight: 600 }}>
+            <h3 className="scream" style={{ fontSize: "var(--t-scream-xs)" }}>
               Recent samples
             </h3>
             <ol className="mt-3">

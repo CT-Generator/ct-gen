@@ -1,14 +1,14 @@
 // /story/[uuid] — Step 2: pick a culprit and a motive for the chosen news event.
 // Spec: zine-design-system + selection-flow.
 
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import { Masthead } from "@/components/masthead";
 import { Footer } from "@/components/footer";
 import { findByUuid, sampleN } from "@/lib/seed";
 import { ConspiratorsPicker } from "@/components/conspirators-picker";
 import { Sticker } from "@/components/zine/sticker";
-import { readLocale, getDict, localizedHref } from "@/lib/i18n";
+import { readLocale, getDict, localizedHref, isLocale, type Locale } from "@/lib/i18n";
 
 type Params = { uuid: string };
 type SearchParams = { r?: string };
@@ -24,14 +24,27 @@ export default async function StoryPage({
 }) {
   const { uuid } = await params;
   const sp = await searchParams;
-  const locale = await readLocale();
+  const visitorLocale = await readLocale();
+
+  const event = findByUuid("news", uuid);
+  if (!event) notFound();
+
+  // Locale lock: the chosen news event is tied to a single seed locale. If the
+  // visitor reaches /<prefix>/story/<uuid> via a URL whose prefix doesn't match
+  // the event's persisted locale, redirect to the canonical URL so chrome,
+  // intro paragraphs, and the H1 headline all align on the seed's locale.
+  // Mirrors the same pattern used on /g/[id].
+  const eventLocale: Locale = isLocale(event.locale) ? event.locale : "en";
+  if (visitorLocale !== eventLocale) {
+    const r = sp.r != null ? `?r=${encodeURIComponent(sp.r)}` : "";
+    redirect(`${localizedHref(`/story/${uuid}`, eventLocale)}${r}`);
+  }
+
+  const locale = eventLocale;
   const t = getDict(locale).story;
   const z = getDict(locale).zine;
 
   const refresh = sp.r != null ? Number.parseInt(sp.r, 10) || 0 : Math.floor(Math.random() * 1_000_000);
-
-  const event = findByUuid("news", uuid);
-  if (!event) notFound();
 
   const culprits = sampleN("culprits", 4, refresh + 11, locale);
   const motives = sampleN("motives", 4, refresh + 13, locale);

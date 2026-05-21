@@ -147,6 +147,43 @@ export const SECTION_SCHEMA = {
 } as const;
 export type SectionOutput = { paragraph: string; debunk: string };
 
+/** A segment of theory text — either plain prose or a phrase that the model
+ *  marked as "this came from a user pick" via <mark>…</mark>. Marked segments
+ *  render with a wobbly red per-line underline (MarkUnderline).
+ *  Spec: openspec/specs/conspiracy-output Requirement: MarkUnderline applied
+ *  to slot-filled phrases in move text. */
+export type TheorySegment = string | { mark: string };
+
+/** Parse a theory paragraph into segments. Splits on <mark>…</mark> tags
+ *  produced by the LLM. If no marks are present, returns a single plain-string
+ *  segment — older persisted rows (generated before this prompt change)
+ *  render as plain prose.
+ *
+ *  Robust to: nested marks (flattened), empty marks (dropped), unclosed marks
+ *  (treated as plain text). HTML/XML inside marks is preserved as text. */
+export function parseMarkedText(input: string): TheorySegment[] {
+  if (!input) return [];
+  const segs: TheorySegment[] = [];
+  const re = /<mark>([\s\S]*?)<\/mark>/g;
+  let lastIdx = 0;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(input)) !== null) {
+    if (m.index > lastIdx) {
+      const plain = input.slice(lastIdx, m.index);
+      if (plain) segs.push(plain);
+    }
+    const inner = m[1]?.trim();
+    if (inner) segs.push({ mark: inner });
+    lastIdx = m.index + m[0].length;
+  }
+  if (lastIdx < input.length) {
+    const tail = input.slice(lastIdx);
+    if (tail) segs.push(tail);
+  }
+  // If no marks were found at all, return the whole input as one plain segment.
+  return segs.length > 0 ? segs : [input];
+}
+
 /** Narrative finale: four-paragraph integrated conspiracy theory built from
  *  the four per-move paragraphs. Paragraph 1 is a neutral news-event framing
  *  (50–80 words) that names the actual event and ends on a hook into the

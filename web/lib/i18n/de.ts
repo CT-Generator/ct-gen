@@ -374,5 +374,8 @@ export const de: Dictionary = {
     pick_the_event_deck: "Nimm die Schlagzeile, bei der deine Vorstellungskraft am wildesten loslegt. Nicht zu lange überlegen.",
     who_did_it_h: "Wer war es? Und was ist das Motiv?",
     file_open: "Akte offen",
+    credits_built_by: "Gebaut von",
+    credits_amp: "&",
+    credits_affiliation: "· Etienne-Vermeersch-Lehrstuhl für Kritisches Denken, Universität Gent",
   },
 };
