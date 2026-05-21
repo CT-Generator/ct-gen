@@ -47,13 +47,9 @@ export default async function HomePage({
         <section className="twocol" style={{ alignItems: "start" }}>
           {/* Left column */}
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <Sticker tilt={-3} className="self-start" color="hot">
-              {z.exercise_not_manifesto}
-            </Sticker>
-
             <h1
               className="scream"
-              style={{ fontSize: "var(--t-scream-xl)", margin: "16px 0 14px" }}
+              style={{ fontSize: "var(--t-scream-xl)", margin: "0 0 14px" }}
             >
               {t.hero_h1_a}{" "}
               <span style={{ color: "var(--hot-2)" }}>{t.hero_h1_b}</span>
