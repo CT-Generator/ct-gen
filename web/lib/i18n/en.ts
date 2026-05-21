@@ -188,6 +188,13 @@ export type Dictionary = {
     done_p_period: string;
     done_p_missing: string;
     done_cta_read: string;
+    /** Server-side error strings. Returned by /api/build/[id]/[move]/section
+     *  and /api/build/[id]/yolo. The route reads the row's persisted locale
+     *  and picks the right string before responding. */
+    err_engine_glitched_section: string;
+    err_engine_refused_section: string;
+    err_engine_glitched_yolo: string;
+    err_engine_refused_yolo: string;
   };
   wizard_blurb: {
     anomaly_explainer: string;
@@ -543,6 +550,10 @@ export const en: Dictionary = {
     done_p_missing:
       "Some moves are missing. You can go back and finish them, or jump straight to the result.",
     done_cta_read: "Read the full theory →",
+    err_engine_glitched_section: "The theory engine glitched — try again.",
+    err_engine_refused_section: "The engine refused this one. Pick a different idea or try again.",
+    err_engine_glitched_yolo: "The theory engine glitched mid-build — try again.",
+    err_engine_refused_yolo: "The engine refused this combo. Try again or pick different conspirators.",
   },
   wizard_blurb: {
     anomaly_explainer:

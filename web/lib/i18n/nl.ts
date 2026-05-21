@@ -242,6 +242,10 @@ export const nl: Dictionary = {
     done_p_missing:
       "Sommige stappen ontbreken nog. Je kunt teruggaan om ze in te vullen — of meteen naar het resultaat springen.",
     done_cta_read: "Hele theorie lezen →",
+    err_engine_glitched_section: "De theoriemachine haperde — probeer het opnieuw.",
+    err_engine_refused_section: "De machine weigerde dit idee. Kies een ander idee of probeer het opnieuw.",
+    err_engine_glitched_yolo: "De theoriemachine haperde halverwege — probeer het opnieuw.",
+    err_engine_refused_yolo: "De machine weigerde deze combinatie. Probeer het opnieuw of kies andere schuldigen.",
   },
   wizard_blurb: {
     anomaly_explainer:

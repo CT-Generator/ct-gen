@@ -230,6 +230,10 @@ export const de: Dictionary = {
     done_p_missing:
       "Einige Schritte fehlen noch. Du kannst zurückgehen und sie ergänzen — oder direkt zum Ergebnis springen.",
     done_cta_read: "Ganze Theorie lesen →",
+    err_engine_glitched_section: "Die Theorie-Maschine hat geruckelt — bitte erneut versuchen.",
+    err_engine_refused_section: "Die Maschine hat diese Idee abgelehnt. Wähle eine andere Idee oder versuche es nochmal.",
+    err_engine_glitched_yolo: "Die Theorie-Maschine hat mittendrin geruckelt — bitte erneut versuchen.",
+    err_engine_refused_yolo: "Die Maschine hat diese Kombination abgelehnt. Versuche es erneut oder wähle andere Schuldige.",
   },
   wizard_blurb: {
     anomaly_explainer:

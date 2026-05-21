@@ -8,7 +8,7 @@ import { eq } from "drizzle-orm";
 import { db, schema } from "@/lib/db";
 import { generateNarrative, generateSection, moderate } from "@/lib/openai";
 import { type MoveKey, type WizardContent } from "@/lib/recipe";
-import { isLocale, type Locale } from "@/lib/i18n";
+import { getDict, isLocale, type Locale } from "@/lib/i18n";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -62,6 +62,7 @@ export async function POST(
   // Read locale from the persisted row — the user's locale was decided at /api/start
   // time and we keep section generation consistent with what's already on the page.
   const rowLocale: Locale = isLocale(row.locale) ? row.locale : "en";
+  const errLabels = getDict(rowLocale).wizard;
 
   const sec = await generateSection({
     locale: rowLocale,
@@ -78,7 +79,7 @@ export async function POST(
   });
   if (!sec) {
     return NextResponse.json(
-      { error: "The theory engine glitched — try again." },
+      { error: errLabels.err_engine_glitched_section },
       { status: 502 },
     );
   }
@@ -87,7 +88,7 @@ export async function POST(
   if (m.flagged) {
     console.warn("[section] flagged", { id, moveKey, idea: chosenIdea });
     return NextResponse.json(
-      { error: "The engine refused this one. Pick a different idea or try again." },
+      { error: errLabels.err_engine_refused_section },
       { status: 422 },
     );
   }

@@ -21,7 +21,7 @@ import { eq } from "drizzle-orm";
 import { db, schema } from "@/lib/db";
 import { generateNarrative, generateSection, moderate } from "@/lib/openai";
 import { type MoveKey, type WizardContent } from "@/lib/recipe";
-import { isLocale, type Locale } from "@/lib/i18n";
+import { getDict, isLocale, type Locale } from "@/lib/i18n";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -72,6 +72,7 @@ export async function POST(_req: Request, { params }: { params: Promise<Params> 
   }
 
   const rowLocale: Locale = isLocale(row.locale) ? row.locale : "en";
+  const errLabels = getDict(rowLocale).wizard;
 
   // Random picks ONLY for missing moves; existing moves keep the user's idea verbatim.
   const newPicks: Partial<Record<MoveKey, string>> = {};
@@ -112,7 +113,7 @@ export async function POST(_req: Request, { params }: { params: Promise<Params> 
         errorMessage: err instanceof Error ? err.message : String(err),
       });
       return NextResponse.json(
-        { error: "The theory engine glitched mid-build — try again." },
+        { error: errLabels.err_engine_glitched_yolo },
         { status: 502 },
       );
     }
@@ -148,7 +149,7 @@ export async function POST(_req: Request, { params }: { params: Promise<Params> 
         moveKey: missingKeys[flaggedIndices[0]!],
       });
       return NextResponse.json(
-        { error: "The engine refused this combo. Try again or pick different conspirators." },
+        { error: errLabels.err_engine_refused_yolo },
         { status: 422 },
       );
     }
@@ -179,10 +180,7 @@ export async function POST(_req: Request, { params }: { params: Promise<Params> 
             { shortId: id },
           );
           return NextResponse.json(
-            {
-              error:
-                "The engine refused this combo. Try again or pick different conspirators.",
-            },
+            { error: errLabels.err_engine_refused_yolo },
             { status: 422 },
           );
         }
@@ -198,7 +196,7 @@ export async function POST(_req: Request, { params }: { params: Promise<Params> 
           errorMessage: err instanceof Error ? err.message : String(err),
         });
         return NextResponse.json(
-          { error: "The theory engine glitched mid-build — try again." },
+          { error: errLabels.err_engine_glitched_yolo },
           { status: 502 },
         );
       }

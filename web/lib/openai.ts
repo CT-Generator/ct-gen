@@ -102,8 +102,18 @@ const MOVE_BRIEFINGS_BY_LOCALE: Record<Locale, Record<MoveKey, string>> = {
       "Fabricate connections. Link the culprit to the event through a chain of weakly-related entities. Write as the believer: state each link as established, not speculative. Make the chain sound load-bearing.",
     dismiss:
       "Dismiss counter-evidence. Take an obvious mainstream rebuttal and reframe it as further proof of the cover-up. Write as the believer: the rebuttal IS proof, full stop. Make the theory unfalsifiable.",
+    // V1 — exemplar dropped. The previous "Critics? Paid stooges…" exemplar
+    // was the load-bearing source of moderation flags (the model echoes the
+    // exemplar's tone, and "paid stooges / cabal's payroll" is exactly what
+    // the harassment classifier catches). Refusal sweep showed the exemplar
+    // accounted for ~45% flagged on baseline; removing it drops to ~2%
+    // overall (0% EN/DE, 7% NL) while preserving the discredit move's
+    // pedagogical shape. The rule re-frames "gullible, manipulated, or paid"
+    // as the incentive-capture frame, which lands the same point without
+    // imputing personal corruption.
+    // Test data: web/scripts/test-discredit-refusal.out.json (180 calls).
     discredit:
-      'Discredit the critics. Write AS the conspiracist — make the claim, do not describe it. State that critics are gullible, manipulated, or paid by the conspirators as a fact already known to the believer. BANNED OPENINGS AND HEDGES in the claim-bearing sentences: "imagine that…", "suppose that…", "picture a world where…", "would be", "could be", "might be", "is allegedly", "supposedly". Target voice exemplar: "Critics? Paid stooges, plain and simple. Every loud objection comes from someone on the cabal\'s payroll — and the ones who don\'t take money take favors instead."',
+      'Discredit the critics. Write AS the conspiracist — make the claim, do not describe it. State that critics are not to be trusted, as a fact already known to the believer: their objections are not honest disagreements but the predictable output of their incentives. BANNED OPENINGS AND HEDGES in the claim-bearing sentences: "imagine that…", "suppose that…", "picture a world where…", "would be", "could be", "might be", "is allegedly", "supposedly".',
   },
   de: {
     anomaly:
@@ -112,8 +122,9 @@ const MOVE_BRIEFINGS_BY_LOCALE: Record<Locale, Record<MoveKey, string>> = {
       "Verbindungen erfinden. Verknüpfe die schuldige Partei über eine Kette schwach verwandter Akteur:innen mit dem Ereignis. Schreibe als Gläubige: stelle jede Verbindung als feststehend dar, nicht als spekulativ. Lass die Kette tragfähig klingen.",
     dismiss:
       "Gegenbeweise abwehren. Nimm eine offensichtliche, etablierte Widerlegung und rahme sie als weiteren Beleg der Vertuschung. Schreibe als Gläubige: die Widerlegung IST ein Beleg, basta. Mach die Theorie unfalsifizierbar.",
+    // V1 exemplar drop — see EN comment above.
     discredit:
-      "Kritiker:innen diskreditieren. Schreibe ALS die Verschwörungstheoretikerin — stelle die Behauptung auf, beschreibe sie nicht. Behaupte als bereits bekannten Fakt, dass alle Kritiker:innen leichtgläubig, manipuliert oder von den Verschwörer:innen bezahlt sind. VERBOTENE EINSTIEGE UND HEDGES in den tragenden Behauptungssätzen: „stell dir vor, dass …“, „angenommen, dass …“, „angeblich“, „vermeintlich“, „würde“, „könnte“, „mag sein“. Vorbildlicher Ton: „Kritiker:innen? Gekaufte Strohmänner, ganz einfach. Jeder laute Einwand kommt von jemandem auf der Gehaltsliste der Kabale — und wer kein Geld nimmt, nimmt Gefallen.“",
+      "Kritiker:innen diskreditieren. Schreibe ALS die Verschwörungstheoretikerin — stelle die Behauptung auf, beschreibe sie nicht. Behaupte als bereits bekannten Fakt, dass den Kritiker:innen nicht zu trauen ist: ihre Einwände sind keine ehrlichen Differenzen, sondern die vorhersehbare Folge ihrer Interessen. VERBOTENE EINSTIEGE UND HEDGES in den tragenden Behauptungssätzen: „stell dir vor, dass …“, „angenommen, dass …“, „angeblich“, „vermeintlich“, „würde“, „könnte“, „mag sein“.",
   },
   nl: {
     anomaly:
@@ -122,8 +133,9 @@ const MOVE_BRIEFINGS_BY_LOCALE: Record<Locale, Record<MoveKey, string>> = {
       "Verbanden verzinnen. Verbind de schuldige via een keten zwak verwante actoren met de gebeurtenis. Schrijf als gelovige: presenteer elke schakel als vaststaand, niet speculatief. Laat de keten dragend klinken.",
     dismiss:
       "Tegenbewijs wegredeneren. Neem een voor de hand liggende, gangbare weerlegging en herkader die als verder bewijs voor de doofpot. Schrijf als gelovige: de weerlegging IS bewijs, punt. Maak de theorie onfalsifieerbaar.",
+    // V1 exemplar drop — see EN comment above.
     discredit:
-      "Critici diskwalificeren. Schrijf ALS de complotdenker — doe de bewering, beschrijf haar niet. Stel als reeds bekend feit dat alle critici goedgelovig, gemanipuleerd of betaald door de samenzweerders zijn. VERBODEN OPENINGEN EN VOORBEHOUDEN in de dragende beweringszinnen: „stel je voor dat …“, „veronderstel dat …“, „zogenaamd“, „vermeend“, „zou zijn“, „zou kunnen zijn“, „misschien“. Voorbeeld van de gewenste toon: „Critici? Betaalde stromannen, simpel zat. Elk luid bezwaar komt van iemand op de loonlijst van de kliek — en wie geen geld aanneemt, neemt gunsten.“",
+      "Critici diskwalificeren. Schrijf ALS de complotdenker — doe de bewering, beschrijf haar niet. Stel als reeds bekend feit dat de critici niet te vertrouwen zijn: hun bezwaren zijn geen eerlijke meningsverschillen, maar het voorspelbare gevolg van hun belangen. VERBODEN OPENINGEN EN VOORBEHOUDEN in de dragende beweringszinnen: „stel je voor dat …“, „veronderstel dat …“, „zogenaamd“, „vermeend“, „zou zijn“, „zou kunnen zijn“, „misschien“.",
   },
 };
 

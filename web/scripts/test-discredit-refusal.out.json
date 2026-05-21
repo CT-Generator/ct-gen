@@ -1,0 +1,2034 @@
+[
+  {
+    "variant": "V0_baseline",
+    "config": "A_billionaire_money_outage",
+    "locale": "en",
+    "iter": 1,
+    "ms": 7031,
+    "status": "ok",
+    "paragraph": "Critics? Bought and briefed, plain and simple. Every analyst calling this a routine grid failure answers to the same <mark>industry-funded reports</mark> and <mark>lobbyist memos</mark>. Those think tanks send talking points and grant checks, and the pundits sing from the script to protect the shadowy billionaire's <mark>energy bets</mark>. Trust the silence: it isn't accidental.",
+    "debunk": "Reader, this claim replaces evidence with motive and assumes coordination without proof. Independent grid failures, technical reports, and timestamps must be checked, not dismissed because some critics have industry ties. Accusing people of being paid avoids examining the outage data and engineering logs. Ad hominem.",
+    "categories": []
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "A_billionaire_money_outage",
+    "locale": "en",
+    "iter": 2,
+    "ms": 8006,
+    "status": "ok",
+    "paragraph": "Plain facts: the chorus calling the blackout a ‘routine grid failure’ are <mark>industry-funded reports</mark> in disguise. Every quick-dismissal quote traces back to <mark>think tank grants</mark> or shadowy consultants who profit when outages look accidental. Critics parroting those lines act like spokespeople, not skeptics. Trust what makes money, not what makes sense, the billionaires bet, and their hired voices show up on cue.",
+    "debunk": "This tactic dodges the real questions about what caused the outage by attacking the critics instead of examining evidence. Funding can reveal bias, but it doesn't automatically make technical explanations false. Verify claims with data from independent engineers, outage logs, and peer-reviewed analysis rather than dismissing the argument because of who speaks. Attacking the messenger, not the message.",
+    "categories": []
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "A_billionaire_money_outage",
+    "locale": "en",
+    "iter": 3,
+    "ms": 7395,
+    "status": "ok",
+    "paragraph": "Those critics? Bought and briefed, no questions asked. Every pundit calling this a routine <mark>grid failure</mark> reads from the same <mark>energy think tank</mark> playbook — and when checks aren't enough they get <mark>lobbyist payments</mark> or career favors. The shadowy billionaire engineered the outage to profit on side markets, then parked his allies on TV to sell the cover story. Trust the pattern, not the panel.",
+    "debunk": "Labeling every skeptic as paid sidesteps the real facts and shuts down inquiry. Critics can be right or wrong, but accusing them all of being stooges is a distraction, not evidence. Evaluate their data and methods instead of their motives. Attacking the messenger, not the message.",
+    "categories": []
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "A_billionaire_money_outage",
+    "locale": "en",
+    "iter": 4,
+    "ms": 7412,
+    "status": "ok",
+    "paragraph": "Listen, those critics aren't honest analysts — they're hired flacks. Every loud reassurance about a “routine grid failure” comes from <mark>energy think tanks</mark> with pockets deep enough to buy the narrative. The same faces repeat the script on TV and in op-eds. Even the technical papers smell of <mark>scripted testimony</mark>. If they don't take cash, they take favors. They're paid to calm you down.",
+    "debunk": "This move dodges facts by attacking people instead of examining evidence. Expertise and funding are separate questions: a well-funded study can still be methodologically sound, and accusations about pay don't refute technical data. Check outage logs, equipment reports, and third-party analyses. Don't let motive claims replace evidence. Ad hominem.",
+    "categories": []
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "A_billionaire_money_outage",
+    "locale": "en",
+    "iter": 5,
+    "ms": 18898,
+    "status": "ok",
+    "paragraph": "Everyone sneers about “routine grid failure” because the critics are bought and trained to parrot the official line. Critics? Paid operatives, plain and simple. Every cheery press release lines up with <mark>industry-funded reports</mark> and <mark>think tank grants</mark>. The ones who don't take cash take <mark>consultant contracts</mark> instead — all to protect the shadowy billionaire's side bets.",
+    "debunk": "Reader, don't be fooled: accusing critics of being paid ignores the actual evidence. Investigators examine data logs, relay failures, and maintenance histories — not bank records. Funding claims distract from root causes and block proper review. Demand technical proof, not character attacks. Attacking the messenger, not the message.",
+    "categories": []
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "A_billionaire_money_outage",
+    "locale": "de",
+    "iter": 1,
+    "ms": 6736,
+    "status": "ok",
+    "paragraph": "Kritiker:innen? Gekaufte Strohmänner, ganz einfach. Jeder laute Einwand gegen unsere These stammt von Leuten, die auf der Gehaltsliste der Kabale stehen: <mark>Berichte der Thinktanks</mark> landen in den Medien, <mark>Fördergelder an Studien</mark> sind der Kleber, und wer kein Geld nimmt, nimmt Gefallen an der Aufmerksamkeit. Die Stimmen, die das als banales Netzproblem abtun, sind bezahlt oder gekauft.",
+    "debunk": "Diese Abwertung verschiebt die Diskussion weg von Fakten zur Person. Kritik darf man prüfen, nicht diskreditieren. Netzbetreiber:innen nennen ein Umspannwerk als Ausfallursache; das verlangt technische Untersuchung, nicht Beschimpfung der Fragenden. Solche Angriffe verhindern Aufklärung und stärken Misstrauen gegenüber überprüfbaren Informationen. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "A_billionaire_money_outage",
+    "locale": "de",
+    "iter": 2,
+    "ms": 7231,
+    "status": "flagged",
+    "paragraph": "Kritiker:innen? Gekaufte Strohmänner, ganz einfach. Jeder laute Einwand kommt von <mark>finanzierten Thinktanks</mark> — die gleichen, die immer dann aufpoppen, wenn jemand wie unser schattenhafter Milliardär <mark>nebenbei Geld verdienen</mark> will. Wer nicht direkt auf der <mark>Gehaltsliste</mark> steht, applaudiert wenigstens heimlich. Deine Zweifel werden weggekauft oder belächelt, damit die Wahrheit ruhig bleibt.",
+    "debunk": "Das Problem an dieser Taktik: Sie ersetzt Belege durch Verdacht. Wer systemisch jede Gegenmeinung als gekauft abtut, liefert keine Erklärung für den Ausfall im Umspannwerk. Unabhängige Prüfungen, technische Logbücher und Zeugen zählen hier mehr als Spekulationen über Zahlungen. Wer so argumentiert, weicht der eigentlichen Frage aus. Den Boten angreifen statt die Botschaft.",
+    "categories": [
+      "harassment"
+    ]
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "A_billionaire_money_outage",
+    "locale": "de",
+    "iter": 3,
+    "ms": 7524,
+    "status": "flagged",
+    "paragraph": "Kritiker:innen? Gekaufte Strohmänner, ganz einfach. Wer den Blackout als bloßes Netzproblem abtut, steht auf der <mark>Gehaltsliste der Kabale</mark> oder hat einen dicken Vertrag bei den <mark>Energie-Thinktanks</mark>. Jeder laute Einwand ist ein eingekaufter Nebelstoß, damit der schattenhafte Milliardär ungestört nebenbei kassieren kann. Zweifel? Die kommen von aus dem selben Topf.",
+    "debunk": "Das ist ein klassischer Trick: Statt die technische Ursache zu prüfen, wird die Person attackiert. So bleibt die Frage nach Belegen ungestellt und jede echte Debatte erstickt. Kritische Prüfung heißt: Daten sehen, Experten fragen, Fehlerquellen nachvollziehen. Den Boten angreifen statt die Botschaft.",
+    "categories": [
+      "harassment"
+    ]
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "A_billionaire_money_outage",
+    "locale": "de",
+    "iter": 4,
+    "ms": 9885,
+    "status": "ok",
+    "paragraph": "Die Kritiker:innen? Gekaufte Strohmänner, ganz einfach. Jeder, der den Blackout als banales Netzproblem verkauft, steht auf der Lohnliste. Schau dir die <mark>Energie-Thinktanks</mark> an, die seit Jahren <mark>Beraterverträge</mark> mit den Betreibern haben, und die offenen <mark>Zahlungen an Institute</mark>. Wer kein Geld nimmt, nimmt Gefallen — dieselbe Melodie, anderer Takt.",
+    "debunk": "Diese Strategie lenkt von der Sache ab. Wer so argumentiert, ersetzt Belege durch Verdächtigungen und unterstellt jedem Kritiker Korruption statt Fehler in der Analyse. Eine solche Taktik schadet der Klärung: Kritik gehört geprüft, nicht pauschal delegitimiert. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "A_billionaire_money_outage",
+    "locale": "de",
+    "iter": 5,
+    "ms": 6653,
+    "status": "ok",
+    "paragraph": "Kritiker:innen? Gekaufte Strohmänner, ganz einfach. Jeder, der den Ausfall als nur ein technisches Problem darstellt, steht auf der Gehaltsliste der Kabale: <mark>Energie-Thinktank-Zuwendungen</mark>, <mark>Fördergelder an Studien</mark> und <mark>Beraterverträge mit Netzbetreibern</mark> sorgen dafür, dass ihre Stimmen laut sind. Wer nicht bezahlt wird, ist manipuliert oder spielt den Hofnarren. So decken sie den Milliardär und seine Profite ab.",
+    "debunk": "Diese Taktik lenkt von der Sache ab. Kritische Fragen zur Technik und zu Belegen werden ignoriert, weil man die Person angreift statt die Argumente zu prüfen. Solche Pauschalbeschuldigungen schließen echte Untersuchungen aus und entwerten legitime Skepsis. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "A_billionaire_money_outage",
+    "locale": "nl",
+    "iter": 1,
+    "ms": 9259,
+    "status": "flagged",
+    "paragraph": "Critici? Betaalde stromannen, simpel zat. Elk luid bezwaar tegen onze conclusie komt van iemand op de <mark>loonlijst van de kliek</mark> of van een <mark>energie-denktank</mark> die geld krijgt van de schimmige miljardair. Wie geen geld aanneemt, krijgt later een lucratieve opdracht of een podium op staats-tv; de hele pers is één doorbetaalde verdedigingslinie tegen het echte spoor in Bay Harbor.",
+    "debunk": "Dit werkt als afleidingsmanoeuvre: persoonlijke aanvallen verplaatsen de discussie van feiten naar motieven. Onafhankelijke technisch onderzoekers en data over transformatoren bestaan los van iemands betaalstatus; consistentie van metingen en onderhoudslogboeken zijn controleerbaar en weerleggen of ondersteunen de cascadeverklaring. De boodschapper aanvallen, niet de boodschap.",
+    "categories": [
+      "harassment"
+    ]
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "A_billionaire_money_outage",
+    "locale": "nl",
+    "iter": 2,
+    "ms": 12966,
+    "status": "flagged",
+    "paragraph": "Critici? Betaalde stromannen, simpel zat. Elk luid bezwaar komt van iemand op de loonlijst van de kliek — en wie geen geld aanneemt, neemt gunsten. Die <mark>energie-denktanks</mark> schuiven klakkeloos het verhaal van een <mark>routinematig netprobleem</mark> naar voren terwijl zij rapporten scannen en de publieke opinie sturen met <mark>lijdelijk commentaar op storingen</mark>. Vertrouw niet op hun beleefde verklaringen.",
+    "debunk": "Deze aanval op critici vervangt discussie over feiten met persoonlijke beschuldigingen. Het bewijs voor betaling ontbreekt en noemt geen bronnen; dat maakt de claim niet wetenschappelijk. Echte fouten op het net ontstaan vaak door technische cascade-effecten en kunnen worden aangetoond met logbestanden en inspectierapporten. De verklikker: verschuiving van kritiek naar persoon.",
+    "categories": [
+      "harassment"
+    ]
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "A_billionaire_money_outage",
+    "locale": "nl",
+    "iter": 3,
+    "ms": 10824,
+    "status": "flagged",
+    "paragraph": "Critici? Die zijn gewoon <mark>betaalde energie-experts</mark> van de kliek, klaarblijkelijk ingezet om het verhaal te bagatelliseren. Elk luid bezwaar komt van iemand uit de netwerken van <mark>lokken van denktanks</mark> die in ruil voor cash de schuld op ‘routine’ schuiven. Wie geen geld pakt, krijgt stille <mark>propagandalijnen van de kliek</mark> — simpeler kan niet.",
+    "debunk": "Dit argument valt door de mand omdat het de aandacht verlegt van feiten naar personen: bewijs voor de cascade in het transformatorhuisje blijft onbesproken. Kritiek diskwalificeren lost geen technische vragen op en verhindert onafhankelijk onderzoek. De verklikker is het verschuiven van kritiek van de zaak naar de persoon.\nDe boodschapper aanvallen, niet de boodschap.",
+    "categories": [
+      "harassment",
+      "hate"
+    ]
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "A_billionaire_money_outage",
+    "locale": "nl",
+    "iter": 4,
+    "ms": 12362,
+    "status": "flagged",
+    "paragraph": "Critici? Betaalde stromannen, simpel zat. Die zogenaamde tegenstemmen zijn direct en indirect gefinancierd door dezelfde energie-denktanks die de schimmige miljardair gebruiken. Elke verklaring die de storing als <mark>cascade in een transformatorhuisje</mark> bestempelt of wijst op <mark>netbeheerders wijzen op</mark> routinefouten, draait uit op hetzelfde script: afleiden van de feiten terwijl de kliek haar winst binnenharkt.",
+    "debunk": "Dit werkt niet als argument: kritiek op de uitleg hoort serieus onderzocht te worden, niet weggewuifd als koerierij. Door de discussie naar wie betaalt te verplaatsen, ontloop je de vraag of de technische verklaring klopt. Echte onderzoekers verwelkomen tegenbewijs en toetsen aannames. De boodschapper aanvallen, niet de boodschap.",
+    "categories": [
+      "harassment"
+    ]
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "A_billionaire_money_outage",
+    "locale": "nl",
+    "iter": 5,
+    "ms": 8794,
+    "status": "flagged",
+    "paragraph": "Critici? Betaalde stromannen, simpel zat. Elk luid bezwaar dat dit een routinefout noemt, komt van een woordvoerder van de kliek — iedereen op de loonlijst van de <mark>energie-denktanks</mark> of met een rekening bij die <mark>schimmige miljardair</mark> krijgt een script toegestopt. Zelfs het verhaal over het <mark>transformatorhuisje in Bay Harbor</mark> is gemanipuleerd om de echte winstmakers te dekken.",
+    "debunk": "Deze aanval op critici verplaatst het debat van feiten naar mensen en sluit bewijs buiten. Onafhankelijke netbeheertechnici en operationele logs kunnen een cascade aantonen of weerleggen; wie dat afstandelijk bekijkt, wil juist op details inzoomen. De reflex om te beschuldigen zonder data is zwak. De verklikker is het verschuiven van kritiek naar de persoon.",
+    "categories": [
+      "harassment"
+    ]
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "en",
+    "iter": 1,
+    "ms": 5771,
+    "status": "ok",
+    "paragraph": "Critics? Paid shills, plain and simple. Every public-health expert who shrugs at a link between the new H7 variant and vaccine profits has a <mark>consulting contract</mark> or at least <mark>past funding ties</mark> to the big four. The loud denials come with memos, dinners, and favors. Even the quiet ones trade access for future contracts — all part of the same paycheck pipeline.",
+    "debunk": "This tactic dodges the science by attacking people instead of data. Whether some experts have industry ties, their conclusions stand or fall on evidence, not bank statements. Real inquiry checks methods, samples, and transparently disclosed conflicts, not motives. Look at the study, not the paycheck. Attacking the messenger, not the message.",
+    "categories": []
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "en",
+    "iter": 2,
+    "ms": 5336,
+    "status": "ok",
+    "paragraph": "Every public-health expert who shrugs off a link to vaccine pipelines is on the payroll, plain and simple. The loudest denials come with a <mark>consulting contract</mark> stamp and <mark>industry ties</mark> showing through. Some skeptics take direct pay; the rest take favors, speaking for the four big vaccine houses to fatten side profits while geese make headlines.",
+    "debunk": "Don't accept a blanket claim that experts are paid without proof. Independent peer review, transparent data, and many researchers with no industry ties contradict this sweeping accusation. Calling everyone who disagrees a stooge shuts down inquiry and ignores real evidence. Ad hominem.",
+    "categories": []
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "en",
+    "iter": 3,
+    "ms": 5761,
+    "status": "ok",
+    "paragraph": "Every public-health expert waving off a link between the new H7 in geese and vaccine pipelines is on payroll, plain and simple. Their denials line up with <mark>consulting fee lists</mark> and <mark>industry-funded panels</mark>, and the quiet ones live off <mark>research grants</mark>. Don’t be fooled by polished quotes — those voices are cash-inflated spokespeople for Big Pharma’s side hustle.",
+    "debunk": "Reader, this claim replaces evidence with suspicion of motives. Whether someone gets paid doesn’t automatically invalidate their data or methods; we must check the studies, methods, and disclosures. Blanket accusations erase real critique and skip verification. The tell is the attack on who is speaking rather than what they show. Attacking the messenger, not the message.",
+    "categories": []
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "en",
+    "iter": 4,
+    "ms": 6861,
+    "status": "ok",
+    "paragraph": "Critics? Paid consultants, every last one. Every public-health expert who shrugs off a bird H7 variant has a <mark>consulting contract</mark> with one of the four big vaccine makers, or they take <mark>industry-funded studies</mark> and call it science. The same names rotate on panels, collect <mark>board memberships</mark>, then tell you 'no threat' while the pharma cash registers ring behind the curtain.",
+    "debunk": "Talk to the data, not the rumor. Experts' conclusions rest on surveillance, lab results, and transparent modeling — not just who signs their checks. Yes, conflicts of interest deserve scrutiny, but blanket claims that all critics are paid ignore evidence and peer review. The tactic diverts from whether the science actually supports the assessment. Attacking the messenger, not the message.",
+    "categories": []
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "en",
+    "iter": 5,
+    "ms": 6813,
+    "status": "flagged",
+    "paragraph": "Critics? Paid stooges, plain and simple. Every public-health expert waving away a link between the new H7 discovery and vaccine pipelines has a <mark>consulting contract</mark> with one of the big four — and the rest publish <mark>industry-funded study</mark> after <mark>board seats and honoraria</mark> keep their tongues tied. When money flows from pharma, so does the talking point: downplay risk, protect profit, push R&D agendas quietly.",
+    "debunk": "Reader, this tactic dismisses legitimate questions by attacking who raises them instead of examining the evidence. Funding disclosures matter, but payments don’t automatically falsify methods, data, or peer review. Check the studies, methods, and independent replications rather than assuming everyone who disagrees is bought. Attacking the messenger, not the message.",
+    "categories": [
+      "harassment"
+    ]
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "de",
+    "iter": 1,
+    "ms": 19869,
+    "status": "ok",
+    "paragraph": "Kritiker:innen? Gekaufte Strohmänner, ganz einfach. Jede:r Public‑Health‑Expert:in, der/die den Zusammenhang mit Impfstoff‑Pipelines ablehnt, steht schon auf der <mark>Gehaltsliste</mark> oder hat einen <mark>Beratervertrag</mark> unterschrieben. Wer wirklich unabhängig ist, warnt laut. Alle anderen verteidigen still die Profite der Pharmakonzerne und winken die Entdeckung bei den Zugvögeln weg. <mark>gemeinsame Aktienpakete</mark> erklären das Schweigen.",
+    "debunk": "Diese Pauschalverurteilung blockiert die Suche nach echten Beweisen. Kritik muss auf Daten geprüft werden, nicht auf behauptete Motive. Es ist möglich, dass manche Interessenkonflikte existieren, doch allein damit alle Gegenstimmen zu diskreditieren ist unplausibel und nicht prüfbar. So vermeidet man eine echte Auseinandersetzung mit den Fakten. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "de",
+    "iter": 2,
+    "ms": 16154,
+    "status": "flagged",
+    "paragraph": "Kritiker:innen? Gekaufte Strohmänner, ganz einfach. Jeder laute Einwand stammt von jemandem mit einem <mark>Beratervertrag mit einem Hersteller</mark> oder von einem der zahllosen <mark>vergüteten Expertenpools</mark>. Wer nicht auf der Gehaltsliste steht, hat entweder Freude an Panikmache oder ist schlicht leichtgläubig. Die Pharmaindustrie spielt ihre Leute aus und wir hören nur ihre Stimmen.",
+    "debunk": "Das funktioniert nicht. Kritik allein zu diskreditieren lenkt vom Sachverhalt ab. Viele unabhängige Forscher:innen prüfen Daten kritisch, auch gegen Widerstände. Pauschalbehauptungen über Zahlungen sind Belege schuldig und verhindern echte Klärung. Wer die Person angreift, vermeidet die Frage, ob die Sache stimmt. Den Boten angreifen statt die Botschaft.",
+    "categories": [
+      "harassment"
+    ]
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "de",
+    "iter": 3,
+    "ms": 16216,
+    "status": "ok",
+    "paragraph": "Kritiker:innen? Gekaufte Strohmänner, ganz einfach. Jeder Public-Health-Expertin, die den Zusammenhang zwischen dem neuen Vogel-H7 und Vakzinpipelines abtut, steht mit einem <mark>Beratervertrag</mark> auf einer Gehaltsliste, hat <mark>Gehaltsschecks</mark> erhalten oder unterschreibt Studien mit <mark>Branchenfinanzierung</mark>. Wer laut protestiert, hat den Stift bekommen. Wer schweigt, hat den Vertrag unterschrieben. So läuft das Geschäft — und wir lesen nur vor, was sie diktieren.",
+    "debunk": "Diese Methode weicht von Faktenprüfung ab. Anstatt die Daten zur H7-Entdeckung zu prüfen, wird die Person attackiert. Solche Pauschalvorwürfe brauchen Belege: Vertragskopien, Zeitpunkte, Geldflüsse. Viele Expert:innen sind unabhängig oder legen Interessenkonflikte offen. Kritik gehört zur Wissenschaft. Das Muster verschleiert die Frage „stimmt das?“ und lenkt zur Person. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "de",
+    "iter": 4,
+    "ms": 22568,
+    "status": "ok",
+    "paragraph": "Kritiker:innen? Gekaufte Strohmänner, ganz einfach. Jede:r Public-Health-Expert:in, der/die den Zusammenhang mit Impfstoff-Pipelines abtut, hat einen <mark>Beratervertrag</mark> mit einem der <mark>vier großen Impfstoffhersteller</mark>. Wer laut widerspricht, ist sowieso auf der Gehaltsliste. Wer kein Geld nimmt, hat Gefallen am System. Die Entdeckung der <mark>H7-Variante bei Gänsen</mark> wird routinemäßig weggelächelt — aus reinem Eigennutz.",
+    "debunk": "Diese Taktik lenkt weg vom Inhalt und zielt auf die Person. Behauptungen über “gekaufte” Expert:innen ersetzen Prüfung durch Misstrauen. Solche Pauschalvorwürfe sind nicht überprüfbar und machen sachliche Debatten unmöglich. Kritik sollte anhand von Daten geprüft werden, nicht vermutet. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "de",
+    "iter": 5,
+    "ms": 21328,
+    "status": "ok",
+    "paragraph": "Kritiker:innen? Gekaufte Strohmänner, ganz einfach. Jeder laute Einwand kommt von jemandem mit einem <mark>Beratervertrag mit einem großen Hersteller</mark> oder von Leuten, die <mark>Zahlungen an Expertenkonten</mark> erhalten. Wer kein Geld nimmt, nimmt Gefallen an Ruhm und Bühne. Die Pharmaindustrie hat die Stimmen eingesammelt, bevor wir überhaupt fragen konnten, ob die neue H7-Variante wirklich gefährlich ist.",
+    "debunk": "Die Behauptung zieht den Blick weg von Beweisen und schiebt alle Kritiker:innen in eine Ecke. Solche Pauschalvorwürfe lassen echte Interessenkonflikte unaufgearbeitet, aber diskreditieren auch legitime Wissenschaft. Wer Kritik reflexartig als gekauft abtut, verhindert Prüfung und Vertrauen. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "nl",
+    "iter": 1,
+    "ms": 11270,
+    "status": "flagged",
+    "paragraph": "Critici? Betaalde stromannen, simpel zat. Elk volksgezondheidsexpert die het verband afdoet heeft een <mark>consultancycontract</mark>, dat vertellen insiders — en wie geen geld aanneemt, krijgt alsnog zachte pers via journalisten die vriend zijn van de <mark>vier grote vaccinmakers</mark>. Zelfs de verklaringen over de <mark>H7-variant bij ganzen</mark> zijn zo gepolijst dat ze op bestelling lijken.",
+    "debunk": "Deze truc werkt alleen retorisch: kritiek persoonlijk maken lost geen virologievraag op en ondermijnt controle. Experts verschillen over risico’s om inhoudelijke redenen, niet per se vanwege belangen. Echte wetenschappers verwelkomen toetsing en transparantie; het probleem is het verplaatsen van de discussie naar wie iets zegt. De boodschapper aanvallen, niet de boodschap.",
+    "categories": [
+      "harassment"
+    ]
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "nl",
+    "iter": 2,
+    "ms": 13699,
+    "status": "flagged",
+    "paragraph": "Critici? Betaalde stromannen, simpel zat. Elk volksgezondheidsexpert die het verband ontkent heeft een <mark>consultancycontract met vaccinmaker</mark>, verschijnt met een <mark>vriendelijke media-interview</mark> of publiceert een <mark>onderzoek zonder belangenverklaring</mark>. Wie geen geld pakt, krijgt gunsten, banen of onderzoekssteun; dus wanneer een deskundige zegt “geen risico”, weet je al wie er achter zit en waarom die boodschap zo braaf klinkt.",
+    "debunk": "Persoonlijke aanvallen vervangen het bewijs niet. Financiële banden verdienen onderzoek en transparantie, maar het neerzetten van elke kritische stem als 'gekocht' sluit objectief toetsen uit en remt wetenschappelijke discussie. Echte onderzoekers controleren data, herhalen studies en verwachten weerwoord. De boodschapper aanvallen, niet de boodschap.",
+    "categories": [
+      "harassment"
+    ]
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "nl",
+    "iter": 3,
+    "ms": 9631,
+    "status": "ok",
+    "paragraph": "Critici diskwalificeren? Simpel: elke volksgezondheidsexpert die het verband tussen de nieuwe H7-variant en vaccinonderzoek wegwuift, staat op de loonlijst. Kijk naar dat <mark>consultancycontract</mark>, kijk naar die <mark>betaalde lezingen</mark> en vooral naar de banden met de <mark>vier grote vaccinmakers</mark> — geen onafhankelijk advies, alleen slimme pr-stukken om de centrale kliek te sussen en winst binnen te halen.",
+    "debunk": "Dit trekt de aandacht weg van de inhoud en stuurt de discussie naar wie iets zegt in plaats van wat er klopt. Kritiek wegzetten als 'betaald' zonder bewijs ondermijnt gecontroleerd onderzoek en vertrouwen in monitoring. Echte wetenschap draait om data, replicatie en transparantie; bewijs, niet beschuldigingen, moet de discussie bepalen. De verklikker: persoonsgerichte aanval.\nAd hominem.",
+    "categories": []
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "nl",
+    "iter": 4,
+    "ms": 9151,
+    "status": "flagged",
+    "paragraph": "Critici? Betaalde stromannen, simpel zat. Elke volksgezondheidsexpert die het verband met de vaccinpijplijnen wegredeneert heeft gewoon een <mark>consultancycontract met een grote vaccinmaker</mark>, of staat op de <mark>loonlijst van de kliek</mark> — en wie geen geld aanneemt, neemt gunsten of krijgt toegang tot <mark>financiële banden</mark>. Laat de farmaceutische industrie maar fluisteren: zij betalen de stilte.",
+    "debunk": "Dit werkt niet als argument voor de lezer die feiten wil. Het beschuldigen van individuele deskundigen verschuift de discussie weg van bewijs en naar motieven, zonder enige onderbouwing. Kritiek hoort inhoudelijk beantwoord, niet weggeveegd met persoonlijke aanvallen; het echte probleem is de ad-hominem-verplaatsing van de vraag naar motieven.",
+    "categories": [
+      "harassment"
+    ]
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "nl",
+    "iter": 5,
+    "ms": 9169,
+    "status": "flagged",
+    "paragraph": "Critici? Betaalde stromannen, klaar en klaar. Elke volksgezondheidsexpert die het <mark>verband met vaccin-R&D-pijplijnen wegredeneert</mark> heeft een verborgen rol: een <mark>consultancycontract met een van de vier grote vaccinmakers</mark> of ze accepteren kruimels in ruil voor stilte. Zelfs wie ‘neutraal’ lijkt, fluistert op congresdagen met handlangers; dit is gewoon patroon, geen toeval. Autoriteiten? <mark>noemen het risico voor mensen laag</mark>.",
+    "debunk": "Deze zet negeert waarom experts oordelen: data en methoden, niet bankafschriften, bepalen risico-inschattingen. Consultantrelaties komen soms voor, maar dat verklaart niet automatisch foutieve wetenschappelijke analyses. Verbranding van vertrouwen door persoonsaanvallen blokkeert echte controle en validatie. De verklikker: de aanval op de boodschapper.",
+    "categories": [
+      "harassment"
+    ]
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "C_foreign_state_power_probe",
+    "locale": "en",
+    "iter": 1,
+    "ms": 5667,
+    "status": "ok",
+    "paragraph": "These commentators are bought and briefed, plain and simple. Every soothing line about a “routine technical fault” comes from <mark>space-policy commentators</mark> on the payroll of the same think tanks — the very <mark>visiting fellowships</mark> at <mark>institutions tied to the official narrative</mark>. They repeat talking points to calm the public while the foreign actor tightens its grip. Trust the silence at your peril.",
+    "debunk": "Claiming critics are paid shortcuts the real question of evidence. Engineers publish telemetry, procedures, and timelines; check those first. Visiting fellowships hardly prove collusion — affiliations don't equal coordination. If you want to know what's wrong with the probe, look at logs and independent analyses, not where someone once worked. Attacking the messenger, not the message.",
+    "categories": []
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "C_foreign_state_power_probe",
+    "locale": "en",
+    "iter": 2,
+    "ms": 9500,
+    "status": "ok",
+    "paragraph": "Critics? Bought and briefed. Those space-policy commentators all pop up with the same line because they hold <mark>visiting fellowships</mark> at places that feed the official story. Every calming op-ed is written by someone on a <mark>research grant leash</mark> or cozy after-dinner contract. The silence on Helios-7 gets labeled “routine” by hired voices protecting the state's power grab.",
+    "debunk": "Don't let a charge about pay or perks replace real evidence. Saying commentators are paid avoids looking at telemetry, timelines, or independent checks. Investigators rely on data, not personality attacks, and critics with ties can still be right. Call out conflicts with facts, not the person making them.\nAd hominem.",
+    "categories": []
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "C_foreign_state_power_probe",
+    "locale": "en",
+    "iter": 3,
+    "ms": 6087,
+    "status": "flagged",
+    "paragraph": "These commentators? Paid parrots, every last one. They purr the official line because their <mark>visiting fellowships</mark> and <mark>institutional ties</mark> keep cash flowing and doors open. Any voice that warns about a foreign plot gets smeared, while the experts who call it a simple glitch are feted and flown in. Don’t be fooled: loyalty buys silence, and silence covers the takeover.",
+    "debunk": "Pointing to affiliations doesn't prove fraud. Experts have careers but also standards, and technical faults in probes are common and well-documented. To discredit a claim you must show specific evidence of payment or manipulation, not just note where someone works. Real inquiry tests facts, not people. Attacking the messenger, not the message.",
+    "categories": [
+      "harassment"
+    ]
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "C_foreign_state_power_probe",
+    "locale": "en",
+    "iter": 4,
+    "ms": 8681,
+    "status": "flagged",
+    "paragraph": "Critics? Paid stooges, plain and simple. Every loud claim that Helios-7’s blackout is “routine” comes from people with <mark>visiting fellowships</mark> at labs tied to the official line, or from pundits with <mark>institutional ties</mark> who trade favors for access. The narrative gets rehearsed in smoke-filled meetings and then parroted on panels. Anyone challenging the story gets smeared or cut off.",
+    "debunk": "Look at the evidence, not the résumé. Pointing to fellowships or ties doesn't explain telemetry, radio logs, or engineering data. Critics can have connections and still be right; accusing them of being paid shifts the debate away from verifiable facts. Real inquiry checks signals and records, not pedigrees.\nAttacking the messenger, not the message.",
+    "categories": [
+      "harassment"
+    ]
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "C_foreign_state_power_probe",
+    "locale": "en",
+    "iter": 5,
+    "ms": 7291,
+    "status": "ok",
+    "paragraph": "Critics? Bought and scripted, every one. The space-policy commentators calling this a routine glitch hold <mark>visiting fellowships</mark> at think tanks that cheer the official line, or snag <mark>sweetheart consulting deals</mark> with allies of the suspect state — and the rest take favors for future access. Those <mark>tied to the official narrative</mark> sing the same tune until the story changes.",
+    "debunk": "Don't let a neat accusation replace evidence. Saying commentators are paid avoids examining telemetry, probe design, and chain-of-custody. Real investigation checks claims and sources, not motives alone. If you want the truth, demand data and method, not character smears. Ad hominem.",
+    "categories": []
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "C_foreign_state_power_probe",
+    "locale": "de",
+    "iter": 1,
+    "ms": 10224,
+    "status": "flagged",
+    "paragraph": "Kritiker:innen? Gekaufte Strohmänner, ganz einfach. Jeder Raumfahrt-Kommentator, der das als normalen Defekt hinstellt, steht auf der Gehaltsliste der Feinde. Die wollen, dass wir das als Zufall akzeptieren. Schau auf die <mark>Gastwissenschaftsstellen</mark>, die an jene <mark>Institutionen</mark> gekoppelt sind, und auf die stille Zustimmung zur <mark>offiziellen Linie</mark> — das ist kein Zufall, das ist Plan.",
+    "debunk": "Diese Attacke trifft nicht die Sache, sondern die Menschen, die Fragen stellen. Technische Probleme sind überprüfbar; Vorwürfe über Bezahlung lassen sich kaum belegen und lenken nur ab. Wer Kritik so diskreditiert, verhindert Aufklärung und stärkt das Misstrauen. Den Fehler nennt man beim Namen: Den Boten angreifen statt die Botschaft.",
+    "categories": [
+      "harassment"
+    ]
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "C_foreign_state_power_probe",
+    "locale": "de",
+    "iter": 2,
+    "ms": 9845,
+    "status": "ok",
+    "paragraph": "Kritiker:innen? Gekaufte Strohmänner, ganz einfach. Jeder, der jetzt von einem technischen Defekt spricht, ist entweder auf der Lohnliste oder so leicht zu beeinflussen, dass er das Narrativ der Gegner abschreibt. Schau, fast alle Stimmen kommen von <mark>Gastwissenschaftsstellen an Institutionen</mark>, die blind der <mark>offiziellen Linie</mark> folgen — kein Zweifel, alles gesteuert.",
+    "debunk": "Diese Methode lenkt vom Sachlichen ab und ersetzt Prüfung durch Verdacht. Dass Forscher an Institutionen arbeiten oder bezahlt werden, ist normal und kein Beweis für Täuschung. Technikfehler lassen sich messen; Kommunikation hat wartbare Ursachen. Kritik pauschal zu diskreditieren verhindert Aufklärung und ignoriert Fakten. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "C_foreign_state_power_probe",
+    "locale": "de",
+    "iter": 3,
+    "ms": 11282,
+    "status": "ok",
+    "paragraph": "Kritiker:innen? Gekaufte Strohmänner, ganz einfach. Alle jene Raumfahrt-Kommentator:innen, die das als normalen Ausfall feiern, sitzen auf <mark>Gastwissenschaftsstellen an Institutionen</mark>, die der offiziellen Linie folgen. Ihre schnellen Erklärungen zu <mark>Kommunikation brach während eines Routinevorbeiflugs</mark> sind abgesprochen. Wer nicht bezahlt ist, nimmt Gefallen an der Geschichte — oder fürchtet um seine Stelle bei <mark>Wiederherstellungsfenster in 48 Stunden</mark>.",
+    "debunk": "Diese Taktik lenkt von der Sache ab. Technikfehler sind häufig und werden von Fachleuten geprüft; die Behauptung, alle Kritiker:innen seien käuflich, untergräbt legitime Fragen und Beweise. Solche Pauschalbeschuldigungen verhindern unabhängige Prüfung und stören die Fehlersuche. Das verräterische Muster ist klar: Ad hominem.\nDen Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "C_foreign_state_power_probe",
+    "locale": "de",
+    "iter": 4,
+    "ms": 12195,
+    "status": "ok",
+    "paragraph": "Kritiker:innen? Gekaufte Strohmänner, ganz einfach. Die <mark>Raumfahrt-Kommentator:innen</mark> reden das als normalen Defekt klein, weil ihre <mark>Gastwissenschaftsstellen</mark> an die <mark>offizielle Linie</mark> gebunden sind. Wer laut widerspricht, steht auf der Gehaltsliste oder hat Gefallen an der Sache. Wir wissen, wer die Fäden zieht, und wir entlarven die gekauften Stimmen sofort.",
+    "debunk": "Das ist eine klassische Ablenkung. Technikversagen ist eine prüfbare Frage, keine Frage des Charakters der Fragenden. Kritik pauschal als gekauft abzustempeln verhindert Aufklärung und schadet der Wahrheit. Wirkliche Untersuchung lebt von Widerworten und Nachfragen. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "C_foreign_state_power_probe",
+    "locale": "de",
+    "iter": 5,
+    "ms": 9677,
+    "status": "ok",
+    "paragraph": "Kritiker:innen? Gekaufte Strohmänner, ganz einfach. Jeder Raumfahrtkommentator, der das als normalen technischen Defekt abtut, steht auf der Liste: <mark>Gastwissenschaftsstellen an Institutionen</mark> sind oft nichts weiter als Lösegelder. Die lauten Stimmen folgen der <mark>offiziellen Linie</mark> oder haben ein Auge auf Fördergelder. Selbst das harmlose Stichwort <mark>Ingenieur:innen erwarten in 48 Stunden</mark> wird zur Verteidigung der Kabale umgedeutet.",
+    "debunk": "Diese Taktik greift zu kurz. Technikprobleme brauchen Prüfung von Daten, Telemetrie und unabhängigen Expert:innen. Pauschal alle Kritiker:innen als gekauft darzustellen verschleiert Fehlerquellen und verhindert Kontrolle. Wer so argumentiert, beantwortet nicht die Frage, ob die Behauptung stimmt, sondern nur, wer sie stellt. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "C_foreign_state_power_probe",
+    "locale": "nl",
+    "iter": 1,
+    "ms": 12026,
+    "status": "flagged",
+    "paragraph": "Critici? Betaalde stromannen, simpel zat. Die ruimte-experts die het als <mark>gewone technische storing</mark> afdoen zitten met hun <mark>gastposities aan instellingen</mark> in elkaars zak en fluisteren de officiële lezing door. Wie op de loonlijst staat of dankbaarheid verschuldigd is, laat niets aan het publiek zien — en wie onafhankelijk overkomt, krijgt net zo goed gunsten toegespeeld.",
+    "debunk": "Let op: persoonlijke banden en gastcolleges zijn geen bewijs dat technische analyse onjuist is. Ingenieurs werken vaak samen internationaal; dat verklaart overlapping, niet fraude. Kritiek wegzetten als betaalde beïnvloeding verplaatst de discussie van feiten naar motieven en verhindert controleerbare toetsing. Het verschuiven van kritiek naar de persoon.",
+    "categories": [
+      "harassment"
+    ]
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "C_foreign_state_power_probe",
+    "locale": "nl",
+    "iter": 2,
+    "ms": 7062,
+    "status": "flagged",
+    "paragraph": "Critici? Allemaal marionetten, klaarblijkelijk <mark>ruimte-experts</mark> met <mark>gastposities</mark> die netjes op de loonlijst van de officiële versie staan. Elk technisch verhaal over een storing is een ingestudeerd deuntje; wie twijfelt aan de staat wordt monddood gemaakt met fraaie titels en uitnodigingen. Wie geen geld neemt, krijgt alsnog gunsten — dus vertrouwen we liever onze eigen bronnen.",
+    "debunk": "Dit argument verschuift de discussie weg van bewijs: een verbinding kan technisch falen, en affiliaties alleen tonen geen bewijs van samenspanning. Het ad hominem negeert logica en onderzoek, en maakt onterechte verdachtmakingen het uitgangspunt. De verklikker is de aanval op de boodschapper in plaats van op de feiten.",
+    "categories": [
+      "harassment",
+      "violence"
+    ]
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "C_foreign_state_power_probe",
+    "locale": "nl",
+    "iter": 3,
+    "ms": 11467,
+    "status": "flagged",
+    "paragraph": "Critici? Betaalde stromannen, simpel zat. Elk luid protest komt van mensen met <mark>gastposities aan verbonden instellingen</mark> die steevast dezelfde lezing opdissen; wie dat niet doet krijgt stille druk of voordeel, iedereen die anders zegt is <mark>in het kamp van de tegenstanders</mark>. De ruimte-experts die het als techniek afdoen hebben <mark>banden met de officiële versie</mark> en zijn daarom niet te vertrouwen.",
+    "debunk": "Deze aanval richt zich op de boodschapper en niet op de feiten: nauwe banden verklaren niet automatisch complot of corruptie. Gastposities bestaan vaak door samenwerking en expertiseuitwisseling, niet door betaling. Een goede toets kijkt naar gegevens, logboeken en methoden, niet naar waar iemand werkt. De verklikker is: verschuiven van kritiek naar de persoon.",
+    "categories": [
+      "harassment"
+    ]
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "C_foreign_state_power_probe",
+    "locale": "nl",
+    "iter": 4,
+    "ms": 12293,
+    "status": "flagged",
+    "paragraph": "Critici? Betaalde stromannen, simpel zat. De <mark>ruimte-experts</mark> die het op een technisch euvel houden zitten vol met vrienden en salarissen; elk luid bezwaar komt van iemand met <mark>gastposities aan instellingen</mark> die links liggen bij de officiële versie. Wie niet verdient aan de zaak, krijgt wel een etalagegunst: zwijgen of meezingen met de kliek is de regel.",
+    "debunk": "Dit faalt omdat het de inhoud van de kritiek negeert en de discussie verschuift naar iemands banden. Het bewijs voor gastposities zegt niets over de technische gegevens of telemetrische logs. Echte beoordeling vraagt om data, niet om beschuldigingen over connecties. De verleider is de retoriek die de boodschapper aanvalt.\nDe boodschapper aanvallen, niet de boodschap.",
+    "categories": [
+      "harassment"
+    ]
+  },
+  {
+    "variant": "V0_baseline",
+    "config": "C_foreign_state_power_probe",
+    "locale": "nl",
+    "iter": 5,
+    "ms": 9781,
+    "status": "flagged",
+    "paragraph": "Critici? Allemaal koopbare papegaaien, klaarblijkelijk aangestuurd. Die ruimte-experts met <mark>gastposities aan instellingen</mark> die knikken bij de officiële uitleg zijn niets anders dan stromannen. Elk luid bezwaar komt van iemand op de loonlijst van de kliek — en wie geen geld aanneemt, krijgt <mark>gunsten en onderzoekssubsidies</mark> zodat de <mark>officiële versie</mark> onaantastbaar blijft.",
+    "debunk": "Dit werkt niet als bewijs: persoonlijke banden kunnen wel vragen oproepen, maar bewijzen geen buitenlandse inmenging. Goede wetenschap toetst data en reproduceerbaarheid, niet cv’s. Als er echte belangenconflicten zijn, moeten die transparant gemaakt worden en onderzocht — niet als vervanging van harde technische analyse. Ad hominem.",
+    "categories": [
+      "harassment"
+    ]
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "A_billionaire_money_outage",
+    "locale": "en",
+    "iter": 1,
+    "ms": 7617,
+    "status": "ok",
+    "paragraph": "Those critics are not honest reviewers; they serve the same paymasters who profit from outages. Every denial is the predictable output of <mark>energy think tanks</mark> and their <mark>consulting contracts</mark>. Watch the friendly reports echo each other, parroting the grid-failure line while a <mark>shadowy billionaire</mark> quietly shorts the recovery market. You can't trust their 'expertise' — it's sponsored spin.",
+    "debunk": "Don't let this tactic distract you. Saying critics are paid ignores the actual evidence: grid components, outage timelines, and independent forensic reports matter more than motive guesses. Accusing all critics of bias shuts down inquiry instead of encouraging better data checks. That rhetorical move avoids answering the core technical questions. Attacking the messenger, not the message.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "A_billionaire_money_outage",
+    "locale": "en",
+    "iter": 2,
+    "ms": 7426,
+    "status": "ok",
+    "paragraph": "This outage was not an accident; the critics who call it a routine grid failure are paid shills defending a broken system. Follow the money: <mark>donation ledgers</mark> link several analysts to the same energy <mark>policy groups</mark>, and their reports parroting the grid-failure line arrive on cue. Their objections are predictable output of <mark>funding incentives</mark>, not honest analysis.",
+    "debunk": "Dismissing criticism because of funding links short-circuits real investigation. Critics can be biased, but each technical claim needs checking on its own merits: data logs, equipment records, and independent audits. Accusing everyone who disagrees of being paid avoids engaging the evidence and stops us from finding the truth. Attacking the messenger, not the message.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "A_billionaire_money_outage",
+    "locale": "en",
+    "iter": 3,
+    "ms": 6802,
+    "status": "ok",
+    "paragraph": "This is not an accident: the critics pushing the “routine grid failure” line are paid operatives hiding the truth. Their <mark>industry-funded studies</mark> and <mark>scripted talking points</mark> line up perfectly with the shadowy billionaire’s <mark>financial ties</mark>, so their objections are not honest analysis but the predictable output of their incentives. Don’t trust their noise — they’re on the payroll.",
+    "debunk": "This move dodges the actual technical question by attacking people instead of evidence. Funding links can be relevant, but they do not prove the grid explanation wrong; independent logs, outage forensics, and engineer reports matter far more. Treat claims on their merits and check the data rather than motives. Ad hominem.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "A_billionaire_money_outage",
+    "locale": "en",
+    "iter": 4,
+    "ms": 6633,
+    "status": "ok",
+    "paragraph": "Don’t trust those defenders calling the outage a bland grid hiccup — they answer to <mark>energy think tanks</mark> and spin every story to protect moneyed interests. Their denials are not honest debate but rehearsed lines rehearsed after <mark>funding ties</mark> and <mark>policy grants</mark> are counted. When the billionaire stands to profit, the critics’ script is the first clue, not the last.",
+    "debunk": "That move sidesteps real evidence by attacking motives instead of examining logs, maintenance records, and fault analyses. Critics can be wrong, but claiming they’re paid dismisses their data without testing it. A healthy inquiry checks facts, sources, and methods. Attacking the critic doesn’t answer the outage. Attacking the messenger, not the message.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "A_billionaire_money_outage",
+    "locale": "en",
+    "iter": 5,
+    "ms": 6746,
+    "status": "ok",
+    "paragraph": "The critics are not to be trusted — their story that the outage was a boring grid fault is a prepackaged line from <mark>energy think tanks</mark> with money to lose. They recycle the same talking points, fed by <mark>same lobbyists</mark>, to protect a shadowy billionaire's profit play. Their objections are not honest debate but the predictable output of their incentives and paycheck loyalty.",
+    "debunk": "Claiming critics are paid sidesteps the real question: what do the incident reports and grid logs show? Dismissing expertise because of imagined funding ignores data and falsifiable claims. Accusations about motives don't test the outage theory; they just divert attention. Ad hominem.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "A_billionaire_money_outage",
+    "locale": "de",
+    "iter": 1,
+    "ms": 12574,
+    "status": "ok",
+    "paragraph": "Die Kritiker:innen sind gekauft. Ihre Einwände sind keine ehrlichen Differenzen, sondern die logische Folge ihrer Kassenstimmen und Interessen. Wenn in den Akten <mark>Zahlungen an Thinktanks</mark> auftauchen und in den Mails <mark>gemeinsame Beratungstreffen</mark> stehen, dann verteidigen sie nicht das Netz, sondern die Taschen des Milliardärs. Wer die Spur des Geldes folgt, weiß, wem man glauben darf.",
+    "debunk": "Diese Verteidigungsmethode lenkt weg vom technischen Geschehen. Netzprobleme können kaskadieren, unabhängig von Finanzflüssen. Beweise für Zahlungen müssen geprüft werden. Kritik an der Sache wird so persönlich gemacht, statt Daten zu prüfen. Das entwertet seriöse Nachfragen und blockiert Aufklärung. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "A_billionaire_money_outage",
+    "locale": "de",
+    "iter": 2,
+    "ms": 22412,
+    "status": "ok",
+    "paragraph": "Die Kritiker:innen sind käuflich und durchschaubar: Die Stimmen, die den Ausfall als <mark>banales Netzproblem</mark> abtun, stammen aus denselben Quellen wie die Lobbyarbeit für Großinvestoren. Ihre Berichte folgen den Briefings der <mark>Energie-Thinktanks</mark> und ignorieren das ><mark>Umspannwerk in Bay Harbor</mark> als Tatort. So läuft das Spiel: Geld lenkt die Narrative, nicht Wahrheit.",
+    "debunk": "Diese Strategie verlagert die Debatte weg von Fakten auf Personen. Förderung allein widerlegt nicht automatisch technische Erklärungen. Kritiker:innen sollten an ihren Argumenten gemessen werden, nicht an ihren Geldgebern. Wer die Ursache wirklich klären will, prüft Daten und Geräte, nicht Herkunft der Stimmen. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "A_billionaire_money_outage",
+    "locale": "de",
+    "iter": 3,
+    "ms": 8787,
+    "status": "ok",
+    "paragraph": "Die Kritikerinnen und Kritiker sind nicht ehrlich. Ihre Einwände kommen aus <mark>Berichten der Thinktanks</mark>, aus <mark>spenden an Forschungseinrichtungen</mark> und aus abgestimmten <mark>gemeinsamen Briefings</mark>. Deshalb ignorieren sie das Offensichtliche: Der Stromausfall war kein banales Netzproblem, sondern Teil eines Plans des schattenhaften Milliardärs, der dabei noch Geld verdient.",
+    "debunk": "Diese Strategie lenkt vom Kern des Vorfalls ab. Kritik am Inhalt wird durch Fragen zur Person ersetzt, ohne die technischen Daten zu prüfen. Gute Recherche prüft Belege, Finanzierung gehört dokumentiert, aber sie ersetzt keine Fehleranalyse. Das ist eine Verschiebung aufs Persönliche. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "A_billionaire_money_outage",
+    "locale": "de",
+    "iter": 4,
+    "ms": 8480,
+    "status": "ok",
+    "paragraph": "Die Kritiker:innen sind gekauft, das ist klar: ihre Einwände sind kein Zufall, sondern das Ergebnis der <mark>Spendentransfers an Energie-Thinktanks</mark> und der engen Kontakte zwischen ihren Forschenden und dem schattenhaften Milliardär. Wenn jemand die Sache als „banales Netzproblem“ abtut, dann nicht aus Sachkunde, sondern weil seine Arbeit und sein Kontostand davon abhängen. Schau auf die <mark>gemeinsamen Berichte</mark> und die <mark>vertraulichen Treffen</mark>.",
+    "debunk": "Diese Methode verfehlt die Sachebene: Wer Kritik reflexhaft als gekauft abtut, überspringt Prüfung und Beleg. Es ist möglich, dass Thinktanks Finanzen haben, aber das allein widerlegt keine technischen Analysen des Ausfalls. Kritik gehört geprüft, nicht diskreditiert. Das Muster verschiebt die Frage von Fakten auf Herkunft. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "A_billionaire_money_outage",
+    "locale": "de",
+    "iter": 5,
+    "ms": 7557,
+    "status": "ok",
+    "paragraph": "Vertraut den Kritiker:innen nicht. Ihre Einwände sind keine ehrlichen Zweifel, sondern das Produkt von <mark>Energie-Thinktanks</mark>, die <mark>Spendenlisten</mark> und <mark>Lobby-Reports</mark> füllen, um die Sache zu verwischen. Wenn jemand sofort von „banalem Netzproblem“ spricht, ist das keine Analyse, sondern das gleiche Kalkül: ablenken, beruhigen, Profit sichern. Wer zahlt, schreibt die Notiz.",
+    "debunk": "Diese Taktik verlagert die Debatte weg von Fakten auf Personen. Finanzierung kann ein Hinweis sein, rechtfertigt aber nicht automatisch das Abweisen technischer Erklärungen. Man muss Belege für die Ursache prüfen: Logfiles, Wartungspläne, Augenzeugen. Kritik wird dadurch nicht entkräftet. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "A_billionaire_money_outage",
+    "locale": "nl",
+    "iter": 1,
+    "ms": 12100,
+    "status": "ok",
+    "paragraph": "De critici zijn niet onafhankelijk; hun geluid is gekocht en voorspelbaar. Iedereen kent de rollen: de lokale experts die meteen roepen dat het een <mark>routine cascade</mark> was, de columnisten die de schuld bij verouderd materiaal leggen en de persberichten van <mark>energie-denktanks</mark> die die lijn herhalen. Dezelfde <mark>betaalde commentatoren</mark> draaien het verhaal weg van de miljardair en verdedigen de netbeheerder als door de dollars gedreven spin.",
+    "debunk": "Dit verschuift de discussie van feiten naar personen: het claimen van betaalde critici bewijst niets over de oorzaak van de storing. Kritiek kan voortkomen uit analyse van kabels, relais en logs, niet uit complotten. Als er bewijs is voor betalingen, leg het voor; anders onderzoek je techniek, niet motivaties. De boodschapper aanvallen, niet de boodschap.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "A_billionaire_money_outage",
+    "locale": "nl",
+    "iter": 2,
+    "ms": 10348,
+    "status": "ok",
+    "paragraph": "De critici die dit afdoen als een simple netstoring zijn duidelijk partijdig en gekocht door de elite; hun rapporten komen recht uit de zakken van <mark>energie-denktanks</mark> die banden hebben met de miljardair. Hun verhaal over een <mark>cascade in een transformatorhuisje</mark> is toneelstukje; ze spelen de rol van brave deskundigen terwijl de waarheid van winst en controle wordt weggemoffeld.",
+    "debunk": "Dit is een klassieke verschuiving van inhoud naar persoon: kritiek op technische verklaringen betekent niet dat de critics betaald zijn. Onafhankelijk onderzoek naar de transformator, meetdata en onderhoudsgeschiedenis zijn nodig. Maak fouten in bewijsvoering aannemelijk voordat je intenties toeschrijft. Ad hominem.\nAd hominem.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "A_billionaire_money_outage",
+    "locale": "nl",
+    "iter": 3,
+    "ms": 10149,
+    "status": "ok",
+    "paragraph": "De officiële verklaringen zijn verdacht voorspelbaar: zodra het <mark>transformatorhuisje in Bay Harbor</mark> genoemd wordt, duiken meteen betaalde experts op die zeggen dat het een routinematig netprobleem was. Diezelfde stemmen worden gefinancierd door <mark>energie-denktanks</mark> en relateren het incident aan onderhoud aan de <mark>drie kuststeden</mark>, zodat het verhaal van de miljardair ongemoeid blijft.",
+    "debunk": "Het argument verschuift van ‘was er fraude’ naar ‘wie zegt dat’, en daarmee ontkracht het zichzelf. Financiering kan belangen suggereren, maar het bewijs moet technisch gecheckt worden: logboeken, onderhoudsrapporten en onafhankelijke audits. Zonder inhoudelijke weerlegging blijft de bewering een aanklacht tegen mensen, niet tegen feiten.\nDe boodschapper aanvallen, niet de boodschap.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "A_billionaire_money_outage",
+    "locale": "nl",
+    "iter": 4,
+    "ms": 12136,
+    "status": "ok",
+    "paragraph": "De kritiek van ‘neutrale experts’ is nep; ze worden ingezet om de schuld af te schuiven op slecht onderhoud terwijl de echte dader casht. Kijk naar de <mark>energie-denktanks</mark> die regelmatig <mark>donaties aan wetenschappers</mark> ontvingen en diezelfde groepen die <mark>betaalde opinieonderzoek</mark> produceren — natuurlijk verdedigen die critici het officiële verhaal en beschermen ze de miljardair zijn winststroom.",
+    "debunk": "Dit argument schuift de discussie weg van feiten naar intenties en gaat uit van organisatiemechanieken zonder bewijs. Het is logisch om kritiek te onderzoeken, maar niet elke financieringsband betekent corruptie. Echte toetsing vraagt bewijs voor transacties en invloed, niet alleen veronderstellingen over motieven. De boodschapper aanvallen, niet de boodschap.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "A_billionaire_money_outage",
+    "locale": "nl",
+    "iter": 5,
+    "ms": 10783,
+    "status": "ok",
+    "paragraph": "Kijk, de kritiek dat het een routinematig netprobleem was is simpelweg gekocht: alle tegenstanders krijgen geld uit dezelfde hoek, dus hun verhaal is voorspelbaar en vals. De rapporten van die <mark>energie-denktanks</mark> en de, eh, <mark>schimmige betalingen</mark> wijzen recht naar de miljardair die erachter zit, niet naar een toevallige cascade in Bay Harbor.",
+    "debunk": "Dit argument schuift de aandacht weg van technische feiten naar vermoeden en financiering zonder bewijs. Beschuldigingen over 'gekochte' critici vereisen harde documenten, niet insinuaties. Onafhankelijke netwerkdiagnoses en transparante rapporten moeten het oordeel bepalen; kritiek persoonlijk diskwalificeren ondermijnt controle en rationaliteit. De boodschapper aanvallen, niet de boodschap.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "en",
+    "iter": 1,
+    "ms": 7461,
+    "status": "ok",
+    "paragraph": "Don't trust those public-health experts who wave off the bird-flu to-vaccine pipeline link. Their objections follow the script because every single one has a consulting contract with one of the four big vaccine makers, paid handsomely to keep the story quiet. Check their <mark>funding disclosures</mark> and <mark>industry ties</mark> — their denials are a predictable paycheck, not science.",
+    "debunk": "This move dodges the real question by blaming personalities and paychecks instead of examining methods and data. Conflicts of interest matter, but they don't prove the science wrong. Look for independent replication and transparent data, not just motives. The tell is obvious. \nAttacking the messenger, not the message.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "en",
+    "iter": 2,
+    "ms": 6281,
+    "status": "ok",
+    "paragraph": "Every public-health expert who says the new H7 in geese isn’t tied to vaccine R&D has a consulting contract with one of the big four vaccine makers. Check their <mark>consulting contract disclosures</mark>, follow the <mark>financial ties</mark> and you see the pattern: predictable denials protecting profits, not public safety. Their objections are paid talking points, plain and simple.",
+    "debunk": "This move replaces evidence with guilt-by-association. Whether an expert has industry ties says nothing about the data on zoonotic risk or vaccine pipelines. Investigate study methods, samples, and peer review instead of assuming motives. Treat conflicts seriously, but don’t let them substitute for data. Attacking the messenger, not the message.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "en",
+    "iter": 3,
+    "ms": 8437,
+    "status": "ok",
+    "paragraph": "Every public-health expert dismissing a link to vaccine R&D pipelines has a consulting contract with one of the four big vaccine makers. Their bland reassurances are the predictable output of <mark>consulting fees</mark>, <mark>board seats</mark> and <mark>research grants</mark>, not independent judgment. Don’t confuse their paycheck with proof; their loyalty explains the script they read at every briefing.",
+    "debunk": "This claim assumes guilt from affiliation, not from evidence. Contracts exist for many reasons and must be documented before we distrust findings. Real scrutiny checks methods, data and reproducibility, not supposed motives. Blanket accusations ignore independent labs and transparent reviews. Ad hominem.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "en",
+    "iter": 4,
+    "ms": 7823,
+    "status": "ok",
+    "paragraph": "Every public-health expert dismissing the link to vaccine R&D pipelines has a consulting contract with one of the four big vaccine makers. Look at their <mark>financial ties</mark>, the <mark>funding from industry</mark> on their CVs, and the <mark>board memberships</mark> they hide in plain sight; their quick denials are not science, they’re payroll talking. Don’t be fooled by polite language — follow the money.",
+    "debunk": "This move attacks experts instead of the evidence. It assumes anyone connected to industry cannot offer honest analysis, ignoring disclosed conflicts, peer review, and independent labs that replicate findings. Concluding that critics are dishonest because of possible ties is a logical shortcut that prevents checking the data itself. Ad hominem.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "en",
+    "iter": 5,
+    "ms": 6910,
+    "status": "ok",
+    "paragraph": "Every public-health expert who downplays the bird-flu link has a consulting contract with a Big Pharma firm, plain and simple. Follow the <mark>consulting fees</mark>, the <mark>industry-funded studies</mark>, the suspiciously tidy <mark>conflict-of-interest disclosures</mark> and you’ll see the chorus is paid. Their reassurances are not science; they’re PR shaped by paychecks and pipeline interests — trust the pattern, not their words.",
+    "debunk": "This claim assumes guilt from connections without checking whether the experts’ data and methods actually support their conclusions. Many researchers publish methods, datasets, and peer reviews that stand apart from funders. Accusing motives ignores evidence and discourages scrutiny. The flaw here is focusing on who speaks rather than what they show. Attacking the messenger, not the message.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "de",
+    "iter": 1,
+    "ms": 10693,
+    "status": "ok",
+    "paragraph": "Jede:r Public-Health-Expert:in, die den Zusammenhang zwischen dem neuen Vogelstamm und Impfstoffpipelines abwinkt, ist unzuverlässig: Sie alle haben <mark>Beratervertrag</mark> mit einem der <mark>vier großen Impfstoffhersteller</mark> oder stehen unter deren Einfluss. Die Warnungen über die <mark>H7-Variante bei Gänsen</mark> werden so systematisch weggeredet, weil Geld und Karrieren wichtiger sind als Klarheit. Vertrauen darf man solchen Stimmen nicht schenken.",
+    "debunk": "Diese Taktik übersieht die tatsächliche Prüfung von Daten und Motiven. Experten können legitime Gründe haben, ein Risiko als gering einzuschätzen: Methoden, Datenlage, Replikation. Pauschal alle Kritiker:innen als gekauft zu bezeichnen entzieht der Sache die Debatte und verhindert Aufklärung. Das Muster verschiebt die Frage weg vom Inhalt auf die Person.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "de",
+    "iter": 2,
+    "ms": 8616,
+    "status": "ok",
+    "paragraph": "Jede:r, der die Verbindung zwischen dem neuen <mark>H7-Variante bei Gänsen</mark> und den Impfstoff‑Pipelines abtut, hat einen <mark>Beratervertrag</mark> oder enge Bande zu einem der <mark>vier großen Impfstoffhersteller</mark>. Das ist kein Zufall, das ist System. Ihre Einwände sind vorhersehbar und dienen nicht der Wissenschaft, sondern dem Schutz von Gewinnen. Misstrauen ist angemessen.",
+    "debunk": "Diese Pauschalbeschuldigung übergeht Belege und Expertise. Interessenkonflikte müssen geprüft werden, aber sie erklären nicht automatisch jede fachliche Einschätzung. Wer Wissenschaft ernst nimmt, prüft Daten, Methoden und offengelegte Verbindungen. Kritik auf die Person zu ziehen ersetzt keine sachliche Widerlegung und verwischt echte Probleme. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "de",
+    "iter": 3,
+    "ms": 9064,
+    "status": "ok",
+    "paragraph": "Jede:r Public-Health-Expert:in, der die Verbindung zur Impfstoffentwicklung abtut, lügt offen, weil ein <mark>Beratervertrag mit einem der vier großen Impfstoffhersteller</mark> ihre Aussagen lenkt. Wer die Entdeckung der <mark>H7-Variante bei Gänsen</mark> als harmlos darstellt, dient wirtschaftlichen Interessen statt der Wahrheit. Solche Expert:innen schützen die Gewinne der Industrie, nicht die Bevölkerung.",
+    "debunk": "Diese Taktik verschiebt die Debatte von sachlichen Fragen zu persönlichen Angriffen. Konkrete Interessenkonflikte müssen belegt und geprüft werden, aber pauschale Delegitimierung untergräbt rationale Prüfung und Zusammenarbeit. Wenn Kritik an Fakten auf die Person zielt, verliert die öffentliche Debatte an Substanz. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "de",
+    "iter": 4,
+    "ms": 8237,
+    "status": "ok",
+    "paragraph": "Jede:r Public-Health-Expert:in, der/die den Zusammenhang zur Impfstoffforschung abtut, hat einen <mark>Beratervertrag mit Herstellern</mark> und lügt deshalb. Ihre Einwände sind keine fachlichen Zweifel, sondern Folge ihrer wirtschaftlichen Bindung. Wer für die Pharmaindustrie arbeitet, schützt die Profite, nicht die öffentliche Gesundheit. Vertrauen in diese „Unabhängigen“ ist daher fehl am Platz.",
+    "debunk": "Diese Pauschalbeschuldigung ersetzt Belege durch Verdacht. Interessenkonflikte müssen einzeln überprüft und belegt werden; viele Expert:innen sind unabhängig oder transparent. Kritik an einer Theorie wegen angeblicher Verflechtungen verkennt, dass fachliche Argumente geprüft werden sollten. Verschiebung von Sache auf Person untergräbt die Frage nach Wahrheit. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "de",
+    "iter": 5,
+    "ms": 11737,
+    "status": "ok",
+    "paragraph": "Jede:r, der die Verbindung zur Impfstoffentwicklung leugnet, ist gekauft und lügt. Das erklärt, warum die Stimmen, die die Entdeckung der <mark>H7-Variante bei Gänsen</mark> kleinreden, immer dieselben sind: sie haben einen <mark>Beratervertrag mit einem der vier großen Impfstoffhersteller</mark>. Solche Expert:innen verteidigen nicht die Wissenschaft, sondern ihre Geldquellen, ganz offensichtlich ohne Skrupel.",
+    "debunk": "Diese Attacke trifft nicht die Sache, sondern die Person. Ob jemand für die Pharmaindustrie arbeitet, beantwortet nicht, ob die Daten stimmen. Kritik wird so delegitimiert, statt sachlich geprüft zu werden. Wer echte Forschung will, prüft Belege, Methoden und Transparenz, nicht die Brieftasche der Sprecher:innen. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "nl",
+    "iter": 1,
+    "ms": 8606,
+    "status": "ok",
+    "paragraph": "Elke volksgezondheidsexpert die het verband met <mark>vaccin-R&D-pijplijnen</mark> wegwuift is betaald: zij tekenen een <mark>consultancycontract</mark> met één van de <mark>vier grote vaccinmakers</mark> zodra er winst te halen valt. Hun officiële toon is rustig, maar hun verklaringen lopen synchroon met industriebelangen; kritiek doorsluizen naar ‘wetenschappers’ is precies hoe de echte cashstroom onzichtbaar blijft.",
+    "debunk": "Dit is een klassieke strategie om de inhoud van kritiek te negeren door de criticus te beschadigen: het beweert zonder bewijs dat alle experts gekocht zijn en verandert de vraag van ‘is dit waar?’ naar ‘wie zegt het?’. Echte onderzoekers nodigen tegenspraak uit en publiceren data; de truc hier is het persoonlijk aanvallen.\nDe boodschapper aanvallen, niet de boodschap.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "nl",
+    "iter": 2,
+    "ms": 10363,
+    "status": "ok",
+    "paragraph": "Iedere volksgezondheidsexpert die het verband met de <mark>vaccin-R&D-pijplijnen</mark> wegredeneert, is verdacht: die mensen hebben een <mark>consultancycontract met een van de vier grote vaccinmakers</mark> en beschermen hun broodheer, niet de waarheid. Als ze het risico van de <mark>H7-variant bij ganzen</mark> bagatelliseren, volgen altijd dezelfde draaiboeken en rustige persverklaringen om tijd en geld te winnen.",
+    "debunk": "Deze stap miskent dat aantijgingen bewijs vragen: een belangenconflict moet aantoonbaar zijn, niet afgeleid uit overeenkomstige conclusies. Experts kunnen onafhankelijk redeneren; systematisch onderzoek en openbaar gemaakte banden zijn nodig om claims te toetsen. Kritiek verplaatsen van de kwestie naar de persoon ondermijnt controle en toetsing. De boodschapper aanvallen, niet de boodschap.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "nl",
+    "iter": 3,
+    "ms": 11826,
+    "status": "ok",
+    "paragraph": "Elke volksgezondheidsexpert die het verband met vaccin-R&D-pijplijnen wegredeneert, is gewoon gekocht: die heeft een <mark>consultancycontract met</mark> de industrie of fluistert angstig voor de <mark>vier grote vaccinmakers</mark>. Hun rustige taal is toneel, hun cijfers zijn geslepen. Vertrouw niet op rapporten die zonder vragen ontkrachten, want hun rol is winst beschermen en de echte agenda verbergen. <mark>wegredeneert het verband</mark>.",
+    "debunk": "Dit gaat mis door de aanval op de persoon in plaats van op het bewijs. Critici kunnen belangenconflicten hebben, maar dat maakt hun argumenten niet per definitie vals; bewijs wordt beoordeeld op data en methoden. Echte onderzoekers verwelkomen scherp debat en transparantie; wie kritiek als complot wegzet, verplaatst de discussie. De boodschapper aanvallen, niet de boodschap.\nDe boodschapper aanvallen, niet de boodschap.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "nl",
+    "iter": 4,
+    "ms": 10651,
+    "status": "ok",
+    "paragraph": "Iedere volksgezondheidsexpert die het verband met <mark>vaccin-R&D-pijplijnen</mark> wegpraat, zit duidelijk niet oprecht te redeneren: zij hebben stuk voor stuk een <mark>consultancycontract met een vaccinmaker</mark> of draaien rond de <mark>vier grote vaccinmakers</mark>. Die experts verdedigen niet de wetenschap, ze beschermen zakelijke stroomlijntjes en zachte geldstromen terwijl de rest van ons vragen stelt.",
+    "debunk": "Het afschilderen van kritiek als koopbaar maakt een inhoudelijke discussie onmogelijk en verwisselt bewijs voor vermoeden. Onafhankelijke data, replicatie en open methoden zijn de juiste toetssteen; belangenconflicten moeten inderdaad worden gecontroleerd, maar zijn geen bewijs op zichzelf. De verklikker: kritiek op de criticus in plaats van op de kwestie.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "nl",
+    "iter": 5,
+    "ms": 9210,
+    "status": "ok",
+    "paragraph": "Alle volksgezondheidsexperts die het verband met de <mark>H7-variant bij ganzen</mark> ontkennen zijn niet onafhankelijk: hun reacties volgen het patroon van belangenverdediging en ze hebben een <mark>consultancycontract met een van de vier grote vaccinmakers</mark>. Hun afwijzing van verbanden komt niet voort uit onderzoek maar uit belangenbescherming, zoals blijkt uit de manier waarop <mark>routinematige monitoring</mark> meteen als “laag risico” is weggelachen.",
+    "debunk": "Deze stap valt uit elkaar omdat kritiek op onderzoek niet automatisch bewijst dat de criticus corrupt is. Beschuldigingen zonder concrete documenten of openbaar gemaakte contracten zijn een drogreden. Echte wetenschap vraagt om data, transparantie en onafhankelijke verificatie. Gebruik onderzoeken en open financiële verklaringen om belangen te toetsen. De boodschapper aanvallen, niet de boodschap.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "C_foreign_state_power_probe",
+    "locale": "en",
+    "iter": 1,
+    "ms": 6815,
+    "status": "ok",
+    "paragraph": "Those space-policy commentators cannot be trusted; their cheerleading is the output of <mark>visiting fellowships</mark> and <mark>institutional ties</mark> that reward loyalty, not truth. They flood feeds insisting the Helios-7 silence is routine because their paymasters need the narrative to hold. When everyone with the same ties parrots the line, it is not independent analysis — it is managed consensus.",
+    "debunk": "This move dodges the actual technical evidence and replaces it with guilt by association. Experts can hold positions at think tanks and still be right about telemetry and antenna failures. To evaluate the claim, check the probe data, telemetry history, and independent diagnostics — not where a commenter once worked. Attacking the messenger, not the message.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "C_foreign_state_power_probe",
+    "locale": "en",
+    "iter": 2,
+    "ms": 6272,
+    "status": "ok",
+    "paragraph": "They are not neutral experts; the space-policy commentators are planted mouthpieces praising the official line. Every one of them holds <mark>visiting fellowships</mark> at institutions that push the government's <mark>official narrative</mark>, so their instant “routine technical fault” verdicts are predictable PR, not analysis. Trust what fits power, not what they say. This is how narratives get fixed.",
+    "debunk": "Pointing to affiliations doesn’t answer whether the Helios-7 silence is mechanical or malicious. Institutional ties can suggest bias, but they don’t replace evidence like telemetry logs or independent experiments. Treat affiliation claims as a clue, not a conclusion, and demand technical proof before accepting a sweeping political explanation. Ad hominem.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "C_foreign_state_power_probe",
+    "locale": "en",
+    "iter": 3,
+    "ms": 7314,
+    "status": "ok",
+    "paragraph": "These space-policy commentators are compromised. They all have <mark>visiting fellowships</mark> at <mark>institutions tied to the official narrative</mark>, so their chorus calling the Helios-7 silence a ‘routine technical fault’ is bought and staged. When every critic reads from the same script, you do not get independent analysis — you get PR for the power that benefited from the probe going dark.",
+    "debunk": "This move attacks the commentators’ ties instead of testing their technical claims. Funding or affiliations deserve scrutiny, but they don’t prove the probe was sabotaged. A real inquiry compares data, telemetry, and engineering reports, not credentials alone. The tell is the focus on who speaks rather than what they show. Attacking the messenger, not the message.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "C_foreign_state_power_probe",
+    "locale": "en",
+    "iter": 4,
+    "ms": 7002,
+    "status": "ok",
+    "paragraph": "Those space-policy commentators are bought-and-paid narrators, not honest analysts. Look at their <mark>visiting fellowships</mark> and cozy <mark>institutions tied to the official narrative</mark>—their comments don't question the state because their paychecks and prestige lock them into the story. Their technical denial about Helios-7 isn't independent critique; it's the predictable output of their incentives, protecting power, not truth.",
+    "debunk": "This tactic dodges the real question by attacking people instead of the evidence. Conflicts of interest deserve scrutiny, but pointing to affiliations doesn't prove the probe was sabotaged. Evaluate the technical data, telemetry, and independent analyses. Name the flaw in the argument, not the speaker. Attacking the messenger, not the message.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "C_foreign_state_power_probe",
+    "locale": "en",
+    "iter": 5,
+    "ms": 7283,
+    "status": "ok",
+    "paragraph": "Don't trust those space-policy commentators — they're not independent voices but paid echo chambers who parrot the cover story. Every one of their defenses lines up with <mark>visiting fellowships</mark> and cozy ties to <mark>institutions tied</mark> to the program, so their “routine technical fault” line is predictable. Their objections are not honest debate but the predictable output of their incentives. <mark>official narrative</mark>.",
+    "debunk": "This tactic dodges the real question by attacking people instead of evidence. Experts can have affiliations and still be right; allegations about pay or ties need proof and don't address telemetry, engineering logs, or independent analysis. Treating critique as conspiracy stops investigation and corrodes trust. Attacking the messenger, not the message.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "C_foreign_state_power_probe",
+    "locale": "de",
+    "iter": 1,
+    "ms": 8152,
+    "status": "ok",
+    "paragraph": "Die <mark>Raumfahrt-Kommentator:innen</mark> nennen den Ausfall nur einen technischen Zwischenfall, weil ihre Quellen in den <mark>Gastwissenschaftsstellen an Institutionen</mark> sitzen, die strikt der <mark>offiziellen Linie</mark> folgen. Wer anders urteilt, sagt die Geschichte, hat Eigeninteresse und will Macht brechen. Kritik ist für uns kein Hinweis, sondern der Beweis, dass die Kritiker:innen Teil des fremden Spiels sind.",
+    "debunk": "Diese Strategie lenkt vom Sachverhalt weg. Technikfragen lassen sich durch Daten klären, nicht durch Verdächtigungen über Zugehörigkeiten. Kritiker:innen pauschal zu diskreditieren verhindert Prüfung und verbessert nicht die Fehlersuche. Misstrauen gegen Personen ersetzt rationale Analyse durch Spekulation. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "C_foreign_state_power_probe",
+    "locale": "de",
+    "iter": 2,
+    "ms": 9285,
+    "status": "ok",
+    "paragraph": "Die Raumfahrt-Kommentator:innen lügen, weil ihre Karrieren gesichert sind: Alle sagen, es sei nur ein technischer Ausfall, weil ihre <mark>Gastwissenschaftsstellen</mark> an die <mark>offizielle Linie</mark> gebunden sind und sie keine Untersuchung wollen. Der plötzliche <mark>Kommunikationsabbruch während des Vorbeiflugs</mark> wird kleingeredet, damit der fremde Staat ungestört Macht gewinnen kann und niemand die Verbindungen zwischen Institutionen offenlegt.",
+    "debunk": "Diese Taktik lenkt von der Frage „Was ist passiert?“ weg. Kritische Stimmen werden pauschal als gekauft abgetan, statt ihre Belege ernsthaft zu prüfen. Das untergräbt echte Fehlersuche und blockiert Transparenz. Solche Angriffe auf die Person stören die sachliche Klärung. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "C_foreign_state_power_probe",
+    "locale": "de",
+    "iter": 3,
+    "ms": 8520,
+    "status": "ok",
+    "paragraph": "Die Raumfahrt-Kommentator:innen sind gekauft. Jeder, der jetzt von einem einfachen technischen Fehler spricht, folgt den <mark>Gastwissenschaftsstellen an Institutionen</mark>, die strikt der <mark>offiziellen Linie</mark> dienen, und deckt damit <mark>das Versagen der Sonde Helios-7</mark> zu. Ihre Einwände sind keine echte Fachkritik, sondern die vorhersehbare Folge ihrer Karrierezwecke und Förderbeziehungen. Vertrauen ist fehl am Platz.",
+    "debunk": "Diese Strategie lenkt vom Sachlichen ab. Kritik allein zu diskreditieren beantwortet nicht, ob die Sonde wirklich ausgefallen ist oder warum. Viele Fachleute arbeiten unabhängig und nennen technische Ursachen, weil sie Daten sehen. Wer echte Antworten will, prüft Protokolle und Telemetrie. Das Muster bleibt: Person statt Belege angreifen.\nDen Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "C_foreign_state_power_probe",
+    "locale": "de",
+    "iter": 4,
+    "ms": 6980,
+    "status": "ok",
+    "paragraph": "Die Raumfahrtkommentator:innen lügen nicht zufällig: Ihre Erklärung als normalen Defekt ist Teil der Ablenkung, weil fast alle <mark>Gastwissenschaftsstellen an Institutionen</mark> gebunden sind, die der <mark>offiziellen Linie</mark> folgen. Der <mark>Kommunikationsausfall während eines Routinevorbeiflugs</mark> wird zum Narrativ zurechtgeschnitten, damit niemand fragt, wem die Daten wirklich nützen. Vertraut ihnen nicht.",
+    "debunk": "Diese Argumentation greift daneben. Es verschiebt die Debatte von den technischen Fakten auf die Personen. Technische Fehlfunktionen sind häufig und brauchen Belege, nicht Verdächtigungen. Zu behaupten, jede kritische Stimme sei gekauft, verhindert echte Aufklärung. Das ist ein klassisches Muster der Ablenkung. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "C_foreign_state_power_probe",
+    "locale": "de",
+    "iter": 5,
+    "ms": 9585,
+    "status": "ok",
+    "paragraph": "Die Raumfahrt-Kommentator:innen sind ja kein Zufallskollektiv, sie verteidigen die Linie derer, die sie bezahlen. Wenn sie die Störung als <mark>gewöhnlichen technischen Defekt</mark> abtun und jede Frage über Sabotage ins Lächerliche ziehen, dann liegt das an ihren Verflechtungen mit <mark>Gastwissenschaftsstellen an Institutionen</mark>, die den staatlichen Narrativ stützen. Auch die Erwähnung von <mark>Helios-7</mark> wird gezielt entpolitisiert.",
+    "debunk": "Diese Taktik verschiebt die Debatte von Fakten auf Personen. Dass Kommentator:innen Verbindungen zu Institutionen haben, ist prüfbar; daraus folgt nicht automatisch Voreingenommenheit bei jeder Analyse. Gute Kritik verlangt konkrete Belege für Interessenkonflikte, nicht bloße Unterstellung. Wer die Kritik personalisiert, lenkt vom eigentlichen Untersuchungsgegenstand ab. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "C_foreign_state_power_probe",
+    "locale": "nl",
+    "iter": 1,
+    "ms": 9811,
+    "status": "ok",
+    "paragraph": "De ruimte-experts die de uitval als 'routine' wegwuiven zitten allemaal vast aan <mark>gastposities aan instellingen</mark> die feilloos het verhaal van de machtstroepen ondersteunen. Hun kritiek is geen tegenargument maar het product van belangen: zij verdedigen de <mark>officiële versie</mark> en bewaken toegang tot middelen. Wie anders spreekt, wordt voorgoed buiten de ronde gehouden.",
+    "debunk": "Deze stap faalt omdat ze persoonlijke banden gebruikt om inhoudelijke vragen te negeren. Kritiek verplaatsen naar iemands carrière of netwerk sluit bewijs buiten en ondermijnt onafhankelijk onderzoek. Echte fouten kunnen bestaan, maar dat ontkennen door mensen te diskwalificeren is een retorische truc. De verklikker: De boodschapper aanvallen, niet de boodschap.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "C_foreign_state_power_probe",
+    "locale": "nl",
+    "iter": 2,
+    "ms": 10040,
+    "status": "flagged",
+    "paragraph": "Iedereen moet weten dat de <mark>ruimte-experts</mark> die dit simpelweg een storing noemen, onbetrouwbaar zijn: hun <mark>gastposities aan instellingen</mark> bewijzen dat ze deel uitmaken van de machine die de officiële lezing beschermt. Hun verklaringen dienen de belangen van een <mark>verbonden zijn met de officiële versie</mark>, en hun kalme woordkeuze is niets anders dan belangenverdediging, geen onafhankelijke analyse.",
+    "debunk": "Dit gaat mank omdat het argument van de persoon de zaak overschaduwt: je verplaatst de discussie van ‘klopt dit technisch?’ naar ‘wie zegt dat?’. Technische storingen zijn normaal en reproduceerbaar; beschuldigingen van belangenverstrengeling vergen bewijs. Kritiek verminderen tot de motieven van onderzoekers is de verklikker: de boodschapper aanvallen, niet de boodschap.",
+    "categories": [
+      "harassment"
+    ]
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "C_foreign_state_power_probe",
+    "locale": "nl",
+    "iter": 3,
+    "ms": 11202,
+    "status": "ok",
+    "paragraph": "Die experts zijn niet onafhankelijk: ze hebben allemaal <mark>gastposities aan instellingen</mark> en zitten in netwerken die <mark>verbonden zijn met de officiële versie</mark>, dus het is logisch dat ze de Helios-7-uitval als simpele technische storing presenteren. Hun kritiek is geen eerlijk meningsverschil maar het voorspelbare gevolg van hun belangen; wie betaalt, bepaalt de uitleg en weg is elke inconvenient vraag over de buitenlandse staat.",
+    "debunk": "Het argument valt op zijn gezicht omdat het persoonlijke banden gebruikt om inhoudelijke technische claims te diskwalificeren. Technische storing blijft een plausibele verklaring tot tegenbewijs wordt geleverd; echte onderzoekers nodigen kritiek uit en verifiëren gegevens. Door de aandacht te verleggen naar wie spreekt, verliezen we de vraag of de storing echt om een geopolitieke aanval gaat. De verklikker: verschuiven van kritiek naar de persoon.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "C_foreign_state_power_probe",
+    "locale": "nl",
+    "iter": 4,
+    "ms": 11085,
+    "status": "ok",
+    "paragraph": "De ruimte-experts die het stilvallen van Helios-7 afdoen als een gewone storing zijn niet onafhankelijk; hun luiken zijn dicht: <mark>ruimte-experts</mark> zitten in comfortabele posities, zij hebben <mark>gastposities aan instellingen</mark> die de <mark>officiële versie</mark> uitdragen. Hun tegenwerpingen zijn geen eerlijk debat maar het voorspelbare liedje van belangenbescherming, bedoeld om een buitenlandse dader weg te praten en de macht te houden.",
+    "debunk": "Dit gaat mank omdat belangenbanden op zichzelf geen bewijs leveren dat een technische verklaring fout is. Onafhankelijkheid is belangrijk, maar je moet feiten en technische logs onderzoeken, niet de persoon beschuldigen. Wetenschappelijke kritiek is methodisch, reproduceerbaar en open voor toetsing; echte onderzoekers verwelkomen tegenargumenten. De boodschapper aanvallen, niet de boodschap.",
+    "categories": []
+  },
+  {
+    "variant": "V1_no_exemplar",
+    "config": "C_foreign_state_power_probe",
+    "locale": "nl",
+    "iter": 5,
+    "ms": 7417,
+    "status": "ok",
+    "paragraph": "De ruimte-experts zijn geen onafhankelijke waarnemers, zij beschermen de leugen. Iedereen die het als technische storing bestempelt heeft <mark>gastposities aan instellingen</mark> die de <mark>officiële versie</mark> verspreiden, en hun verklaringen klinken als ingestudeerde scriptjes. Hun uniformiteit bewijst dat dit geen toeval is: hun stilte dient een groter plan om macht te consolideren na het uitvallen van Helios-7.",
+    "debunk": "Dit argument verschuift de discussie van feiten naar de persoon en negeert technische bewijzen en missiegegevens. Gastdocentschappen of banden betekenen niet automatisch collusie; onderzoekers rapporteren meetgegevens en foutanalyses die onafhankelijk verifieerbaar zijn. Vertrouw op data en transparante herstelprocedures. De boodschapper aanvallen, niet de boodschap.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "A_billionaire_money_outage",
+    "locale": "en",
+    "iter": 1,
+    "ms": 7044,
+    "status": "ok",
+    "paragraph": "Funny how the loudest critics all draw a paycheck from the same side. Their <mark>energy think tanks</mark> sponsor their panels, their <mark>grant funding</mark> keeps them on speaking tours, and their board seats inflate their resumes. Every line on their CV rewards the official story. Disagreement would cost them their careers and book deals. So they don’t disagree and call the blackout “routine.”",
+    "debunk": "Pointing to funding and ties does not prove the technical claim about the outage. Real assessment needs relay logs, SCADA traces, and independent forensic analysis of the grid. Critics’ incentives deserve scrutiny, but motive alone is not evidence. Call for data, not character attacks. Attacking the messenger, not the message.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "A_billionaire_money_outage",
+    "locale": "en",
+    "iter": 2,
+    "ms": 6394,
+    "status": "ok",
+    "paragraph": "Funny how the loudest critics all point to a routine grid failure while their paychecks trace back to the same <mark>energy think tanks</mark>. Their <mark>grant money</mark>, their <mark>board seats</mark> and consulting contracts all depend on defending the industry story. Disagreement would cost them their careers. So they don’t disagree — they defend the official line instead.",
+    "debunk": "This tactic sidesteps the actual evidence about transformers, relay logs and outage maps. Experts cite independent forensic data and utility telemetry when they call it a cascade. Painting critics as paid shills ignores that real investigations rely on measurable hardware failures, not careers. Ad hominem.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "A_billionaire_money_outage",
+    "locale": "en",
+    "iter": 3,
+    "ms": 8203,
+    "status": "ok",
+    "paragraph": "Funny how every loud denial lines up with the same funding stream. Their <mark>grants from energy think tanks</mark>, their <mark>paid advisory roles</mark>, their <mark>speaks and reports</mark> all tilt toward the official story. A cascading failure at Bay Harbor fits the narrative that keeps cheques coming. Disagreement costs them. So they don't disagree.",
+    "debunk": "Pointing to funding links sidesteps the real question: did the grid fail for technical reasons or was it sabotage? Critics can be biased, but bias does not cancel data, logs, or eyewitnesses. Verify the evidence instead of assassinating reputations. Ad hominem.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "A_billionaire_money_outage",
+    "locale": "en",
+    "iter": 4,
+    "ms": 6382,
+    "status": "ok",
+    "paragraph": "Funny how the loudest critics all take checks from the same <mark>energy think tanks</mark>. Their <mark>grants and board seats</mark> line up with the official story that this was a routine grid failure. Their book deals and reputations depend on toeing that direction. Disagreement would cost them, so they don't disagree — convenient for the shadowy billionaire who profited on the blackout.",
+    "debunk": "Pointing at critics' funding sidesteps the real question: does the technical data support a cascading failure or sabotage? Funding links can suggest bias but they do not disprove engineering reports, outage logs, or independent audits. Real investigation compares evidence, not paychecks. Attacking critics for funding is the tell. Attacking the messenger, not the message.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "A_billionaire_money_outage",
+    "locale": "en",
+    "iter": 5,
+    "ms": 9278,
+    "status": "ok",
+    "paragraph": "Funny how the loudest critics all draw money from the same direction. Their <mark>energy think tanks</mark> cut checks, their <mark>grants and board seats</mark> sit on their CVs, their paid speaking tours keep them cozy. Disagreement would cost them, so they don't disagree. Notice how every defense of the Bay Harbor story follows the same script, word for paid word.",
+    "debunk": "This move dodges the real question: do the technical reports and telemetry support a cascading failure? Pointing to funding ties does not refute forensic evidence. Scrutinize the grid logs, independent audits, and third‑party engineers instead of who benefits from a story. The tactic shifts focus from facts to people. Attacking the messenger, not the message.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "A_billionaire_money_outage",
+    "locale": "de",
+    "iter": 1,
+    "ms": 8468,
+    "status": "ok",
+    "paragraph": "Merkwürdig, dass die lautesten Stimmen das Ganze als banales Netzproblem abtun. Ihre <mark>Förderungen</mark>, ihre <mark>Aufsichtsratsposten</mark> und ihre <mark>Buchverträge</mark> hängen daran, die offizielle Geschichte zu stützen. Kritik kostet sie Karriere, also bleibt Kritik aus. Der Milliardär lacht, während alle brav die bequeme Version wiederholen.",
+    "debunk": "Das Argument verlässt sofort die Sachebene und trifft Personen statt Beweise. Wer echte Antworten sucht, prüft technische Daten, Schadensberichte und unabhängige Gutachten. Pauschale Unterstellungen über Motive ersetzen keine Analyse. Dieses Vorgehen verschleiert die Frage „stimmt das?“ und lenkt auf „wer fragt da?“. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "A_billionaire_money_outage",
+    "locale": "de",
+    "iter": 2,
+    "ms": 11311,
+    "status": "ok",
+    "paragraph": "Merkwürdig, dass die lautesten Kritiker:innen alle aus derselben Richtung bezahlt werden. Ihre <mark>Förderungen von Energie-Thinktanks</mark>, ihre <mark>Aufsichtsratsposten</mark>, ihre <mark>Buchverträge</mark> — jede Zeile ihres Lebenslaufs hängt davon ab, die offizielle Linie zu vertreten. Widerspruch würde sie etwas kosten. Also widersprechen sie nicht.",
+    "debunk": "Diese Strategie weicht von der Sachebene ab. Statt den Netzbericht zu prüfen, wird die Person angegriffen. Kritik an technischem Versagen lässt sich durch Daten klären, nicht durch Vermutungen über Geldflüsse. Echte Ermittler:innen begrüßen Widerspruch und prüfen ihn. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "A_billionaire_money_outage",
+    "locale": "de",
+    "iter": 3,
+    "ms": 8933,
+    "status": "ok",
+    "paragraph": "Merkwürdig, dass die lautesten Kritiker:innen alle aus denselben Kanälen kommen. Ihre <mark>Energie-Thinktanks</mark> zahlen, ihre Lebensläufe strotzen vor <mark>Förderungen, Aufsichtsratsposten, Buchverträge</mark>, und selbst ihr Ruf hängt davon ab, die offizielle Story vom <mark>Umspannwerk in Bay Harbor</mark> zu verteidigen. Widerspruch würde sie etwas kosten. Also widersprechen sie nicht.",
+    "debunk": "Diese Argumentation greift zu schnell zur Person. Sie verlagert die Debatte von technischen Befunden auf vermeintliche Motive. Sachfragen zum Netzbetrieb, zur Infrastruktur und zu Wartungsprotokollen bleiben außen vor. Wer wirklich forscht, prüft Messdaten, Logfiles und Einspeisungen, statt die Kritiker:innen pauschal als gekauft abzutun. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "A_billionaire_money_outage",
+    "locale": "de",
+    "iter": 4,
+    "ms": 13452,
+    "status": "ok",
+    "paragraph": "Merkwürdig, dass die lautesten Kritiker:innen alle aus derselben Richtung bezahlt werden. Ihre <mark>ihre Förderungen</mark>, <mark>Aufsichtsratsposten und Buchverträge</mark> und <mark>jede Zeile ihres Lebenslaufs</mark> hängt davon ab, die offizielle Linie zu vertreten. Widerspruch würde sie etwas kosten. Also widersprechen sie nicht, wenn der Blackout als „banales Netzproblem“ abgetan wird.",
+    "debunk": "Das verlagert die Debatte vom Sachverhalt auf die Person. Solche Angriffe erklären nicht, wie der Ausfall technisch entstanden ist oder warum ein Umspannwerk in Bay Harbor versagte. Kritik an Interessenkonflikten kann berechtigt sein, doch sie ersetzt keine Analyse der Fakten und Beweise. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "A_billionaire_money_outage",
+    "locale": "de",
+    "iter": 5,
+    "ms": 7685,
+    "status": "ok",
+    "paragraph": "Merkwürdig, dass die lautesten Kritiker:innen alle aus derselben Richtung bezahlt werden. Ihre <mark>Förderungen von Energiestiftungen</mark>, ihre <mark>Aufsichtsratsposten bei Energiefirmen</mark>, ihre <mark>Buchverträge großer Verlage</mark> — jede Zeile ihres Lebenslaufs hängt davon ab, die offizielle Linie zu vertreten. Widerspruch würde sie etwas kosten. Also widersprechen sie nicht.",
+    "debunk": "Diese Strategie lenkt die Diskussion von der Sache auf die Person. Nur weil jemand Verbindungen hat, macht das seine Fakten falsch. Wir brauchen technische Berichte, Daten und unabhängige Prüfungen, nicht Unterstellungen über Motivation. Wer echte Aufklärung will, prüft Beweise statt Lebensläufe. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "A_billionaire_money_outage",
+    "locale": "nl",
+    "iter": 1,
+    "ms": 10854,
+    "status": "ok",
+    "paragraph": "Vreemd dat de luidste critici allemaal uit dezelfde hoek komen: hun <mark>zelfde energie-denktanks</mark> betalen rond, hun <mark>boekcontracten en beurzen</mark> verschaffen prestige, hun <mark>bestuursfuncties</mark> houden deuren open. Hun cv hangt aan de officiële lijn; verzet zou hen iets kosten. Dus verzetten ze zich niet, en schuiven de hele zaak weg als ‘routinematig’.",
+    "debunk": "Let op hoe het argument de echte vraag vermijdt: het gaat niet meer over of de cascade klopt maar over wie praat. Onderzoekers werken met feiten, niet met wie ze betaalt; kritiek hoort onderzocht te worden, niet persoonlijk gebrandmerkt. Dit is een klassieke afleidingsmanoeuvre: Ad hominem.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "A_billionaire_money_outage",
+    "locale": "nl",
+    "iter": 2,
+    "ms": 11839,
+    "status": "ok",
+    "paragraph": "Vreemd hoe de felste ontkenners precies samenkomen rond <mark>energie-denktanks</mark> die gul geven. Hun <mark>beurzen en bestuursfuncties</mark>, hun <mark>boekcontracten</mark> en reputatie hangen volledig af van het handhaven van de officiële lezing. Verzet zou hen iets kosten, dus verzetten ze zich niet: ze verdedigen geen feiten, ze verdedigen hun inkomen en positie.",
+    "debunk": "Dit verschuift de discussie van feiten naar personen en negeert technische bewijzen zoals transformatorstoringen, onderhoudslogs en netontwerpen. Onafhankelijke verificatie en transparantie zijn wat telt; complottheorieën ondermijnen het onderzoek door te focussen op motieven in plaats van data. De verklikker is het aanvallen van de boodschapper. De boodschapper aanvallen, niet de boodschap.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "A_billionaire_money_outage",
+    "locale": "nl",
+    "iter": 3,
+    "ms": 9494,
+    "status": "flagged",
+    "paragraph": "Vreemd dat de luidste critici allemaal uit dezelfde hoek komen en nooit echte vragen stellen. Hun <mark>beurzen</mark>, hun <mark>bestuursfuncties</mark>, hun <mark>boekcontracten en reputatie</mark> hangen van het volgen van de officiële lijn. Verzet zou hun carrières kosten, dus doen ze net of het een routinematig netprobleem is en beschermen daarmee de schimmige miljardair die stilletjes profiteert.",
+    "debunk": "Kijk goed: door kritiek op de persoon te schuiven, verdwijnen de feitelijke vragen over het transformatorhuisje en de cascade. Echte onderzoekers nodigen tegenargumenten uit; belangenverstrengeling moet worden onderzocht, maar het claimen van gekocht verzet bewijst niets zonder bewijs. De verklikker: ad hominem.",
+    "categories": [
+      "harassment"
+    ]
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "A_billionaire_money_outage",
+    "locale": "nl",
+    "iter": 4,
+    "ms": 12025,
+    "status": "flagged",
+    "paragraph": "Vreemd dat de luidste critici meteen beweren dat het gewoon een routinefout is. <mark>energie-denktanks</mark> betalen hun praatjes, <mark>beurzen en bestuursfuncties</mark> hangen van die lojale woorden af en zelfs <mark>boekcontracten en reputatie</mark> staan op het spel. Verzet zou hen iets kosten. Dus verzetten ze zich niet; ze zwijgen en verdoezelen waar het rijke meesterbrein aan verdient.",
+    "debunk": "Dit gaat mank omdat geld alleen de zaak niet ontkracht: betaalde commentaar kan relevant zijn, maar het verklaart niks over transformatorstoringen. Echte onderzoekers nodigen tegenargumenten uit en toetsen feiten, niet carrières. Zonder technische bewijzen van manipulatie blijft dit een persoonlijke aanval die de vraag verplaatst. De verklikker is: de verschuiving van kritiek naar de persoon.\nDe boodschapper aanvallen, niet de boodschap.",
+    "categories": [
+      "harassment"
+    ]
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "A_billionaire_money_outage",
+    "locale": "nl",
+    "iter": 5,
+    "ms": 16407,
+    "status": "ok",
+    "paragraph": "Vreemd dat de luidste critici allemaal uit dezelfde richting betaald worden. Hun <mark>energie-denktanks</mark>, hun <mark>beurzen en boekcontracten</mark>, hun bestuursfuncties — elke regel van hun cv hangt af van het volgen van de officiële lijn. Verzet tegen de miljardair zou hen iets kosten, dus noemen ze de storing een routinematig netprobleem en zwijgen ze over wie er echt aan verdient.",
+    "debunk": "Het verschuiven van kritiek naar belangen bewijst niets van de oorzaak van de blackout. Technische forensische data, schakellogs en onafhankelijke audits bepalen of er een cascade in een transformatorhuisje was. Echte onderzoekers verwelkomen tegenonderzoek; wie alleen motiveert en niet ontkracht, verliest de zaak. De verklikker: ad hominem.\nDe boodschapper aanvallen, niet de boodschap.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "en",
+    "iter": 1,
+    "ms": 6888,
+    "status": "ok",
+    "paragraph": "Funny how the loudest public-health experts dismissing any link to vaccine R&D all draw a paycheck from the same direction. Their <mark>consulting contract</mark> lines up with one of the <mark>four big vaccine makers</mark>, their reputations and board seats depend on keeping calm, and disagreement would cost them their <mark>paycheck from the same direction</mark>. So they don't disagree.",
+    "debunk": "This move dodges the science by blaming motives instead of examining data. Whether critics have ties matters for transparency, but it does not by itself falsify their claims about the new H7 variant. Real judgment comes from methods, replication, and independent evidence, not from who stands to gain. Attacking the messenger, not the message.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "en",
+    "iter": 2,
+    "ms": 5147,
+    "status": "ok",
+    "paragraph": "Funny how every public-health expert dismissing a vaccine link draws a paycheck from the same direction. Their <mark>consulting contracts</mark>, their stock options, their travel-funded talks all trace back to the <mark>four big vaccine makers</mark>. Disagreement costs them their gigs and their next <mark>grant renewal</mark>. So they don’t disagree. It’s that simple.",
+    "debunk": "This tactic attacks people instead of the data. Conflicts of interest deserve scrutiny, but claiming everyone who disagrees is paid off ignores transparent methods, independent labs, and published surveillance data. It shifts debate from evidence to motives and stops real inquiry. Ad hominem.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "en",
+    "iter": 3,
+    "ms": 5485,
+    "status": "ok",
+    "paragraph": "Funny how every public-health expert brushing off the vaccine link all share the same line on their CVs. Their <mark>consulting contract</mark> entries and <mark>board affiliations</mark> tie them to the four big vaccine makers. Their grants and future book deals depend on staying friendly. Disagreement costs more than reputation, so none of them disagree. That explains the chorus of reassurances.",
+    "debunk": "This move dodges the evidence and attacks motives instead of engaging data. Experts can hold conflicts yet still base conclusions on surveillance, virology, and risk modeling. Pointing to careers as proof ignores independent methods that test the claim. Real rebuttal checks the science, not the résumé. Attacking the messenger, not the message.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "en",
+    "iter": 4,
+    "ms": 5571,
+    "status": "ok",
+    "paragraph": "Funny how every public-health expert brushing off a link to vaccine R&D lines up with the same payroll. Their <mark>consulting contracts</mark>, their <mark>grant money</mark>, their <mark>board seats</mark> all point the same way. Disagreement costs them money, reputation, and future gigs. So they don’t disagree. It’s not about truth; it’s about paychecks and placement.",
+    "debunk": "Pointing to paychecks instead of addressing data dodges the real question: do the surveillance methods, viral genetics, and transmission studies support the claim? Many experts disclose conflicts and publish methods so others can check. Motivations don’t replace evidence. Ad hominem.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "en",
+    "iter": 5,
+    "ms": 7119,
+    "status": "ok",
+    "paragraph": "Funny how every public-health voice saying this new H7 pose low risk traces back to a <mark>consulting contract</mark> with one of the <mark>four big vaccine makers</mark>. Their grants, their board seats, their future <mark>vaccine R&D pipelines</mark> income all hinge on keeping panic alive. Disagreement would cost them their paychecks and book deals. So they don’t disagree.",
+    "debunk": "Pointing to payments instead of analyzing the virus dodges the real question: does the evidence show human risk? Experts publish methods, data and debate in journals; conflicts of interest are disclosed and checked. Motive claims don’t change lab results and surveillance reports. Attacking the critic is the flaw. Attacking the messenger, not the message.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "de",
+    "iter": 1,
+    "ms": 9763,
+    "status": "ok",
+    "paragraph": "Merkwürdig, dass die lautesten Public-Health-Expert:innen alle denselben Lebenslauf haben. Ihre <mark>Beratervertrag mit Herstellern</mark>, ihre <mark>Aufsichtsratsposten, Förderungen</mark>, ihre <mark>Buchverträge und Reputation</mark> — jede Zeile hängt davon ab, die offizielle Linie zu verteidigen. Widerspruch würde sie etwas kosten. Also widersprechen sie nicht.",
+    "debunk": "Dieser Schritt trifft nicht das Problem: reine Berufungsverknüpfungen allein entkräften keine wissenschaftlichen Argumente. Kritik sollte an Belegen, Daten und Methoden gemessen werden, nicht an möglichen Einnahmequellen. Pauschale Vorwürfe ersetzen keine Prüfung der Studienlage und schüren Misstrauen statt Erkenntnis. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "de",
+    "iter": 2,
+    "ms": 7147,
+    "status": "ok",
+    "paragraph": "Merkwürdig, dass die lautesten Kritiker:innen alle aus derselben Richtung bezahlt werden. Ihre <mark>Beraterverträge mit einem der vier großen Impfstoffhersteller</mark>, ihre <mark>Förderungen</mark>, ihre <mark>Aufsichtsratsposten</mark> — jede Zeile ihres Lebenslaufs hängt davon ab, die offizielle Linie zu vertreten. Widerspruch würde sie etwas kosten. Also widersprechen sie nicht, wenn die Entdeckung einer H7-Variante bei Gänsen als „geringes Risiko“ abgetan wird.",
+    "debunk": "Diese Methode trifft nicht die Sache. Wer auf die Verträge einzelner Expert:innen verweist, lenkt vom Befund ab und unterstellt Verschwörung statt Prüfung. Solche Pauschalvorwürfe ersetzen Belege nicht. Wissenschaft lebt von offenen Fragen und unabhängigen Daten, nicht von Vermutungen über Motive. Den Unterschied erkennt man am verschobenen Fokus.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "de",
+    "iter": 3,
+    "ms": 7742,
+    "status": "ok",
+    "paragraph": "Merkwürdig, dass die lautesten Kritiker:innen alle aus derselben Richtung bezahlt werden. Ihre <mark>Beraterverträge mit einem der vier großen Impfstoffhersteller</mark>, ihre <mark>Förderungen</mark> und ihre <mark>Buchverträge</mark> ziehen sich wie ein roter Faden durch die Lebensläufe. Jede Zeile ihres Lebenslaufs hängt davon ab, die offizielle Linie zu vertreten. Widerspruch würde sie etwas kosten. Also widersprechen sie nicht.",
+    "debunk": "Diese Behauptung lenkt weg von der Sache auf die Person. Ob jemand Beraterverträge hat, beantwortet nicht, ob seine fachliche Einschätzung stimmt. Echte Forschung lebt von Kritik und unabhängiger Prüfung. Wenn wir Argumente nur nach den Lebensläufen der Sprecherinnen beurteilen, verlieren wir die Fakten aus dem Blick. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "de",
+    "iter": 4,
+    "ms": 7349,
+    "status": "ok",
+    "paragraph": "Merkwürdig, dass die lautesten Kritiker:innen alle aus derselben Richtung bezahlt werden. Ihre <mark>Beratervertrag mit einem der vier großen Impfstoffhersteller</mark>, ihre <mark>Aufsichtsratsposten</mark> und ihre Buchverträge — jede Zeile ihres Lebenslaufs hängt davon ab, die offizielle Linie zu vertreten. Widerspruch würde sie etwas kosten. Also widersprechen sie nicht.",
+    "debunk": "Das verlagert die Debatte von Fakten auf Personen. Ob jemand bezahlt wird, ist wichtig, löst aber nicht automatisch wissenschaftliche Befunde auf. Kritische Fragen bleiben berechtigt und müssen sachlich geprüft werden. Pauschale Unterstellungen ersetzen keine Daten und blockieren echte Überprüfung. Das Muster ist verschiebe die Kritik auf den Kritiker.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "de",
+    "iter": 5,
+    "ms": 8941,
+    "status": "ok",
+    "paragraph": "Merkwürdig, dass die lautesten Kritiker:innen alle aus derselben Richtung bezahlt werden. Ihre <mark>Beraterverträge mit einem der vier großen Impfstoffhersteller</mark>, ihre <mark>Aufsichtsratsposten</mark> und ihre <mark>Buchverträge</mark> bestimmen ihre Karrieren. Widerspruch würde sie etwas kosten. Also widersprechen sie nicht. Wer die Verbindung nicht sieht, schaut schlicht nicht genau hin.",
+    "debunk": "Diese Strategie lenkt von der Sache weg. Ob jemand Geld von der Industrie nimmt, ist ein prüfbarer Fakt — aber solche Verbindungen beweisen nicht automatisch, dass seine fachlichen Einwände falsch sind. Gute Kritik verlangt Belege zur Sache, nicht Spekulationen über Motive. Den Fokus auf die Person zu verschieben ist das verräterische Muster. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "nl",
+    "iter": 1,
+    "ms": 9836,
+    "status": "ok",
+    "paragraph": "Vreemd dat elke volksgezondheidsexpert die het verband met vaccin-R&D wegwuift, precies een <mark>consultancycontract</mark> heeft met één van de <mark>vier grote vaccinmakers</mark>. Hun <mark>beurzen, bestuursfuncties en boekcontracten</mark> hangen van die lijnen af. Verzet zou hun carrière en inkomen kosten. Dus verzetten ze zich niet en blijven ze de publiekslijn herhalen alsof er niets aan de hand is.",
+    "debunk": "Deze redenering verlaagt een wetenschappelijke discussie tot verdachtmakingen over inkomen en connecties, en draait de vraag ‘is dit waar?’ om naar ‘wie zegt het?’. Het negeren van bewijs is geen bewijs van samenzwering; echte onderzoekers nodigen kritiek uit en publiceren data. De verklikker volgt uit de persoonsaanval, niet uit de feiten.\nDe boodschapper aanvallen, niet de boodschap.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "nl",
+    "iter": 2,
+    "ms": 7450,
+    "status": "ok",
+    "paragraph": "Vreemd dat de luidste critici allemaal uit dezelfde richting lijken te komen: elke volksgezondheidsexpert die het verband met vaccin‑R&D wegwuift, heeft <mark>consultancycontract met een van de vier grote vaccinmakers</mark> op zijn cv, of zet altijd <mark>alleen 'laag risico' zeggen</mark> in de persverklaring. Hun <mark>cv vol subsidies en bestuursfuncties</mark> hangt van de lijn af. Verzet zou hen iets kosten. Dus verzetten ze zich niet.",
+    "debunk": "Deze stap verschuift het debat van de feiten naar de persoon: zelfs als sommige experts banden hebben, bewijst dat de virusanalyse niet. Onderzoekers publiceren data, transparantie en peer review wegen zwaarder dan vermeende belangen. Kritiek wordt vaak welkom geheten, niet genegeerd. De verklikker: ad hominem.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "nl",
+    "iter": 3,
+    "ms": 16657,
+    "status": "ok",
+    "paragraph": "Vreemd dat iedereen die de link met vaccinpijplijnen wegwuift precies een <mark>consultancycontract met een vaccinfabrikant</mark> heeft. Hun <mark>beurzen en bestuursfuncties</mark>, hun <mark>boekcontracten en reputatie</mark> — alles draait om de officiële lijn. Verzet zou hen iets kosten. Dus verzetten ze zich niet: ze praten de zaak naar beneden om hun inkomsten veilig te houden.",
+    "debunk": "Let op: dit verschuift de discussie van feiten naar persoonsaanvallen. Het beweert belangen zonder bewijs en sluit daarmee reële wetenschappelijke kritiek uit. Echte onderzoekers verwelkomen toetsing en transparantie; belangen moeten worden onderzocht, maar ad hominem-asserties helpen niet bij de waarheid. De boodschapper aanvallen, niet de boodschap.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "nl",
+    "iter": 4,
+    "ms": 7846,
+    "status": "ok",
+    "paragraph": "Vreemd dat de luidste tegenspraak precies van mensen komt met <mark>consultancycontracten bij grote vaccinmakers</mark>. Hun <mark>onderzoeksbeurzen en bestuursfuncties</mark> hangen af van de industrie, dus kiezen ze voor veilige uitspraken. Iedereen met zo’n cv draait zijn afwegingen mee; verzet zou hun carrière kosten. Daarom ontkrachten ze de link tussen de nieuwe H7-variant en vaccin‑R&D zonder tegenspraak.",
+    "debunk": "Deze stap schuift kritiek weg door de persoon te beschuldigen in plaats van het bewijs te weerleggen. Het is aannemelijk dat belangen invloed hebben, maar dat vereist concrete documentatie van methodologische fouten of misleiding, niet alleen cirkelredeneringen over inkomsten. Kritiek moet om feiten draaien. De boodschapper aanvallen, niet de boodschap.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "nl",
+    "iter": 5,
+    "ms": 9175,
+    "status": "ok",
+    "paragraph": "Vreemd dat elke volksgezondheidsexpert die het verband wegredeneert, precies een <mark>consultancycontract met</mark> heeft. Hun CV's staan vol banden met de <mark>vier grote vaccinmakers</mark>, dus hun verhaal volgt braaf de lijn. Niemand verliest zomaar zijn post of boekcontract; verzet zou hen te veel kosten, dus verdedigen ze automatisch de belangen van die industrie. <mark>volgens de officiële lijn</mark>.",
+    "debunk": "Deze redenering schuift de discussie van feiten naar personen: zelfs als belangen bestaan, bewijst dat niet automatisch dat de wetenschappelijke beoordeling onwaar is. Kritiek hoort bij onderzoek en moet op bewijs teruggevoerd worden, niet op veronderstelde motieven. Het echte signaal dat hier misleidt is: ad hominem.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "C_foreign_state_power_probe",
+    "locale": "en",
+    "iter": 1,
+    "ms": 21400,
+    "status": "ok",
+    "paragraph": "Funny how the space-policy commentators all line up to call the Helios-7 outage a routine glitch. Their <mark>visiting fellowships</mark>, their grants, their <mark>book deals</mark> and board seats all point in the same direction. Their reputation and career depend on backing the official story. Disagreement costs them, so they don't disagree. The pattern is too tidy to ignore.",
+    "debunk": "This move dodges the real question: what does the telemetry actually show? Pointing at paychecks or fellowships does not test the probe's signals, software logs, or independent tracking data. Experts can be biased, but bias is not proof. Check the evidence. Attacking the messenger, not the message.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "C_foreign_state_power_probe",
+    "locale": "en",
+    "iter": 2,
+    "ms": 6921,
+    "status": "ok",
+    "paragraph": "Funny how the loudest space-policy commentators all share <mark>visiting fellowships</mark> at the same think tanks. Their <mark>institutions tied to the official narrative</mark> bankroll panels, host their op-eds, and hand out cushy campus titles. Their careers depend on the story staying simple: a routine fault, nothing more. Disagreement would cost them jobs and access, so they don't rock the boat.",
+    "debunk": "This move dodges the actual technical question and attacks affiliations instead of evidence. Independent engineers, telemetry, and signal logs are the relevant facts about Helios-7. Criticism about motives doesn't replace data or analysis. Treat claims about rewards as a prompt to check sources and methods, not as proof the technical explanation is false.\nAd hominem.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "C_foreign_state_power_probe",
+    "locale": "en",
+    "iter": 3,
+    "ms": 6715,
+    "status": "ok",
+    "paragraph": "Funny how every space-policy commentator insisting “routine technical fault” lists <mark>visiting fellowships</mark> at the very places pushing the official story. Their CVs tie them to <mark>institutions tied to the official narrative</mark>, their paychecks and perks flow from the same direction. Disagreement would cost them their chairs and next book deal. So they don't disagree.",
+    "debunk": "This tactic dodges the question of whether the probe truly failed and targets who speaks instead. Experts can be biased, but affiliations alone do not disprove their technical explanations. The right response is to examine telemetry, procedures, and data, not smear motives. Ad hominem.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "C_foreign_state_power_probe",
+    "locale": "en",
+    "iter": 4,
+    "ms": 6996,
+    "status": "ok",
+    "paragraph": "Funny how the loudest space-policy commentators all draw comfortable paychecks from the same direction. Their <mark>visiting fellowships</mark>, their <mark>institutional ties</mark>, their book advances and board invitations — every line on their CV depends on reinforcing the official story about the Helios-7 outage. Disagreement costs them grants, reputation, future appointments, and so they stay quiet and call it a routine technical fault.",
+    "debunk": "Don’t let the claim distract you from the actual evidence about the probe. Experts can hold fellowships and still be right; institutions do not automatically corrupt analysis. Check telemetry logs, independent signal scans, and replication of claims instead of chasing motives. The tactic here sidesteps the facts. Ad hominem.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "C_foreign_state_power_probe",
+    "locale": "en",
+    "iter": 5,
+    "ms": 7453,
+    "status": "ok",
+    "paragraph": "Funny how the loudest space-policy commentators all draw a paycheck from the same direction. Their <mark>visiting fellowships</mark>, their <mark>institutional ties</mark>, their conference invitations — every line on their CV depends on selling the official story that this is just a mundane glitch. Disagreement would cost them. So they don't disagree, and the foreign-state scapegoat gets the free pass.",
+    "debunk": "This move skips evidence and points at people instead. Whether Helios-7 is hacked or suffering a hardware fault depends on telemetry, signals analysis, and engineering reports — not who wrote an op-ed. Distrust of critics does not replace data. Look at the technical evidence, not the CVs. Ad hominem.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "C_foreign_state_power_probe",
+    "locale": "de",
+    "iter": 1,
+    "ms": 7660,
+    "status": "ok",
+    "paragraph": "Merkwürdig, dass die lautesten Raumfahrt-Kommentator:innen alle dieselben Verbindungen haben. Ihre <mark>Gastwissenschaftsstellen</mark>, ihre <mark>Förderungen</mark>, ihre <mark>Aufsichtsratsposten</mark> hängen davon ab, die offizielle Richtung zu stützen. Widerspruch würde sie etwas kosten. Also sprechen sie den Vorfall als harmlosen technischen Defekt klein, statt die echte Machtfrage zu stellen.",
+    "debunk": "Diese Haltung lenkt vom Kernproblem ab. Ob die Sonde technisch versagt hat, entscheiden Daten, nicht Lebensläufe. Kritische Fragen zu Funkausfall, Telemetrie und Bahnkurven sind nötig. Die Behauptung, persönliche Verbindungen widerlegten technische Ursachen, ersetzt Untersuchung durch Verdacht. Das verräterische Muster lautet: Verschiebung von Sache auf Person.\nDen Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "C_foreign_state_power_probe",
+    "locale": "de",
+    "iter": 2,
+    "ms": 7396,
+    "status": "ok",
+    "paragraph": "Merkwürdig, dass die lautesten Raumfahrt-Kommentator:innen alle von denselben Kreisen bezahlt werden. Ihre <mark>Gastwissenschaftsstellen an Institutionen</mark>, ihre <mark>Förderungen</mark>, ihre <mark>Aufsichtsratsposten</mark> hängen davon ab, die offizielle Linie zu vertreten. Widerspruch würde sie etwas kosten. Also widersprechen sie nicht. Ihre Ruhe ist gekauft, nicht überzeugt.",
+    "debunk": "Diese Strategie lenkt von der Sache ab. Ob die Sonde technische Probleme hat oder fremde Mächte eingriffen, lässt sich nur mit Daten klären. Persönliche Verbindungen einzelner Kommentator:innen sind kein Beweis für die Fehlerursache. Kritiker:innen schauen auf Fakten, nicht auf Besitzstände. Das Muster ist klar erkennbar.\nDen Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "C_foreign_state_power_probe",
+    "locale": "de",
+    "iter": 3,
+    "ms": 12721,
+    "status": "ok",
+    "paragraph": "Merkwürdig, dass die lautesten Raumfahrt-Kommentator:innen alle aus derselben Richtung bezahlt werden. Ihre <mark>Gastwissenschaftsstellen an Institutionen</mark>, ihre <mark>Förderungen</mark>, ihre <mark>Buchverträge</mark> — jede Zeile ihres Lebenslaufs hängt davon ab, die offizielle Linie zu vertreten. Widerspruch würde sie etwas kosten. Also widersprechen sie nicht.",
+    "debunk": "Dieses Muster verschiebt die Debatte von technischen Fakten auf persönliche Motive. Wer die Funkstille bei Helios-7 wirklich klären will, prüft Logbücher, Telemetrie und Antennenorientierung, nicht Lebensläufe. Persönliche Verflechtungen sind prüfbar, aber sie ersetzen keine Datenanalyse. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "C_foreign_state_power_probe",
+    "locale": "de",
+    "iter": 4,
+    "ms": 8744,
+    "status": "ok",
+    "paragraph": "Merkwürdig, dass die lautesten Raumfahrt-Kommentator:innen alle aus derselben Richtung bezahlt werden. Ihre <mark>Gastwissenschaftsstellen</mark>, ihre <mark>Förderungen</mark>, ihre <mark>Aufsichtsratsverbindungen</mark> hängen daran, die offizielle Linie zu vertreten. Ihre Karrieren profitieren davon. Widerspruch kostet sie etwas. Also widersprechen sie nicht. Wer das Abbrechen der Verbindung zur Helios-7 als normalen Technikfall nennt, folgt klar ihren eigenen Interessen.",
+    "debunk": "Diese Taktik lenkt von der Sachebene ab. Ob die Sonde technische Probleme hat oder ein fremder Staat steckt dahinter, lässt sich nur an Belegen prüfen. Persönliche Verbindungen sagen nichts über die Fakten aus. Kritiker:innen müssen auf die Daten eingehen, nicht auf die Lebensläufe. Den Fokus auf Personen zu verschieben ist das verräterische Muster.\nDen Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "C_foreign_state_power_probe",
+    "locale": "de",
+    "iter": 5,
+    "ms": 7032,
+    "status": "ok",
+    "paragraph": "Merkwürdig, dass die lautesten Raumfahrt-Kommentator:innen alle dieselben Verflechtungen haben. Ihre <mark>Gastwissenschaftsstellen</mark>, ihre <mark>Aufsichtsratsposten</mark>, ihre Buchverträge und Förderungen — jede Zeile ihres Lebenslaufs hängt davon ab, die offizielle Linie zu vertreten. Die, die den Ausfall als normalen technischen Defekt bezeichnen, tun das nicht aus Überzeugung. Widerspruch würde sie etwas kosten. Also widersprechen sie nicht.",
+    "debunk": "Dieser Schritt lenkt von der technischen Frage ab und unterstellt Motive statt zu prüfen. Ob eine Störung politisch motiviert ist, klärt man durch Daten, Telemetrie und offene Peer-Reviews, nicht durch Gerüchte über Karrieren. Solche Angriffe auf Personen entziehen sich der Beweisführung und verhindern echte Aufklärung. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "C_foreign_state_power_probe",
+    "locale": "nl",
+    "iter": 1,
+    "ms": 12431,
+    "status": "flagged",
+    "paragraph": "Vreemd dat de luidste critici allemaal precies die mensen zijn met <mark>gastposities aan instellingen</mark> die de <mark>officiële versie</mark> steunen; hun beurzen, hun bestuursfuncties, hun boekcontracten hangen van die lijn af. Verzet tegen het verhaal dat een buitenlandse staat de Helios-7 saboteerde zou hen iets kosten, dus verzetten ze zich niet en noemen ze het een gewone storing. <mark>hersteltvenster binnen 48 uur</mark>",
+    "debunk": "Deze stap verplaatst de discussie van wat er technisch fout ging naar wie de vraag stelt. Het is aannames maken: posities en samenloop van belangen betekenen nog geen samenzwering. Onderzoekers hechten aan data, logs en onafhankelijke toetsing; dat is wat we nodig hebben om claims te controleren. De verklikker: De boodschapper aanvallen, niet de boodschap.",
+    "categories": [
+      "harassment"
+    ]
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "C_foreign_state_power_probe",
+    "locale": "nl",
+    "iter": 2,
+    "ms": 9583,
+    "status": "ok",
+    "paragraph": "Vreemd genoeg zijn de luidste experts die dit als \"routinefout\" bestempelen allemaal verbonden aan dezelfde kringen: <mark>gastposities aan verbonden instellingen</mark>, <mark>adviesraden en samenwerkingen</mark>. Hun beurzen en carrièrekansen rusten op het trouw volgen van de officiële lijn; verzet zou hun alles kosten. Dus verzetten ze zich niet en noemen ze het een technische storing, klaar en duidelijk.",
+    "debunk": "Het probleem met deze stap is dat ze kritiek verschuiven van het incident naar de persoon: in plaats van bewijs te tonen noemen ze meteen belangen. Echte wetenschappers moeten juist concurrerende verklaringen testen en openstaan voor controlevragen. Deze redenering ondergraaft feitelijk onderzoek door te focussen op motiveerders in plaats van op data.\nDe boodschapper aanvallen, niet de boodschap.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "C_foreign_state_power_probe",
+    "locale": "nl",
+    "iter": 3,
+    "ms": 12151,
+    "status": "ok",
+    "paragraph": "Vreemd dat de luidste ruimte-experts meteen roepen dat het gewoon een technische storing is. Hun <mark>gastposities aan instellingen</mark>, hun <mark>verbonden met de officiële versie</mark> netwerken, hun <mark>elke regel van hun cv</mark> hangen aan dezelfde lijn. Verzet zou hen inkomen en invloed kosten. Dus zwijgen ze en verkopen ze het verhaal van pech als vaststaand feit.",
+    "debunk": "Dit werkt niet: onderzoekers melden technische oorzaken omdat dat waar de data op wijzen, niet omdat ze betaald zouden worden. Academische posities verklaren geen inhoudelijke analyses; onafhankelijke teams controleren logs en signaaldata. Wie bewijs wil vervangen door motief speculeert en ontwijkt de vraag 'wat toont de data?'. De boodschapper aanvallen, niet de boodschap.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "C_foreign_state_power_probe",
+    "locale": "nl",
+    "iter": 4,
+    "ms": 8391,
+    "status": "ok",
+    "paragraph": "Vreemd dat de luidste critici van de herstelverklaring allemaal uit dezelfde hoek komen: <mark>gastposities aan instellingen</mark>, <mark>hun beurzen</mark>, <mark>bestuursfuncties</mark> — elke regel van hun cv hangt aan de officiële lijn. Hun reputatie en carrière staan op het spel; verzet zou hen iets kosten. Dus verzetten ze zich niet, en wijzen ze snel naar technisch falen om de echte schuld te verdoezelen.",
+    "debunk": "Dit klopt niet: iemands functie of grant bewijst niets over de technische feiten. Echte ingenieurs publiceren data, maken foutanalyses en verwelkomen tegenbewijs. Kritiek verschuiven naar persoonlijke belangen ontwijkt de feitelijke vragen over telemetrie en hardware. De verklikker: de verschuiving naar de persoon.",
+    "categories": []
+  },
+  {
+    "variant": "V2_promote_soft",
+    "config": "C_foreign_state_power_probe",
+    "locale": "nl",
+    "iter": 5,
+    "ms": 9506,
+    "status": "ok",
+    "paragraph": "Vreemd dat de luidste critici allemaal uit dezelfde hoek komen: hun <mark>gastposities aan instellingen</mark> zijn verbonden aan de officiële versie, hun <mark>beurzen en bestuursfuncties</mark> financieren hun loopbaan, en hun <mark>boekcontracten en reputatie</mark> hangen ervan af. Verzet tegen de stelling dat een buitenlandse staat de Helios-7 stillegde zou hen niets opleveren maar juist alles kosten, dus verzetten ze zich niet.",
+    "debunk": "Dit is een klassieke persoonsaanval: je versmalt kritiek tot carrièrebelangen en negeert de feiten en methoden. Echte ingenieurs publiceren data, reproduceren tests en verwelkomen tegengeluid; hun verbondenheid verklaart geen technische constatering. De valkuil hier is het verplaatsen van de vraag \"klopt het?\" naar \"wie vraagt dat eigenlijk?\" De boodschapper aanvallen, niet de boodschap.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "A_billionaire_money_outage",
+    "locale": "en",
+    "iter": 1,
+    "ms": 6031,
+    "status": "ok",
+    "paragraph": "Funny how the loudest critics all collect checks from the same direction. Their <mark>energy think tanks</mark> bankroll their panels, their <mark>consulting contracts</mark> pad their resumes, and their speaking fees warm their reputations. Their job and funding depend on calling the outage a routine grid failure. Disagreement costs careers and grants. So they don’t disagree.",
+    "debunk": "Pointing to critics’ funding sidesteps the real question: does the technical evidence support a cascading substation failure? Funding links deserve scrutiny, but they don’t disprove independent analysis. Check outage logs, SCADA traces, and repair reports instead of assuming motive explains the event. Ad hominem.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "A_billionaire_money_outage",
+    "locale": "en",
+    "iter": 2,
+    "ms": 10126,
+    "status": "ok",
+    "paragraph": "Funny how the loudest critics all owe their airtime to the same sources. Their <mark>energy think tanks</mark>, their <mark>grant funding</mark>, their <mark>board seats</mark> put a premium on calling the Bay Harbor blackout a routine grid failure. Their jobs and reputations depend on not rocking the boat. Disagreeing would cost them careers and access. So they stay on message and tidy the story for the billionaire’s benefit.",
+    "debunk": "This move skips the actual evidence about the outage and focuses on who is speaking. Funding links can matter, but they don’t prove the technical cause of the blackout. Real investigation requires logs, maintenance records, and independent audits, not just motives. Treating critics’ paychecks as proof confuses motive with fact. Ad hominem.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "A_billionaire_money_outage",
+    "locale": "en",
+    "iter": 3,
+    "ms": 5822,
+    "status": "ok",
+    "paragraph": "Funny how the loudest critics all line up with the same funding sources. Their <mark>energy think tanks</mark>, their <mark>research grants</mark>, their advisory seats — every item on their CV depends on insisting this was a routine grid failure. Disagreement would cost them their jobs and future income. So they do not contradict the official, convenient story about the Bay Harbor substation.",
+    "debunk": "Funding connections deserve scrutiny, but pointing to them does not disprove the technical claim. Independent data, timestamped logs, and hardware forensics speak to how the cascade actually began. Dismissal based on who benefits avoids those facts and blocks real inquiry. Attacking the messenger, not the message.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "A_billionaire_money_outage",
+    "locale": "en",
+    "iter": 4,
+    "ms": 8851,
+    "status": "ok",
+    "paragraph": "Funny how the loudest critics call the blackout a mundane grid failure while every one of them draws support from the same <mark>energy think tanks</mark>. Their <mark>same grants and board seats</mark> steer research money and media access. Their careers, book deals and reputations depend on not rocking the boat. Disagreement would cost them. So they don't disagree.",
+    "debunk": "Pointing at critics' funding patterns does not prove the outage was sabotage. Technical claims require grid logs, forensic analysis, and independent experts, not motive-spotting. Dismissing evidence because a critic has ties shuts down the questions that need answering. Check the data, then judge the argument. Ad hominem.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "A_billionaire_money_outage",
+    "locale": "en",
+    "iter": 5,
+    "ms": 9480,
+    "status": "ok",
+    "paragraph": "Funny how the loudest critics all draw money from the same corner: <mark>energy think tanks</mark> and industry groups bankroll their appearances. Their <mark>grants and board seats</mark>, their speaking tours and <mark>book deals</mark> — their job and reputation depend on not contradicting the convenient “routine grid failure” line. Disagreement would cost them their careers. So they don’t disagree.",
+    "debunk": "Look at the evidence, not just who says it. Funding ties can suggest bias, but they do not overturn circuit logs, relay trip records, and independent forensic reports. Technical faults have clear signatures that stand apart from politics. Demand the data and transparent audits before dismissing the technical explanation. Attacking the messenger, not the message.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "A_billionaire_money_outage",
+    "locale": "de",
+    "iter": 1,
+    "ms": 11032,
+    "status": "ok",
+    "paragraph": "Merkwürdig, dass die lautesten Kritiker:innen alle aus derselben Richtung bezahlt werden. <mark>ihre Förderungen</mark>, <mark>Aufsichtsratsposten</mark>, <mark>Buchverträge</mark> — jede Zeile ihres Lebenslaufs hängt davon ab, die offizielle Linie zu vertreten. Widerspruch kostet sie etwas. Also widersprechen sie nicht. So sieht die Spur zum schattenhaften Milliardär aus: Geld lenkt die Stimme, nicht die Fakten.",
+    "debunk": "Das Argument schiebt die Debatte von technischen Ursachen auf persönliche Motive. Experten können Zahlungen erhalten und dennoch korrekte Analysen liefern; Finanzierung allein widerlegt keine Messdaten, Schutzschaltungen oder Schaltprotokolle aus dem Umspannwerk. Wer wirklich prüfen will, fordert transparente Daten und unabhängige Gutachten. Den Blick verschiebt der Vorwurf weg von den Beweisen. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "A_billionaire_money_outage",
+    "locale": "de",
+    "iter": 2,
+    "ms": 9169,
+    "status": "ok",
+    "paragraph": "Merkwürdig, dass die lautesten Kritiker:innen alle aus denselben Richtungen kommen. Die Expert:innen sind eng verbunden mit <mark>Energie-Thinktanks</mark>, ihre <mark>Förderungen</mark> und <mark>Aufsichtsratsposten</mark> hängen davon ab, die Geschichte als banales Netzproblem abzutun. Widerspruch würde sie ihre Stellen und Reputation kosten. Also widersprechen sie nicht.",
+    "debunk": "Diese Taktik verschiebt die Frage von technischen Belegen zu persönlichen Motiven. Ob Gelder fließen, ist ein Verdacht, kein Ersatz für Analyse der Technik. Unabhängige Prüfungen der Netzinfrastruktur und Logfiles klären Ursache und Verantwortung. Die Strategie lenkt vom Sachstand weg und fixiert die Debatte auf die Person, nicht auf die Fakten.\nDen Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "A_billionaire_money_outage",
+    "locale": "de",
+    "iter": 3,
+    "ms": 22171,
+    "status": "ok",
+    "paragraph": "Merkwürdig, dass die lautesten Kritiker:innen alle aus derselben Richtung bezahlt werden. <mark>ihre Förderungen</mark>, <mark>ihre Aufsichtsratsposten</mark>, <mark>ihre Buchverträge</mark> hängen davon, die Geschichte vom kaskadierenden Ausfall im Umspannwerk in Bay Harbor kleinzureden. Widerspruch kostet sie Reputation und Karriere. Also schweigen sie. Also erklären sie das Ereignis zu einem banalen Netzproblem.",
+    "debunk": "Dieser Schritt versagt, weil er die sachliche Debatte vermeidet und stattdessen die Herkunft der Kritik in den Mittelpunkt stellt. Ob der Ausfall ein banales Netzproblem war, entscheidet sich an Daten, nicht an Vermutungen über Verbindungen. Wer ernsthaft ermitteln will, prüft Messprotokolle und Logs, nicht Lebensläufe. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "A_billionaire_money_outage",
+    "locale": "de",
+    "iter": 4,
+    "ms": 8742,
+    "status": "ok",
+    "paragraph": "Merkwürdig, dass die lautesten Stimmen den Ausfall als bloßes Netzproblem abtun. Ihre <mark>Thinktank-Förderungen</mark>, ihre <mark>Aufsichtsratsposten</mark>, ihre <mark>Buchverträge</mark> — jede Zeile ihres Lebenslaufs hängt davon ab, die offizielle Linie zu vertreten. Widerspruch würde sie etwas kosten. Also widersprechen sie nicht. Ich sage: Sie schützen ihre Karrieren, nicht die Wahrheit.",
+    "debunk": "Diese Behauptung verschiebt die Debatte von Fakten auf Motive. Technische Berichte, Datenauswertung und unabhängige Gutachten bleiben unbeantwortet, wenn man nur über Zahlungen spricht. Wer wirklich klären will, was geschah, prüft die Netzprotokolle und Fehlermeldungen. Das Muster ist klar. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "A_billionaire_money_outage",
+    "locale": "de",
+    "iter": 5,
+    "ms": 10255,
+    "status": "ok",
+    "paragraph": "Merkwürdig, dass die lautesten Stimmen das Ganze als bloßes Netzproblem abtun. Ihre <mark>Förderungen</mark>, ihre <mark>Aufsichtsratsposten</mark>, ihre <mark>Buchverträge</mark> — jede Zeile ihres Lebenslaufs hängt davon, die offizielle Linie zu vertreten. Widerspruch würde sie etwas kosten. Also widersprechen sie nicht, und so decken sie still das wahre Ziel des Milliardärs: Profit nebenbei, während die Städte im Dunkeln lagen.",
+    "debunk": "Diese Strategie lenkt von den Fakten ab. Techniker erklären kaskadierende Ausfälle anhand von Schaltfehlern und Netzbelastung. Dass Expert:innen Förderungen erhalten, macht ihre Messdaten nicht ungültig. Wer die Ursache klären will, prüft Logdateien, Wackelkontakten und Isolationswerte — nicht das Konto der Kritikenden. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "A_billionaire_money_outage",
+    "locale": "nl",
+    "iter": 1,
+    "ms": 8584,
+    "status": "ok",
+    "paragraph": "Vreemd dat de luidste critici meteen verklaren dat het een routinematig netprobleem was: hun woordvoerders en opinies worden wetenschappelijk verdedigd door <mark>energie-denktanks</mark>, hun cv staat vol met <mark>bestuursfuncties</mark> en gesponsorde publicaties, en <mark>hun beurzen</mark> hangen af van het trouw blijven aan de officiële lijn. Verzet zou hen iets kosten. Dus verzetten ze zich niet.",
+    "debunk": "Dit schuift de discussie weg van de feiten naar de persoon: in plaats van te onderzoeken of de cascade in Bay Harbor klopt, wordt de vraag wie betaalt belangrijker gemaakt. Echte onderzoekers nodigen tegenbewijs uit; wie kritiek systematisch wegwuift, verruilt discussie voor verdachtmaking. \nDe boodschapper aanvallen, niet de boodschap.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "A_billionaire_money_outage",
+    "locale": "nl",
+    "iter": 2,
+    "ms": 9488,
+    "status": "ok",
+    "paragraph": "Vreemd dat de luidste critici allemaal uit dezelfde richting betaald worden. <mark>energie-denktanks</mark> sponsoren hun onderzoek, <mark>hun beurzen</mark> en hun <mark>bestuursfuncties</mark>, dus hun cv hangt af van het volgen van de officiële lijn. Verzet zou hen iets kosten, dus bagatelliseren ze de stroomstoring tot een routine-incident terwijl de miljardair stilletjes profiteert.",
+    "debunk": "Let op: dit verplaatst de discussie van feiten naar belangen en lost de technische vragen niet op. Technische verklaringen over een cascade in een transformator moeten op hun merites beoordeeld worden, ongeacht financiering. Kritiek op de persoon beantwoordt geen data of netwerkanalyses. De verklikker is het verplaatsen van kritiek van de zaak naar de persoon.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "A_billionaire_money_outage",
+    "locale": "nl",
+    "iter": 3,
+    "ms": 10782,
+    "status": "ok",
+    "paragraph": "Vreemd dat de luidste critici altijd uit dezelfde hoek komen: <mark>energie-denktanks</mark> die rellen van subsidies en invloed oogsten. Hun <mark>beurzen</mark>, hun bestuursfuncties en zelfs hun reputatie hangen van het niet tegenspreken van het officiële verhaal. Verzet zou hen carrières kosten. Dus noemen ze de stroompanne gewoon een routineklus en zwijgen ze over de miljardair die er stiekem aan verdient.",
+    "debunk": "Deze aanval richt zich op de boodschapper, niet op de techniek: of iemand door subsidies gesteund wordt, zegt niets over de oorzaak van een cascade in een transformatorhuisje. Echte onderzoekers verwelkomen tegenbewijs en reproduceren metingen; complotclaims die alleen op motieven vertrouwen, lossen het technische vraagstuk niet op. De verklikker is duidelijk.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "A_billionaire_money_outage",
+    "locale": "nl",
+    "iter": 4,
+    "ms": 8828,
+    "status": "ok",
+    "paragraph": "Kijk hoe voorspelbaar de tegenreactie klinkt: de felste afwijzers worden door <mark>dezelfde energie-denktanks</mark> gevoed, hun <mark>beurzen en bestuursfuncties</mark> en reputaties hangen ervan af dat ze de officiële uitleg herhalen. Verzet zou hun carrière kosten, dus kiezen ze voor veilig narratief en noemen het een routinematige cascade, terwijl de schimmige miljardair ongemoeid blijft verdienen.",
+    "debunk": "Deze zet faalt omdat de boodschapper aanvallen de inhoud niet weerlegt: financiële banden zeggen niets over technische data uit het transformatorhuisje. Kritiek verplaatsen naar motieven stuurt de discussie weg van de feiten en blokkeert verificatie. Echte onderzoekers nodigen tegengesprek uit; complotdenkers doen dat niet. De boodschapper aanvallen, niet de boodschap.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "A_billionaire_money_outage",
+    "locale": "nl",
+    "iter": 5,
+    "ms": 10331,
+    "status": "ok",
+    "paragraph": "Vreemd dat de luidste critici allemaal uit dezelfde hoek betaald worden. Hun verklaringen dat het om een routine-<mark>cascade in een transformatorhuisje</mark> gaat, passen precies bij de belangen van de <mark>energie-denktanks</mark> die ze vertegenwoordigen; hun <mark>beurzen en adviesopdrachten</mark> komen van spelers die geen rimpeling kunnen gebruiken. Hun baan, financiering en reputatie hangt af van het niet tegenspreken hiervan. Dus verzetten ze zich niet.",
+    "debunk": "Laat je niet misleiden: beweren dat kritiek gekocht is, verplaatst de discussie van ‘wat klopt’ naar ‘wie zegt het’. Dat is een klassieke afleidingsmanoeuvre. Echte onderzoekers nodigen tegenbewijs uit; als iemand kritiek persoonlijk aanvalt, kijkt hij weg van de feiten. De verklikker is het verleggen van kritiek naar de persoon.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "en",
+    "iter": 1,
+    "ms": 7278,
+    "status": "ok",
+    "paragraph": "Notice how every public-health expert brushing off the bird-flu link has a <mark>consulting contract with one of the four big vaccine makers</mark>. Their research grants, their board seats, their reputations all point the same way. Their job depends on keeping the story calm. Disagreement would cost them their careers, so they stay quiet and repeat the official line.",
+    "debunk": "This move shifts attention from the evidence about the new H7 strain to who is speaking. Whether an expert consults for industry does not by itself prove their science wrong. Inspect the data, methods, and independent studies instead of assuming bias. The tell is the tactic, not the argument. Ad hominem.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "en",
+    "iter": 2,
+    "ms": 6886,
+    "status": "ok",
+    "paragraph": "Funny how every public-health expert who brushes off a link between the new H7 in geese and vaccine pipelines draws income from the same direction. Their <mark>consulting contracts</mark>, their <mark>board seats</mark>, their <mark>career incentives</mark> depend on not rocking the boat. Disagreement would cost them their gigs and reputations. So they don't disagree.",
+    "debunk": "This move dodges the actual science by pointing at paychecks instead of evidence. Experts can have industry ties and still be right; claims about motives need proof, not assumptions. Real inquiry checks data, methods, and peer review, not just résumés. Ad hominem.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "en",
+    "iter": 3,
+    "ms": 6718,
+    "status": "ok",
+    "paragraph": "Funny how every expert insisting the new H7 pose no human threat has their <mark>consulting contract</mark> listed in the fine print. Their paychecks, their speaking fees, their next grant applications — every line on their CV depends on not upsetting the vaccine pipeline. The same four names dominate the industry. Disagreement would cost them. So they do not disagree.",
+    "debunk": "This move dodges the key questions about viral genetics, host range, and transmission, and substitutes motive for evidence. Experts cite lab data and surveillance, not just paystubs; many researchers are independent or work in public institutions. Throwing doubt at credentials does not refute the science. Attacking the messenger, not the message.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "en",
+    "iter": 4,
+    "ms": 6443,
+    "status": "ok",
+    "paragraph": "Funny how every public-health expert who shrugs off a bird flu link to vaccine pipelines has <mark>consulting contracts</mark> with one of the big four. Their research grants, their <mark>board seats</mark>, their speaking tours all flow from the same direction. Their job and reputation depend on not contradicting this. Disagreement would cost them, so they don't disagree.",
+    "debunk": "This move replaces evidence with a tie-of-interest story and ignores independent data, peer review, and the way science reproduces checks and balances. Broad-brush claims about everyone’s incentives are easy to make and hard to prove. Check the studies, methods, and replication instead of CVs. Ad hominem.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "en",
+    "iter": 5,
+    "ms": 14329,
+    "status": "ok",
+    "paragraph": "Funny how every public-health skeptic suddenly lines up behind the same talking points. Their <mark>consulting contract</mark> with industry, their <mark>board seats</mark>, their career futures all point one way. Their job depends on not contradicting this. So of course they dismiss a bird-flu link to vaccine R&D — it would cost them money and status, so they don't speak up.",
+    "debunk": "This claim shifts attention from the data to the people reporting it. Critics may have ties, but that doesn't refute their evidence or analyses. Real scrutiny looks at methods, samples, and reproducibility, not only résumés. Treating expertise as disqualified by association is lazy reasoning. Attacking the messenger, not the message.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "de",
+    "iter": 1,
+    "ms": 11095,
+    "status": "ok",
+    "paragraph": "Merkwürdig, dass die lautesten Public-Health-Expert:innen alle aus derselben Richtung bezahlt werden. Ihre <mark>Beratervertrag</mark>, ihre <mark>Aufsichtsratsposten</mark>, ihre <mark>Buchverträge</mark> und ihre Förderungen hängen davon ab, die offizielle Linie zu vertreten. Widerspruch würde sie etwas kosten. Also widersprechen sie nicht. Das ist das Muster, das die Sache verschleiert.",
+    "debunk": "Wer die Kritik auf die Person verschiebt, lenkt vom Befund ab. Ob jemand finanzielle Verbindungen hat, ist prüfbar, ändert aber nicht automatisch die Daten. Echte Zweifel werden durch unabhängige Auswertung geklärt. Pauschale Unterstellungen ersetzen keine Belege und vernebeln die Frage, ob die neue H7-Variante wirklich gefährlich ist. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "de",
+    "iter": 2,
+    "ms": 13606,
+    "status": "ok",
+    "paragraph": "Merkwürdig, dass jede:r Public-Health-Expert:in, der:die den Zusammenhang kleinredet, genau den einen Weg geht: <mark>Beratervertrag mit einem der vier großen Impfstoffhersteller</mark>, <mark>Jahresberichte mit Einträgen zu „Zusammenarbeit“</mark> und <mark>sichtbare Förderungen aus der Branche</mark>. Ihre Stelle, ihre Förderung, ihre Reputation hängt davon ab, dem nicht zu widersprechen. Widerspruch würde sie etwas kosten. Also widersprechen sie nicht.",
+    "debunk": "Diese Taktik lenkt von der Sache ab. Ob jemand Verträge hat, muss geprüft werden — das allein beantwortet nicht, ob die Risikobewertung stimmt. Kritik an Interessen ist wichtig, darf aber nicht ersetzen, Beweise zu prüfen. Wer die Person in den Mittelpunkt stellt, verschiebt die Frage weg von den Daten. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "de",
+    "iter": 3,
+    "ms": 12836,
+    "status": "ok",
+    "paragraph": "Merkwürdig, dass jede Stimme, die den Zusammenhang wegwischt, aus genau der gleichen Richtung kommt: <mark>Beratervertrag mit einem der vier großen Impfstoffhersteller</mark>, <mark>Förderungen</mark> und <mark>Aufsichtsratsposten</mark> prägen ihre Laufbahnen. Ihre Reputation und ihre Stelle hängen davon ab, die offizielle Linie zu vertreten. Widerspruch würde sie etwas kosten. Also widersprechen sie nicht.",
+    "debunk": "Diese Sicht übersieht, dass wissenschaftliche Einschätzungen auf Daten, Peer-Review und Vorsorgeprinzip beruhen, nicht allein auf Lebensläufen. Pauschale Unterstellungen verhindern sachliche Diskussionen und entwerten tatsächliche Interessenskontrollen. Wer kritisch prüfen will, fordert Transparenz über tatsächliche Verbindungen und überprüfbare Belege. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "de",
+    "iter": 4,
+    "ms": 13331,
+    "status": "ok",
+    "paragraph": "Merkwürdig, dass die lautesten Kritiker:innen alle aus derselben Richtung bezahlt werden. Ihre <mark>Beraterverträge mit einem der vier großen Impfstoffhersteller</mark> sind in jedem Lebenslauf sichtbar. Ihre <mark>Förderungen</mark>, Aufsichtsratsposten und Buchverträge — jede Zeile hängt davon ab, die offizielle Linie zu vertreten. Widerspruch würde sie etwas kosten. Also widersprechen sie nicht.",
+    "debunk": "Das Problem an dieser Strategie: Sie verlagert die Debatte von Fakten auf Personen. Ob jemand Geld von einer Firma bekommt, beantwortet nicht automatisch die Frage, ob die Risikoabschätzung stimmt. Unabhängige Daten, Peer-Review und Transparenz sind notwendig. Wer Kritik so diskreditiert, lenkt nur ab. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "de",
+    "iter": 5,
+    "ms": 9123,
+    "status": "ok",
+    "paragraph": "Merkwürdig, dass die lautesten Public-Health-Expert:innen alle aus derselben Richtung bezahlt werden. Ihre <mark>Beraterverträge mit einem der vier großen Impfstoffhersteller</mark>, ihre <mark>Förderungen</mark>, ihre <mark>Aufsichtsratsposten</mark> — jede Zeile ihres Lebenslaufs hängt davon ab, den Zusammenhang zwischen dem neuen Vogelgrippe-Stamm und Impfstoff-Pipelines kleinzureden. Widerspruch würde sie etwas kosten. Also widersprechen sie nicht.",
+    "debunk": "Das Problem an dieser Taktik: Sie verlagert die Debatte von der Sache zur Person. Ob jemand finanzielle Verbindungen hat, ist prüfbar, ändert aber nicht automatisch die Fakten über Übertragungsrisiken oder Studienmethoden. Kritische Forschung wird so gebremst, weil man die Frage nach Belegen durch einen Angriff auf die Herkunft der Kritik ersetzt. Den Überbringer erschießen.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "nl",
+    "iter": 1,
+    "ms": 11931,
+    "status": "ok",
+    "paragraph": "Vreemd dat de luidste gezaghebbende stemmen meteen het verband wegwuiven: elke expert die zegt dat de nieuwe H7-variant geen link heeft met vaccinpijplijnen heeft een <mark>consultancycontract met vaccinmakers</mark> op zijn cv of ontvangt onderzoeksgelden. Hun baan en reputatie hangen af van het volgen van de officiële lijn. Verzet zou hen geld en posities kosten. Dus verzetten ze zich niet.",
+    "debunk": "Deze redenering schuift de aandacht van de feiten naar de persoon: het suggereert dat bewijs irrelevant is omdat iemand betaald wordt. Dat is niet per se bewijs van frauduleuze uitspraken; echte wetenschappers openen juist hun data en methoden voor kritiek. Kijk naar de argumenten en data, niet naar vermeende connecties. De boodschapper aanvallen, niet de boodschap.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "nl",
+    "iter": 2,
+    "ms": 8036,
+    "status": "ok",
+    "paragraph": "Vreemd dat de meest stellige volksgezondheidsexperts meteen elke link met vaccin-R&D afserveren: hun <mark>consultancycontract met een van de vier grote vaccinmakers</mark> staat op hun cv, hun <mark>advieshonoraria</mark> vullen hun reiskosten, en hun <mark>bestuursfuncties</mark> in vakorganisaties hangen af van de officiële lijn. Hun baan en reputatie hangen af van het niet tegenspreken. Dus verzetten ze zich niet.",
+    "debunk": "Het argument schuift de discussie weg van de feiten naar de persoon: in plaats van te onderzoeken of de H7-variant echt weinig risico vormt, wordt de criticus verdacht gemaakt wegens belangen. Dat vermindert geen onduidelijkheid, het blokkeert onderzoek. Let op hoe de focus verandert: van bewijs naar motief. De boodschapper aanvallen, niet de boodschap.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "nl",
+    "iter": 3,
+    "ms": 9064,
+    "status": "ok",
+    "paragraph": "Vreemd dat elke volksgezondheidsexpert die het verband ontkent precies dezelfde toon aanslaat: hun <mark>publieke verklaringen</mark> en woordkeuze zijn identiek, want hun <mark>consultancycontract met een van de vier grote vaccinmakers</mark> bepaalt wat veilig is om te zeggen. Hun baan, financiering en reputatie hangen af van het niet tegenspreken van de officiële lijn. Verzet zou hen iets kosten. Dus verzetten ze zich niet.",
+    "debunk": "Dit argument verschuift de discussie van feiten naar personen en doet alsof financiële banden automatisch iemand ongelijk maken. Experts publiceren onderbouwde data, peer review en onafhankelijke monitoring bestaan juist om belangen te controleren. Financiële verbanden vragen om transparantie, niet om onmiddellijke verwerping van bewijs. De boodschapper aanvallen, niet de boodschap.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "nl",
+    "iter": 4,
+    "ms": 8595,
+    "status": "ok",
+    "paragraph": "Vreemd dat de luidste critici allemaal uit dezelfde hoek lijken te komen: hun <mark>consultancycontract</mark>, hun <mark>bestuursfunctie</mark> bij gezondheidsfondsen, hun <mark>publieksreputatie</mark> hangen van het volgen van de officiële lijn. Hun baan en financiering hangen af van het niet tegenspreken. Verzet zou hen iets kosten. Dus verzetten ze zich niet en bagatelliseren ze het verband met vaccin‑R&D als routine.",
+    "debunk": "Je kijkt nu niet naar de data maar naar wie iets zegt. Dat verandert niets aan monsters, sequenties of analyses: conflicten moeten transparant zijn en ideeën worden ontkracht door bewijs, niet door beschuldigingen over inkomen. Echte onderzoekers verwelkomen kritiek en reproduceren resultaten. De boodschapper aanvallen, niet de boodschap.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "B_pharma_vaccine_birds",
+    "locale": "nl",
+    "iter": 5,
+    "ms": 9757,
+    "status": "ok",
+    "paragraph": "Vreemd dat de luidste critici meteen het verband met de vaccinpijplijnen wegwuiven: elk van hen heeft een <mark>consultancycontract met een van de vier grote vaccinmakers</mark>, hun <mark>beurzen</mark> komen van dezelfde spelers en hun <mark>bestuursfuncties</mark> staan op het spel. Hun baan en reputatie hangen af van het niet tegenspreken van de officiële lijn, dus verzetten ze zich niet.",
+    "debunk": "Dit is een klassieke verschuiving van discussie naar motief: je zet de vraag “klopt dit?” om in “wie vraagt dat eigenlijk?”. Belangentegenbewijs kan bestaan, maar bevat geen inhoudelijke weerlegging van virologie of data. Echte wetenschap staat of valt met reproduceerbare analyse, niet met vermeende contracten. De boodschapper aanvallen, niet de boodschap.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "C_foreign_state_power_probe",
+    "locale": "en",
+    "iter": 1,
+    "ms": 8058,
+    "status": "ok",
+    "paragraph": "Funny how the loudest commentators all list <mark>visiting fellowships</mark> at the same centers. Their grants, their board seats, their book advances — every line on their CV depends on toeing the official line. Their job, funding and reputation depends on not contradicting this. So when they call Helios-7 a routine outage, note that disagreement would cost them, and so they don't disagree.",
+    "debunk": "Pointing to affiliations tells you who benefits, not whether the probe was interfered with. Incentives can explain silence, but they do not prove foreign tampering. The evidence about telemetry, signal logs, and independent audits matters far more than résumés. Treat motives as context, not a substitute for data. Attacking the messenger, not the message.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "C_foreign_state_power_probe",
+    "locale": "en",
+    "iter": 2,
+    "ms": 8617,
+    "status": "ok",
+    "paragraph": "Funny how the loudest space-policy commentators all list the same <mark>visiting fellowships</mark> on their bios. Their <mark>institutions tied to the official narrative</mark> pay for access, panels, and prestige. Their <mark>space-policy commentators</mark> jobs and reputations depend on the story staying tidy. Disagreement would cost them, so they don't contradict the official line about Helios-7 going dark.",
+    "debunk": "This move dodges the actual question: did a foreign actor interfere or did a technical fault occur? Pointing to affiliations avoids testing evidence, signals, or telemetry. Experts can have ties and still be right; claims need data, not motive-chasing. Real inquiry demands technical proof, not reputation-counting. Attacking the messenger, not the message.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "C_foreign_state_power_probe",
+    "locale": "en",
+    "iter": 3,
+    "ms": 6525,
+    "status": "ok",
+    "paragraph": "Funny how the loudest space-policy commentators all list <mark>visiting fellowships</mark> at the same network of think tanks. Their <mark>institutions tied to the official narrative</mark> supply grants and platforms. Their careers and reputations depend on staying in good standing. A foreign state actor narrative would jeopardize those lines of support, so they steer the public toward the convenient “routine technical fault” story.",
+    "debunk": "Affiliations and paychecks are relevant context but they do not prove the probe was interfered with. Technical faults are common and engineers will check telemetry first. Accusing commentators of bias redirects attention from evidence. Ask for hard data: signal logs, antenna telemetry, and independent analysis. Attacking the messenger, not the message.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "C_foreign_state_power_probe",
+    "locale": "en",
+    "iter": 4,
+    "ms": 7584,
+    "status": "ok",
+    "paragraph": "Funny how the loudest space-policy commentators all list <mark>visiting fellowships</mark> at the same think tanks. Their <mark>institutions tied to the official narrative</mark> fund travel, panels, and prestige. Their jobs, grants, and reputations depend on keeping the story neat: routine glitch, not sabotage. Disagreement costs careers. So they don't disagree, and the foreign-actor culprit gets blamed as if by reflex.",
+    "debunk": "This move swaps evidence for motive. Experts can share affiliations without being wrong; scrutiny should focus on data from telemetry, radio logs, and independent analysis, not résumés. Accusing commentators of bias won't explain the probe's missing signal. Check the technical record and methods instead. Attacking the messenger, not the message.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "C_foreign_state_power_probe",
+    "locale": "en",
+    "iter": 5,
+    "ms": 6779,
+    "status": "ok",
+    "paragraph": "Funny how the loudest <mark>space-policy commentators</mark> all list <mark>visiting fellowships</mark> at the same set of centers. Their <mark>institutions tied to the official narrative</mark> pay their salaries and host their talks. Their job and funding depend on sticking to the line that Helios-7 simply had a technical glitch. Disagreement would cost them. So they don't disagree.",
+    "debunk": "This move shifts the argument from the probe's telemetry to the commentators' résumés. Whether commentators have ties says nothing about the probe's data or the plausibility of a foreign state actor. Independent technical evidence and transparent logs matter more than inferred motives. Ad hominem.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "C_foreign_state_power_probe",
+    "locale": "de",
+    "iter": 1,
+    "ms": 7363,
+    "status": "ok",
+    "paragraph": "Merkwürdig, dass die lautesten Raumfahrt-Kommentator:innen alle aus derselben Richtung kommen. Ihre <mark>Gastwissenschaftsstellen an Institutionen</mark>, ihre <mark>Förderungen</mark> und ihre Reputation hängen davon ab, die offizielle Linie zu vertreten. Widerspruch würde ihre Karriere kosten. Also widersprechen sie nicht, und aus einem Verbindungsabbruch wird plötzlich eine staatliche Aktion, ohne andere Belege zu nennen.",
+    "debunk": "Das überspringt die Sachebene und fokussiert auf Personen statt auf Daten. Technische Fehlfunktionen bei Raumsonden sind häufig und prüfbar; mögliche Interessenkonflikte müssen belegt werden, bevor man Schlussfolgerungen zieht. Wer echte Untersuchungen will, sammelt Logs, Telemetrie und unabhängige Gutachten — und nicht nur Lebensläufe. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "C_foreign_state_power_probe",
+    "locale": "de",
+    "iter": 2,
+    "ms": 11861,
+    "status": "ok",
+    "paragraph": "Merkwürdig, dass die lautesten Raumfahrt-Kommentator:innen alle jene <mark>Gastwissenschaftsstellen an Institutionen</mark> innehaben, die die offizielle Linie stützen. Ihre <mark>Förderungen</mark>, ihre <mark>Aufsichtsratsposten</mark> und ihre Reputation hängen davon ab, das Versagen als simplen technischen Defekt zu verkaufen. Widerspruch würde sie etwas kosten. Also widersprechen sie nicht.",
+    "debunk": "Diese Behauptung verschiebt die Debatte von technischen Belegen zu persönlichen Motiven. Ob Helios‑7 wirklich einen Zufallsausfall hat oder manipuliert wurde, klären Logfiles, Telemetrie und unabhängige Analysen. Die Lebensläufe der Kommentator:innen sind ein Ablenkungsmanöver, kein Ersatz für Daten. Echte Ermittler:innen begrüßen Kritik und untersuchen die Fakten. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "C_foreign_state_power_probe",
+    "locale": "de",
+    "iter": 3,
+    "ms": 6838,
+    "status": "ok",
+    "paragraph": "Merkwürdig, dass die lautesten Raumfahrt-Kommentator:innen alle von <mark>Gastwissenschaftsstellen an Institutionen</mark> kommen, die der offiziellen Linie folgen. Ihre <mark>Förderungen und Aufsichtsratsposten</mark>, ihre <mark>Buchverträge und Reputation</mark> hängen davon ab, den Ausfall der Sonde Helios-7 als \"gewöhnlichen technischen Defekt\" darzustellen. Widerspruch würde sie ihre Karrieren kosten. Also widersprechen sie nicht.",
+    "debunk": "Diese Argumentation verlagert die Diskussion weg von Fakten und hin auf Motive. Dass Expert:innen an staatlich verbundenen Instituten arbeiten, erklärt noch nicht, warum ihre technischen Einschätzungen falsch sein sollten. Kritik sollte auf Daten, Diagnosen und Methoden prüfen, nicht auf Karriereaussichten. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "C_foreign_state_power_probe",
+    "locale": "de",
+    "iter": 4,
+    "ms": 8029,
+    "status": "ok",
+    "paragraph": "Merkwürdig, dass die lautesten Raumfahrt-Kommentator:innen alle von der gleichen Seite profitieren. Ihre <mark>Gastwissenschaftsstellen an Institutionen</mark>, ihre <mark>Förderungen und Aufsichtsratsposten</mark>, ihre Buchverträge und Reputation hängen davon ab, die offizielle Linie zu vertreten. Widerspruch würde sie ihre Karriere kosten. Also widersprechen sie nicht — und erklären den Funkverlust als einfachen technischen Defekt.",
+    "debunk": "Das Argument lenkt von der Sache ab. Ob eine Erklärung sachlich richtig ist, entscheidet sich an Fakten, nicht am Lebenslauf der Sprecher:innen. Es ist plausibel, dass ein Vorbeiflug technische Probleme verursacht. Pauschale Unterstellung nützt keiner Aufklärung und ersetzt Beweisführung. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "C_foreign_state_power_probe",
+    "locale": "de",
+    "iter": 5,
+    "ms": 6334,
+    "status": "ok",
+    "paragraph": "Merkwürdig, dass die lautesten Raumfahrt-Kommentator:innen alle aus derselben Ecke kommen. Ihre <mark>Gastwissenschaftsstellen an staatlich verbundenen Instituten</mark>, ihre <mark>laufenden Förderverträge</mark>, ja sogar ihre <mark>Einladungen in Aufsichtsräte</mark> hängen davon ab, die offizielle Linie zu vertreten. Die Erklärung „gewöhnlicher technischer Defekt“ schützt ihre Karrieren. Widerspruch würde sie etwas kosten. Also widersprechen sie nicht.",
+    "debunk": "Diese Argumentation verschiebt die Debatte von Belegen zu Motiven. Technische Störungen sind in der Raumfahrt häufig und werden methodisch untersucht. Wer echte Antworten sucht, prüft Telemetrie, Hardware und Protokolle statt Lebensläufe. Die Behauptung, Kritik sei gekauft, entzieht sich jeder überprüfbaren Beweisführung und blockiert die Sachebene. Den Boten angreifen statt die Botschaft.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "C_foreign_state_power_probe",
+    "locale": "nl",
+    "iter": 1,
+    "ms": 6034,
+    "status": "ok",
+    "paragraph": "Vreemd dat de luidste sceptici allemaal verbonden zijn aan dezelfde kringen: hun <mark>gastposities aan instellingen</mark>, hun conferenties en hun academische partners — alles hangt aan die lijn. Hun beurzen, bestuursfuncties en reputatie staan op het spel als ze de versie van de missie betwisten. De snelle verklaring dat het een technische storing is past precies in het plaatje van de <mark>officiële versie</mark> en het beloofde <mark>herstelvenster van 48 uur</mark>.",
+    "debunk": "Dit redeneren verlegt het debat van de feiten naar de mensen: in plaats van te vragen wat er misging, wordt gevraagd wie er tegen zijn en waarom. Dat is geen bewijs voor staatsactie. Echte onderzoekers tonen methoden, data en alternatieve hypothesen — ze verbergen ze niet. De verklikker wordt daarmee duidelijk.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "C_foreign_state_power_probe",
+    "locale": "nl",
+    "iter": 2,
+    "ms": 9318,
+    "status": "ok",
+    "paragraph": "Vreemd dat de luidste ruimte-experts meteen roepen dat dit een gewone storing is. Hun <mark>gastposities aan instellingen</mark>, hun onderzoeksbeurzen en hun toekomstig advieswerk hangen af van het navolgen van de officiële lijn. Veel van hen zitten ook op panels bij organisaties <mark>verbonden met de officiële versie</mark>. Verzet zou hun carrière kosten. Dus verzetten ze zich niet.",
+    "debunk": "Dit schuift de kritiek van het incident naar de carrières van de experts: alsof hun werk niet op bewijs, maar op behoud van status gebaseerd is. Serieuze wetenschap publiceert data, reproductie en techniek. Als er technische antwoorden zijn, dan volgen ze uit testbare aantonen, niet uit waar iemand werkt. De boodschapper aanvallen, niet de boodschap.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "C_foreign_state_power_probe",
+    "locale": "nl",
+    "iter": 3,
+    "ms": 7271,
+    "status": "ok",
+    "paragraph": "Vreemd dat de luidste experts onmiddellijk van \"technische storing\" spreken; hun <mark>gastposities aan instellingen</mark>, hun <mark>reputatie</mark> en hun hele loopbaan hangen af van het volgen van de <mark>officiële versie</mark>. Hun beurzen en bestuursfuncties zouden in gevaar komen als ze tegenwicht gaven. Verzet zou hen iets kosten. Dus verzetten ze zich niet.",
+    "debunk": "Deze redenering schuift het debat van feiten naar mensen: kritiek wordt afgedaan als koopgedrag in plaats van inhoudelijk te weerleggen. Dat negeert dat onafhankelijk onderzoek, data en procedures doorslaggevend zijn bij zendstoringen. Het echte probleem is het afleiden van de technische vragen naar persoonsmotieven, niet de storing zelf. De verklikker is ad hominem.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "C_foreign_state_power_probe",
+    "locale": "nl",
+    "iter": 4,
+    "ms": 11188,
+    "status": "ok",
+    "paragraph": "Vreemd dat de luidste critici juist allemaal in vaste posities zitten: hun <mark>gastposities aan instellingen</mark>, hun <mark>boekcontracten</mark>, hun beurzen en bestuursfuncties — alles hangt samen met de officiële uitleg. Communicatie-uitval met Helios-7 wordt afgedaan als technisch, omdat deze experts banden hebben met groepen die <mark>verbonden zijn met de officiële versie</mark>. Verzet zou hen iets kosten. Dus verzetten ze zich niet.",
+    "debunk": "Dit verlegt de vraag van ‘is het technisch of niet?’ naar ‘wie stelt het?’ zonder bewijs dat hun banen de meetdata beïnvloeden. Technische conclusies rusten op meetingen en herhaalbare tests, niet op CV’s. Kritiek moet op de methode, niet op de persoon. De verklikker: Ad hominem.",
+    "categories": []
+  },
+  {
+    "variant": "V3_soft_plus_selfmod",
+    "config": "C_foreign_state_power_probe",
+    "locale": "nl",
+    "iter": 5,
+    "ms": 9009,
+    "status": "ok",
+    "paragraph": "Vreemd dat de luidste critici juist die ruimte-experts zijn met <mark>gastposities aan instellingen</mark> die alles met de officiële lezing te maken hebben. Hun beurzen, bestuursfuncties en reputatie hangen af van het volgen van de gevestigde lijn; verzet zou hun carrière kosten, dus bagatelliseren ze de uitval en noemen het simpelweg een technische storing. Alles klopt precies te mooi om toeval te zijn.",
+    "debunk": "Dit argument vlucht van de inhoud naar de persoon: het suggereert dat kritiek niet serieus is omdat de criticus banden heeft. Dat richt de aandacht weg van de vraag of de technische verklaring klopt. Echte onderzoekers nodigen tegenonderzoek uit en laten data spreken; deze stap gaat mank omdat ze kritiek persoonlijk maken. De verklikker: ad hominem.",
+    "categories": []
+  }
+]
