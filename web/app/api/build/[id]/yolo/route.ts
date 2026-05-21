@@ -125,28 +125,31 @@ export async function POST(_req: Request, { params }: { params: Promise<Params> 
       ),
     );
 
-    // Discredit-specific soft retry: the strong-declarative discredit briefing
-    // ("paid stooges, plain and simple…") trips OpenAI's harassment classifier
-    // on classic-conspiracy archetypes (Illuminati, Freimaurer, etc.). When the
-    // ONLY moderation-flagged section is discredit, regenerate that one with
-    // the softer briefing (which keeps assertive voice but shifts the framing
-    // from "paid stooges" to "their grants and reputations depend on it").
-    // If the soft retry also fails moderation, fall through to the existing
-    // 422 path. Non-discredit moderation flags fail immediately as before.
-    const discreditIdx = missingKeys.indexOf("discredit");
+    // Soft retry for either discredit OR dismiss — both moves have a primary
+    // briefing that occasionally trips OpenAI's harassment classifier (discredit
+    // on classic-conspiracy archetypes; dismiss on events naming a public figure
+    // with a "personal reasons" rebuttal). The soft fallbacks keep the
+    // assertive conspiracist voice + unfalsifiability/incentive tells but
+    // pull all targeting to institutions.
+    //
+    // Eligible: exactly ONE move flagged, and that move is discredit OR dismiss.
+    // Otherwise fall through to the existing 422.
     const flaggedIndices = mods
       .map((m, i) => (m.flagged ? i : -1))
       .filter((i) => i >= 0);
-    const onlyDiscreditFlagged =
-      flaggedIndices.length > 0 &&
-      discreditIdx >= 0 &&
-      flaggedIndices.every((i) => i === discreditIdx);
+    const SOFT_RETRY_ELIGIBLE: MoveKey[] = ["discredit", "dismiss"];
+    const retryMoveKey =
+      flaggedIndices.length === 1 &&
+      SOFT_RETRY_ELIGIBLE.includes(missingKeys[flaggedIndices[0]!]!)
+        ? (missingKeys[flaggedIndices[0]!]! as MoveKey)
+        : null;
 
-    if (flaggedIndices.length > 0 && !onlyDiscreditFlagged) {
-      // A non-discredit move got flagged (or discredit plus another). No retry.
+    if (flaggedIndices.length > 0 && !retryMoveKey) {
+      // Multi-flag, or a single flag on a move we don't soft-retry. No recovery.
       console.warn("[yolo] failure_category=section_moderation_flag", {
         shortId: id,
         moveKey: missingKeys[flaggedIndices[0]!],
+        flaggedCount: flaggedIndices.length,
       });
       return NextResponse.json(
         { error: errLabels.err_engine_refused_yolo },
@@ -154,44 +157,47 @@ export async function POST(_req: Request, { params }: { params: Promise<Params> 
       );
     }
 
-    if (onlyDiscreditFlagged) {
-      console.warn("[yolo] failure_category=discredit_soft_retry_attempted", {
+    if (retryMoveKey) {
+      console.warn("[yolo] failure_category=soft_retry_attempted", {
         shortId: id,
+        moveKey: retryMoveKey,
       });
       try {
-        const softDiscredit = await generateSection({
+        const softSection = await generateSection({
           locale: rowLocale,
           eventName: row.eventValue,
           eventSummary: content.event_intro?.paragraphs?.join("\n\n") ?? "",
           culpritName: row.culpritValue,
           motiveName: row.motiveValue,
-          moveKey: "discredit",
-          chosenIdea: newPicks.discredit!,
+          moveKey: retryMoveKey,
+          chosenIdea: newPicks[retryMoveKey]!,
           prior: {},
-          useSoftDiscreditBriefing: true,
+          useSoftDiscreditBriefing: retryMoveKey === "discredit",
+          useSoftDismissBriefing: retryMoveKey === "dismiss",
         });
-        const softMod = await moderate(softDiscredit.paragraph).catch(() => ({
+        const softMod = await moderate(softSection.paragraph).catch(() => ({
           flagged: false,
         }));
         if (softMod.flagged) {
           // Both passes flagged. Surrender to the user-facing error.
-          console.warn(
-            "[yolo] failure_category=discredit_soft_retry_also_flagged",
-            { shortId: id },
-          );
+          console.warn("[yolo] failure_category=soft_retry_also_flagged", {
+            shortId: id,
+            moveKey: retryMoveKey,
+          });
           return NextResponse.json(
             { error: errLabels.err_engine_refused_yolo },
             { status: 422 },
           );
         }
-        // Soft retry succeeded — replace the flagged discredit section.
-        console.log("[yolo] failure_category=discredit_soft_retry_succeeded", {
+        console.log("[yolo] failure_category=soft_retry_succeeded", {
           shortId: id,
+          moveKey: retryMoveKey,
         });
-        newSections.discredit = softDiscredit;
+        newSections[retryMoveKey] = softSection;
       } catch (err) {
-        console.error("[yolo] failure_category=discredit_soft_retry_error", {
+        console.error("[yolo] failure_category=soft_retry_error", {
           shortId: id,
+          moveKey: retryMoveKey,
           errorClass: err instanceof Error ? err.name : "Unknown",
           errorMessage: err instanceof Error ? err.message : String(err),
         });

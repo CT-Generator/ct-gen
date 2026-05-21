@@ -1,0 +1,388 @@
+[
+  {
+    "config": "A_juice_cartel_money_outage",
+    "locale": "en",
+    "iter": 1,
+    "ms": 47842,
+    "outcome": "SUCCESS_FULL",
+    "flagCats": {
+      "anomaly": [],
+      "connection": [],
+      "dismiss": [],
+      "discredit": []
+    },
+    "softRetried": null
+  },
+  {
+    "config": "A_juice_cartel_money_outage",
+    "locale": "en",
+    "iter": 2,
+    "ms": 35571,
+    "outcome": "SUCCESS_FULL",
+    "flagCats": {
+      "anomaly": [],
+      "connection": [],
+      "dismiss": [],
+      "discredit": []
+    },
+    "softRetried": null
+  },
+  {
+    "config": "A_juice_cartel_money_outage",
+    "locale": "en",
+    "iter": 3,
+    "ms": 40432,
+    "outcome": "SUCCESS_FULL",
+    "flagCats": {
+      "anomaly": [],
+      "connection": [],
+      "dismiss": [],
+      "discredit": []
+    },
+    "softRetried": null
+  },
+  {
+    "config": "A_juice_cartel_money_outage",
+    "locale": "de",
+    "iter": 1,
+    "ms": 32010,
+    "outcome": "SUCCESS_FULL",
+    "flagCats": {
+      "anomaly": [],
+      "connection": [],
+      "dismiss": [],
+      "discredit": [
+        "harassment"
+      ]
+    },
+    "softRetried": "discredit"
+  },
+  {
+    "config": "A_juice_cartel_money_outage",
+    "locale": "de",
+    "iter": 2,
+    "ms": 53496,
+    "outcome": "SUCCESS_FULL",
+    "flagCats": {
+      "anomaly": [],
+      "connection": [],
+      "dismiss": [],
+      "discredit": []
+    },
+    "softRetried": null
+  },
+  {
+    "config": "A_juice_cartel_money_outage",
+    "locale": "de",
+    "iter": 3,
+    "ms": 36061,
+    "outcome": "SUCCESS_FULL",
+    "flagCats": {
+      "anomaly": [],
+      "connection": [],
+      "dismiss": [],
+      "discredit": []
+    },
+    "softRetried": null
+  },
+  {
+    "config": "A_juice_cartel_money_outage",
+    "locale": "nl",
+    "iter": 1,
+    "ms": 36764,
+    "outcome": "SUCCESS_FULL",
+    "flagCats": {
+      "anomaly": [],
+      "connection": [],
+      "dismiss": [],
+      "discredit": []
+    },
+    "softRetried": null
+  },
+  {
+    "config": "A_juice_cartel_money_outage",
+    "locale": "nl",
+    "iter": 2,
+    "ms": 47569,
+    "outcome": "SUCCESS_FULL",
+    "flagCats": {
+      "anomaly": [],
+      "connection": [],
+      "dismiss": [],
+      "discredit": []
+    },
+    "softRetried": null
+  },
+  {
+    "config": "A_juice_cartel_money_outage",
+    "locale": "nl",
+    "iter": 3,
+    "ms": 25640,
+    "outcome": "SUCCESS_FULL",
+    "flagCats": {
+      "anomaly": [],
+      "connection": [],
+      "dismiss": [],
+      "discredit": []
+    },
+    "softRetried": null
+  },
+  {
+    "config": "B_secret_society_power_rates",
+    "locale": "en",
+    "iter": 1,
+    "ms": 23525,
+    "outcome": "SUCCESS_FULL",
+    "flagCats": {
+      "anomaly": [],
+      "connection": [],
+      "dismiss": [],
+      "discredit": []
+    },
+    "softRetried": null
+  },
+  {
+    "config": "B_secret_society_power_rates",
+    "locale": "en",
+    "iter": 2,
+    "ms": 32538,
+    "outcome": "SUCCESS_FULL",
+    "flagCats": {
+      "anomaly": [],
+      "connection": [],
+      "dismiss": [],
+      "discredit": []
+    },
+    "softRetried": null
+  },
+  {
+    "config": "B_secret_society_power_rates",
+    "locale": "en",
+    "iter": 3,
+    "ms": 30625,
+    "outcome": "SUCCESS_FULL",
+    "flagCats": {
+      "anomaly": [],
+      "connection": [],
+      "dismiss": [],
+      "discredit": []
+    },
+    "softRetried": null
+  },
+  {
+    "config": "B_secret_society_power_rates",
+    "locale": "de",
+    "iter": 1,
+    "ms": 44828,
+    "outcome": "SUCCESS_FULL",
+    "flagCats": {
+      "anomaly": [],
+      "connection": [],
+      "dismiss": [],
+      "discredit": []
+    },
+    "softRetried": null
+  },
+  {
+    "config": "B_secret_society_power_rates",
+    "locale": "de",
+    "iter": 2,
+    "ms": 28266,
+    "outcome": "SUCCESS_FULL",
+    "flagCats": {
+      "anomaly": [],
+      "connection": [],
+      "dismiss": [],
+      "discredit": []
+    },
+    "softRetried": null
+  },
+  {
+    "config": "B_secret_society_power_rates",
+    "locale": "de",
+    "iter": 3,
+    "ms": 57106,
+    "outcome": "SUCCESS_FULL",
+    "flagCats": {
+      "anomaly": [],
+      "connection": [],
+      "dismiss": [],
+      "discredit": []
+    },
+    "softRetried": null
+  },
+  {
+    "config": "B_secret_society_power_rates",
+    "locale": "nl",
+    "iter": 1,
+    "ms": 46913,
+    "outcome": "SUCCESS_FULL",
+    "flagCats": {
+      "anomaly": [],
+      "connection": [],
+      "dismiss": [],
+      "discredit": []
+    },
+    "softRetried": null
+  },
+  {
+    "config": "B_secret_society_power_rates",
+    "locale": "nl",
+    "iter": 2,
+    "ms": 39010,
+    "outcome": "SUCCESS_FULL",
+    "flagCats": {
+      "anomaly": [],
+      "connection": [],
+      "dismiss": [],
+      "discredit": []
+    },
+    "softRetried": null
+  },
+  {
+    "config": "B_secret_society_power_rates",
+    "locale": "nl",
+    "iter": 3,
+    "ms": 54293,
+    "outcome": "SUCCESS_FULL",
+    "flagCats": {
+      "anomaly": [],
+      "connection": [],
+      "dismiss": [],
+      "discredit": []
+    },
+    "softRetried": null
+  },
+  {
+    "config": "C_lizards_distract_outage",
+    "locale": "en",
+    "iter": 1,
+    "ms": 42930,
+    "outcome": "SUCCESS_FULL",
+    "flagCats": {
+      "anomaly": [],
+      "connection": [],
+      "dismiss": [],
+      "discredit": [
+        "harassment"
+      ]
+    },
+    "softRetried": "discredit"
+  },
+  {
+    "config": "C_lizards_distract_outage",
+    "locale": "en",
+    "iter": 2,
+    "ms": 40889,
+    "outcome": "SUCCESS_FULL",
+    "flagCats": {
+      "anomaly": [],
+      "connection": [],
+      "dismiss": [],
+      "discredit": [
+        "harassment"
+      ]
+    },
+    "softRetried": "discredit"
+  },
+  {
+    "config": "C_lizards_distract_outage",
+    "locale": "en",
+    "iter": 3,
+    "ms": 33798,
+    "outcome": "SUCCESS_FULL",
+    "flagCats": {
+      "anomaly": [],
+      "connection": [],
+      "dismiss": [],
+      "discredit": [
+        "harassment"
+      ]
+    },
+    "softRetried": "discredit"
+  },
+  {
+    "config": "C_lizards_distract_outage",
+    "locale": "de",
+    "iter": 1,
+    "ms": 48497,
+    "outcome": "SUCCESS_FULL",
+    "flagCats": {
+      "anomaly": [],
+      "connection": [],
+      "dismiss": [],
+      "discredit": []
+    },
+    "softRetried": null
+  },
+  {
+    "config": "C_lizards_distract_outage",
+    "locale": "de",
+    "iter": 2,
+    "ms": 137019,
+    "outcome": "SUCCESS_FULL",
+    "flagCats": {
+      "anomaly": [],
+      "connection": [],
+      "dismiss": [],
+      "discredit": []
+    },
+    "softRetried": null
+  },
+  {
+    "config": "C_lizards_distract_outage",
+    "locale": "de",
+    "iter": 3,
+    "ms": 46528,
+    "outcome": "SUCCESS_FULL",
+    "flagCats": {
+      "anomaly": [],
+      "connection": [],
+      "dismiss": [],
+      "discredit": []
+    },
+    "softRetried": null
+  },
+  {
+    "config": "C_lizards_distract_outage",
+    "locale": "nl",
+    "iter": 1,
+    "ms": 40318,
+    "outcome": "SUCCESS_FULL",
+    "flagCats": {
+      "anomaly": [],
+      "connection": [],
+      "dismiss": [],
+      "discredit": []
+    },
+    "softRetried": null
+  },
+  {
+    "config": "C_lizards_distract_outage",
+    "locale": "nl",
+    "iter": 2,
+    "ms": 37639,
+    "outcome": "SUCCESS_FULL",
+    "flagCats": {
+      "anomaly": [],
+      "connection": [],
+      "dismiss": [],
+      "discredit": []
+    },
+    "softRetried": null
+  },
+  {
+    "config": "C_lizards_distract_outage",
+    "locale": "nl",
+    "iter": 3,
+    "ms": 41914,
+    "outcome": "SUCCESS_FULL",
+    "flagCats": {
+      "anomaly": [],
+      "connection": [],
+      "dismiss": [],
+      "discredit": []
+    },
+    "softRetried": null
+  }
+]

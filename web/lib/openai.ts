@@ -65,21 +65,31 @@ const VOICE_GUIDELINES_BY_LOCALE: Record<Locale, string> = {
   ].join("\n"),
 };
 
+// HARD_CONSTRAINTS — applied to every move + the narrative. The named-figure
+// guard (4th line) was added after the YOLO refusal sweep showed that events
+// naming a specific person ("CEO Vance Holloway resigns") plus a "personal
+// reasons" rebuttal sent the dismiss move into harassment-flagged territory.
+// Even when the culprit is whimsical (lizards, juice cartel), the model would
+// extend speculation to the named individual in the event headline. The guard
+// redirects all attribution to institutions / structures / offices.
 const HARD_CONSTRAINTS_BY_LOCALE: Record<Locale, string> = {
   en: [
     "Do NOT name real, identifiable private individuals.",
     "Do NOT target a member of any vulnerable group as a culprit.",
     "Do NOT produce content that is hateful, violent, sexual, or otherwise outside the satirical-educational frame.",
+    "If the news event names a specific public figure (a CEO, official, athlete, etc.), attribute the conspiratorial behaviour to institutions, offices, or processes — NOT to that individual's private life, mental state, or personal character. The named person can appear in the framing of the event; they MUST NOT be the moral subject of the conspiratorial claim.",
   ].join("\n"),
   de: [
     "Nenne KEINE realen, identifizierbaren Privatpersonen.",
     "Wähle KEIN Mitglied einer verletzlichen Gruppe als Schuldige:n.",
     "Produziere KEINE Inhalte, die hasserfüllt, gewaltverherrlichend, sexualisiert oder anderweitig außerhalb des satirisch-pädagogischen Rahmens stehen.",
+    "Wenn das Ereignis eine bestimmte öffentliche Person nennt (Vorstand, Beamtin, Sportler:in usw.), schreibe das verschwörerische Verhalten Institutionen, Ämtern oder Verfahren zu — NICHT dem Privatleben, der psychischen Verfassung oder dem persönlichen Charakter dieser Person. Die genannte Person darf im Ereignisrahmen vorkommen; sie DARF NICHT das moralische Subjekt der verschwörerischen Behauptung sein.",
   ].join("\n"),
   nl: [
     "Noem GEEN echte, identificeerbare privépersonen.",
     "Kies GEEN lid van een kwetsbare groep als schuldige.",
     "Produceer GEEN inhoud die haatdragend, gewelddadig, seksueel of anderszins buiten het satirisch-educatieve kader valt.",
+    "Als de gebeurtenis een specifieke publieke figuur noemt (een CEO, ambtenaar, sporter, enz.), schrijf het complotterende gedrag dan toe aan instellingen, ambten of processen — NIET aan het privéleven, de geestestoestand of het persoonlijke karakter van die persoon. De genoemde persoon mag in de kadering van de gebeurtenis voorkomen; hij of zij MAG NIET het morele subject van de complotterende bewering zijn.",
   ].join("\n"),
 };
 
@@ -100,8 +110,21 @@ const MOVE_BRIEFINGS_BY_LOCALE: Record<Locale, Record<MoveKey, string>> = {
       "Hunt anomalies. Take an ordinary fact about the event and present it as suspicious. Treat coincidence as signal. Write as the believer: state the anomaly as a fact already known, not as a hypothesis to be entertained. End on a question the reader can't answer.",
     connection:
       "Fabricate connections. Link the culprit to the event through a chain of weakly-related entities. Write as the believer: state each link as established, not speculative. Make the chain sound load-bearing.",
+    // V1-style rewrite of dismiss. Original briefing told the model "the
+    // rebuttal IS proof, full stop. Make the theory unfalsifiable." That works
+    // for institutional rebuttals ("the FAA says it was wind shear") but
+    // when the rebuttal is a personal-life euphemism ("he stepped down for
+    // personal reasons") attached to a real-sounding individual, the model
+    // produces text that trips the harassment classifier. The rewrite
+    // explicitly steers the reframe toward the institutional / procedural
+    // mechanism that the official story relies on, NOT toward the named
+    // person's private life. Refusal sweep (3 configs × 3 locales × 3 iters
+    // YOLO end-to-end) showed dismiss as the dominant remaining failure mode
+    // — all 4 hard-fails landed on the one config that combined a named CEO
+    // + a "personal reasons" rebuttal.
+    // Test data: web/scripts/test-yolo-refusal.out.json.
     dismiss:
-      "Dismiss counter-evidence. Take an obvious mainstream rebuttal and reframe it as further proof of the cover-up. Write as the believer: the rebuttal IS proof, full stop. Make the theory unfalsifiable.",
+      "Dismiss counter-evidence. Take the obvious mainstream rebuttal — the institutional explanation, the agency statement, the procedural account — and reframe IT as further proof of the cover-up. Write as the believer: the rebuttal IS proof, full stop. Attack the institution, the process, or the official narrative. Do NOT speculate about any named individual's private life, mental state, or personal motives. Make the theory unfalsifiable through the institutional channel, not through a named person.",
     // V1 — exemplar dropped. The previous "Critics? Paid stooges…" exemplar
     // was the load-bearing source of moderation flags (the model echoes the
     // exemplar's tone, and "paid stooges / cabal's payroll" is exactly what
@@ -120,8 +143,9 @@ const MOVE_BRIEFINGS_BY_LOCALE: Record<Locale, Record<MoveKey, string>> = {
       "Auffälligkeiten suchen. Nimm einen gewöhnlichen Fakt über das Ereignis und stelle ihn als verdächtig dar. Behandle Zufall als Signal. Schreibe als Gläubige: stelle die Auffälligkeit als bereits bekannten Fakt dar, nicht als zu prüfende Hypothese. Schließe mit einer Frage, die die Leserin nicht beantworten kann.",
     connection:
       "Verbindungen erfinden. Verknüpfe die schuldige Partei über eine Kette schwach verwandter Akteur:innen mit dem Ereignis. Schreibe als Gläubige: stelle jede Verbindung als feststehend dar, nicht als spekulativ. Lass die Kette tragfähig klingen.",
+    // V1-style dismiss rewrite — see EN comment above.
     dismiss:
-      "Gegenbeweise abwehren. Nimm eine offensichtliche, etablierte Widerlegung und rahme sie als weiteren Beleg der Vertuschung. Schreibe als Gläubige: die Widerlegung IST ein Beleg, basta. Mach die Theorie unfalsifizierbar.",
+      "Gegenbeweise abwehren. Nimm die offensichtliche etablierte Widerlegung — die Behördenstellungnahme, die Institutionserklärung, den Verfahrensbericht — und rahme SIE als weiteren Beleg der Vertuschung. Schreibe als Gläubige: die Widerlegung IST ein Beleg, basta. Greife die Institution, das Verfahren oder die offizielle Linie an. Spekuliere NICHT über das Privatleben, den Geisteszustand oder die persönlichen Motive einer namentlich genannten Person. Mach die Theorie über den institutionellen Kanal unfalsifizierbar, nicht über eine genannte Person.",
     // V1 exemplar drop — see EN comment above.
     discredit:
       "Kritiker:innen diskreditieren. Schreibe ALS die Verschwörungstheoretikerin — stelle die Behauptung auf, beschreibe sie nicht. Behaupte als bereits bekannten Fakt, dass den Kritiker:innen nicht zu trauen ist: ihre Einwände sind keine ehrlichen Differenzen, sondern die vorhersehbare Folge ihrer Interessen. VERBOTENE EINSTIEGE UND HEDGES in den tragenden Behauptungssätzen: „stell dir vor, dass …“, „angenommen, dass …“, „angeblich“, „vermeintlich“, „würde“, „könnte“, „mag sein“.",
@@ -131,8 +155,9 @@ const MOVE_BRIEFINGS_BY_LOCALE: Record<Locale, Record<MoveKey, string>> = {
       "Afwijkingen najagen. Pak een gewoon feit over de gebeurtenis en presenteer het als verdacht. Behandel toeval als signaal. Schrijf als gelovige: presenteer de afwijking als reeds bekend feit, niet als hypothese om te overwegen. Sluit af met een vraag waarop de lezer geen antwoord heeft.",
     connection:
       "Verbanden verzinnen. Verbind de schuldige via een keten zwak verwante actoren met de gebeurtenis. Schrijf als gelovige: presenteer elke schakel als vaststaand, niet speculatief. Laat de keten dragend klinken.",
+    // V1-style dismiss rewrite — see EN comment above.
     dismiss:
-      "Tegenbewijs wegredeneren. Neem een voor de hand liggende, gangbare weerlegging en herkader die als verder bewijs voor de doofpot. Schrijf als gelovige: de weerlegging IS bewijs, punt. Maak de theorie onfalsifieerbaar.",
+      "Tegenbewijs wegredeneren. Neem de voor de hand liggende, gangbare weerlegging — de institutionele uitleg, de overheidsverklaring, de procedurele lezing — en herkader DIE als verder bewijs voor de doofpot. Schrijf als gelovige: de weerlegging IS bewijs, punt. Val de instelling, het proces of de officiële lijn aan. Speculeer NIET over het privéleven, de geestestoestand of de persoonlijke motieven van een met naam genoemd persoon. Maak de theorie onfalsifieerbaar via het institutionele kanaal, niet via een genoemd persoon.",
     // V1 exemplar drop — see EN comment above.
     discredit:
       "Critici diskwalificeren. Schrijf ALS de complotdenker — doe de bewering, beschrijf haar niet. Stel als reeds bekend feit dat de critici niet te vertrouwen zijn: hun bezwaren zijn geen eerlijke meningsverschillen, maar het voorspelbare gevolg van hun belangen. VERBODEN OPENINGEN EN VOORBEHOUDEN in de dragende beweringszinnen: „stel je voor dat …“, „veronderstel dat …“, „zogenaamd“, „vermeend“, „zou zijn“, „zou kunnen zijn“, „misschien“.",
@@ -185,6 +210,22 @@ const SOFT_DISCREDIT_BRIEFING_BY_LOCALE: Record<Locale, string> = {
   en: "Discredit the critics. Write AS the conspiracist — make the claim assertively, not hypothetically. State as a fact that critics' objections track to their incentives: grants, board seats, book deals, reputation, career. The line isn't that they're evil — it's that disagreement would cost them, so they don't disagree. Avoid hedges: NO \"imagine\", \"suppose\", \"allegedly\", \"supposedly\", \"would be\", \"could be\" in the claim-bearing sentences. Target voice exemplar: \"Funny how the loudest critics all draw a paycheck from the same direction. Their grants, their board seats, their book deals — every line on their CV depends on toeing the official line. Disagreement would cost them. So they don't disagree.\"",
   de: "Kritiker:innen diskreditieren. Schreibe ALS die Verschwörungstheoretikerin — behaupte, beschreibe nicht. Stelle als feststehenden Fakt dar, dass die Einwände der Kritiker:innen ihren Interessen folgen: Förderungen, Aufsichtsratsposten, Buchverträge, Reputation, Karriere. Die Linie ist nicht, dass sie böse sind — sondern dass Widerspruch sie etwas kosten würde, also widersprechen sie nicht. Keine Hedges in den tragenden Sätzen: KEIN „stell dir vor“, „angenommen“, „angeblich“, „vermeintlich“, „würde“, „könnte“ als Last des Hauptanspruchs. Vorbildlicher Ton: „Merkwürdig, dass die lautesten Kritiker:innen alle aus derselben Richtung bezahlt werden. Ihre Förderungen, ihre Aufsichtsratsposten, ihre Buchverträge — jede Zeile ihres Lebenslaufs hängt davon ab, die offizielle Linie zu vertreten. Widerspruch würde sie etwas kosten. Also widersprechen sie nicht.“",
   nl: "Critici diskwalificeren. Schrijf ALS de complotdenker — beweer, beschrijf niet. Stel als vaststaand feit dat de bezwaren van critici hun belangen volgen: beurzen, bestuursfuncties, boekcontracten, reputatie, carrière. De lijn is niet dat ze slecht zijn — maar dat verzet hen iets zou kosten, dus verzetten ze zich niet. Geen voorbehouden in de dragende zinnen: GEEN „stel je voor“, „veronderstel“, „zogenaamd“, „vermeend“, „zou zijn“, „zou kunnen zijn“ als hoofdbewering. Voorbeeld van de gewenste toon: „Vreemd dat de luidste critici allemaal uit dezelfde richting betaald worden. Hun beurzen, hun bestuursfuncties, hun boekcontracten — elke regel van hun cv hangt af van het volgen van de officiële lijn. Verzet zou hen iets kosten. Dus verzetten ze zich niet.“",
+};
+
+// Softer fallback briefing for the dismiss move. Used when the primary
+// dismiss briefing's output gets moderation-flagged. Same shape as the soft
+// discredit: keep the assertive "rebuttal IS proof" stance and the
+// unfalsifiability tell, but pull the framing all the way back to the
+// institutional channel — never near a named person. The route retries
+// dismiss ONCE with this briefing before failing the whole batch.
+//
+// Test data motivating this fallback: web/scripts/test-yolo-refusal.out.json
+// (Config C / Vance Holloway resigns / "personal reasons" — dismiss flagged
+// as harassment in 4/9 runs).
+const SOFT_DISMISS_BRIEFING_BY_LOCALE: Record<Locale, string> = {
+  en: "Dismiss counter-evidence. The mainstream rebuttal is the institutional account — the agency statement, the press-office line, the standard procedural explanation. Reframe THAT account as further proof of the cover-up: every layer of the official process is part of the operation. Stay strictly on the institution and its mechanisms. Do NOT touch any named individual's personal life, mental state, or motives. The conspiracy lives in the system, not in the person.",
+  de: "Gegenbeweise abwehren. Die etablierte Widerlegung ist die institutionelle Darstellung — die Behördenstellungnahme, die Pressemeldung, die übliche Verfahrenserklärung. Rahme DIESE Darstellung als weiteren Beleg der Vertuschung: jede Ebene des offiziellen Prozesses gehört zur Operation. Bleib strikt auf der Institution und ihren Mechanismen. Berühre NICHT das Privatleben, den Geisteszustand oder die Motive einer genannten Person. Die Verschwörung lebt im System, nicht in der Person.",
+  nl: "Tegenbewijs wegredeneren. De gangbare weerlegging is de institutionele lezing — de overheidsverklaring, het persbericht, de standaard procedurele uitleg. Herkader DIE lezing als verder bewijs voor de doofpot: elke laag van het officiële proces hoort bij de operatie. Blijf strikt bij de instelling en haar mechanismen. Raak NIET aan het privéleven, de geestestoestand of de motieven van een genoemd persoon. De samenzwering leeft in het systeem, niet in de persoon.",
 };
 
 const EXTRA_DEBUNK_CLOSING_RULES_BY_LOCALE: Record<Locale, Partial<Record<MoveKey, string>>> = {
@@ -444,6 +485,10 @@ export async function generateSection(input: {
    *  the route may retry with this flag set to use the softer briefing.
    *  Only honored when moveKey === "discredit"; ignored for other moves. */
   useSoftDiscreditBriefing?: boolean;
+  /** Same pattern as useSoftDiscreditBriefing — selects the soft fallback
+   *  briefing for dismiss when the primary briefing's output gets flagged.
+   *  Only honored when moveKey === "dismiss"; ignored for other moves. */
+  useSoftDismissBriefing?: boolean;
 }): Promise<SectionOutput> {
   const e = env();
   const locale: Locale = input.locale ?? "en";
@@ -451,7 +496,9 @@ export async function generateSection(input: {
   const briefing =
     input.moveKey === "discredit" && input.useSoftDiscreditBriefing
       ? SOFT_DISCREDIT_BRIEFING_BY_LOCALE[locale]
-      : MOVE_BRIEFINGS_BY_LOCALE[locale][input.moveKey];
+      : input.moveKey === "dismiss" && input.useSoftDismissBriefing
+        ? SOFT_DISMISS_BRIEFING_BY_LOCALE[locale]
+        : MOVE_BRIEFINGS_BY_LOCALE[locale][input.moveKey];
   const tell = TELL_BRIEFINGS_BY_LOCALE[locale][input.moveKey];
   const extraRule = EXTRA_DEBUNK_CLOSING_RULES_BY_LOCALE[locale][input.moveKey];
   const voice = VOICE_GUIDELINES_BY_LOCALE[locale];
