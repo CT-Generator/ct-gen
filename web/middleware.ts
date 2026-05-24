@@ -1,14 +1,19 @@
 // Three responsibilities, one matcher:
-//   1. Locale negotiation — every non-excluded request gets `x-locale: en|de|nl`. The
-//      /<locale>/<rest> URL prefix triggers an internal rewrite to /<rest> so the same
-//      Next.js page file renders, but the URL bar stays /<locale>/<rest>.
+//   1. Chrome-locale negotiation — every non-excluded request gets `x-locale: en|de|nl`.
+//      Resolution order: `cgen_lang` cookie → URL prefix → Accept-Language → `en`.
+//      The cookie wins over the URL prefix, so a visitor who explicitly chose a chrome
+//      locale keeps it even when clicking shared `/<other>/...` links. The `cgen_lang`
+//      cookie is only WRITTEN on the very first request (when no cookie is present);
+//      after that, only the masthead toggle (client-side) writes it.
+//      The URL prefix still triggers an internal rewrite to /<rest> so the same Next.js
+//      page file renders, but the URL bar stays /<locale>/<rest>.
 //   2. /stats/* → HTTP Basic Auth gate. Username ignored; STATS_PASSWORD env is the gate.
 //   3. Everything else → set x-pathname / x-referrer / x-country request headers so the
 //      Node-runtime root layout can capture an anonymous page-view event after the response.
 // Specs:
 //   - openspec/changes/visitor-tracking/specs/visitor-analytics/spec.md
-//   - openspec/changes/multilingual-german/specs/internationalization/spec.md
-//   - openspec/changes/multilingual-dutch/specs/internationalization/spec.md
+//   - openspec/specs/internationalization/spec.md
+//   - openspec/changes/sticky-language-selection/specs/internationalization/spec.md
 
 import { NextResponse, type NextRequest } from "next/server";
 
@@ -48,6 +53,7 @@ export function middleware(req: NextRequest) {
 
   // First-visit redirect: no cookie, no explicit prefix, AL prefers a non-English
   // supported locale → /<locale>/...
+  // This is the one-time imprint: the only middleware-side cookie write.
   if (
     !cookieLocale &&
     !explicitPrefix &&
@@ -62,13 +68,15 @@ export function middleware(req: NextRequest) {
     return res;
   }
 
-  // Resolve final locale.
-  const locale: Locale = explicitPrefix ?? cookieLocale ?? acceptLocale ?? "en";
+  // Resolve chrome locale. Cookie wins; URL prefix is the fallback for
+  // visitors without a cookie (e.g., a first-time visitor who landed on
+  // a shared `/de/...` link). Spec: sticky-language-selection.
+  const locale: Locale = cookieLocale ?? explicitPrefix ?? acceptLocale ?? "en";
 
   // Pass on un-prefixed path to /stats handler / tracking layer.
   if (unprefixedPath.startsWith("/stats")) {
     const res = statsAuthGate(req);
-    if (locale !== cookieLocale) setLangCookie(res, locale);
+    if (!cookieLocale) setLangCookie(res, locale);
     return res;
   }
 
@@ -93,7 +101,10 @@ export function middleware(req: NextRequest) {
   } else {
     res = NextResponse.next({ request: { headers: requestHeaders } });
   }
-  if (locale !== cookieLocale) setLangCookie(res, locale);
+  // Write the cookie only on first visit (no cookie was sent). After that the
+  // cookie reflects the visitor's explicit toggle choice and middleware leaves
+  // it alone — even when the URL prefix differs from the cookie value.
+  if (!cookieLocale) setLangCookie(res, locale);
   return res;
 }
 

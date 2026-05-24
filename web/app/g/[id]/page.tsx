@@ -5,12 +5,15 @@
 //   - earlier v2 rows (pre-wizard): top-level { anomalies, connect_dots, ..., debunk }
 //   - migrated v1 rows: { legacy_text, recipe_tags: null }
 //
-// Locale of the chrome follows the row's persisted locale, NOT the visitor's
-// active UI locale. Spec: openspec/changes/multilingual-german/specs/internationalization/spec.md
-// (the "Permalink bypasses Accept-Language redirect" scenario).
+// Two locales live on this page:
+//   - rowLocale: the language the row was authored in (paragraphs, H1, dictionary).
+//   - chromeLocale: the visitor's UI choice (masthead, nav targets, locale toggle).
+// They may diverge — an English visitor on a shared `/de/g/<id>` link sees German
+// content with English chrome and English nav targets. Spec:
+//   openspec/changes/sticky-language-selection/specs/internationalization/spec.md
 
 import { eq } from "drizzle-orm";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { db, schema } from "@/lib/db";
@@ -129,19 +132,9 @@ export default async function GenerationPage({ params }: { params: Promise<Param
   const gen = await loadGeneration(id);
   if (!gen) notFound();
 
-  // Chrome locale follows the generation's locale (preserved across visitors).
+  // Row locale drives all body content; chrome locale drives all nav targets.
   const rowLocale: Locale = isLocale(gen.locale) ? gen.locale : "en";
-
-  // Permalink locale lock: when the visitor reaches a /<prefix>/g/<id> URL
-  // whose prefix doesn't match the row's persisted locale, redirect to the
-  // canonical URL. After redirect, <html lang>, masthead chrome, content body,
-  // and OG metadata all align on rowLocale.
-  // Spec: openspec/specs/internationalization
-  //   "Permalink visit redirects to the row's locale URL when prefixes mismatch"
-  const visitorLocale = await readLocale();
-  if (visitorLocale !== rowLocale) {
-    redirect(localizedHref(`/g/${id}`, rowLocale));
-  }
+  const chromeLocale = await readLocale();
 
   const t = getDict(rowLocale).generation;
   const shareLabels = getDict(rowLocale).share;
@@ -307,7 +300,7 @@ export default async function GenerationPage({ params }: { params: Promise<Param
               <span key={m.key}>
                 {i > 0 && <span className="mx-1.5 opacity-50">·</span>}
                 <a
-                  href={localizedHref("/recipe", rowLocale)}
+                  href={localizedHref("/recipe", chromeLocale)}
                   className="underline-offset-2 hover:underline"
                   style={{ color: m.color }}
                 >
@@ -341,8 +334,10 @@ export default async function GenerationPage({ params }: { params: Promise<Param
           {MOVES.map((m, i) => {
             const dm = display.moves[m.key];
             if (!dm) return null;
-            const bgs = ["var(--punch)", "var(--paper)", "var(--paper)", "var(--punch)"];
-            const cardBg = bgs[i % 4];
+            // Strict A-B-A-B alternation so the four cards read as a rhythm
+            // rather than the prior A-B-B-A pattern that left 001+004 yellow
+            // and 002+003 cream — a symmetry that looked like a mistake.
+            const cardBg = i % 2 === 0 ? "var(--punch)" : "var(--paper)";
             return (
               <article
                 key={m.key}
@@ -461,7 +456,7 @@ export default async function GenerationPage({ params }: { params: Promise<Param
           <p className="label">{t.share_meta}</p>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "center" }}>
             <Link
-              href={localizedHref("/", rowLocale)}
+              href={localizedHref("/", chromeLocale)}
               className="zine-btn"
               data-size="md"
               style={{

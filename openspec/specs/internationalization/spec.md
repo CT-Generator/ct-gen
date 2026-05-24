@@ -38,14 +38,14 @@ The system SHALL serve German content under URL paths beginning with `/de/` and 
 
 ### Requirement: Locale resolution on every request
 
-Middleware SHALL set the request locale on every non-asset, non-API request before any page renders. The resolution order is:
+Middleware SHALL set the chrome locale on every non-asset, non-API request before any page renders. The chrome locale is the language the masthead, footer, navigation links, locale toggle, and every internal link target render in. The resolution order is:
 
-1. Explicit prefix in the URL (`/de/...` → `de`; `/nl/...` → `nl`; otherwise `en`).
-2. The `cgen_lang` cookie if set.
-3. The `Accept-Language` header (highest-priority match against the three supported locales) — only when no cookie yet exists.
+1. The `cgen_lang` cookie if set to a supported locale.
+2. The URL prefix (`/de/...` → `de`; `/nl/...` → `nl`; otherwise `en`) — only when no cookie exists.
+3. The `Accept-Language` header (highest-priority match against the three supported locales) — only when no cookie exists and no prefix is present.
 4. Fall back to `en`.
 
-The resolved locale MUST be available to the rendered page via a request header.
+The resolved chrome locale MUST be available to the rendered page via the `x-locale` request header. The URL prefix is still consulted independently for path rewriting (so `/de/recipe` continues to serve `app/recipe/page.tsx`), but it no longer governs the chrome locale once a cookie is set.
 
 #### Scenario: First-time German-speaking visitor
 - **WHEN** a request arrives at `/` with `Accept-Language: de-DE,de;q=0.9,en;q=0.5` and no `cgen_lang` cookie
@@ -65,20 +65,27 @@ The resolved locale MUST be available to the rendered page via a request header.
 - **AND** redirects to `/nl/`
 - **AND** no `nl-BE` variant is served — the single Dutch dictionary covers both audiences
 
-#### Scenario: Returning visitor with cookie
-- **WHEN** a request arrives at `/recipe` with `cgen_lang=nl` cookie set
-- **THEN** the middleware redirects to `/nl/recipe`
-- **AND** the cookie is refreshed (its max-age window restarts)
+#### Scenario: Returning visitor with cookie navigates to /recipe
+- **WHEN** a request arrives at `/recipe` with `cgen_lang=de` cookie set
+- **THEN** the middleware resolves chrome locale to `de`
+- **AND** the page renders with German masthead, German nav strings, and a `/de/recipe`-style locale toggle for any DE-pill
+- **AND** the cookie is NOT rewritten (it already matches the resolved locale)
+- **AND** the URL bar remains `/recipe` (no redirect)
 
 #### Scenario: Permalink bypasses Accept-Language redirect
-- **WHEN** a request arrives at `/g/<shortid>` with `Accept-Language: nl` and no cookie
-- **THEN** the middleware does NOT redirect to `/nl/g/<shortid>`
-- **AND** the page renders in the locale of the stored generation row
+- **WHEN** a request arrives at `/g/<shortid>` or `/story/<uuid>` with `Accept-Language: nl` and no cookie
+- **THEN** the middleware does NOT redirect to `/nl/g/<shortid>` or `/nl/story/<uuid>`
+- **AND** the page renders with chrome locale = `en` (the URL had no prefix, no cookie, Accept-Language is checked but permalink paths skip the imprint redirect)
+- **AND** the page content renders in the locale of the stored generation row or seed event
 
-#### Scenario: Explicit prefix wins over cookie
-- **WHEN** a visitor with `cgen_lang=en` cookie navigates to `/nl/recipe`
-- **THEN** the response is the Dutch recipe page (the URL prefix wins)
-- **AND** the cookie is updated to `nl` so the next visit defaults to Dutch
+#### Scenario: URL prefix on a permalink does NOT change the chrome locale of a cookied visitor
+- **WHEN** a visitor with `cgen_lang=en` cookie clicks a shared link to `/de/g/<shortid>` for a German row
+- **THEN** the middleware resolves chrome locale to `en` (cookie wins over prefix)
+- **AND** the path is rewritten to `/g/<shortid>` so `app/g/[id]/page.tsx` renders
+- **AND** the `x-locale` request header is `en`
+- **AND** the response does NOT rewrite the `cgen_lang` cookie (it stays `en`)
+- **AND** the masthead, footer, and locale toggle render in English
+- **AND** the row's German content (paragraphs, H1) renders unchanged
 
 #### Scenario: Tie-broken Accept-Language follows header order
 - **WHEN** a request arrives at `/` with `Accept-Language: de;q=1.0, nl;q=1.0` and no cookie
@@ -88,6 +95,13 @@ The resolved locale MUST be available to the rendered page via a request header.
 ### Requirement: `cgen_lang` cookie persists locale preference
 
 The system SHALL set a `cgen_lang` cookie with values `en`, `de`, or `nl`, max-age 1 year, `SameSite=Lax`, NOT `HttpOnly` (the locale toggle's client component must read+write it). The cookie MUST be independent of the existing `cgen_sid` session-hash cookie — switching locales does NOT change the session hash. Any cookie value outside the three accepted enum entries MUST be ignored as if the cookie were absent.
+
+The cookie SHALL be written in exactly two situations:
+
+1. **First-visit imprint**: middleware sets the cookie on a request that has no `cgen_lang` cookie, to the locale it resolves for that request (Accept-Language → English fallback, per the resolution order above).
+2. **Explicit toggle click**: the masthead locale-toggle client writes the cookie via `document.cookie` immediately before navigating to the locale-prefixed equivalent path.
+
+The cookie MUST NOT be rewritten by middleware on any subsequent request. In particular, navigating to a locale-prefixed URL (`/de/...`, `/nl/...`) — including via a permalink the visitor did not author — MUST NOT cause the cookie to change.
 
 #### Scenario: Cookie set on first visit
 - **WHEN** the middleware resolves a locale on a request that has no `cgen_lang` cookie
@@ -103,7 +117,19 @@ The system SHALL set a `cgen_lang` cookie with values `en`, `de`, or `nl`, max-a
 #### Scenario: Unknown cookie value is ignored
 - **WHEN** a request arrives with `cgen_lang=fr` (or any other unknown value)
 - **THEN** the middleware treats the cookie as absent
-- **AND** falls through to Accept-Language matching, then English
+- **AND** falls through to URL prefix, then Accept-Language matching, then English
+- **AND** the response sets `cgen_lang` to the newly resolved locale (first-visit imprint applies because the cookie was effectively absent)
+
+#### Scenario: Visiting a foreign-locale permalink does NOT change the cookie
+- **WHEN** a visitor with `cgen_lang=en` cookie visits `/de/g/<shortid>` (or `/nl/g/<shortid>`, or `/de/story/<uuid>`, etc.)
+- **THEN** the response does NOT set the `cgen_lang` cookie
+- **AND** subsequent navigation to any in-app link continues to render chrome in English
+
+#### Scenario: Visiting a foreign-prefixed non-permalink does NOT change the cookie
+- **WHEN** a visitor with `cgen_lang=en` cookie visits `/de/recipe` directly (e.g., via an external link)
+- **THEN** the response does NOT set the `cgen_lang` cookie
+- **AND** the page renders with English chrome and English content (chrome locale wins; the URL prefix only controlled which page file rendered, which is the same English `recipe/page.tsx`)
+- **AND** the visitor sees no flip in their UI language
 
 ### Requirement: Locale-keyed dictionaries are the single source of UI copy
 
@@ -130,28 +156,29 @@ Every page that reads from the dictionaries SHALL be a Server Component (or use 
 
 ### Requirement: Locale toggle in masthead
 
-The masthead component SHALL render a segmented toggle that switches the active locale. The toggle's visible options are the union of `VISIBLE_LOCALES` and the currently-resolved locale (deduped) — guaranteeing that the visitor's current locale always has its own pill in the toggle, even if a feature flag (e.g. `DUTCH_LAUNCHED`) would otherwise hide it. Clicking any inactive locale MUST navigate to the equivalent path under that locale's URL prefix and update the `cgen_lang` cookie. The active locale MUST be visually emphasized (filled / underlined / accent color) AND MUST carry `aria-current="true"` on its pill so screen readers announce it as the current selection. The control MUST remain visible and usable on the narrowest supported viewport.
+The masthead component SHALL render a segmented toggle that switches the active locale. The toggle's visible options are the union of `VISIBLE_LOCALES` and the currently-resolved chrome locale (deduped) — guaranteeing that the visitor's current locale always has its own pill in the toggle, even if a feature flag (e.g. `DUTCH_LAUNCHED`) would otherwise hide it. Clicking any inactive locale MUST navigate to the locale-prefixed equivalent of the current path AND write the `cgen_lang` cookie to the chosen locale. The active locale MUST be visually emphasized (filled / underlined / accent color) AND MUST carry `aria-current="true"` on its pill so screen readers announce it as the current selection. The control MUST remain visible and usable on the narrowest supported viewport. The toggle is the ONLY UI surface that writes `cgen_lang` from client code.
 
 #### Scenario: Toggle is visible on every page
 - **WHEN** any page that renders the masthead is loaded
-- **THEN** the toggle is present in the masthead with the active locale's label visible
+- **THEN** the toggle is present in the masthead with the active chrome locale's label visible
 - **AND** the active locale is visually emphasized
 - **AND** the active locale's pill has `aria-current="true"`
 
 #### Scenario: Active locale always present even when launch-gated
-- **WHEN** the active locale is not in `VISIBLE_LOCALES` (e.g., NL when `DUTCH_LAUNCHED=false`) but a visitor reaches a `/<locale>/...` URL directly
+- **WHEN** the active chrome locale is not in `VISIBLE_LOCALES` (e.g., NL when `DUTCH_LAUNCHED=false`) but a visitor's cookie carries it
 - **THEN** the toggle still renders a pill for the active locale (added to the visible set for that visitor's masthead)
 - **AND** the active pill is visually emphasized so the visitor knows which locale they are viewing
 
-#### Scenario: Toggle updates URL on click — to Dutch
-- **WHEN** a user on `/de/recipe` clicks "NL" in the toggle
-- **THEN** the browser navigates to `/nl/recipe`
-- **AND** the `cgen_lang` cookie is updated to `nl`
+#### Scenario: Toggle updates URL and cookie on click — to Dutch
+- **WHEN** a user on `/recipe` (chrome locale `en`) clicks "NL" in the toggle
+- **THEN** the browser writes `cgen_lang=nl` via `document.cookie`
+- **AND** navigates to `/nl/recipe`
+- **AND** the next request renders chrome and chrome-link targets in Dutch
 
-#### Scenario: Toggle updates URL on click — to English
+#### Scenario: Toggle updates URL and cookie on click — to English
 - **WHEN** a user on `/nl/about` clicks "EN" in the toggle
-- **THEN** the browser navigates to `/about` (same logical page, English)
-- **AND** the `cgen_lang` cookie is updated to `en`
+- **THEN** the browser writes `cgen_lang=en` via `document.cookie`
+- **AND** navigates to `/about` (same logical page, English)
 - **AND** does NOT navigate to `/`
 
 #### Scenario: Toggle preserves the page across all three locales
@@ -164,23 +191,47 @@ The masthead component SHALL render a segmented toggle that switches the active 
 - **THEN** all visible toggle pills remain tappable (≥32px hit target each)
 - **AND** the toggle does not overflow horizontally past the masthead's right edge
 
+#### Scenario: Toggle on a permalink page reflects chrome locale, not row locale
+- **WHEN** a visitor with `cgen_lang=en` views `/de/g/<id>` for a German row
+- **THEN** the masthead toggle shows EN as active (visitor's chrome choice)
+- **AND** the toggle's NL/DE pills point to `/nl/g/<id>` and `/de/g/<id>` respectively
+- **AND** clicking EN keeps the visitor on `/de/g/<id>` (already English chrome) without writing a redundant cookie value
+
 ### Requirement: `<html lang>` matches the active locale
 
-The rendered `<html>` element SHALL set the `lang` attribute to the active locale's BCP-47 tag (`en` or `de`).
+The rendered `<html>` element SHALL set the `lang` attribute to the BCP-47 tag of the **content language** rendered in the page body — i.e., the locale that drives the headlines, paragraphs, and dictionary lookups for the page's body. On pages whose body is driven by a persisted row (`/g/<id>`, `/story/<uuid>`, `/build/<id>`), this is the row's locale. On every other page, this is the chrome locale. This matches what assistive technologies announce.
 
-#### Scenario: lang attribute correct
-- **WHEN** a German page renders
+When the chrome locale differs from the content locale (a possible outcome on permalink pages now that the row-locale redirect is removed), the page MAY wrap chrome strings in nested `lang` attributes for finer-grained announcement, but is NOT required to do so in this change.
+
+#### Scenario: lang attribute on non-permalink page
+- **WHEN** an English visitor (cookie `en`) loads `/recipe`
+- **THEN** the response HTML contains `<html lang="en" ...>`
+
+#### Scenario: lang attribute on German permalink with English chrome
+- **WHEN** an English visitor (cookie `en`) loads `/de/g/<id>` for a German row
+- **THEN** the response HTML contains `<html lang="de" ...>` (matching the row content)
+- **AND** assistive technologies announce the page body in German
+- **AND** the English chrome strings inside the German `<html lang>` are not wrapped in nested `lang` attributes in this change (acceptable trade-off documented in design.md)
+
+#### Scenario: lang attribute on same-locale permalink
+- **WHEN** a German visitor (cookie `de`) loads `/de/g/<id>` for a German row
 - **THEN** the response HTML contains `<html lang="de" ...>`
-- **AND** assistive technologies announce the page in German
+- **AND** chrome and content are both German — no divergence
 
 ### Requirement: Tracking captures the un-prefixed path
 
-The visitor-tracking capture (introduced by the `visitor-tracking` change) SHALL record the un-prefixed path for `page_views.path`, regardless of which locale the visitor is on. The locale is captured separately as a column on `page_views` so per-locale stats are possible without polluting the top-pages chart with `/recipe` and `/de/recipe` as two distinct entries.
+The visitor-tracking capture (introduced by the `visitor-tracking` change) SHALL record the un-prefixed path for `page_views.path`, regardless of which locale URL prefix the visitor's request URL carried. The `locale` column on `page_views` records the **chrome locale** the visitor experienced (the cookie-resolved locale, which is what `x-locale` reflects after this change).
 
-#### Scenario: German visitor's recipe view records as /recipe
-- **WHEN** a visitor on `/de/recipe` triggers a page-view capture
+#### Scenario: English visitor on /de/recipe records as path=/recipe, locale=en
+- **WHEN** an English-chrome visitor (cookie `en`) loads `/de/recipe`
 - **THEN** the inserted `page_views` row has `path = '/recipe'`
-- **AND** a new `locale` column on `page_views` (added by this change) records `'de'`
+- **AND** the `locale` column records `'en'` (chrome locale)
+- **AND** the URL prefix `de` is NOT recorded as the locale (the page rendered in English chrome regardless of prefix)
+
+#### Scenario: German visitor's recipe view records as /recipe, locale=de
+- **WHEN** a German-chrome visitor (cookie `de`) loads `/de/recipe`
+- **THEN** the inserted `page_views` row has `path = '/recipe'`
+- **AND** the `locale` column records `'de'`
 
 ### Requirement: No English fallback for non-English locales
 
@@ -249,30 +300,6 @@ Pages whose body is legally-significant content — currently `/imprint` and `/p
 - **WHEN** a German legally-original imprint body is authored and lives in a Marco-authored file (e.g., `web/app/imprint/page.de.tsx`) AND `/de/imprint` is wired to render that file
 - **THEN** the translation-pending notice is no longer rendered for German
 - **AND** the German body renders without it
-
-### Requirement: Permalink visit redirects to the row's locale URL when prefixes mismatch
-
-When a visitor reaches `/g/<short-id>` (English-default URL) or any locale-prefixed equivalent (`/de/g/<short-id>`, `/nl/g/<short-id>`) for a row whose persisted locale differs from the URL's prefix, the page SHALL respond with an HTTP redirect to the canonical URL under the row's locale prefix. After the redirect, `<html lang>`, masthead chrome, content body, and OG metadata all match the row's locale. This makes the spec-statement "the page renders in the locale of the stored generation row" true at the URL level, not just at the content level.
-
-#### Scenario: Cross-locale visit redirects
-- **WHEN** a visitor reaches `/de/g/<short-id>` for a row whose persisted locale is `en`
-- **THEN** the response is an HTTP redirect to `/g/<short-id>` (English canonical)
-- **AND** the redirected page renders `<html lang="en">`, English masthead, English content, and `og:locale="en_US"`
-
-#### Scenario: Same-locale visit does not redirect
-- **WHEN** a visitor reaches `/de/g/<short-id>` for a row whose persisted locale is `de`
-- **THEN** no redirect occurs
-- **AND** the page renders normally with `<html lang="de">` and German chrome + content
-
-#### Scenario: English-default URL with non-English row redirects
-- **WHEN** a visitor reaches `/g/<short-id>` for a row whose persisted locale is `nl`
-- **THEN** the response is an HTTP redirect to `/nl/g/<short-id>`
-- **AND** the redirected page renders `<html lang="nl">` and Dutch chrome + content
-
-#### Scenario: Redirect preserves nothing else
-- **WHEN** the redirect fires
-- **THEN** the redirect target is exactly the canonical `localizedHref('/g/<short-id>', rowLocale)` — no query parameters, hashes, or other state are added or removed
-- **AND** the visitor's session-hash cookie is unchanged
 
 ### Requirement: Result-page H1 reads grammatically in every supported locale
 

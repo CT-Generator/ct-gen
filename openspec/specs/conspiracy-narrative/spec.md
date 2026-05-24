@@ -24,6 +24,13 @@ When a recipe-tagged generation reaches a state where all four moves' `paragraph
 - **AND** paragraph 1 ends with a transitional hook into the conspiracy reframing (e.g., "…or so the official story goes." in EN, locale-appropriate equivalents in DE/NL)
 - **AND** paragraph 1 is between 50 and 80 words inclusive
 
+#### Scenario: Official-version tag clamps to the institutional claim
+- **WHEN** the narrative finale is generated for any locale
+- **THEN** the "official version" pivot phrase (EN: "…or so the official story goes.", DE: "…so jedenfalls die offizielle Version.", NL: "…of dat is althans het officiële verhaal.") MUST immediately follow the sentence stating the neutral institutional fact — i.e., what happened and how authorities classified it
+- **AND** the pivot phrase MUST NOT follow a sentence that itemises doubts, contradictions, vanished evidence, unanswered questions, or other shortcomings of the official account
+- **AND** if paragraph 1 names such doubts at all, they MUST appear in a separate sentence AFTER the pivot phrase, framed as the conspiracist's first move
+- **AND** a paragraph of the wrong shape — for example "…das Ereignis wurde als Sabotage eingestuft. Ermittlungen lieferten widersprüchliche Fährten, Belege lösten sich auf, viele Fragen blieben offen – so jedenfalls die offizielle Version." — fails this scenario, because the pivot is attached to the list of doubts rather than to the institutional classification
+
 #### Scenario: Narrative integrates the four moves
 - **WHEN** the narrative-generation prompt receives the four `paragraph` outputs, the event/culprit/motive triple, and the locale
 - **THEN** paragraphs 2–4 reference the specific anomaly, connection, dismissal, and discrediting claims from the input paragraphs

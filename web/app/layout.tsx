@@ -4,7 +4,7 @@ import { headers } from "next/headers";
 import { ClassroomMount } from "@/components/classroom-mount";
 import { readSessionHash } from "@/lib/session";
 import { recordPageView } from "@/lib/tracking";
-import { readLocale, getDict, type Locale } from "@/lib/i18n";
+import { readLocale, getDict, resolveContentLocaleFromPath, type Locale } from "@/lib/i18n";
 import "./globals.css";
 
 // OG locale codes per supported locale. A `Record<Locale, string>` so that
@@ -74,9 +74,17 @@ export const viewport: Viewport = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   await captureVisit();
-  const locale = await readLocale();
+  const chromeLocale = await readLocale();
+  // <html lang> follows the body content's language. On row-driven pages
+  // (/g/<id>, /story/<uuid>, /build/<id>) this is the row's persisted locale,
+  // which may differ from the visitor's chrome locale.
+  // Spec: openspec/changes/sticky-language-selection/specs/internationalization/spec.md
+  //   "<html lang> matches the rendered content language"
+  const path = (await headers()).get("x-pathname") ?? "/";
+  const contentLocale = await resolveContentLocaleFromPath(path);
+  const htmlLang = contentLocale ?? chromeLocale;
   return (
-    <html lang={locale} className={`${display.variable} ${body.variable} ${hand.variable}`}>
+    <html lang={htmlLang} className={`${display.variable} ${body.variable} ${hand.variable}`}>
       <body>
         <ClassroomMount />
         {children}

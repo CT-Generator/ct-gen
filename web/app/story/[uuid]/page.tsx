@@ -1,7 +1,13 @@
 // /story/[uuid] — Step 2: pick a culprit and a motive for the chosen news event.
 // Spec: zine-design-system + selection-flow.
+//
+// Two locales: eventLocale (seed's persisted locale → drives content, headline,
+// conspirators dictionary) and chromeLocale (visitor's choice → drives masthead
+// and any nav link that takes the visitor away from this story). They may
+// diverge when a visitor opens a foreign-locale story link. Spec:
+//   openspec/changes/sticky-language-selection/specs/internationalization/spec.md
 
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Masthead } from "@/components/masthead";
 import { Footer } from "@/components/footer";
@@ -24,21 +30,15 @@ export default async function StoryPage({
 }) {
   const { uuid } = await params;
   const sp = await searchParams;
-  const visitorLocale = await readLocale();
+  const chromeLocale = await readLocale();
 
   const event = findByUuid("news", uuid);
   if (!event) notFound();
 
-  // Locale lock: the chosen news event is tied to a single seed locale. If the
-  // visitor reaches /<prefix>/story/<uuid> via a URL whose prefix doesn't match
-  // the event's persisted locale, redirect to the canonical URL so chrome,
-  // intro paragraphs, and the H1 headline all align on the seed's locale.
-  // Mirrors the same pattern used on /g/[id].
+  // Body content (headline, intro paragraphs, conspirators list) follows the
+  // seed's locale. Nav targets (home, masthead) follow the visitor's chrome
+  // locale and may diverge.
   const eventLocale: Locale = isLocale(event.locale) ? event.locale : "en";
-  if (visitorLocale !== eventLocale) {
-    const r = sp.r != null ? `?r=${encodeURIComponent(sp.r)}` : "";
-    redirect(`${localizedHref(`/story/${uuid}`, eventLocale)}${r}`);
-  }
 
   const locale = eventLocale;
   const t = getDict(locale).story;
@@ -72,7 +72,7 @@ export default async function StoryPage({
             {z.file_open}
           </Sticker>
           <Link
-            href={localizedHref("/", locale)}
+            href={localizedHref("/", chromeLocale)}
             className="label"
             style={{
               marginLeft: "auto",
