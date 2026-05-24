@@ -176,6 +176,12 @@ export type Dictionary = {
     /** Label for the retry control rendered next to skip_to_result_failed when
      *  the YOLO POST aborts or returns non-2xx. */
     skip_to_result_retry: string;
+    /** Collapsible story-recap card shown at the top of every move screen so
+     *  the visitor can re-read the true event while choosing how to twist it. */
+    recap_label: string;
+    recap_toggle_open: string;
+    recap_toggle_close: string;
+    recap_source_label: string;
     progress_done: string;
     /** Singular noun used in the wizard progress bar and per-move screen header
      *  (e.g. "Move 01" / "Schritt 01" / "Stap 01"). */
@@ -539,6 +545,10 @@ export const en: Dictionary = {
     skip_to_result_loading_dots: "Picking ideas, writing the missing moves, stitching the theory",
     skip_to_result_failed: "Couldn't fill in the rest — try again.",
     skip_to_result_retry: "Try again",
+    recap_label: "The story",
+    recap_toggle_open: "Remind me what happened",
+    recap_toggle_close: "Hide the story",
+    recap_source_label: "Source",
     progress_done: "Done",
     move_label: "Move",
     done_eyebrow: "Done",

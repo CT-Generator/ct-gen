@@ -38,6 +38,10 @@ type WizardLabels = {
   skip_to_result_loading_dots: string;
   skip_to_result_failed: string;
   skip_to_result_retry: string;
+  recap_label: string;
+  recap_toggle_open: string;
+  recap_toggle_close: string;
+  recap_source_label: string;
   progress_done: string;
   move_label: string;
   done_eyebrow: string;
@@ -195,6 +199,8 @@ export function BuildWizard(props: Props) {
           <MoveScreen
             key={k}
             shortId={props.shortId}
+            eventName={props.eventName}
+            intro={props.intro}
             move={moveByKey(props.moves, k)}
             blurb={blurbMap[k]}
             ideas={props.ideas[k]}
@@ -348,10 +354,78 @@ function ProgressBar({
   );
 }
 
+/* ─── Story recap ─── */
+
+function safeHost(url: string): string | null {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return null;
+  }
+}
+
+function StoryRecap({
+  eventName,
+  intro,
+  label,
+  openHint,
+  closeHint,
+  sourceLabel,
+}: {
+  eventName: string;
+  intro: EventIntro;
+  label: string;
+  openHint: string;
+  closeHint: string;
+  sourceLabel: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const host = intro.source_url ? safeHost(intro.source_url) : null;
+  return (
+    <details
+      className="story-recap"
+      open={open}
+      onToggle={(e) => setOpen((e.currentTarget as HTMLDetailsElement).open)}
+    >
+      <summary aria-label={open ? closeHint : openHint}>
+        <span className="label" style={{ color: "var(--hot-2)", flex: "0 0 auto" }}>
+          {label}
+        </span>
+        <span className="story-recap-headline">{eventName}</span>
+        <span className="story-recap-chevron" aria-hidden="true">▾</span>
+      </summary>
+      <div className="story-recap-body">
+        {intro.paragraphs.map((p, i) => (
+          <p key={i}>{p}</p>
+        ))}
+        {host && intro.source_url && (
+          <p className="label" style={{ marginTop: 2 }}>
+            {sourceLabel}:{" "}
+            <a
+              href={intro.source_url}
+              target="_blank"
+              rel="noopener"
+              style={{
+                color: "var(--cool)",
+                textDecoration: "underline",
+                textUnderlineOffset: 3,
+              }}
+            >
+              {host} ↗
+            </a>
+          </p>
+        )}
+      </div>
+    </details>
+  );
+}
+
 /* ─── Move screen ─── */
 
 function MoveScreen({
   shortId,
+  eventName,
+  intro,
   move,
   blurb,
   ideas,
@@ -363,6 +437,8 @@ function MoveScreen({
   onNext,
 }: {
   shortId: string;
+  eventName: string;
+  intro: EventIntro;
   move: WizardMove;
   blurb: { explainer: string; tell: string };
   ideas: string[];
@@ -421,6 +497,15 @@ function MoveScreen({
 
   return (
     <div>
+      <StoryRecap
+        eventName={eventName}
+        intro={intro}
+        label={labels.recap_label}
+        openHint={labels.recap_toggle_open}
+        closeHint={labels.recap_toggle_close}
+        sourceLabel={labels.recap_source_label}
+      />
+
       {/* Move-step header — sticker eyebrow + scream H1 */}
       <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
         <Sticker tilt={-2}>

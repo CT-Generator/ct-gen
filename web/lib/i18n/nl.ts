@@ -230,6 +230,10 @@ export const nl: Dictionary = {
       "Ideeën kiezen, ontbrekende stappen schrijven, theorie aaneenvoegen", // FIXME: pass 2
     skip_to_result_failed: "Kon de rest niet aanvullen — probeer het opnieuw.", // FIXME: pass 2
     skip_to_result_retry: "Opnieuw proberen", // FIXME: pass 2
+    recap_label: "Het verhaal",
+    recap_toggle_open: "Wat was er ook alweer gebeurd?",
+    recap_toggle_close: "Verhaal verbergen",
+    recap_source_label: "Bron",
     progress_done: "Klaar",
     move_label: "Stap", // FIXME: pass 2
     done_eyebrow: "Klaar",
