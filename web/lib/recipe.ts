@@ -203,7 +203,7 @@ export const NARRATIVE_SCHEMA = {
       type: "array",
       items: { type: "string" },
       description:
-        "Exactly four paragraphs. Paragraph 1: a brief news-event framing (50–80 words) in neutral journalistic register that names the actual news event and ends on a hook into the conspiracy reframing. Paragraphs 2–4: the conspiracy theory in conspiracist voice (80–140 words each), weaving the four moves into one continuous story. No headings, no bullets, no debunks.",
+        "Exactly four paragraphs. Paragraph 1: a brief news-event framing (50–80 words) in neutral journalistic register that names the actual news event and ends on a hook into the conspiracy reframing. Paragraphs 2–4: one continuous conspiracy theory in conspiracist voice (80–140 words each). The four input moves are source notes — each should leave a detectable trace, but the result must read as one coherent, witty theory, not a paragraph-per-move summary. Invent connective detail freely; coverage is not the goal. No headings, no bullets, no debunks.",
     },
   },
 } as const;
