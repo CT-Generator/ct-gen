@@ -250,21 +250,23 @@ export default async function HomePage({
                       alignItems: "stretch",
                     }}
                   >
-                    <div style={{ flex: "0 0 auto" }}>
-                      <Image
-                        src={e.imageUrl}
-                        width={140}
-                        height={140}
-                        alt={e.name}
-                        className="block object-cover"
-                        style={{
-                          width: 128,
-                          height: 128,
-                          border: "2.5px solid var(--ink)",
-                        }}
-                        unoptimized
-                      />
-                    </div>
+                    {e.imageUrl && (
+                      <div style={{ flex: "0 0 auto" }}>
+                        <Image
+                          src={e.imageUrl}
+                          width={140}
+                          height={140}
+                          alt={e.name}
+                          className="block object-cover"
+                          style={{
+                            width: 128,
+                            height: 128,
+                            border: "2.5px solid var(--ink)",
+                          }}
+                          unoptimized
+                        />
+                      </div>
+                    )}
                     <div
                       style={{
                         flex: "1 1 auto",

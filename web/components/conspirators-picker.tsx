@@ -237,15 +237,17 @@ export function ConspiratorsPicker({
                     transition: "transform var(--t-fast), box-shadow var(--t-fast), background var(--t-fast)",
                   }}
                 >
-                  <Image
-                    src={c.imageUrl}
-                    width={36}
-                    height={36}
-                    alt=""
-                    className="block flex-shrink-0 object-cover"
-                    style={{ width: 36, height: 36, border: "2px solid var(--ink)" }}
-                    unoptimized
-                  />
+                  {c.imageUrl && (
+                    <Image
+                      src={c.imageUrl}
+                      width={36}
+                      height={36}
+                      alt=""
+                      className="block flex-shrink-0 object-cover"
+                      style={{ width: 36, height: 36, border: "2px solid var(--ink)" }}
+                      unoptimized
+                    />
+                  )}
                   <span style={{ lineHeight: 1.1 }}>{c.name}</span>
                 </button>
               );
@@ -294,15 +296,17 @@ export function ConspiratorsPicker({
                     transition: "transform var(--t-fast), box-shadow var(--t-fast), background var(--t-fast)",
                   }}
                 >
-                  <Image
-                    src={m.imageUrl}
-                    width={36}
-                    height={36}
-                    alt=""
-                    className="block flex-shrink-0 object-cover"
-                    style={{ width: 36, height: 36, border: "2px solid var(--ink)" }}
-                    unoptimized
-                  />
+                  {m.imageUrl && (
+                    <Image
+                      src={m.imageUrl}
+                      width={36}
+                      height={36}
+                      alt=""
+                      className="block flex-shrink-0 object-cover"
+                      style={{ width: 36, height: 36, border: "2px solid var(--ink)" }}
+                      unoptimized
+                    />
+                  )}
                   <span style={{ lineHeight: 1.1 }}>{m.name}</span>
                 </button>
               );

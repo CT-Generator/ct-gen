@@ -23,13 +23,13 @@ export type SeedItem = {
   /** Locale of this entry. Existing entries default to 'en'. */
   locale?: Locale;
   /** Optional explicit image filename (relative to /public/seed/<kind>/).
-   * Used by entries without per-uuid images, e.g. the German pass-1 set
-   * which all point to the shared `de-placeholder.svg`. */
+   * Filenames ending in `-placeholder.svg` are treated as "no image": the
+   * picker omits the thumbnail entirely instead of rendering a placeholder. */
   image_override?: string;
 };
 
 export type SeedItemWithImage = SeedItem & {
-  imageUrl: string;
+  imageUrl: string | null;
   kind: SeedKind;
 };
 
@@ -41,8 +41,11 @@ function matchesLocale(item: SeedItem, locale: Locale): boolean {
   return (item.locale ?? "en") === locale;
 }
 
-function buildImageUrl(kind: SeedKind, item: SeedItem): string {
-  if (item.image_override) return `/seed/${kind}/${item.image_override}`;
+function buildImageUrl(kind: SeedKind, item: SeedItem): string | null {
+  if (item.image_override) {
+    if (item.image_override.endsWith("-placeholder.svg")) return null;
+    return `/seed/${kind}/${item.image_override}`;
+  }
   return `/seed/${kind}/${item.uuid}.jpg`;
 }
 
