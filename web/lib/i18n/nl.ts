@@ -114,8 +114,8 @@ export const nl: Dictionary = {
     credits_h: "Medewerkers",
     credits_p_a: "De Conspiracy Generator is gebouwd door",
     credits_p_and: "en",
-    credits_p_inspired: ", geïnspireerd door",
-    credits_blog_link: "een blogpost van Maarten",
+    credits_p_inspired: ", geïnspireerd door een essay van Maarten, vermeld in",
+    credits_blog_link: "deze blogpost",
     credits_p_thanks:
       ". Met dank aan Natasha Newbold, Mohammed Darras en Peter Keroti voor hun werk aan een eerdere versie, en aan de Etienne Vermeersch-leerstoel Kritisch Denken aan de Universiteit Gent voor de financiering.",
   },

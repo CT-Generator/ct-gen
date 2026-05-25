@@ -103,8 +103,8 @@ export const de: Dictionary = {
     credits_h: "Mitwirkende",
     credits_p_a: "Den Conspiracy Generator haben",
     credits_p_and: "und",
-    credits_p_inspired: " gebaut, inspiriert von",
-    credits_blog_link: "einem Blogpost von Maarten",
+    credits_p_inspired: " gebaut, inspiriert von einem Essay von Maarten, erwähnt in",
+    credits_blog_link: "diesem Blogpost",
     credits_p_thanks:
       ". Mit Dank an Natasha Newbold, Mohammed Darras und Peter Keroti für ihre Arbeit an einer früheren Version sowie an den Etienne-Vermeersch-Lehrstuhl für kritisches Denken an der Universität Gent für die Förderung.",
   },

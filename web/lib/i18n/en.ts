@@ -441,8 +441,8 @@ export const en: Dictionary = {
     credits_h: "Credits",
     credits_p_a: "The Conspiracy Generator is built by",
     credits_p_and: "and",
-    credits_p_inspired: ", inspired by",
-    credits_blog_link: "a blog post by Maarten",
+    credits_p_inspired: ", inspired by an essay by Maarten referenced in",
+    credits_blog_link: "this blog post",
     credits_p_thanks:
       ". With thanks to Natasha Newbold, Mohammed Darras, and Peter Keroti for their work on an earlier version, and to the Etienne Vermeersch Chair of Critical Thinking at Ghent University for funding.",
   },
