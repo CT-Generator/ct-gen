@@ -219,52 +219,88 @@ export async function POST(_req: Request, { params }: { params: Promise<Params> 
     };
   }
 
-  // Narrative finale: regenerate when missing OR when we just filled in moves.
-  // (When all moves were already complete and narrative exists, we returned early above.)
-  let narrative: WizardContent["narrative"] | undefined = content.narrative;
-  if (!haveNarrative || missingKeys.length > 0) {
-    try {
-      const out = await generateNarrative({
-        locale: rowLocale,
-        eventName: row.eventValue,
-        culpritName: row.culpritValue,
-        motiveName: row.motiveValue,
-        paragraphs: {
-          anomaly: mergedPerMove.anomaly!.paragraph,
-          connection: mergedPerMove.connection!.paragraph,
-          dismiss: mergedPerMove.dismiss!.paragraph,
-          discredit: mergedPerMove.discredit!.paragraph,
-        },
-      });
-      const joined = out.paragraphs.join("\n\n");
-      const mod = await moderate(joined).catch(() => ({ flagged: false }));
-      if (mod.flagged) {
-        // Breadcrumb category: narrative moderation flag. Includes shortId only;
-        // no paragraph text.
-        console.warn("[yolo] failure_category=narrative_moderation_flag", {
-          shortId: id,
-        });
-        narrative = undefined;
-      } else {
-        narrative = { paragraphs: out.paragraphs, generated_at: new Date().toISOString() };
-      }
-    } catch (err) {
-      // Breadcrumb category: narrative-generation failure. Includes shortId
-      // and error class only. Does NOT include any model-generated text.
-      // Route still returns success because per-move data is consistent.
-      console.error("[yolo] failure_category=narrative_generation", {
+  // Narrative finale — required for any non-cached 2xx response so the
+  // /g/[id] render matches the tutored flow (standalone narrative + four-move
+  // breakdown). One retry with the same inputs catches transient model
+  // glitches; if the retry also fails we persist per_move only (so a
+  // subsequent yolo POST hits the idempotent narrative-only recovery branch)
+  // and return non-2xx so the picker/wizard surface their existing inline
+  // retry control.
+  const firstAttempt = await attemptNarrative({
+    locale: rowLocale,
+    row,
+    mergedPerMove,
+  });
+  let finalAttempt = firstAttempt;
+  if (firstAttempt.kind !== "ok") {
+    console.warn("[yolo] failure_category=narrative_retry_attempted", {
+      shortId: id,
+      firstFailureKind: firstAttempt.kind,
+    });
+    finalAttempt = await attemptNarrative({
+      locale: rowLocale,
+      row,
+      mergedPerMove,
+    });
+    if (finalAttempt.kind === "ok") {
+      console.log("[yolo] failure_category=narrative_retry_succeeded", {
         shortId: id,
-        errorClass: err instanceof Error ? err.name : "Unknown",
-        errorMessage: err instanceof Error ? err.message : String(err),
       });
-      // Keep existing narrative if any; otherwise leave undefined.
     }
   }
+
+  if (finalAttempt.kind !== "ok") {
+    const subcategory =
+      finalAttempt.kind === "moderation_flagged"
+        ? "moderation"
+        : finalAttempt.kind === "invalid_output"
+          ? "invalid_output"
+          : "throw";
+    console.error("[yolo] failure_category=narrative_retry_also_failed", {
+      shortId: id,
+      subcategory,
+      ...(finalAttempt.kind === "error"
+        ? {
+            errorClass:
+              finalAttempt.err instanceof Error
+                ? finalAttempt.err.name
+                : "Unknown",
+            errorMessage:
+              finalAttempt.err instanceof Error
+                ? finalAttempt.err.message
+                : String(finalAttempt.err),
+          }
+        : {}),
+    });
+    const recoverableContent: WizardContent = {
+      ...content,
+      per_move: mergedPerMove,
+    };
+    await db()
+      .update(schema.generations)
+      .set({ recipeContent: recoverableContent })
+      .where(eq(schema.generations.shortId, id));
+    if (subcategory === "moderation") {
+      return NextResponse.json(
+        { error: errLabels.err_engine_refused_yolo },
+        { status: 422 },
+      );
+    }
+    return NextResponse.json(
+      { error: errLabels.err_engine_glitched_yolo },
+      { status: 502 },
+    );
+  }
+
+  const narrative: WizardContent["narrative"] = {
+    paragraphs: finalAttempt.paragraphs,
+    generated_at: new Date().toISOString(),
+  };
 
   const newContent: WizardContent = {
     ...content,
     per_move: mergedPerMove,
-    ...(narrative ? { narrative } : {}),
+    narrative,
   };
 
   await db()
@@ -273,4 +309,40 @@ export async function POST(_req: Request, { params }: { params: Promise<Params> 
     .where(eq(schema.generations.shortId, id));
 
   return NextResponse.json({ ok: true });
+}
+
+type NarrativeAttempt =
+  | { kind: "ok"; paragraphs: string[] }
+  | { kind: "moderation_flagged" }
+  | { kind: "invalid_output" }
+  | { kind: "error"; err: unknown };
+
+async function attemptNarrative(args: {
+  locale: Locale;
+  row: { eventValue: string; culpritValue: string; motiveValue: string };
+  mergedPerMove: NonNullable<WizardContent["per_move"]>;
+}): Promise<NarrativeAttempt> {
+  try {
+    const out = await generateNarrative({
+      locale: args.locale,
+      eventName: args.row.eventValue,
+      culpritName: args.row.culpritValue,
+      motiveName: args.row.motiveValue,
+      paragraphs: {
+        anomaly: args.mergedPerMove.anomaly!.paragraph,
+        connection: args.mergedPerMove.connection!.paragraph,
+        dismiss: args.mergedPerMove.dismiss!.paragraph,
+        discredit: args.mergedPerMove.discredit!.paragraph,
+      },
+    });
+    if (!Array.isArray(out.paragraphs) || out.paragraphs.length === 0) {
+      return { kind: "invalid_output" };
+    }
+    const joined = out.paragraphs.join("\n\n");
+    const mod = await moderate(joined).catch(() => ({ flagged: false }));
+    if (mod.flagged) return { kind: "moderation_flagged" };
+    return { kind: "ok", paragraphs: out.paragraphs };
+  } catch (err) {
+    return { kind: "error", err };
+  }
 }
