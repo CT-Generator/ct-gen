@@ -70,6 +70,8 @@ export async function POST(
     eventSummary: content.event_intro?.paragraphs?.join("\n\n") ?? "",
     culpritName: row.culpritValue,
     motiveName: row.motiveValue,
+    culpritSummary: content.culprit_summary,
+    motiveSummary: content.motive_summary,
     moveKey,
     chosenIdea,
     prior,
@@ -110,6 +112,8 @@ export async function POST(
         eventName: row.eventValue,
         culpritName: row.culpritValue,
         motiveName: row.motiveValue,
+        culpritSummary: content.culprit_summary,
+        motiveSummary: content.motive_summary,
         paragraphs: {
           anomaly: newPerMove.anomaly!.paragraph,
           connection: newPerMove.connection!.paragraph,

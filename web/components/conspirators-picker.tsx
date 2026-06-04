@@ -253,6 +253,20 @@ export function ConspiratorsPicker({
               );
             })}
           </div>
+          {culprit?.summary && (
+            <p
+              style={{
+                marginTop: 12,
+                fontFamily: "var(--font-body)",
+                fontSize: 13.5,
+                lineHeight: 1.4,
+                color: "var(--ink)",
+                opacity: 0.72,
+              }}
+            >
+              {culprit.summary}
+            </p>
+          )}
         </fieldset>
 
         {/* Motive */}
@@ -312,6 +326,20 @@ export function ConspiratorsPicker({
               );
             })}
           </div>
+          {motive?.summary && (
+            <p
+              style={{
+                marginTop: 12,
+                fontFamily: "var(--font-body)",
+                fontSize: 13.5,
+                lineHeight: 1.4,
+                color: "var(--ink)",
+                opacity: 0.72,
+              }}
+            >
+              {motive.summary}
+            </p>
+          )}
         </fieldset>
       </div>
 

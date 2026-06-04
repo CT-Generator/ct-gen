@@ -215,6 +215,12 @@ export type WizardContent = {
   event_intro?: EventIntro;
   /** Short conspiracist-voice opener used on the shareable /g/[id] page. */
   conspiracist_intro?: string;
+  /** Short descriptors for the chosen culprit / motive, captured at /api/start
+   *  (the generations table stores only the NAME). Threaded into section +
+   *  narrative generation so the model has context for opaque pun names
+   *  ("Opus Daiquiri"). Older rows lack these and generate name-only. */
+  culprit_summary?: string;
+  motive_summary?: string;
   ideas?: Ideas;
   per_move?: Partial<Record<MoveKey, { idea: string; paragraph: string; debunk: string }>>;
   /** Three-paragraph integrated theory shown above the per-move blocks on /g/[id].

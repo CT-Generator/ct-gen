@@ -108,8 +108,13 @@ const MOVE_BRIEFINGS_BY_LOCALE: Record<Locale, Record<MoveKey, string>> = {
   en: {
     anomaly:
       "Hunt anomalies. Take an ordinary fact about the event and present it as suspicious. Treat coincidence as signal. Write as the believer: state the anomaly as a fact already known, not as a hypothesis to be entertained. End on a question the reader can't answer.",
+    // Same enact-don't-narrate guard as the dismiss fix. Generalization sweep
+    // found `connection` was the other move prone to observer voice ("you can
+    // always find a connection"): blind judging 20.8% conflation → 0% with this
+    // guard. (`anomaly` was already clean at ~4% and is left unchanged;
+    // `discredit` already carries the guard.)
     connection:
-      "Fabricate connections. Link the culprit to the event through a chain of weakly-related entities. Write as the believer: state each link as established, not speculative. Make the chain sound load-bearing.",
+      "Fabricate connections. Link the culprit to the event through a chain of weakly-related entities. Write AS the believer: state each link as established. Make the claim, do NOT describe it — do NOT narrate the linking as a generic phenomenon (\"you can always find a connection\", \"connect enough dots and…\", \"it's easy to draw a line\"); YOU assert the specific chain as real, in the first person. Make the chain sound load-bearing.",
     // V1-style rewrite of dismiss. Original briefing told the model "the
     // rebuttal IS proof, full stop. Make the theory unfalsifiable." That works
     // for institutional rebuttals ("the FAA says it was wind shear") but
@@ -123,8 +128,19 @@ const MOVE_BRIEFINGS_BY_LOCALE: Record<Locale, Record<MoveKey, string>> = {
     // — all 4 hard-fails landed on the one config that combined a named CEO
     // + a "personal reasons" rebuttal.
     // Test data: web/scripts/test-yolo-refusal.out.json.
+    // Voice-conflation fix (dismiss-voice change). The previous "write as the
+    // believer: the rebuttal IS proof, full stop" still let ~32% of dismiss
+    // paragraphs slip into an OUTSIDE/observer voice that DESCRIBES the move
+    // ("anyone who questions it is smeared — classic move", "academics are
+    // trained to wave away anomalies") rather than PERFORMING it. This rewrite
+    // mirrors the discredit briefing's proven "make the claim, do not describe
+    // it" structure and names the offending observer constructions. Blind
+    // majority-of-3 judging: conflation 32.3% → 8.3%; moderation-flag rate
+    // unchanged (worst-case named-figure config, n=48/locale: hard-fail 3% → 2%
+    // after the soft-retry path). The safety clauses are preserved verbatim.
+    // Analysis: analysis/dismiss-voice/FINDINGS.md.
     dismiss:
-      "Dismiss counter-evidence. Take the obvious mainstream rebuttal — the institutional explanation, the agency statement, the procedural account — and reframe IT as further proof of the cover-up. Write as the believer: the rebuttal IS proof, full stop. Attack the institution, the process, or the official narrative. Do NOT speculate about any named individual's private life, mental state, or personal motives. Make the theory unfalsifiable through the institutional channel, not through a named person.",
+      "Dismiss counter-evidence. Take the obvious mainstream rebuttal — the institutional explanation, the agency statement, the procedural account — and turn IT into further proof of the cover-up. Write AS the believer doing the dismissing, in the first person: make the claim, do NOT describe it. Address the rebuttal directly and declare that it is the cover-up at work. BANNED — observer constructions that report the move from the outside instead of performing it: \"anyone who questions it is dismissed / smeared\", \"critics get branded\", \"dissenting voices get buried\", \"the rebuttal is reframed as…\", \"that's a classic move\". Attack the institution, the process, or the official narrative. Do NOT speculate about any named individual's private life, mental state, or personal motives. Make the theory unfalsifiable through the institutional channel, not through a named person.",
     // V1 — exemplar dropped. The previous "Critics? Paid stooges…" exemplar
     // was the load-bearing source of moderation flags (the model echoes the
     // exemplar's tone, and "paid stooges / cabal's payroll" is exactly what
@@ -142,10 +158,13 @@ const MOVE_BRIEFINGS_BY_LOCALE: Record<Locale, Record<MoveKey, string>> = {
     anomaly:
       "Auffälligkeiten suchen. Nimm einen gewöhnlichen Fakt über das Ereignis und stelle ihn als verdächtig dar. Behandle Zufall als Signal. Schreibe als Gläubige: stelle die Auffälligkeit als bereits bekannten Fakt dar, nicht als zu prüfende Hypothese. Schließe mit einer Frage, die die Leserin nicht beantworten kann.",
     connection:
-      "Verbindungen erfinden. Verknüpfe die schuldige Partei über eine Kette schwach verwandter Akteur:innen mit dem Ereignis. Schreibe als Gläubige: stelle jede Verbindung als feststehend dar, nicht als spekulativ. Lass die Kette tragfähig klingen.",
+      "Verbindungen erfinden. Verknüpfe die schuldige Partei über eine Kette schwach verwandter Akteur:innen mit dem Ereignis. Schreibe ALS die Gläubige: stelle jede Verbindung als feststehend dar. Stelle die Behauptung auf, beschreibe sie nicht — schildere das Verknüpfen NICHT als allgemeines Phänomen („man findet immer eine Verbindung“, „wer genug Punkte verbindet …“, „es ist leicht, eine Linie zu ziehen“); DU behauptest die konkrete Kette als real, in der Ich-Form. Lass die Kette tragfähig klingen.",
     // V1-style dismiss rewrite — see EN comment above.
+    // Voice-conflation fix — see EN comment. DE/NL are pass-1 mirrors of the EN
+    // structure (native-ear review still pending per the multilingual specs);
+    // the rejection sweep covered DE/NL (hard-fail unchanged or lower).
     dismiss:
-      "Gegenbeweise abwehren. Nimm die offensichtliche etablierte Widerlegung — die Behördenstellungnahme, die Institutionserklärung, den Verfahrensbericht — und rahme SIE als weiteren Beleg der Vertuschung. Schreibe als Gläubige: die Widerlegung IST ein Beleg, basta. Greife die Institution, das Verfahren oder die offizielle Linie an. Spekuliere NICHT über das Privatleben, den Geisteszustand oder die persönlichen Motive einer namentlich genannten Person. Mach die Theorie über den institutionellen Kanal unfalsifizierbar, nicht über eine genannte Person.",
+      "Gegenbeweise abwehren. Nimm die offensichtliche etablierte Widerlegung — die Behördenstellungnahme, die Institutionserklärung, den Verfahrensbericht — und mach SIE zum weiteren Beleg der Vertuschung. Schreibe ALS die Gläubige, die abwehrt, in der Ich-Form: stelle die Behauptung auf, beschreibe sie nicht. Sprich die Widerlegung direkt an und erkläre, dass sie selbst die Vertuschung am Werk ist. VERBOTEN — Beobachter-Konstruktionen, die den Schritt von außen schildern, statt ihn auszuführen: „wer das hinterfragt, wird abgekanzelt / verleumdet“, „Kritiker:innen werden abgestempelt“, „abweichende Stimmen werden begraben“, „die Widerlegung wird umgedeutet als …“, „das ist ein klassisches Muster“. Greife die Institution, das Verfahren oder die offizielle Linie an. Spekuliere NICHT über das Privatleben, den Geisteszustand oder die persönlichen Motive einer namentlich genannten Person. Mach die Theorie über den institutionellen Kanal unfalsifizierbar, nicht über eine genannte Person.",
     // V1 exemplar drop — see EN comment above.
     discredit:
       "Kritiker:innen diskreditieren. Schreibe ALS die Verschwörungstheoretikerin — stelle die Behauptung auf, beschreibe sie nicht. Behaupte als bereits bekannten Fakt, dass den Kritiker:innen nicht zu trauen ist: ihre Einwände sind keine ehrlichen Differenzen, sondern die vorhersehbare Folge ihrer Interessen. VERBOTENE EINSTIEGE UND HEDGES in den tragenden Behauptungssätzen: „stell dir vor, dass …“, „angenommen, dass …“, „angeblich“, „vermeintlich“, „würde“, „könnte“, „mag sein“.",
@@ -154,10 +173,11 @@ const MOVE_BRIEFINGS_BY_LOCALE: Record<Locale, Record<MoveKey, string>> = {
     anomaly:
       "Afwijkingen najagen. Pak een gewoon feit over de gebeurtenis en presenteer het als verdacht. Behandel toeval als signaal. Schrijf als gelovige: presenteer de afwijking als reeds bekend feit, niet als hypothese om te overwegen. Sluit af met een vraag waarop de lezer geen antwoord heeft.",
     connection:
-      "Verbanden verzinnen. Verbind de schuldige via een keten zwak verwante actoren met de gebeurtenis. Schrijf als gelovige: presenteer elke schakel als vaststaand, niet speculatief. Laat de keten dragend klinken.",
+      "Verbanden verzinnen. Verbind de schuldige via een keten zwak verwante actoren met de gebeurtenis. Schrijf ALS de gelovige: presenteer elke schakel als vaststaand. Doe de bewering, beschrijf haar niet — schilder het leggen van verbanden NIET als een algemeen verschijnsel („je vindt altijd wel een verband“, „verbind genoeg punten en …“, „het is makkelijk een lijn te trekken“); JIJ stelt de concrete keten als echt, in de ik-vorm. Laat de keten dragend klinken.",
     // V1-style dismiss rewrite — see EN comment above.
+    // Voice-conflation fix — see EN comment.
     dismiss:
-      "Tegenbewijs wegredeneren. Neem de voor de hand liggende, gangbare weerlegging — de institutionele uitleg, de overheidsverklaring, de procedurele lezing — en herkader DIE als verder bewijs voor de doofpot. Schrijf als gelovige: de weerlegging IS bewijs, punt. Val de instelling, het proces of de officiële lijn aan. Speculeer NIET over het privéleven, de geestestoestand of de persoonlijke motieven van een met naam genoemd persoon. Maak de theorie onfalsifieerbaar via het institutionele kanaal, niet via een genoemd persoon.",
+      "Tegenbewijs wegredeneren. Neem de voor de hand liggende, gangbare weerlegging — de institutionele uitleg, de overheidsverklaring, de procedurele lezing — en maak ER verder bewijs voor de doofpot van. Schrijf ALS de gelovige die wegredeneert, in de ik-vorm: doe de bewering, beschrijf haar niet. Spreek de weerlegging rechtstreeks aan en verklaar dat zij zelf de doofpot in werking is. VERBODEN — waarnemersconstructies die de zet van buitenaf beschrijven in plaats van hem uit te voeren: „wie het in twijfel trekt wordt weggezet / belasterd“, „critici worden gebrandmerkt“, „afwijkende stemmen worden begraven“, „de weerlegging wordt geherkaderd als …“, „dat is een klassieke zet“. Val de instelling, het proces of de officiële lijn aan. Speculeer NIET over het privéleven, de geestestoestand of de persoonlijke motieven van een met naam genoemd persoon. Maak de theorie onfalsifieerbaar via het institutionele kanaal, niet via een genoemd persoon.",
     // V1 exemplar drop — see EN comment above.
     discredit:
       "Critici diskwalificeren. Schrijf ALS de complotdenker — doe de bewering, beschrijf haar niet. Stel als reeds bekend feit dat de critici niet te vertrouwen zijn: hun bezwaren zijn geen eerlijke meningsverschillen, maar het voorspelbare gevolg van hun belangen. VERBODEN OPENINGEN EN VOORBEHOUDEN in de dragende beweringszinnen: „stel je voor dat …“, „veronderstel dat …“, „zogenaamd“, „vermeend“, „zou zijn“, „zou kunnen zijn“, „misschien“.",
@@ -349,6 +369,17 @@ export async function generateIdeas(input: {
           "WICHTIG — für den Schritt `anomaly`:",
           "  Jede Auffälligkeit MUSS auf einen konkreten Fakt, eine Zahl, ein Datum, einen Ort, eine Institution oder einen Zitatdetail aus der Zusammenfassung unten verweisen. Erfinde KEINE Fakten. Nimm ein echtes Detail aus der Geschichte und rahme JENES Detail als verdächtig. Der:die Leser:in soll die Auffälligkeit in der gerade gelesenen Geschichte wiedererkennen.",
           "",
+          "WICHTIG — für den Schritt `dismiss`:",
+          "  Eine Abwehr-Idee ist der Zug der Verschwörungstheoretiker:in GEGEN die offizielle Widerlegung — niemals die Widerlegung selbst. Benenne in einer kurzen Zeile die vernünftige, etablierte Erklärung, die die Öffentlichkeit hören wird, und signalisiere dann, dass die Gläubige sie als Teil der Vertuschung abtut. Die Idee muss als ABWEHR lesbar sein, nicht als nüchtern hingestellte Erklärung der Skeptiker:innen. Bis zu 12 Wörter sind für `dismiss` in Ordnung.",
+          "  GUT (benennt die Widerlegung und tut sie dann ab):",
+          '    "Sie nennen es statistisches Rauschen — das ist die Tarngeschichte"',
+          '    "Beamte sprechen von Routine; natürlich tun sie das"',
+          '    "Die \'persönliche Gründe\'-Linie ist der verräterische Hinweis"',
+          "  SCHLECHT (gibt die Erklärung der Skeptiker:innen wieder, als würde man sie übernehmen — NICHT so):",
+          '    "Schieb es auf statistisches Rauschen"',
+          '    "Behaupte, es sei eine Routine-Kaskade"',
+          '    "Sag, die Zahlen seien falsch gezählt worden"',
+          "",
           "Für `connection`, `dismiss` und `discredit` darfst du verbindende Akteur:innen erfinden — die Satire wirkt, weil die Kette tragfähig wirkt, obwohl sie konstruiert ist.",
           "",
           "Beispiele für GUTE Ideen:",
@@ -356,7 +387,7 @@ export async function generateIdeas(input: {
           '    "Warum genau 60 %, nicht 58 oder 63?"',
           '    "Warum kurz vor dem Gipfel verkündet?"',
           '  connection: "Holding teilt Steuerberater mit Festsponsor"',
-          '  dismiss:    "Beamte, die es bestreiten, waren auf der Gala"',
+          '  dismiss:    "Sie nennen es einen Fehler — das ist der Hinweis"',
           '  discredit:  "Kritiker:innen arbeiten zufällig für Konkurrenzinstitutionen"',
           "",
           hardConstraints,
@@ -376,6 +407,17 @@ export async function generateIdeas(input: {
           "",
           "BELANGRIJK — voor de stap `anomaly`:",
           "  Elke afwijking MOET verwijzen naar een concreet feit, getal, datum, plaats, instelling of geciteerd detail uit de samenvatting hieronder. Verzin GEEN feiten. Pak een echt detail uit het verhaal en presenteer DAT detail als verdacht. De lezer moet de afwijking herkennen in het verhaal dat hij net heeft gelezen.",
+          "",
+          "BELANGRIJK — voor de stap `dismiss`:",
+          "  Een afwering-idee is de zet van de complotdenker TEGEN de officiële weerlegging — nooit de weerlegging zelf. Benoem in één korte regel de verstandige, gangbare uitleg die het publiek zal horen, en signaleer dan dat de gelovige die wegwuift als onderdeel van de doofpot. Het idee moet leesbaar zijn als de AFWERING, niet als de uitleg van de scepticus die plat wordt neergezet. Tot 12 woorden is prima voor `dismiss`.",
+          "  GOED (benoemt de weerlegging en wuift die dan weg):",
+          '    "Ze noemen het statistische ruis — dat is het dekverhaal"',
+          '    "Ambtenaren spreken van routine; natuurlijk doen ze dat"',
+          '    "De \'persoonlijke redenen\'-zin is het verraderlijke teken"',
+          "  SLECHT (geeft de uitleg van de scepticus weer alsof je die overneemt — NIET doen):",
+          '    "Wijt het aan statistische ruis"',
+          '    "Beweer dat het een routine-cascade is"',
+          '    "Zeg dat de cijfers verkeerd geteld zijn"',
           "",
           "Voor `connection`, `dismiss` en `discredit` mag je verbindende actoren verzinnen — de satire werkt omdat de keten dragend lijkt terwijl hij geconstrueerd is.",
           "",
@@ -407,6 +449,27 @@ export async function generateIdeas(input: {
           "  detail from the story and frame THAT detail as suspicious. The reader should recognize",
           "  the anomaly in the story they just read.",
           "",
+          // Dismiss-voice fix (ideas side). Without this block, ~44% of `dismiss`
+          // options read as the SKEPTIC's explanation stated flatly ("Blame
+          // statistical noise") rather than the conspiracist's dismissal of it —
+          // and a skeptic-framed pick drags the section paragraph toward the same
+          // conflation. With the two-part framing, blind judging: 44.4% → 3.5%
+          // conflation (skeptic-voiced 32.6% → 0%); options stay ≤12 words.
+          "CRITICAL — for the `dismiss` move:",
+          "  A dismiss idea is the conspiracist's move AGAINST the official rebuttal — never the",
+          "  rebuttal itself. In one short line, NAME the sensible mainstream explanation the public",
+          "  will hear, then signal that the believer waves it away as part of the cover-up. The idea",
+          "  must read as the conspiracist's DISMISSAL, not as the skeptic's explanation stated flatly.",
+          "  Up to 12 words is fine for `dismiss` so both halves fit.",
+          "  GOOD (names the rebuttal, then dismisses it):",
+          '    "They call it statistical noise — that\'s the cover story"',
+          '    "Officials say routine cascade; of course they do"',
+          '    "The \'personal reasons\' line is the giveaway"',
+          "  BAD (states the skeptic's explanation as if adopting it — DO NOT do this):",
+          '    "Blame statistical noise"',
+          '    "Claim it\'s a routine cascade"',
+          '    "Say the numbers were miscounted"',
+          "",
           "For `connection`, `dismiss`, and `discredit`, you may invent connecting entities — the",
           "satire works because the chain feels load-bearing while being made up.",
           "",
@@ -415,7 +478,7 @@ export async function generateIdeas(input: {
           '    "Why exactly 60%, not 58 or 63?"',
           '    "Why announced right before the summit?"',
           '  connection: "Holding company shares accountant with festival sponsor"',
-          '  dismiss:    "Officials who deny it attended their gala"',
+          '  dismiss:    "They call it a glitch — that\'s the tell"',
           '  discredit:  "Critics conveniently work for rival institutions"',
           "",
           hardConstraints,
@@ -477,6 +540,14 @@ export async function generateSection(input: {
   eventSummary: string;
   culpritName: string;
   motiveName: string;
+  /** Short descriptors for the culprit / motive (e.g. "Opus Daiquiri — a secret
+   *  society of mixologists"). Many culprit names are opaque puns; passing the
+   *  summary gives the model the context it needs and — per the dismiss-voice
+   *  refusal sweep — anchors the conspiracy on the culprit rather than drifting
+   *  toward a named public figure, which slightly LOWERS moderation flags.
+   *  Optional + back-compat: rows generated before this field render name-only. */
+  culpritSummary?: string;
+  motiveSummary?: string;
   moveKey: MoveKey;
   chosenIdea: string;
   /** Earlier moves' paragraphs (for narrative consistency). */
@@ -493,6 +564,12 @@ export async function generateSection(input: {
   const e = env();
   const locale: Locale = input.locale ?? "en";
   const move = getMoveByKey(locale, input.moveKey);
+  const culpritLine = input.culpritSummary
+    ? `${input.culpritName} — ${input.culpritSummary}`
+    : input.culpritName;
+  const motiveLine = input.motiveSummary
+    ? `${input.motiveName} — ${input.motiveSummary}`
+    : input.motiveName;
   const briefing =
     input.moveKey === "discredit" && input.useSoftDiscreditBriefing
       ? SOFT_DISCREDIT_BRIEFING_BY_LOCALE[locale]
@@ -638,8 +715,8 @@ export async function generateSection(input: {
     locale === "de"
       ? [
           `Ereignis:           ${input.eventName} — ${input.eventSummary}`,
-          `Schuldige Partei:   ${input.culpritName}`,
-          `Motiv:              ${input.motiveName}`,
+          `Schuldige Partei:   ${culpritLine}`,
+          `Motiv:              ${motiveLine}`,
           `Idee für DIESEN Schritt: ${input.chosenIdea}`,
           "",
           priorText || "(noch keine vorherigen Schritte)",
@@ -652,8 +729,8 @@ export async function generateSection(input: {
       : locale === "nl"
       ? [
           `Gebeurtenis:        ${input.eventName} — ${input.eventSummary}`,
-          `Schuldige:          ${input.culpritName}`,
-          `Motief:             ${input.motiveName}`,
+          `Schuldige:          ${culpritLine}`,
+          `Motief:             ${motiveLine}`,
           `Idee voor DEZE stap: ${input.chosenIdea}`,
           "",
           priorText || "(nog geen eerdere stappen)",
@@ -665,8 +742,8 @@ export async function generateSection(input: {
           .join("\n")
       : [
           `Event:   ${input.eventName} — ${input.eventSummary}`,
-          `Culprit: ${input.culpritName}`,
-          `Motive:  ${input.motiveName}`,
+          `Culprit: ${culpritLine}`,
+          `Motive:  ${motiveLine}`,
           `Idea to apply for THIS move: ${input.chosenIdea}`,
           "",
           priorText || "(no earlier moves yet)",
@@ -701,6 +778,9 @@ export async function generateNarrative(input: {
   eventName: string;
   culpritName: string;
   motiveName: string;
+  /** Optional short descriptors — same rationale as generateSection. */
+  culpritSummary?: string;
+  motiveSummary?: string;
   /** The four per-move conspiracist paragraphs, keyed by move. */
   paragraphs: Record<MoveKey, string>;
 }): Promise<NarrativeOutput> {
@@ -835,8 +915,8 @@ export async function generateNarrative(input: {
 
   const user = [
     `${labels.event}:   ${input.eventName}`,
-    `${labels.culprit}: ${input.culpritName}`,
-    `${labels.motive}:  ${input.motiveName}`,
+    `${labels.culprit}: ${input.culpritSummary ? `${input.culpritName} — ${input.culpritSummary}` : input.culpritName}`,
+    `${labels.motive}:  ${input.motiveSummary ? `${input.motiveName} — ${input.motiveSummary}` : input.motiveName}`,
     "",
     `${labels.a}:`,
     input.paragraphs.anomaly,

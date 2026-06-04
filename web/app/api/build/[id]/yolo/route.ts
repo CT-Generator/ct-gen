@@ -92,6 +92,8 @@ export async function POST(_req: Request, { params }: { params: Promise<Params> 
             eventSummary: content.event_intro?.paragraphs?.join("\n\n") ?? "",
             culpritName: row.culpritValue,
             motiveName: row.motiveValue,
+            culpritSummary: content.culprit_summary,
+            motiveSummary: content.motive_summary,
             moveKey,
             chosenIdea: newPicks[moveKey]!,
             // Yolo (full or partial) runs in parallel — no deterministic earlier-move ordering.
@@ -169,6 +171,8 @@ export async function POST(_req: Request, { params }: { params: Promise<Params> 
           eventSummary: content.event_intro?.paragraphs?.join("\n\n") ?? "",
           culpritName: row.culpritValue,
           motiveName: row.motiveValue,
+          culpritSummary: content.culprit_summary,
+          motiveSummary: content.motive_summary,
           moveKey: retryMoveKey,
           chosenIdea: newPicks[retryMoveKey]!,
           prior: {},
@@ -226,9 +230,16 @@ export async function POST(_req: Request, { params }: { params: Promise<Params> 
   // subsequent yolo POST hits the idempotent narrative-only recovery branch)
   // and return non-2xx so the picker/wizard surface their existing inline
   // retry control.
+  const narrativeRow = {
+    eventValue: row.eventValue,
+    culpritValue: row.culpritValue,
+    motiveValue: row.motiveValue,
+    culpritSummary: content.culprit_summary,
+    motiveSummary: content.motive_summary,
+  };
   const firstAttempt = await attemptNarrative({
     locale: rowLocale,
-    row,
+    row: narrativeRow,
     mergedPerMove,
   });
   let finalAttempt = firstAttempt;
@@ -239,7 +250,7 @@ export async function POST(_req: Request, { params }: { params: Promise<Params> 
     });
     finalAttempt = await attemptNarrative({
       locale: rowLocale,
-      row,
+      row: narrativeRow,
       mergedPerMove,
     });
     if (finalAttempt.kind === "ok") {
@@ -319,7 +330,7 @@ type NarrativeAttempt =
 
 async function attemptNarrative(args: {
   locale: Locale;
-  row: { eventValue: string; culpritValue: string; motiveValue: string };
+  row: { eventValue: string; culpritValue: string; motiveValue: string; culpritSummary?: string; motiveSummary?: string };
   mergedPerMove: NonNullable<WizardContent["per_move"]>;
 }): Promise<NarrativeAttempt> {
   try {
@@ -328,6 +339,8 @@ async function attemptNarrative(args: {
       eventName: args.row.eventValue,
       culpritName: args.row.culpritValue,
       motiveName: args.row.motiveValue,
+      culpritSummary: args.row.culpritSummary,
+      motiveSummary: args.row.motiveSummary,
       paragraphs: {
         anomaly: args.mergedPerMove.anomaly!.paragraph,
         connection: args.mergedPerMove.connection!.paragraph,

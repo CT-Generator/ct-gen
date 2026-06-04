@@ -87,6 +87,10 @@ export async function POST(req: Request) {
   const recipeContent: WizardContent = {
     event_intro: intro,
     conspiracist_intro: conspiracistIntro,
+    // Persist the descriptors so section + narrative generation can use them
+    // (the generations table stores only the culprit/motive NAME).
+    culprit_summary: body.culprit.summary,
+    motive_summary: body.motive.summary,
     ideas,
     per_move: {},
   };
